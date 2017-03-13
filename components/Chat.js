@@ -14,25 +14,37 @@ import store from './Redux/redux.js'
 //     topic: ""
 // });
 
-var Search = React.createClass({
+
+
+
+
+
+var Chat = React.createClass({
     render: function () {
         return (<div>
-                    
-                </div>);
+                <div className="jumbotron">
+                    <div className="page-header">
+                    TEST
+                    </div>
+                </div>
+                <div>
+                    <ul id="messages"></ul>
+                    <form className="well" action="">
+                        <input id="m" autoComplete="off" /><button>Send</button>
+                    </form>
+                </div>
+            </div>);
     }
 });
 
 // anything that was state now becomes props
 // there will be NO state properties in this file - they are set in the redux store and mapped to properties in this file below:
-const mapStateToProps = function(store){
-    return {
-        topic: store.searchState.topic,
-        startdate: store.searchState.startdate,
-        enddate: store.searchState.enddate,
-        results: store.searchState.results
-    }
-};
-// module.exports = Search;
-export default connect(mapStateToProps)(Search);
+// var mapStateToProps = function(store,ownProps){
+//     return {
+//         test: store.testState.test,
+//     }
+// };
+export default Chat;
+// export default connect(mapStateToProps)(Search);
 
 // ref: https://css-tricks.com/learning-react-container-components/
