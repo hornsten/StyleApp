@@ -4,6 +4,8 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var hashHistory =  ReactRouter.hashHistory;
 var IndexRoute = require("react-router").IndexRoute;
+var Chat = require("../components/Chat.js").default
+var Main = require("../components/Main.js").default
 
 // e.g. sample
 // var routes = (
@@ -18,7 +20,7 @@ var IndexRoute = require("react-router").IndexRoute;
 
 var routes = (
     <Router history={hashHistory}>
-
+        <Route path='/' component={Chat} />
     </Router>
 )
 

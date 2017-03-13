@@ -3,7 +3,7 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var routes = require("../config/routes.js");
-import store from './redux.js'
+import store from '../components/Redux/redux.js'
 import {Provider} from 'react-redux'
 
 // This file should not need to be changed
