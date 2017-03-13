@@ -20,8 +20,13 @@ var Main = require("../components/Main.js").default
 
 var routes = (
     <Router history={hashHistory}>
-        <Route path='/' component={Chat} />
+        <Route path="/" component={Main} >
+            <IndexRoute component={Chat} />
+            <Route path='/chat' component={Chat} />
+        </Route>
+        
+            
     </Router>
 )
 
-module.exports = routes;
+export default routes;

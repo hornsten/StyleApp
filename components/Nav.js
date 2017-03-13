@@ -19,14 +19,12 @@ import store from './Redux/redux.js'
 
 
 
-var Chat = React.createClass({
+var Nav = React.createClass({
     render: function () {
-        return (<div className="col-md-4">
-                    <ul id="messages"></ul>
-                    <form className="well" action="">
-                        <input id="m" autoComplete="off" /><button>Send</button>
-                    </form>
-                </div>);
+        return (<div>
+         <Link to='/chat'>Chat</Link>
+
+        </div>);
     }
 });
 
@@ -37,7 +35,7 @@ var Chat = React.createClass({
 //         test: store.testState.test,
 //     }
 // };
-export default Chat;
+export default Nav;
 // export default connect(mapStateToProps)(Search);
 
 // ref: https://css-tricks.com/learning-react-container-components/

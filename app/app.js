@@ -2,7 +2,7 @@
 // Include the Main React Dependencies
 var React = require("react");
 var ReactDOM = require("react-dom");
-var routes = require("../config/routes.js");
+var routes = require("../config/routes.js").default;
 import store from '../components/Redux/redux.js'
 import {Provider} from 'react-redux'
 

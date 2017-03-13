@@ -12,9 +12,13 @@ var Main = React.createClass({
                     TEST
                     </div>
                 </div>
-                <div className="well">
-                    <ul id="messages"></ul>
-                    <Chat />
+                
+                <div class="row">
+                    <div className="col-md-4"></div>
+                    
+                    <div className="col-md-4">{this.props.children}</div>
+                    
+                    <div className="col-md-4"></div>
                 </div>
             </div>);
   }
