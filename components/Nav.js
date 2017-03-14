@@ -1,11 +1,11 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var helper = require("../app/utils/helper.js");
 
-// must use .default on component e.g. var Main = require(./component/Main.js).default
-
+import React from "react";
+import ReactDOM from "react-dom";
+import helper from"../app/utils/helper.js";
 import {connect } from 'react-redux';
-import store from './Redux/redux.js'
+import store from './Redux/redux.js';
+
+
 
 // e.g. do the below instead of set state when required
 // this maps to the redux.js file
@@ -19,14 +19,17 @@ import store from './Redux/redux.js'
 
 
 
-var Nav = React.createClass({
-    render: function () {
+class Nav  extends React.Component{
+    constructor(props) {
+        super(props)
+    }
+    render() {
         return (<div>
          <Link to='/chat'>Chat</Link>
 
         </div>);
     }
-});
+};
 
 // anything that was state now becomes props
 // there will be NO state properties in this file - they are set in the redux store and mapped to properties in this file below:
