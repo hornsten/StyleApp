@@ -20,7 +20,7 @@ import store from './Redux/redux.js';
 
 
 class Nav  extends React.Component{
-    constructor(propse) {
+    constructor(props) {
         super(props)
     }
     render() {
