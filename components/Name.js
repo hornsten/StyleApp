@@ -1,11 +1,8 @@
-
-import React from "react";
 import ReactDOM from "react-dom";
+import React from "react";
 import helper from"../app/utils/helper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
-
-
 
 // e.g. do the below instead of set state when required
 // this maps to the redux.js file
@@ -14,20 +11,17 @@ import store from './Redux/redux.js';
 //     topic: ""
 // });
 
-
-
-
-
-
-class Nav  extends React.Component{
-    constructor(props) {
-        super(props)
+class Name extends React.Component{
+    constructor(props){
+        super(props);
     }
     render() {
-        return (<div>
-         <Link to='/chat'>Chat</Link>
-
-        </div>);
+        return (<div className="col-md-4">
+                    <form className="well addName" action="">
+                        Name<input autoComplete="off" id="name"/>
+                        <a href='/chat'><button>Add Name</button></a>
+                    </form>
+                </div>);
     }
 };
 
@@ -38,7 +32,7 @@ class Nav  extends React.Component{
 //         test: store.testState.test,
 //     }
 // };
-export default Nav;
+export default Name;
 // export default connect(mapStateToProps)(Search);
 
 // ref: https://css-tricks.com/learning-react-container-components/

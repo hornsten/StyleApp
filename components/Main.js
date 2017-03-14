@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import Chat from "./Chat.js";
-
+import Name from "./Name.js";
 
 class Main extends React.Component{
     constructor(props) {
@@ -15,8 +15,7 @@ class Main extends React.Component{
                         TEST
                         </div>
                     </div>
-                    
-                    <div class="row">
+                    <div className="row">
                         <div className="col-md-4"></div>
                         
                         <div className="col-md-4">{this.props.children}</div>

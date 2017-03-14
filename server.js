@@ -25,16 +25,39 @@ app.use(bodyParser.text({ type: 'text/html' }));
 // populate database initially - dont erase existing data
 require("./controllers/apiController.js")(app);
 
+var users = {
+
+}
+
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected', socket.id);
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    
+    console.log('user disconnected', socket.id);
   });
+
+  socket.on("join", function(name){
+      // users. = name;
+      users[name] = socket.id;
+      // socket.emit("chat message", "You have connected to the server.");
+      // io.emit("chat message", name + " has joined the server.");
+      // socket.sockets.emit("update-people", people);
+      console.log("usrs", users);
+  });
+
+  socket.on("private", function(name){
+      socket.to(users[name]).emit('hey', 'I just met you');
+  })
+// history from database and a few chat rooms - users can join them -- upload pictures / videos? Ability to create a new chat room for a new topic??
+
   socket.on('chat message', function(msg){
     // send message to everyone
+    
     io.emit('chat message', msg);
     console.log('message: ' + msg);
   });
+
+
 });
 
 
