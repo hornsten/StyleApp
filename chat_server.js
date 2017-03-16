@@ -10,11 +10,7 @@
 
 
 
-function chat_server(io){
-
-var Chat = require("./models/Chat.js");
-var Room = require("./models/Room.js");
-var ConnectedUser = require("./models/ConnectedUser.js");
+function chat_server(io, models){
 
 // usernames which are currently connected to the chat
 var usernames = {};
@@ -24,7 +20,7 @@ var rooms = ['room1','room2','room3'];
 // save rooms to database -- only for testing purposes
 for (var i = 0; i < rooms.length; i++){
 	console.log("rooms",rooms[i] , "date",  Date.now())
-	var roomList = new Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
+	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
 	roomList.save(function (err) {
 		// console.log("saved:" + rooms[i]); 
 		if (err) return console.log(err);
@@ -32,9 +28,14 @@ for (var i = 0; i < rooms.length; i++){
 	})
 }
 
+
+
+
+
+// all connected clients
+
+
 io.sockets.on('connection', function (socket) {
-
-
 
 
 	// when the client emits 'adduser', this listens and executes
@@ -49,7 +50,8 @@ io.sockets.on('connection', function (socket) {
 		// send client to room 1
 		socket.join('room1');
 		// update database
-		var newConnectedUser = new ConnectedUser({room:socket.room, username: socket.username, socketid: socket.id, created_at:  Date.now()});
+		console.log(socket.username, "username");
+		var newConnectedUser = new models.ConnectedUser({room:socket.room, username: socket.username, socketid: socket.id, created_at:  Date.now()});
 		newConnectedUser.save(function (err) {
 			// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
@@ -64,7 +66,7 @@ io.sockets.on('connection', function (socket) {
 
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendchat', function (data) {
-		var newChatMessage = new Chat({ room: socket.room, username: socket.username, message: data, created_at:  Date.now()});
+		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: data, created_at:  Date.now()});
 		newChatMessage.save(function (err) {
 			// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
@@ -75,6 +77,24 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in(socket.room).emit('updatechat', socket.username, data);
 	});
 
+	// socket.on('base64 file', function (data) {
+
+	// 	console.log("in base 64", data);
+
+	// 	// fileHandler.receiveFile(socket, data.file, data.fileName);
+
+	// 	io.sockets.in(socket.room).emit('base64 file',
+
+	// 		{
+	// 		username: socket.username,
+	// 		file: data,
+			
+	// 		}
+
+	// 	);
+
+	// });
+
 	socket.on('switchRoom', function(newroom){
 		// leave the current room (stored in session)
 		socket.leave(socket.room);
@@ -83,7 +103,7 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('updatechat', 'SERVER', ' You are in ' + socket.room);
 		// update the room in the database
 		// Model.findOneAndUpdate(query, { $set: { name: 'jason borne' }}, options, callback)
-		ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}, function (err) {
+		models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}, function (err) {
 			// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
 			console.log("saved:" ); 
@@ -97,18 +117,45 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('updaterooms', rooms, newroom);
 	});
 
+	socket.on('privateRoom', function(chatuser){
+		// leave the current room (stored in session)
+		socket.leave(socket.room);
+		// join new room, received as function parameter
+console.log("private chat with" + chatuser)
+		// create code for chatting new user in private
+	// 	socket.join(newroom);
+	// 	socket.emit('updatechat', 'SERVER', ' You are in ' + socket.room);
+	// 	// update the room in the database
+	// 	// Model.findOneAndUpdate(query, { $set: { name: 'jason borne' }}, options, callback)
+	// 	models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}, function (err) {
+	// 		// console.log("saved:" + rooms[i]); 
+	// 		if (err) return console.log(err);
+	// 		console.log("saved:" ); 
+	// 		});
+	// 	// sent message to OLD room and dont include the user that left
+	// 	socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+	// 	// update socket session room title
+	// 	socket.room = newroom;
+    // // sent message to NEW room and dont include the user that left
+	// 	socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+	// 	socket.emit('updaterooms', rooms, newroom);
+	});
+
 	// when the user disconnects.. perform this
 	socket.on('disconnect', function(){
+		// *** Also disconnet on logout - just in case browser not closed
 		// remove the username from global usernames list
 		delete usernames[socket.username];
 		// update list of users in chat, client-side
 		io.sockets.emit('updateusers', usernames);
 		// remove from database of list current users/rooms on disconect
-		ConnectedUser.findOneAndRemove({username: socket.username}, function (err) {
+		models.ConnectedUser.findOneAndRemove({username: socket.username}, function (err) {
 		// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
 			console.log("saved:" ); 
 		});
+		
+
 		// echo globally that this client has left
 		socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
 		socket.leave(socket.room);

@@ -2,11 +2,15 @@
 var mongoose = require('../config/connection.js');
 
 var Schema = mongoose.Schema;
+
+mongoose.models = {};
+mongoose.modelSchemas = {};
+
 // create a Schema
 var connectedUserSchema = new Schema({
     // _id: Number,
     // id: {type : Number, required : true, unique : true},
-    username: {type : String, required : true, unique : false},
+    username: {type : String, required : false, unique : false},
     room: {type : String, required : true, unique : false},
     socketid: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}

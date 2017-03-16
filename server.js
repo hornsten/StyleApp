@@ -6,6 +6,13 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
+// soln pass them as arg to chat_server
+var Chat = require("./models/Chat.js");
+var Room = require("./models/Room.js");
+var ConnectedUser = require("./models/ConnectedUser.js");
+var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room};
+
 app.use( express.static(path.join(__dirname, 'public')));
 
 // parse application/x-www-form-urlencoded 
@@ -18,11 +25,8 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(bodyParser.text({ type: 'text/html' }));
 
 // populate database initially - dont erase existing data
-require("./controllers/apiController.js")(app);
-require("./chat_server.js")(io);
-// var users = {
-
-// }
+require("./controllers/apiController.js")(app, models);
+require("./chat_server.js")(io, models);
 
 http.listen(PORT, function(){
   console.log('listening on *:' + PORT);
