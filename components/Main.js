@@ -10,18 +10,10 @@ class Main extends React.Component{
     }
     render() {
         return (<div>
-                    <div className="jumbotron">
-                        <div className="page-header">
-                        TEST
-                        </div>
-                    </div>
                     <div className="row">
-                        <div className="col-md-4"></div>
-                        
-                        <div className="col-md-4">{this.props.children}</div>
-                        
-                        <div className="col-md-4"></div>
-                    </div>
+                       
+                        <div className="col-md-12"></div>
+                    </div> 
                 </div>);
     }
 };

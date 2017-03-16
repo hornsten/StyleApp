@@ -17,10 +17,13 @@ class Name extends React.Component{
     }
     render() {
         return (<div className="col-md-4">
-                    <form className="well addName" action="">
-                        Name<input autoComplete="off" id="name"/>
-                        <a href='/chat'><button>Add Name</button></a>
+                    <form className="well chatTo" action="">
+                        Name<input autoComplete="off" id="chatToName"/>
+                        <a href='/private/chat/user'><button>Start Chat</button></a>
                     </form>
+                    <div>
+                    {this.props.children}
+                    </div>
                 </div>);
     }
 };
