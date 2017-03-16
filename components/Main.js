@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import Chat from "./Chat.js";
-
+import Name from "./Name.js";
 
 class Main extends React.Component{
     constructor(props) {
@@ -10,19 +10,10 @@ class Main extends React.Component{
     }
     render() {
         return (<div>
-                    <div className="jumbotron">
-                        <div className="page-header">
-                        TEST
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div className="col-md-4"></div>
-                        
-                        <div className="col-md-4">{this.props.children}</div>
-                        
-                        <div className="col-md-4"></div>
-                    </div>
+                    <div className="row">
+                       
+                        <div className="col-md-12"></div>
+                    </div> 
                 </div>);
     }
 };

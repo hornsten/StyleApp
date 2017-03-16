@@ -6,7 +6,10 @@ var hashHistory =  ReactRouter.hashHistory;
 var IndexRoute = require("react-router").IndexRoute;
 var Chat = require("../components/Chat.js").default
 var Main = require("../components/Main.js").default
-
+var Name = require("../components/Name.js").default
+var Menu = require("../components/Menu.js").default
+var PrivateChat = require("../components/PrivateChat").default
+var Private = require("../components/Private").default
 // e.g. sample
 // var routes = (
 //     <Router history={hashHistory}>
@@ -18,14 +21,18 @@ var Main = require("../components/Main.js").default
 //     </Router>
 // )
 
+//   <Router history={hashHistory}>
+//     <Route path="/" component={App}>
+//       <Route path="/repos" component={Repos}/>
+//       {/* add the new route */}
+//       <Route path="/repos/:userName/:repoName" component={Repo}/>
+//       <Route path="/about" component={About}/>
+//     </Route>
+//   </Router>
+
 var routes = (
     <Router history={hashHistory}>
-        <Route path="/" component={Main} >
-            <IndexRoute component={Chat} />
-            <Route path='/chat' component={Chat} />
-        </Route>
-        
-            
+        <Route path="/" component={Main} /> 
     </Router>
 )
 
