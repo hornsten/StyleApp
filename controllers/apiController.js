@@ -13,6 +13,8 @@ function router(app, models){
 	// remember restful routes use nouns and not verbs!
 
 	// turn into REACT
+	// get connected users for each room
+	// view should change with users changing rooms
 	app.get('/chat/user/:room', function(req, res){
 		var room = req.params.room;
 		console.log(room);

@@ -17,8 +17,15 @@ var helpers = {
     //         return response.data;
     //     })
         
-    // }
+    // } 
+   getUserList: function(){
+
+        console.log("in here");
+
+   }
    
+
+
  };
 // We export the helpers function (which contains getGithubInfo)
 module.exports = helpers;

@@ -1,15 +1,11 @@
-var React = require("react");
-var ReactRouter = require("react-router");
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var hashHistory =  ReactRouter.hashHistory;
-var IndexRoute = require("react-router").IndexRoute;
-var Chat = require("../components/Chat.js").default
-var Main = require("../components/Main.js").default
-var Name = require("../components/Name.js").default
-var Menu = require("../components/Menu.js").default
-var PrivateChat = require("../components/PrivateChat").default
-var Private = require("../components/Private").default
+import React from "react";
+import ReactRouter from "react-router";
+import IndexRoute from "react-router";
+import Main from "../components/Main.js";
+import {Router, Route, hashHistory} from "react-router";
+
+import ViewChat from "../components/ViewChat.js";
+
 // e.g. sample
 // var routes = (
 //     <Router history={hashHistory}>
@@ -33,6 +29,7 @@ var Private = require("../components/Private").default
 var routes = (
     <Router history={hashHistory}>
         <Route path="/" component={Main} /> 
+        <Route path="/chat/view" component={ViewChat} />
     </Router>
 )
 

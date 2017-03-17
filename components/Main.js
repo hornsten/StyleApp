@@ -1,19 +1,23 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-import Chat from "./Chat.js";
-import Name from "./Name.js";
+import { Link } from 'react-router';
+// import LaunchChat from "./LaunchChat.js";
+import ViewChat from "./ViewChat.js";
 
-class Main extends React.Component{
-    constructor(props) {
-        super(props)
-    }
+
+// notes the below structure replaced by {this.props.children}
+// <div className="container">
+        // <LaunchChat />
+        // <ViewChat />
+//  </div>
+class Main extends React.Component {
+
     render() {
-        return (<div>
-                    <div className="row">
-                       
-                        <div className="col-md-12"></div>
-                    </div> 
+        return (<div className="container">
+                    <ul>
+                        <li><Link to={`/chat/view`} activeClassName="active">Launch Chat</Link></li>
+                    </ul>
                 </div>);
     }
 };
