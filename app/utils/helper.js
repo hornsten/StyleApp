@@ -20,7 +20,12 @@ var helpers = {
     // } 
    getUserList: function(){
 
-        console.log("in here");
+        /// room data is currently hardcoded!!!!!!!!!!
+        return axios.get('/chat/user/room1').then(function(response) {
+            console.log(response);
+            return response;
+        })
+        
 
    }
    

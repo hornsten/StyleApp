@@ -18,15 +18,15 @@ var usernames = {};
 var rooms = ['room1','room2','room3'];
 
 // save rooms to database -- only for testing purposes
-for (var i = 0; i < rooms.length; i++){
-	console.log("rooms",rooms[i] , "date",  Date.now())
-	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
-	roomList.save(function (err) {
-		// console.log("saved:" + rooms[i]); 
-		if (err) return console.log(err);
-		console.log("saved:" ); 
-	})
-}
+// for (var i = 0; i < rooms.length; i++){
+// 	console.log("rooms",rooms[i] , "date",  Date.now())
+// 	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
+// 	roomList.save(function (err) {
+// 		// console.log("saved:" + rooms[i]); 
+// 		if (err) return console.log(err);
+// 		console.log("saved:" ); 
+// 	})
+// }
 
 
 
