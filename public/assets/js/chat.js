@@ -105,18 +105,18 @@
 		// turn into REACT
 		// get connected users for each room
 		// view should change with users changing rooms
-        $('#users').append('<ul>');
-        $.get('/chat/user/room1', function(data){
-            // console.log(data);
-            for (var i = 0; i < data.length; i++){
-                console.log('<li><a href="#" onclick="privateRoom(\''+data[i].username+'\')"">'+data[i].username+'</a></li>');
-                // $('#users').append('<li><a href="#" onclick="privateRoom(\''+data[i].username+'\')">'+data[i].username+'</a></li>');
-				// no private chats for now but maybe a link to the users page so you can see their styles?
-				$('#users').append('<li onclick="privateRoom(\''+data[i].username+'\')">'+data[i].username+'</li>');
+        // $('#users').append('<ul>');
+        // $.get('/chat/user/room1', function(data){
+        //     // console.log(data);
+        //     for (var i = 0; i < data.length; i++){
+        //         console.log('<li><a href="#" onclick="privateRoom(\''+data[i].username+'\')"">'+data[i].username+'</a></li>');
+        //         // $('#users').append('<li><a href="#" onclick="privateRoom(\''+data[i].username+'\')">'+data[i].username+'</a></li>');
+		// 		// no private chats for now but maybe a link to the users page so you can see their styles?
+		// 		$('#users').append('<li onclick="privateRoom(\''+data[i].username+'\')">'+data[i].username+'</li>');
 
-            }
-        })
-        $('#users').append('</ul>');
+        //     }
+        // })
+        // $('#users').append('</ul>');
     })
 
 

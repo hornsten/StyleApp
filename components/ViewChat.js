@@ -12,20 +12,29 @@ import store from './Redux/redux.js';
 
 
 class ViewChat extends React.Component {
-    componentDidMount(){
-  //// need to put client side sockets in here 
-  // example : http://danialk.github.io/blog/2013/06/16/reactjs-and-socket-dot-io-chat-application/
+    constructor(props) {
+        super(props);
 
-    // get list of connected users and their rooms from database
-    helper.getUserList();
-
-
-    // get list of rooms from the database
-
-
-    // get the chat history per room from the database
+        // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
+        this.handleData = this.handleUserData.bind(this);
 
     }
+   componentDidMount(){
+       //// need to put client side sockets in here 
+        // example : http://danialk.github.io/blog/2013/06/16/reactjs-and-socket-dot-io-chat-application/
+        // get data for passing to then component on load
+        helper.getUserList().then((response) => {
+            this.handleUserData(response)
+        })    
+    }
+    handleUserData(response){
+        console.log(typeof response, "response")
+        store.dispatch({ 
+            type: 'USER_LIST',
+            users: response.data
+        })
+    }
+
     render() {
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
