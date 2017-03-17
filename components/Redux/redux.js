@@ -2,15 +2,15 @@
 import {createStore, combineReducers } from 'redux';
 
 //  The below are required and map to the components dispatcher
-const searchReducer = (state={}, action) => {
+const chatReducer = (state={}, action) => {
     switch(action.type){
-    case 'TEST_TOPIC':
-        return Object.assign({},state, {topic: action.topic});
+    case 'USER_LIST':
+        return Object.assign({},state, {users: action.users});
     }
     return state;
 }
 const reducers = combineReducers({
-    testState : searchReducer
+    chatState : chatReducer
 })
 
 var store = createStore(reducers);
