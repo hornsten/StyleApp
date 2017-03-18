@@ -37,7 +37,10 @@ io.sockets.on('connection', function (socket) {
 	// when the client emits 'adduser', this listens and executes
 	socket.on('adduser', function(username){
 		// store the username in the socket session for this client
+		console.log("am i getting in here");
+		console.log("username", username);
 		socket.username = username;
+		console.log("socket usernane" , socket.username);
 		// store the room name in the socket session for this client
 		// this "room1" will need to be chaged to the selected room
 		socket.room = "room1";
@@ -57,17 +60,17 @@ io.sockets.on('connection', function (socket) {
 		// socket.emit('updatechat', 'SERVER', ' You are in ' + socket.room);
 		// echo to room 1 that a person has connected to their room
 		socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
-		socket.emit('updaterooms', rooms, 'room1');
+		// socket.emit('updaterooms', rooms, 'room1');
 	});
 
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendchat', function (data) {
-
+		//update database with new chat message
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: data, created_at:  Date.now()});
 		newChatMessage.save(function (err) {
 			// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
-			console.log("saved:" ); 
+			console.log("chat saved" ); 
 		})
 		// we tell the client to execute 'updatechat' with 2 parameters
 		// send out to all users in that room
@@ -75,6 +78,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('switchRoom', function(newroom){
+		console.log("newroom", newroom);
 		// leave the current room (stored in session)
 		socket.leave(socket.room);
 		// join new room, received as function parameter
@@ -85,7 +89,7 @@ io.sockets.on('connection', function (socket) {
 		models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}, function (err) {
 			// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
-			console.log("saved:" ); 
+			console.log("saved" ); 
 			});
 		// sent message to OLD room and dont include the user that left
 		socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username +' has left this room');
@@ -93,7 +97,7 @@ io.sockets.on('connection', function (socket) {
 		socket.room = newroom;
     // sent message to NEW room and dont include the user that left
 		socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
-		socket.emit('updaterooms', rooms, newroom);
+		// socket.emit('updaterooms', rooms, newroom);
 	});
 
 	// socket.on('privateRoom', function(chatuser){

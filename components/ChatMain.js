@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import { Link } from 'react-router';
-// import LaunchChat from "./LaunchChat.js";
+import LaunchChat from "./LaunchChat.js";
 import ViewChat from "./ViewChat.js";
 
 
@@ -11,15 +11,16 @@ import ViewChat from "./ViewChat.js";
         // <LaunchChat />
         // <ViewChat />
 //  </div>
-class Main extends React.Component {
-
+class ChatMain extends React.Component {
+// <li><Link to={`/chat/view`} activeClassName="active">Launch Chat</Link></li>
     render() {
         return (<div className="container">
-                    <ul>
-                        <li><Link to={`/chat/view`} activeClassName="active">Launch Chat</Link></li>
-                    </ul>
+                
+                    <LaunchChat />
+                    <ViewChat />
+                    
                 </div>);
     }
 };
 
-export default Main;
+export default ChatMain;

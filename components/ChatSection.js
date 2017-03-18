@@ -7,11 +7,14 @@ import ChatInput from "./ChatInput.js";
 
 
 class ChatSection extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         return (<div>
                     <div className="row">
-                        <CurrentUserAndRoom />
+                        <CurrentUserAndRoom currentroom={this.props.currentroom} username={this.props.username}/>
                     </div>
                     <hr />
                     <div className="row">

@@ -19,9 +19,18 @@ var helpers = {
         
     // } 
    getUserList: function(){
-
+        // sends get request to apiController to query database for all connected users for a room
         /// room data is currently hardcoded!!!!!!!!!!
         return axios.get('/chat/user/room1').then(function(response) {
+            console.log(response);
+            return response;
+        })
+        
+   },
+
+   getRoomList: function(){
+        // sends get request to apiController to query database for all rooms
+        return axios.get('/chat/rooms').then(function(response) {
             console.log(response);
             return response;
         })
