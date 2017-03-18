@@ -8,7 +8,7 @@ class Users extends React.Component {
         super(props);
     }
     render() {
-        console.log("propse in users", this.props.users);
+        // console.log("propse in users", this.props.users);
         return (<div className="user-list">
                     <strong>USERS</strong>
                         <UserList users={this.props.users}/>

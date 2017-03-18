@@ -9,7 +9,6 @@ class UserList extends React.Component {
     }
 
     render() {
-       console.log("props", this.props.users)
         if (this.props.users){
         var resultComponents = this.props.users.map(function(result) {
             return <div className="row results" key={result._id}>

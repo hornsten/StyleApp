@@ -15,18 +15,24 @@ function router(app, models){
 	// turn into REACT
 	// get connected users for each room
 	// view should change with users changing rooms
+	// route to get all connected users for a given room for display
 	app.get('/chat/user/:room', function(req, res){
 		var room = req.params.room;
-		console.log(room);
-		// ({room: room});
 		// hardcoded room for now due to async issus - will fix later
-		models.ConnectedUser.find({room: room}, function(err, results){
-		// console.log("saved:" + rooms[i]); 
+		models.ConnectedUser.find({room: room}, function(err, results){ 
 		if (err) return console.log(err);
-		console.log("results:" , results); 
-		res.json(results)
+			res.json(results)
 		});
 	});
+	// route to get all chat rooms for display
+	app.get('/chat/rooms', function(req, res){
+		models.Room.find({}, function(err, results){
+		console.log("rooms", results); 
+		if (err) return console.log(err);
+			res.json(results)
+		});
+	});
+
 
 	// put this at the end after all other routes
 	app.get('/', function(req, res){

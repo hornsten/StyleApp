@@ -6,6 +6,18 @@ const chatReducer = (state={}, action) => {
     switch(action.type){
     case 'USER_LIST':
         return Object.assign({},state, {users: action.users});
+    case 'ROOM_LIST':
+        return Object.assign({},state, {rooms: action.rooms});
+    case 'UPDATE_ROOM':
+        return Object.assign({},state, {currentroom: action.currentroom});
+    case 'ADD_USERNAME':
+        return Object.assign({},state, {username: action.username});
+    case 'ADD_MESSAGE':
+        return Object.assign({},state, {message: action.message});
+    case 'CHAT_USER':
+        return Object.assign({},state, {chatuser: action.chatuser});
+    case 'CHAT_MSG':
+        return Object.assign({},state, {chatmsg: action.chatmsg});
     }
     return state;
 }
@@ -16,3 +28,5 @@ const reducers = combineReducers({
 var store = createStore(reducers);
 
 export default store;
+
+
