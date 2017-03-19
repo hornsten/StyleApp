@@ -7,13 +7,25 @@ var socket = io();
 
 
   var chathelper = {
+
         
-        switchRoom: function(newroom){
+        
+        switchRoom: function(newroom, store){
             socket.emit('switchRoom', newroom);
+            // display current room
+            store.dispatch({ 
+              type: 'UPDATE_ROOM',
+              currentroom: newroom,
+            })
+            // display back chat history - 20 lines?
+
+
         },
+  
         
         adduser: function(username){
             socket.emit('adduser', username);
+
         },
         
         sendchat: function(message){
@@ -33,18 +45,33 @@ var socket = io();
         // pass in the dispatch
         updatechat_listener: function(store){
             socket.on('updatechat', function (username, data){
-                console.log(data, "data");
+                var chat = {username: username, message: data }
+                console.log(chat, "chat in helper");
                 store.dispatch({ 
-                    type: 'CHAT_USER',
-                    chatuser: username
-                },
-                { 
-                    type: 'CHAT_MSG',
-                    chatmsg: data
+                    type: 'CHAT',
+                    chat: chat
                 })
-               
                 // return [username, data];
-            });
+            })
+        },
+            
+        connected_users: function(store){
+
+           socket.on('connectedusers', function (response){
+              console.log("in connectedusers", response)
+              // update the redux store
+              store.dispatch({ 
+                  type: 'USER_LIST',
+                  users: response
+              })
+      
+                // return [username, data];
+            })
+
+        },
+    
+        chat_history: function(store){
+
         }
         
 

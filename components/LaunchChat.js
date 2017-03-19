@@ -45,6 +45,7 @@ class LaunchChat extends React.Component {
 const mapStateToProps = (store,ownProps) => {
     return {
         username: store.chatState.username,
+
     }
 };
 

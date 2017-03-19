@@ -9,20 +9,13 @@ import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
-// import io from 'socket.io-client'
-// // let socket = io(`http://localhost:8000`)
-// var socket = io.connect();
-
-// import io from 'socket.io-client'
-// // let socket = io(`http://localhost:8000`)
-// var socket = io.connect();
 
 class ViewChat extends React.Component {
     constructor(props) {
         super(props);
 
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
-        this.handleUserData = this.handleUserData.bind(this);
+        // this.handleUserData = this.handleUserData.bind(this);
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
 
@@ -30,29 +23,15 @@ class ViewChat extends React.Component {
 
     }
    componentDidMount(){
-       //// need to put client side sockets in here 
-        // example : http://danialk.github.io/blog/2013/06/16/reactjs-and-socket-dot-io-chat-application/
-        // get data for passing to then component on load
-        helper.getUserList().then((response) => {
-            this.handleUserData(response)
-        })  
+
+
         helper.getRoomList().then((response) => {
             this.handleRoomData(response)
         })      
 
 
-        // socket.on('updatechat', ( username, data) => {   
-        //     this.updatechat( username, data)
-        // })
-  
     }
-    handleUserData(response){
-        // dispatches updates to redux store to update the state 
-        store.dispatch({ 
-            type: 'USER_LIST',
-            users: response.data
-        })
-    }
+
     handleRoomData(response){
         // dispatches updates to redux store to update the state 
         store.dispatch({ 
@@ -61,16 +40,7 @@ class ViewChat extends React.Component {
         })
     }
     switchRoom(newroom){
-    // //*** put all sockets in separate helper file  ***/
-    //    socket.emit('switchRoom', newroom);
-       chathelper.switchRoom(newroom);
-       store.dispatch({ 
-            type: 'UPDATE_ROOM',
-            currentroom: newroom,
-        })
-        // console.log("newroom");
-        // emit to w4rf4
-
+       chathelper.switchRoom(newroom, store);
     }
     render() {
         // console.log(this.props.rooms, "this.props.rooms");

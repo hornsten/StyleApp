@@ -19,6 +19,7 @@ class ChatSection extends React.Component {
 
         // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
+        chathelper.connected_users(store);
         // socket.on('updatechat', (username, data) => {   
         //      console.log("socket", username, data);
         //     this.updatechat(username, data);
@@ -49,6 +50,31 @@ class ChatSection extends React.Component {
 
     }
     render() {
+
+        // var component = this;
+        // if (this.props.chat){
+        //         var room = ""; // to be set as a prp this.props.currentroom
+        //         var currentroom = this.props.currentroom;
+        //         var resultComponents = this.props.rooms.map(function(result) {
+        //         // dont hyperlink current room
+        //         if (result.room === currentroom) {
+        //             room = result.room;
+        //         } else {
+        //             // hyperlink not dsipalying properlyx
+        //             room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room)}> {result.room} </div>
+        //             console.log(room);
+        //     }
+        //         return <div className="row results" key={result._id}>
+        //             <div className="col-md-4 text-center">{room}</div>
+        //         </div>
+        //     })
+        // }
+       var chatmessage = this.props.chat;
+       var chatdisplay = "";
+       if (this.props.chat){
+            chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
+       }
+    
         return (<div>
                     <div className="row">
                         <CurrentUserAndRoom currentroom={this.props.currentroom} username={this.props.username}/>
@@ -59,8 +85,8 @@ class ChatSection extends React.Component {
                             History Goes in here -- update when message added
                             <div className="chatbox">
                              need to append data
-                                <div id="conversation">YSER {this.props.chatuser}</div>
-                                <div >MSG  {this.props.chatmsg}</div>
+                                {chatdisplay}
+                                <div ></div>
                             </div>
                         </div>
                     </div>
@@ -78,11 +104,11 @@ class ChatSection extends React.Component {
 };
 
 const mapStateToProps = (store,ownProps) => {
+    console.log("message",store.chatState.message);
+    console.log("chat", store.chatState.chat);
     return {
         message: store.chatState.message,
-       
-        chatmsg: store.chatState.chatmsg,
-         chatuser: store.chatState.chatuser
+        chat: store.chatState.chat,
     }
 };
 
