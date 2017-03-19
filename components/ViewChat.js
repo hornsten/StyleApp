@@ -9,7 +9,9 @@ import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
-
+// import io from 'socket.io-client'
+// // let socket = io(`http://localhost:8000`)
+// var socket = io.connect();
 
 // import io from 'socket.io-client'
 // // let socket = io(`http://localhost:8000`)
@@ -24,6 +26,8 @@ class ViewChat extends React.Component {
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
 
+
+
     }
    componentDidMount(){
        //// need to put client side sockets in here 
@@ -35,6 +39,12 @@ class ViewChat extends React.Component {
         helper.getRoomList().then((response) => {
             this.handleRoomData(response)
         })      
+
+
+        // socket.on('updatechat', ( username, data) => {   
+        //     this.updatechat( username, data)
+        // })
+  
     }
     handleUserData(response){
         // dispatches updates to redux store to update the state 
@@ -62,23 +72,23 @@ class ViewChat extends React.Component {
         // emit to w4rf4
 
     }
-
-
     render() {
-        console.log(this.props.rooms, "this.props.rooms");
+        // console.log(this.props.rooms, "this.props.rooms");
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
+                        CHAT USER {this.props.chatuser}  {this.props.chatmsg}
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>
                         <div className="col-xs-8 col-s-8 col-md-8">
                             <ChatSection currentroom={this.props.currentroom} username={this.props.username}/>
+                            {this.props.chatuser}  {this.props.chatmsg}
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
                             <Users users={this.props.users}/>
                         </div> 
                     </div>);
-    }
-};
+        }
+    };
 
 const mapStateToProps = (store,ownProps) => {
     return {
@@ -86,15 +96,10 @@ const mapStateToProps = (store,ownProps) => {
         rooms: store.chatState.rooms,
         currentroom: store.chatState.currentroom,
         username: store.chatState.username,
+
     }
 };
 
-// const mapStateToProps = (state) => {
-//     return {
-//         fileList: state.fileList
-//     };
-// };
-// module.exports = Search;
+
 export default connect(mapStateToProps)(ViewChat);
 
-// export default ViewChat;

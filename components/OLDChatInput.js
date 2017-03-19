@@ -30,14 +30,9 @@ class ChatInput extends React.Component {
     }
 
     render() {
-        return (<div>
-                    <div className="col-md-2"></div>
-                    <div className="col-md-8">
-                
-                        <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"  />
-                        <button type="button" onClick={() => this.addMessage(this.props.message)}>Add User</button>
-                    </div>
-                    <div className="col-md-2"></div>
+        return (
+            <div>
+
                 </div>);
     }
 };
@@ -46,15 +41,12 @@ class ChatInput extends React.Component {
 const mapStateToProps = (store,ownProps) => {
     return {
         message: store.chatState.message,
+        chatuser: store.chatState.chatuser,
+        chatmsg: store.chatState.chatmsg,
+
     }
 };
 
-// const mapStateToProps = (state) => {
-//     return {
-//         fileList: state.fileList
-//     };
-// };
-// module.exports = Search;
 export default connect(mapStateToProps)(ChatInput);
 
 		
