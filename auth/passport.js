@@ -21,7 +21,7 @@ module.exports = function (passport) {
         clientID:'1454706357935887',
         clientSecret:'fc82402acee632c6c9c3c43dffd33804',
 
-        passReqToCallback:'http://localhost:3000/auth/facebook/callback',
+        passReqToCallback:'http://localhost:8080/auth/facebook/callback',
         // passReqToCallback:'http://localhost:3000/oauth/v1/authorize?response_type=code&redirect_uri='+http://localhost:3000/
         // redirect_uri = "https://www.facebook.com/connect/login_success.html
 
