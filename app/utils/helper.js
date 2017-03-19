@@ -17,8 +17,28 @@ var helpers = {
     //         return response.data;
     //     })
         
-    // }
+    // } 
+//    getUserList: function(room){
+//         // sends get request to apiController to query database for all connected users for a room
+//         return axios.get('/chat/user/'+room).then(function(response) {
+//             console.log(response);
+//             return response;
+//         })
+        
+//    },
+
+   getRoomList: function(){
+        // sends get request to apiController to query database for all rooms
+        return axios.get('/chat/rooms').then(function(response) {
+            console.log(response);
+            return response;
+        })
+        
+
+   }
    
+
+
  };
 // We export the helpers function (which contains getGithubInfo)
 module.exports = helpers;
