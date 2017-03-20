@@ -1,8 +1,8 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-// import Chat from "./Chat.js";
-import CurrentUserAndRoom from "./CurrentUserAndRoom.js";
+// // import Chat from "./Chat.js";
+// import CurrentUserAndRoom from "./CurrentUserAndRoom.js";
 // import ChatInput from "./ChatInput.js";
 // import ChatHistory from "./ChatHistory.js";
 import {connect } from 'react-redux';
@@ -20,6 +20,7 @@ class ChatSection extends React.Component {
         // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store);
+        chathelper.server_messages(store);
         // socket.on('updatechat', (username, data) => {   
         //      console.log("socket", username, data);
         //     this.updatechat(username, data);
@@ -70,24 +71,41 @@ class ChatSection extends React.Component {
         //     })
         // }
        var chatmessage = this.props.chat;
-       var chatdisplay = "";
+       console.log("this.props.chat", this.props.chat);
+    //    var chatdisplay = "";
        if (this.props.chat){
-            chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
+            var resultComponents = this.props.chat.map(function(result) {
+            return <div className="row results" key={result._id}>
+                <div className="col-md-2"><strong>{result.username}</strong></div> 
+                <div className="col-md-8"> {result.message}</div>
+                <div className="col-md-2"></div>
+            </div>
+            // chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
+        });
        }
-    
-        return (<div>
+       // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
+       if ( this.props.username ){
+           var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12"><strong>Welcome {this.props.username}!</strong></div></div><div className="row text-center"><div className="col-xs-12 col-md-12">You are in the <strong>{this.props.currentroom} </strong>Room!</div></div></div>
+            //   headerText += <div className="col-xs-6 col-md-3">You are in the {this.props.currentroom} Room</div>
+            var chatDislay = <div>
                     <div className="row">
-                        <CurrentUserAndRoom currentroom={this.props.currentroom} username={this.props.username}/>
+                        <div>
+                            {headerText}
+                        </div>
                     </div>
                     <hr />
                     <div className="row">
-                        <div className="col-xs-12 col-md-12">
-                            History Goes in here -- update when message added
-                            <div className="chatbox">
-                             need to append data
-                                {chatdisplay}
-                                <div ></div>
-                            </div>
+                        <div>
+                            Server Messages here - maybe a banner or a popup?
+                            {this.props.server}
+                        </div>
+                    </div>
+
+                    <div className="chatbox row">
+                        <div className="col-xs-12 col-md-12">    
+                            <div className="row">{resultComponents}</div>                     
+                        <div>
+                    </div>
                         </div>
                     </div>
                     <div className="row">
@@ -99,6 +117,15 @@ class ChatSection extends React.Component {
                             </div>
                         <div className="col-md-2"></div>
                     </div>
+                </div>
+       } else {
+
+            var chatDislay = <div className="text-center">Apologies but there is currently no chat connection available. Please try again later.</div>
+
+       }
+    
+        return (<div>
+                  {chatDislay}
                 </div>);
     }
 };
@@ -109,6 +136,7 @@ const mapStateToProps = (store,ownProps) => {
     return {
         message: store.chatState.message,
         chat: store.chatState.chat,
+        server: store.chatState.server,
     }
 };
 

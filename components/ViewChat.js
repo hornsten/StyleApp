@@ -19,17 +19,11 @@ class ViewChat extends React.Component {
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
 
-
-
     }
    componentDidMount(){
-
-
         helper.getRoomList().then((response) => {
             this.handleRoomData(response)
         })      
-
-
     }
 
     handleRoomData(response){
@@ -42,19 +36,20 @@ class ViewChat extends React.Component {
     switchRoom(newroom){
        chathelper.switchRoom(newroom, store);
     }
+    privateChat(chatuser){
+       chathelper.privateChat(chatuser, store);
+    }
     render() {
         // console.log(this.props.rooms, "this.props.rooms");
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
-                        CHAT USER {this.props.chatuser}  {this.props.chatmsg}
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>
                         <div className="col-xs-8 col-s-8 col-md-8">
                             <ChatSection currentroom={this.props.currentroom} username={this.props.username}/>
-                            {this.props.chatuser}  {this.props.chatmsg}
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
-                            <Users users={this.props.users}/>
+                            <Users users={this.props.users} privateChat={this.privateChat}/>
                         </div> 
                     </div>);
         }
