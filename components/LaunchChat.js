@@ -27,7 +27,7 @@ class LaunchChat extends React.Component {
         // dispatches updates to redux store to update the state 
         //*** put all sockets in separate helper file  ***/
         // socket.emit('adduser', username);
-        chathelper.adduser(username);
+        chathelper.adduser(username, store);
     }
     render() {
         return (<div className="row text-center" id="usernameinput">

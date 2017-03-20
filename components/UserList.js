@@ -10,12 +10,25 @@ class UserList extends React.Component {
 
     render() {
         if (this.props.users){
+        var currentusername =  this.props.username;
+        var connecteduser = "";
+        var component=this;
         var resultComponents = this.props.users.map(function(result) {
+            if ((result.username === currentusername) ) {
+                    connecteduser = result.username;
+                } else {
+                    // hyperlink not dsipalying properlyx
+                    connecteduser = <div className="room-list-other" onClick={() => component.props.privateChat(result.username)}> {result.username} </div>
+                   
+            }
             return <div className="row results" key={result._id}>
-                <div className="col-md-4 text-center">{result.username}</div>
+                <div className="col-md-4 text-center">{connecteduser}</div>
             </div>
         });
-        }
+    }
+    
+    
+
         return (<div>
                     <div className="col-sm-12">
                         <div className="row results"><div>{resultComponents}</div></div>

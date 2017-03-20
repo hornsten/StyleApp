@@ -10,7 +10,7 @@ class Users extends React.Component {
     render() {
         // console.log("propse in users", this.props.users);
         return (<div className="user-list">
-                    <strong>USERS</strong>
+                    <strong>Connected Stylistas</strong>
                         <UserList users={this.props.users}/>
                         <div id="users"></div>
                 </div>);
