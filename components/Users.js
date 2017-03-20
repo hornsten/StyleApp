@@ -11,7 +11,7 @@ class Users extends React.Component {
         // console.log("propse in users", this.props.users);
         return (<div className="user-list">
                     <strong>Connected Stylistas</strong>
-                        <UserList users={this.props.users}/>
+                        <UserList users={this.props.users} privateChat={this.props.privateChat} currentroom={this.props.currentroom}/>
                         <div id="users"></div>
                 </div>);
     }

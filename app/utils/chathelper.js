@@ -21,12 +21,25 @@ var socket = io();
 
 
         },
+
+        
   
         
         adduser: function(username, store){
-        
-            socket.emit('adduser', username);
+        // for now its the same as start chat - this area needs cleaning up once FB auth implemented
+            // socket.emit('adduser', username);
 
+            store.dispatch({ 
+              type: 'UPDATE_ROOM',
+              currentroom: 'room1',  // default room
+            })
+
+        },
+
+        startchat: function(username, store){
+          // for now its the same as add user - this area needs cleaning up once FB auth implemented
+            socket.emit('adduser', username);
+            // set default room
             store.dispatch({ 
               type: 'UPDATE_ROOM',
               currentroom: 'room1',  // default room
@@ -38,8 +51,17 @@ var socket = io();
             socket.emit('sendchat', message);
         },
 
-        privateChat: function(chatuser){
+        sendprvtchat: function(chatuser, message, store){
+            socket.emit('sendprvtchat', chatuser, message);
+        },
+
+        privateChat: function(chatuser, store){
             socket.emit('privatechat', chatuser);
+            store.dispatch({ 
+              type: 'UPDATE_ROOM',
+              currentroom: chatuser,
+            })
+           
         },
         // listen for data from the server
         // ####### Stopped here
