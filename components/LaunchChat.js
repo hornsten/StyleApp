@@ -23,18 +23,11 @@ class LaunchChat extends React.Component {
             username: e.target.value
         })
     }
-    addUser(username){
-        // dispatches updates to redux store to update the state 
-        //*** put all sockets in separate helper file  ***/
-        // socket.emit('adduser', username);
-        chathelper.adduser(username, store);
-    }
     render() {
         return (<div className="row text-center" id="usernameinput">
                     <div className="col-md-12">
                     <strong>USERNAME</strong>
                     <input type="text" value={this.props.username}  onChange={this.updateUsername}  className="form-control"  />
-                    <button type="button" onClick={() => this.addUser(this.props.username)}>Add User</button>
                     </div>
                 </div>);
     }

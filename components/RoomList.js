@@ -9,6 +9,7 @@ class RoomList extends React.Component {
     }
     render() {
         var component = this;
+         var currentroom = this.props.currentroom;
         if (this.props.rooms){
                 var room = ""; // to be set as a prp this.props.currentroom
                 var currentroom = this.props.currentroom;

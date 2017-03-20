@@ -3,9 +3,10 @@ import ReactRouter from "react-router";
 import IndexRoute from "react-router";
 import ChatMain from "../components/ChatMain.js";
 import {Router, Route, hashHistory} from "react-router";
+import GroupChat from "../components/GroupChat.js";
 
-import ViewChat from "../components/ViewChat.js";
-import LaunchChat from "../components/LaunchChat.js";
+import PrivateChat from "../components/PrivateChat.js";
+
 
 // e.g. sample
 // var routes = (
@@ -29,7 +30,10 @@ import LaunchChat from "../components/LaunchChat.js";
 
 var routes = (
     <Router history={hashHistory}>
-        <Route path='/' component={ChatMain} />
+        <Route IndexRoute path="/" component={ChatMain} >
+            <Route path='/group' component={GroupChat} />
+            <Route path='/private' component={PrivateChat} />
+        </Route>
     </Router>
 )
 
