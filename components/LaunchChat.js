@@ -35,7 +35,7 @@ class LaunchChat extends React.Component {
 
         return (<div className="row text-center" id="usernameinput">
                     <div className="col-md-12">
-                    <strong>USERNAME</strong>
+                    <strong>USERNAME</strong>   Temp Instructions: Hit Enter to Save Username then select the room.
                     <input type="text" value={this.props.username}  onChange={this.updateUsername}  onKeyUp={this.saveUsername} className="form-control"  />
                     </div>
                 </div>);

@@ -62,11 +62,17 @@ class ChatSection extends React.Component {
             // chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
         });
        }
+       if (this.props.currentroom === "Private"){
+            var message = <div className="col-xs-12 col-md-12">You are in the <strong> {this.props.currentroom} </strong> chat area.</div>
+       } else {
+           var message = <div className="col-xs-12 col-md-12">You are chatting with <strong> {this.props.currentroom} </strong></div>
+       }
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
-           var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12"><strong>Welcome {this.props.username}!</strong></div></div><div className="row text-center"><div className="col-xs-12 col-md-12">You are in the <strong>{this.props.currentroom} </strong>Room!</div></div></div>
+           var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12">Welcome <strong>{this.props.username}</strong>!</div>
+           </div><div className="row text-center">{message}</div></div>
             //   headerText += <div className="col-xs-6 col-md-3">You are in the {this.props.currentroom} Room</div>
-            var chatDislay = <div>
+            var chatDisplay = <div>
                     <div className="row">
                         <div>
                             {headerText}
@@ -98,12 +104,12 @@ class ChatSection extends React.Component {
                 </div>
        } else {
 
-            var chatDislay = <div className="text-center">Apologies but there is currently no chat connection available. Please try again later.</div>
+            var chatDisplay = <div className="text-center"> You are not logged in or there is a connection issue, please try later.</div>
 
        }
     
         return (<div>
-                  {chatDislay}
+                  {chatDisplay}
                 </div>);
     }
 };

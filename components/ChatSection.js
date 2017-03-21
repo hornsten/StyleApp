@@ -52,13 +52,17 @@ class ChatSection extends React.Component {
 
        var chatmessage = this.props.chat;
        if (this.props.chat){
-            var resultComponents = this.props.chat.map(function(result) {
-            return <div className="row results" key={result._id}>
-                <div className="col-md-2"><strong>{result.username}</strong></div> 
-                <div className="col-md-8"> {result.message}</div>
-                <div className="col-md-2"></div>
-            </div>
-        });
+           if (this.props.chat.length !== 0){
+                var resultComponents = this.props.chat.map(function(result) {
+                return <div className="row results" key={result._id}>
+                    <div className="col-md-2"><strong>{result.username}</strong></div> 
+                    <div className="col-md-8"> {result.message}</div>
+                    <div className="col-md-2"></div>
+                </div>
+                });
+
+           }
+
        }
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
