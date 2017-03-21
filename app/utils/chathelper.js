@@ -2,6 +2,7 @@
 // let socket = io(`http://localhost:8000`)
 import io from 'socket.io-client';
 
+
 // const setDataSource = require('./datasource.js');
 var socket = io();
 
@@ -35,17 +36,18 @@ var socket = io();
         switchRoom: function(newroom, chattype, store){
             socket.emit('switchRoom', newroom, chattype);
             // display current room -- need to get room for private chat
-            if (chattype = "Group"){
+            // if (chattype = "Group"){
+                console.log(newroom, "newroom", "chattype", chattype);
                 store.dispatch({ 
                 type: 'UPDATE_ROOM',
                 currentroom: newroom,
                 })
-            } else  if (chattype = "Private"){
-                store.dispatch({ 
-                    type: 'UPDATE_ROOM',
-                    currentroom: "Private Chat",
-                })
-            }
+            // } else  if (chattype = "Private"){
+                // store.dispatch({ 
+                //     type: 'UPDATE_ROOM',
+                //     currentroom: newroom,
+                // })
+            // }
         
         },
         // this handles changes from private chat room to another
@@ -120,15 +122,15 @@ var socket = io();
            socket.on('privatemessage', function (response){
               console.log("in private messages", response);
             //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
-              var str = response;
-              var responseToJSON = JSON.parse(JSON.stringify( str ));
+            //   var str = response;
+            //   var responseToJSON = JSON.parse(JSON.stringify( str ));
 
-              var chatWithUser = responseToJSON.username;
-              console.log("chatWithUser", chatWithUser);
+            //   var chatWithUser = responseToJSON.username;
+            //   console.log("chatWithUser", chatWithUser);
               // update the redux store
               store.dispatch({ 
                   type: 'PRIVATE_MESSAGE',
-                  privatemessage: chatWithUser
+                  privatemessage: response
               })
             })
         },

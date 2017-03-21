@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(logger("dev"));
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000});
 
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server

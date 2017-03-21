@@ -27,6 +27,7 @@ class LaunchChat extends React.Component {
         // dispatches updates to redux store to update the state 
         if (e.keyCode == 13) {
          chathelper.adduser(e.target.value, store);
+         e.target.value="";
         
        }
        

@@ -46,14 +46,22 @@ class ChatSection extends React.Component {
         // tell server to execute 'sendchat' and send along one paramete
         if (e.keyCode == 13) {
             chathelper.sendchat(message);
-            // e.target.value = "";
+         
+        
+            store.dispatch({ 
+                type: 'ADD_MESSAGE',
+                message: ""
+            })
         }
+
+
     }
     updateMessage(e){
         store.dispatch({ 
             type: 'ADD_MESSAGE',
             message: e.target.value
         })
+       
 
     }
     componentDidMount() {
@@ -105,7 +113,6 @@ class ChatSection extends React.Component {
                     <div className="row">
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
-
                                 <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"  onKeyUp={(e) => this.addMessage(e, this.props.message)}  ref={input => this.textInput = input}/>
                             </div>
                         <div className="col-md-2"></div>

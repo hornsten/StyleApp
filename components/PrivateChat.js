@@ -34,7 +34,6 @@ class PrivateChat extends React.Component {
         })
     }
     switchRoom(newroom, chattype){
-        console.log("in provate switch room");
        chathelper.switchRoom(newroom, chattype, store);
     }
     privateChat(chatuser){
@@ -46,9 +45,13 @@ class PrivateChat extends React.Component {
                          <div className="col-s-2 col-s-2 col-md-2">
                             <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom}/>
                         </div> 
-                        <div className="col-xs-10 col-s-8 col-md-8">
+                        <div className="col-xs-8 col-s-8 col-md-8">
                             <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
+                        <div className="col-s-2 col-s-2 col-md-2">
+                           Favorite Stylistas
+                        </div> 
+
                     </div>);
         }
     };

@@ -27,6 +27,10 @@ class GroupChatSection extends React.Component {
         // tell server to execute 'sendchat' and send along one paramete
         if (e.keyCode == 13) {
             chathelper.sendchat(message);
+            store.dispatch({ 
+                type: 'ADD_MESSAGE',
+                message: ""
+            })
         }
     }
     updateMessage(e){
@@ -38,8 +42,21 @@ class GroupChatSection extends React.Component {
     }
     componentDidMount() {
         this.textInput.focus();
+        
+    }
+    componentDidUpdate(){
+        // scroll to bottom of chat history
+        var node = this.refs.chathistory;
+        console.log("node",node);
+        console.log(node.scrollBottom);
+        if (node.length > 0){
+          node.scrollTop = -node.scrollHeight;
+        }
+        //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+        // node.scrollTo(0,node.body.scrollHeight);
     }
     render() {
+
 
        var chatmessage = this.props.chat;
        if (this.props.chat){
@@ -55,6 +72,13 @@ class GroupChatSection extends React.Component {
            }
 
        }
+       // if there is a message display it
+       console.log("this.props.privatemessage", this.props.privatemessage);
+       if (this.props.privatemessage){
+           
+            var alertMessage =   this.props.privatemessage;
+       }
+ 
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
            var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12"><strong>Welcome {this.props.username}!</strong></div></div><div className="row text-center"><div className="col-xs-12 col-md-12">You are in the <strong>{this.props.currentroom} </strong>Room!</div></div></div>
@@ -66,15 +90,14 @@ class GroupChatSection extends React.Component {
                         </div>
                     </div>
                     <div className="row text-center">
-                            Server Messages here - maybe a banner or a popup?
-                            {this.props.privatemessage}
+                           { alertMessage }
                     </div>
                     <hr />
              
 
-                    <div className="chatbox row">
+                    <div className="chatbox row" ref="chathistory">
                         <div className="col-xs-12 col-md-12">    
-                            <div className="row">{resultComponents}</div>                     
+                            <div className="row" >{resultComponents}</div>                     
                         <div>
                     </div>
                         </div>
