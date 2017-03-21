@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 
-import ChatSection from "./ChatSection.js";
+import GroupChatSection from "./GroupChatSection.js";
 import Users from "./Users.js";
 import Rooms from "./Rooms.js";
 import helper from "../app/utils/helper.js";
@@ -46,7 +46,7 @@ class GroupChat extends React.Component {
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>
                         <div className="col-xs-8 col-s-8 col-md-8">
-                            <ChatSection currentroom={this.props.currentroom} username={this.props.username}/>
+                            <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
                             <Users users={this.props.users} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>

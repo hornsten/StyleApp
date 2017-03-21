@@ -46,11 +46,8 @@ class PrivateChat extends React.Component {
                          <div className="col-s-2 col-s-2 col-md-2">
                             <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom}/>
                         </div> 
-                        <div className="col-xs-8 col-s-8 col-md-8">
+                        <div className="col-xs-10 col-s-8 col-md-8">
                             <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
-                        </div>
-                        <div className="col-xs-4 col-s-2 col-md-2">
-                            <Rooms rooms={this.props.rooms} switchRoom={this.switchRoom} currentroom={this.props.currentroom} />
                         </div>
                     </div>);
         }
