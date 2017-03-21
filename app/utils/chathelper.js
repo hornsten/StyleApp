@@ -43,7 +43,7 @@ var socket = io();
             } else  if (chattype = "Private"){
                 store.dispatch({ 
                     type: 'UPDATE_ROOM',
-                    currentroom: "Pending",
+                    currentroom: "Private Chat",
                 })
             }
         
@@ -81,6 +81,7 @@ var socket = io();
         // takes in the latest chat data 
         updatechat_listener: function(store){
             socket.on('updatechat', function (data){
+                console.log("is the data in here", data)
                 store.dispatch({ 
                     type: 'CHAT',
                     chat: data

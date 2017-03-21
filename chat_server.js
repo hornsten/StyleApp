@@ -39,8 +39,9 @@ io.sockets.on('connection', function (socket) {
 	})
 	// when the client emits 'connectuser', this listens and executes
 	// it updates the users room and sends back the latest connected user data and chat history for that room
+	// this is when you select link to "Group" or "Private" chats
 	socket.on('connectuser', function(username, defaultRoom){
-		// console.log("username, defaultRoom", username, defaultRoom);
+		console.log("username, defaultRoom", username, defaultRoom);
 		// Group Users subscribe to a default room
 		// Private Chat Users are connected to a generic "Private" room until they start a private chat - no chats will be sent to this room, it is
 		// purely for connected userlist updates
@@ -54,19 +55,20 @@ io.sockets.on('connection', function (socket) {
 		// update database or other datastore - map username to room and socket id
 		if (username !== ""){
 			models.ConnectedUser.findOneAndUpdate({username: username}, { $set: { room: defaultRoom}}).exec(function(){
-				
+					// trying to find all connected users for Private Chat and onlly those in a Room for Group Chat
 				    var searchObj = {};
 					if (defaultRoom !== "Private"){
 						searchObj = {room: defaultRoom}
 					} 
 					models.ConnectedUser.find(searchObj).exec(function (err, results) {
-						// console.log("connected user2", results);
 						io.sockets.in(defaultRoom).emit('connectedusers', results);
 					})
 
 			}).then(function(){
+				// console.log("are we in here");
 				if (defaultRoom !== "Private"){
 					// send chat history for that room
+					// console.log("are we in here");
 					var cutoff = new Date();
 					cutoff.setDate(cutoff.getDate()-1);
 					models.Chat
@@ -75,11 +77,13 @@ io.sockets.on('connection', function (socket) {
 						.exec(function(err, results) {
 							if (err) return console.log(err);
 							// emit to current user only after they log in or join chat
+							console.log("results", results);
 							socket.emit('updatechat', results);
 						});
 				} else {
+					console.log("are we in here2");
 					// clear the chat window as no default private chats
-					socket.emit('updatechat', {});
+					socket.emit('updatechat', []);
 				}
 			})
 		}
@@ -117,7 +121,7 @@ io.sockets.on('connection', function (socket) {
 		if (chattype === 'Private'){
 			// the "newroom" variable stores the private chat username for chattype "Private" so it can now be extracted
 			var chatWithUser = newroom;
-			// look up database mapping table to get conversation id - if one exists for that user, if not create one in the table
+			// look up database mapping table to get conversation id - if one exists for that user, if not create conversation id in the table for both parties
 			models.PrivateChat.findOne({username: socket.username, chatwith: chatWithUser }).exec(function( err, results){
 				if (results === null){
 					var conversationid = socket.username +"-"+chatWithUser;
@@ -135,6 +139,7 @@ io.sockets.on('connection', function (socket) {
 					})
 				} else {
 					socket.room = results.conversationid;
+					console.log("socket.room", socket.room)
 					newroom = results.conversationid;
 					socket.join(newroom);	
 				}
@@ -146,11 +151,13 @@ io.sockets.on('connection', function (socket) {
 		}
 
 		// update the room in the database for current client
+		console.log("newroom", newroom);
 		models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}).exec(function (err, results) {
 			if (chattype === "Private"){
 				// update all connected users list
 				models.ConnectedUser.find({}, function(err, results){ 
 				if (err) return console.log(err)
+					console.log("conneced users on join private chat", results);
 					// send to current client that switched to prvt room not everyone
 					// socket.emit('connectedusers', results);
 					// tell all users in the "Private" chat area
@@ -212,7 +219,7 @@ io.sockets.on('connection', function (socket) {
 
 
 }
-// to do: test if connection, validate disconnect, message when prvt chat....to socket id then message, images uploading and storing, hyperlinks on current user in chat, switchRoom for Private chat dispathc - needed?
+// to do: test if connection, validate disconnect, message when prvt chat....to socket id then message, images uploading and storing
 // remove old chat history - housekeeping, redis?
 // make it pretty, test, test, test
 // toggle chat hypelinks - open/close chat
