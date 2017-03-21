@@ -33,8 +33,9 @@ class PrivateChat extends React.Component {
             rooms: response.data
         })
     }
-    switchRoom(newroom){
-       chathelper.switchRoom(newroom, store);
+    switchRoom(newroom, chattype){
+        console.log("in provate switch room");
+       chathelper.switchRoom(newroom, chattype, store);
     }
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
@@ -43,13 +44,13 @@ class PrivateChat extends React.Component {
         // console.log(this.props.rooms, "this.props.rooms");
         return (<div className="row">
                          <div className="col-s-2 col-s-2 col-md-2">
-                            <Users users={this.props.users} privateChat={this.privateChat} currentroom={this.props.currentroom}/>
+                            <Users users={this.props.users} switchRoom={this.switchRoom} currentroom={this.props.currentroom}/>
                         </div> 
                         <div className="col-xs-8 col-s-8 col-md-8">
                             <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-xs-4 col-s-2 col-md-2">
-                            <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom} />
+                            <Rooms rooms={this.props.rooms} switchRoom={this.switchRoom} currentroom={this.props.currentroom} />
                         </div>
                     </div>);
         }

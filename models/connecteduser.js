@@ -14,12 +14,6 @@ var connectedUserSchema = new Schema({
     room: {type : String, required : true, unique : false},
     socketid: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}
-    // headline: {type : String, required : true, unique : true},
-    // pubdate: {type : String, required : true, unique : false}, 
-    // weburl: {type : String, required : true, unique : true},
-    // snippet: {type : String, required : false, unique : true},
-    // created_at: {type : Date, required : true, default: Date.now},
-    // updated_at: {type : Date, required : true, default: Date.now},
 });
 
 // create a model using this Schema

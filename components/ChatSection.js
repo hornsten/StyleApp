@@ -38,9 +38,7 @@ class ChatSection extends React.Component {
     //         })
     // }
     addMessage(message) {
-        //*** put all sockets in separate helper file  ***/
-        // tell server to execute 'sendchat' and send along one parameter
-        // socket.emit('sendchat', message);
+        // tell server to execute 'sendchat' and send along one paramete
         chathelper.sendchat(message);
     }
     updateMessage(e){
@@ -52,27 +50,7 @@ class ChatSection extends React.Component {
     }
     render() {
 
-        // var component = this;
-        // if (this.props.chat){
-        //         var room = ""; // to be set as a prp this.props.currentroom
-        //         var currentroom = this.props.currentroom;
-        //         var resultComponents = this.props.rooms.map(function(result) {
-        //         // dont hyperlink current room
-        //         if (result.room === currentroom) {
-        //             room = result.room;
-        //         } else {
-        //             // hyperlink not dsipalying properlyx
-        //             room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room)}> {result.room} </div>
-        //             console.log(room);
-        //     }
-        //         return <div className="row results" key={result._id}>
-        //             <div className="col-md-4 text-center">{room}</div>
-        //         </div>
-        //     })
-        // }
        var chatmessage = this.props.chat;
-       console.log("this.props.chat", this.props.chat);
-    //    var chatdisplay = "";
        if (this.props.chat){
             var resultComponents = this.props.chat.map(function(result) {
             return <div className="row results" key={result._id}>
@@ -80,13 +58,12 @@ class ChatSection extends React.Component {
                 <div className="col-md-8"> {result.message}</div>
                 <div className="col-md-2"></div>
             </div>
-            // chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
         });
        }
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
            var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12"><strong>Welcome {this.props.username}!</strong></div></div><div className="row text-center"><div className="col-xs-12 col-md-12">You are in the <strong>{this.props.currentroom} </strong>Room!</div></div></div>
-            //   headerText += <div className="col-xs-6 col-md-3">You are in the {this.props.currentroom} Room</div>
+
             var chatDislay = <div>
                     <div className="row">
                         <div>

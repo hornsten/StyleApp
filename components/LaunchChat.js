@@ -23,11 +23,20 @@ class LaunchChat extends React.Component {
             username: e.target.value
         })
     }
+    saveUsername(e){
+        // dispatches updates to redux store to update the state 
+        if (e.keyCode == 13) {
+         chathelper.adduser(e.target.value, store);
+        
+       }
+       
+    }
     render() {
+
         return (<div className="row text-center" id="usernameinput">
                     <div className="col-md-12">
                     <strong>USERNAME</strong>
-                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  className="form-control"  />
+                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  onKeyUp={this.saveUsername} className="form-control"  />
                     </div>
                 </div>);
     }

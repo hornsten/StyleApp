@@ -3,24 +3,15 @@ function chat_server(io, models){
 
 
 // rooms available in chat - populate from database 
-var rooms = [];
-var connectedusers = {};
-models.Room.find({}, function(err, results){  
-	if (err) return console.log(err);
-	for (var i = 0; i< results.length; i++){
-		rooms.push(results[i].room);
-		connectedusers[rooms[i]] = [];
-	}	
-})
-
-
-
-
-
-// usernames which are currently connected to the chat
-
-// 
-// save rooms to database -- only for testing purposes
+// var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
+// models.Room.find({}, function(err, results){  
+// 	if (err) return console.log(err);
+// 	for (var i = 0; i< results.length; i++){
+// 		rooms.push(results[i].room);
+// // 		connectedusers[rooms[i]] = [];
+// // 	}	
+// // })
+// // save rooms to database -- only for testing purposes
 // for (var i = 0; i < rooms.length; i++){
 // 	console.log("rooms",rooms[i] , "date",  Date.now())
 // 	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
@@ -39,76 +30,64 @@ models.Room.find({}, function(err, results){
 io.sockets.on('connection', function (socket) {
 
 	// TO DO on connection automatically join room1
-
-
-	// when the client emits 'adduser', this listens and execute
+	// Add user to database on connection then update room later when they select a room / prvt chat
 	socket.on('adduser', function(username){
+		var newConnectedUser = new models.ConnectedUser({room: "NewConnection", username: username, socketid: socket.id, created_at:  Date.now()});
+		newConnectedUser.save().then(function(err, newconnection){
+			// console.log("connections", newconnection)
+		});
+	})
+	// when the client emits 'connectuser', this listens and executes
+	// it updates the users room and sends back the latest connected user data and chat history for that room
+	socket.on('connectuser', function(username, defaultRoom){
+		// console.log("username, defaultRoom", username, defaultRoom);
+		// Group Users subscribe to a default room
+		// Private Chat Users are connected to a generic "Private" room until they start a private chat - no chats will be sent to this room, it is
+		// purely for connected userlist updates
 		/// get from FBAUTH.... then this function can be on connection instead
 		// store the username in the socket session for this client
 		socket.username = username;
 		// store the room name in the socket session for this client
-		// default room when user selects chat option
-		socket.room = "room1";
-		socket.join("room1");
-
+		// only do this for group chat where there is a default room set
+		socket.room = defaultRoom;
+		socket.join(defaultRoom);
 		// update database or other datastore - map username to room and socket id
-		var newConnectedUser = new models.ConnectedUser({room:socket.room, username: socket.username, socketid: socket.id, created_at:  Date.now()});
-		if (username !== " "){
-			newConnectedUser.save().then(function(){
-					// get list of currently connected users from datastore to pass to client for display
-					console.log("userlist socket.room", socket.room);
-					// echo to client they've connected - not needed
-					// var serverMessage = 'SERVER' + username + ' has connected to this room';
+		if (username !== ""){
+			models.ConnectedUser.findOneAndUpdate({username: username}, { $set: { room: defaultRoom}}).exec(function(){
+				
+				    var searchObj = {};
+					if (defaultRoom !== "Private"){
+						searchObj = {room: defaultRoom}
+					} 
+					models.ConnectedUser.find(searchObj).exec(function (err, results) {
+						// console.log("connected user2", results);
+						io.sockets.in(defaultRoom).emit('connectedusers', results);
+					})
 
 			}).then(function(){
-					models.ConnectedUser.find({room: socket.room}).exec(function (err, results) {
-						console.log("userlist", results);
-						io.sockets.in(socket.room).emit('connectedusers', results);
-					})
-	
-			}).then(function(){
-				var cutoff = new Date();
-				cutoff.setDate(cutoff.getDate()-1);
-				models.Chat
-					.find({room: socket.room, "created_at": {"$gte": cutoff }})
-					.sort({'date': -1})
-					.exec(function(err, results) {
-						if (err) return console.log(err);
-						// emit to current user only after they log in or join chat
-						socket.emit('updatechat', results);
-						// io.sockets.in(socket.room).emit('updatechat', socket.username, data);
-						// io.sockets.in(socket.room).emit('updatechat', results);
-					});
+				if (defaultRoom !== "Private"){
+					// send chat history for that room
+					var cutoff = new Date();
+					cutoff.setDate(cutoff.getDate()-1);
+					models.Chat
+						.find({room: socket.room, "created_at": {"$gte": cutoff }})
+						.sort({'date': -1})
+						.exec(function(err, results) {
+							if (err) return console.log(err);
+							// emit to current user only after they log in or join chat
+							socket.emit('updatechat', results);
+						});
+				} else {
+					// clear the chat window as no default private chats
+					socket.emit('updatechat', {});
+				}
 			})
 		}
 	});
 
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendchat', function (data) {
-		//update database with new chat message
-		// maybe store to redis instead of db
-		console.log("username", socket.username, "message", data);
-		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: data, created_at:  Date.now()});
-		newChatMessage.save().then(function(){
-			    var cutoff = new Date();
-				cutoff.setDate(cutoff.getDate()-1);
-				models.Chat
-					.find({room: socket.room, "created_at": {"$gte": cutoff }})
-					.sort({'date': -1})
-					.exec(function(err, results) {
-						if (err) return console.log(err);
-						console.log("in here",results);
-						// to everyone in that room including current client
-						io.sockets.in(socket.room).emit('updatechat', results);
-					});
-				})	
-	});
-
-		// when the client emits 'sendchat', this listens and executes
-	socket.on('sendprvtchat', function (chatuser, data) {
-		//update database with new chat message
-		// get users socket id
-
+		// update database with new chat message
 		// maybe store to redis instead of db
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: data, created_at:  Date.now()});
 		newChatMessage.save().then(function(){
@@ -119,44 +98,83 @@ io.sockets.on('connection', function (socket) {
 					.sort({'date': -1})
 					.exec(function(err, results) {
 						if (err) return console.log(err);
-						console.log("in here",results);
 						// to everyone in that room including current client
-						io.sockets.in(socket.room).emit('updatechat', results);
+						console.log("socket room for sendngchat back", socket.room);
+						// don't want any broadcasts to all private users not in 1-1 chat
+						if (socket.room !== "Private"){
+							io.sockets.in(socket.room).emit('updatechat', results);
+						}
+						
 					});
 				})	
 	});
 
 
-	socket.on('switchRoom', function(newroom){
-		// leave the current room (stored in session)
-		switchRooms(newroom);
-	});
-
-
-	function switchRooms(newroom){
+	socket.on('switchRoom', function(newroom, chattype){
+		// leave the current room (stored in sessio
 		var oldroom = socket.room;
 		socket.leave(socket.room);
-		// join new room, received as function parameter
-		socket.join(newroom);
+		if (chattype === 'Private'){
+			// the "newroom" variable stores the private chat username for chattype "Private" so it can now be extracted
+			var chatWithUser = newroom;
+			// look up database mapping table to get conversation id - if one exists for that user, if not create one in the table
+			models.PrivateChat.findOne({username: socket.username, chatwith: chatWithUser }).exec(function( err, results){
+				if (results === null){
+					var conversationid = socket.username +"-"+chatWithUser;
+					// create both sides of the conversation in the table
+					var newPrivateChat = new models.PrivateChat({username: socket.username, chatwith:chatWithUser, conversationid: conversationid });
+					newPrivateChat.save().then(function(err, data){
+					socket.room = conversationid;
+					newroom = conversationid;
+					socket.join(newroom);			
+				}).then(function(){
+						// save the other side so that when other user goes to join this private chat the conversation can be located
+						var newPrivateChat = new models.PrivateChat({username: chatWithUser, chatwith: socket.username, conversationid: conversationid });
+							newPrivateChat.save().then(function(err, data){
+						})
+					})
+				} else {
+					socket.room = results.conversationid;
+					newroom = results.conversationid;
+					socket.join(newroom);	
+				}
+			})
+
+		} else if (chattype === 'Group'){
+			socket.room = newroom;
+			socket.join(newroom);
+		}
+
 		// update the room in the database for current client
 		models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}).exec(function (err, results) {
-			// sent message to OLD room and dont include the user that left
-			///make this a separate broadcast message - not saved in db
-			// socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username +' has left this room');
-			// update socket session room title
-			socket.room = newroom;
-			// get users in this new room from database and sent to all users in new room
-			models.ConnectedUser.find({room: newroom}, function(err, results){ 
-			if (err) return console.log(err)
-				// send updated user list to everyone in that room
-				io.sockets.in(newroom).emit('connectedusers', results);
-			});
+			if (chattype === "Private"){
+				// update all connected users list
+				models.ConnectedUser.find({}, function(err, results){ 
+				if (err) return console.log(err)
+					// send to current client that switched to prvt room not everyone
+					// socket.emit('connectedusers', results);
+					// tell all users in the "Private" chat area
+					io.sockets.in("Private").emit('connectedusers', results);
+				});
+
+			} else if (chattype === "Group"){
+
+				// get users in this new room from database and sent to all users in new room
+				models.ConnectedUser.find({room: newroom}, function(err, results){ 
+				if (err) return console.log(err)
+					// send updated user list to everyone in that room
+					io.sockets.in(newroom).emit('connectedusers', results);
+				});
+		
+			}
+
 			// get users in the old room from database and sent to all users in old room - updates user connected list
 			models.ConnectedUser.find({room: oldroom}, function(err, results){ 
 			if (err) return console.log(err)
 				// send updated user list to everyone in that room
 				io.sockets.in(oldroom).emit('connectedusers', results);
 			});
+
 	
 		}).then(function(){
 			// now get chat history for the new room
@@ -169,110 +187,35 @@ io.sockets.on('connection', function (socket) {
 					if (err) return console.log(err);
 					// just send to current client that switched rooms not everyone
 					socket.emit('updatechat', results);
-					// io.sockets.in(socket.room).emit('updatechat', results);
 				});
 		})
 
-		//make this a separate broadcast message - not saved in db
-    	// sent message to NEW room and dont include the user that left
-// socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
-		// socket.emit('updaterooms', rooms, newroom);
-	}
+	})
 
-	socket.on('privatechat', function(chatuser){
-		// want to send private chat to chatuser
-		// first need to get socketid of chat user
-		console.log(chatuser, "Chat user");
-		// models.ConnectedUser.findOne({username: chatuser}, function(err, results){ 
-		// if (err) return console.log(err);
-		// 	console.log("socket id", results.socketid);
-		// 	// send updated user list to everyone in that room
-		// 	// io.sockets.in(socket.room).emit('connectedusers', results);
-		// 	socket.to(results.socketid).emit('updatechat', [{_id: 1, username:socket.username, message: 'hello'}, {_id: 2, username:socket.username, message: 'how are u?'}]);
-		// });
-
-		var oldroom = socket.room;
-		socket.leave(socket.room);
-		// join new room, received as function parameter
-		socket.join(chatuser);
-		// update the room in the database for current client
-		models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: chatuser }}).exec(function (err, results) {
-			// sent message to OLD room and dont include the user that left
-			///make this a separate broadcast message - not saved in db
-			// socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username +' has left this room');
-			// update socket session room title
-			socket.room = chatuser;
-			// get users in this new room from database and sent to all users in new room
-			// models.ConnectedUser.find({room: newroom}, function(err, results){ 
-			// if (err) return console.log(err)
-			// 	// send updated user list to everyone in that room
-			// 	io.sockets.in(newroom).emit('connectedusers', results);
-			// });
-			// get users in the old room from database and sent to all users in old room - updates user connected list
-			models.ConnectedUser.find({room: oldroom}, function(err, results){ 
-			if (err) return console.log(err)
-				// send updated user list to everyone in that room
-				io.sockets.in(oldroom).emit('connectedusers', results);
-			});
-	
-		}).then(function(){
-			// now get chat history for the new room
-			var cutoff = new Date();
-			cutoff.setDate(cutoff.getDate()-1);
-			models.Chat
-				.find({room: chatuser, username: socket.username, "created_at": {"$gte": cutoff }})
-				.sort({'date': -1})
-				.exec(function(err, results) {
-					if (err) return console.log(err);
-					// just send to current client that switched rooms not everyone
-					// socket.emit('updatechat', results);
-					// get soecket id of chat user
-					models.ConnectedUser.findOne({username: chatuser}).exec(function(err,results){
-						socket.to(results.socketid).emit('updatechat', results);
-					})
-					
-				});
-		})
-
-		//make this a separate broadcast message - not saved in db
-    	// sent message to NEW room and dont include the user that left
-// socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
-		// socket.emi
-
-	});
-
-	// when the user disconnects.. perform this
+	// when the user disconnects - delete from ConnectedUser collection
 	socket.on('disconnect', function(){
-		// *** Also disconnet on logout - just in case browser not closed
-		// remove the username from global usernames list
 		var room = socket.room;
 		var username = socket.username;
-		// delete connectedusers[socket.room][username];
-		// delete usernames[socket.username];
-		// update list of users in chat, client-side
-		// io.sockets.emit('updateusers', usernames);
 		// remove from database of list current users/rooms on disconect
 		models.ConnectedUser.findOneAndRemove({username: socket.username}, function (err) {
-		// console.log("saved:" + rooms[i]); 
 			if (err) return console.log(err);
-			console.log("disconnect use removed:" ); 
-			models.ConnectedUser.find({room: room}, function(err, results){ 
+			console.log("disconnect user removed:",  socket.username); 
+			models.ConnectedUser.find({room: socket.room}, function(err, results){ 
 			if (err) return console.log(err)
-				console.log(socket.room, results)
 				// send updated user list to everyone in that room
-				io.sockets.in(room).emit('connectedusers', results);
+				io.sockets.in(socket.room).emit('connectedusers', results);
 			});
-
 		});
-		
-
-		// echo globally that this client has left
-// socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
 		socket.leave(socket.room);
 	});
 });
 
 
 }
+// to do: test if connection, validate disconnect, message when prvt chat....to socket id then message, images uploading and storing, hyperlinks on current user in chat, switchRoom for Private chat dispathc - needed?
+// remove old chat history - housekeeping, redis?
+// make it pretty, test, test, test
+// toggle chat hypelinks - open/close chat
+// onkeyup for chat part - remove button
 
 module.exports = chat_server;
