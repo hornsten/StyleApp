@@ -31,12 +31,15 @@ class LaunchChat extends React.Component {
        }
        
     }
+    componentDidMount() {
+        this.textInput.focus();
+    }
     render() {
 
         return (<div className="row text-center" id="usernameinput">
                     <div className="col-md-12">
                     <strong>USERNAME</strong>   Temp Instructions: Hit Enter to Save Username then select the room.
-                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  onKeyUp={this.saveUsername} className="form-control"  />
+                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  onKeyUp={this.saveUsername} className="form-control"   ref={input => this.textInput = input}/>
                     </div>
                 </div>);
     }

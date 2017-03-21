@@ -115,7 +115,8 @@ io.sockets.on('connection', function (socket) {
 
 
 	socket.on('switchRoom', function(newroom, chattype){
-		// leave the current room (stored in sessio
+		// leave the current room (stored in session
+		var username = socket.username;
 		var oldroom = socket.room;
 		socket.leave(socket.room);
 		if (chattype === 'Private'){
@@ -143,6 +144,19 @@ io.sockets.on('connection', function (socket) {
 					newroom = results.conversationid;
 					socket.join(newroom);	
 				}
+			}).then(function(){
+				// want to send user notification that you want a private chat
+				// first get their socket id then send a message
+				models.ConnectedUser.findOne({username: chatWithUser}).exec(function(err, results){
+					console.log("socketid", results.socketid);
+					// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
+					// socket.to(results.socketid).emit('privatemessage', 'I just met you');
+					var message = socket.username + " would like a private style consultation.";
+					// *** WORKING HERE
+					io.sockets.connected[results.socketid].emit('privatemessage', message);
+
+				})
+				 
 			})
 
 		} else if (chattype === 'Group'){

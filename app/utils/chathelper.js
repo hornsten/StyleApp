@@ -114,6 +114,38 @@ var socket = io();
               })
             })
         },
+
+        private_message: function(store){
+
+           socket.on('privatemessage', function (response){
+              console.log("in private messages", response);
+            //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
+              var str = response;
+              var responseToJSON = JSON.parse(JSON.stringify( str ));
+
+              var chatWithUser = responseToJSON.username;
+              console.log("chatWithUser", chatWithUser);
+              // update the redux store
+              store.dispatch({ 
+                  type: 'PRIVATE_MESSAGE',
+                  privatemessage: chatWithUser
+              })
+            })
+        },
+
+
+//         // Add a connect listener
+// socket.on('connect',function() {
+// 	console.log('Client has connected to the server!');
+// });
+// // Add a connect listener
+// socket.on('message',function(data) {
+// 	console.log('Received a message from the server!',data);
+// });
+// // Add a disconnect listener
+// socket.on('disconnect',function() {
+// 	console.log('The client has disconnected!');
+// });
     }
 
 export default chathelper;

@@ -13,33 +13,21 @@ import io from 'socket.io-client'
 var socket = io.connect();
 
 
-class ChatSection extends React.Component {
+class GroupChatSection extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store);
         chathelper.server_messages(store);
-        // socket.on('updatechat', (username, data) => {   
-        //      console.log("socket", username, data);
-        //     this.updatechat(username, data);
-        // })
+        chathelper.private_message(store);
+
     }
-    // updatechat(username, data){
-    //         console.log("callint this udate caht function", username, data);
-    //         store.dispatch({ 
-    //             type: 'CHAT_USER',
-    //             chatuser: username
-    //         },
-    //         { 
-    //             type: 'CHAT_MSG',
-    //             chatmsg: data
-    //         })
-    // }
-    addMessage(message) {
+    addMessage(e, message) {
         // tell server to execute 'sendchat' and send along one paramete
-        chathelper.sendchat(message);
+        if (e.keyCode == 13) {
+            chathelper.sendchat(message);
+        }
     }
     updateMessage(e){
         store.dispatch({ 
@@ -47,6 +35,9 @@ class ChatSection extends React.Component {
             message: e.target.value
         })
 
+    }
+    componentDidMount() {
+        this.textInput.focus();
     }
     render() {
 
@@ -74,13 +65,12 @@ class ChatSection extends React.Component {
                             {headerText}
                         </div>
                     </div>
-                    <hr />
-                    <div className="row">
-                        <div>
+                    <div className="row text-center">
                             Server Messages here - maybe a banner or a popup?
-                            {this.props.server}
-                        </div>
+                            {this.props.privatemessage}
                     </div>
+                    <hr />
+             
 
                     <div className="chatbox row">
                         <div className="col-xs-12 col-md-12">    
@@ -93,8 +83,8 @@ class ChatSection extends React.Component {
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
 
-                                <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"  />
-                                <button type="button" onClick={() => this.addMessage(this.props.message)}>Add Message</button>
+                                <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"   onKeyUp={(e) => this.addMessage(e, this.props.message)}  ref={input => this.textInput = input} />
+    
                             </div>
                         <div className="col-md-2"></div>
                     </div>
@@ -118,8 +108,10 @@ const mapStateToProps = (store,ownProps) => {
         message: store.chatState.message,
         chat: store.chatState.chat,
         server: store.chatState.server,
+        privatemessage: store.chatState.privatemessage,
     }
+
 };
 
-export default connect(mapStateToProps)(ChatSection);
+export default connect(mapStateToProps)(GroupChatSection);
 // export default ChatSection;
