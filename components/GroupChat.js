@@ -33,15 +33,14 @@ class GroupChat extends React.Component {
             rooms: response.data
         })
     }
-    switchRoom(newroom){
-       chathelper.switchRoom(newroom, store);
+    switchRoom(newroom, chattype){
+       chathelper.switchRoom(newroom, chattype, store);
     }
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
     }
     render() {
-        // console.log(this.props.rooms, "this.props.rooms");
-        console.log("this.props.currentroom", this.props.currentroom)
+    
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
@@ -50,7 +49,7 @@ class GroupChat extends React.Component {
                             <ChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
-                            <Users users={this.props.users} privateChat={this.privateChat} currentroom={this.props.currentroom}/>
+                            <Users users={this.props.users} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div> 
                     </div>);
         }

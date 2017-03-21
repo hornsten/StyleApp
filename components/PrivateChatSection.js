@@ -37,11 +37,10 @@ class ChatSection extends React.Component {
     //             chatmsg: data
     //         })
     // }
-    addPrvtMessage(message) {
-        //*** put all sockets in separate helper file  ***/
+    addMessage(message) {
         // tell server to execute 'sendchat' and send along one parameter
-        // socket.emit('sendchat', message);
-        chathelper.sendprvtchat(this.props.currentroom, message);
+        console.log("am i getting here");
+        chathelper.sendchat(message);
     }
     updateMessage(e){
         store.dispatch({ 
@@ -52,27 +51,7 @@ class ChatSection extends React.Component {
     }
     render() {
 
-        // var component = this;
-        // if (this.props.chat){
-        //         var room = ""; // to be set as a prp this.props.currentroom
-        //         var currentroom = this.props.currentroom;
-        //         var resultComponents = this.props.rooms.map(function(result) {
-        //         // dont hyperlink current room
-        //         if (result.room === currentroom) {
-        //             room = result.room;
-        //         } else {
-        //             // hyperlink not dsipalying properlyx
-        //             room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room)}> {result.room} </div>
-        //             console.log(room);
-        //     }
-        //         return <div className="row results" key={result._id}>
-        //             <div className="col-md-4 text-center">{room}</div>
-        //         </div>
-        //     })
-        // }
        var chatmessage = this.props.chat;
-       console.log("this.props.chat", this.props.chat);
-    //    var chatdisplay = "";
        if (this.props.chat){
             var resultComponents = this.props.chat.map(function(result) {
             return <div className="row results" key={result._id}>
@@ -96,7 +75,7 @@ class ChatSection extends React.Component {
                     <hr />
                     <div className="row">
                         <div>
-                            {this.props.server}
+                        {this.props.server}
                         </div>
                     </div>
 
@@ -112,7 +91,7 @@ class ChatSection extends React.Component {
                             <div className="col-md-8">
 
                                 <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"  />
-                                <button type="button" onClick={() => this.addPrvtMessage(this.props.message)}>Add Message</button>
+                                <button type="button" onClick={() => this.addMessage(this.props.message)}>Add Message</button>
                             </div>
                         <div className="col-md-2"></div>
                     </div>

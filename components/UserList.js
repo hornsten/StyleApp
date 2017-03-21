@@ -14,6 +14,7 @@ class UserList extends React.Component {
             var connecteduser = "";
             var component=this;
             var currentroom = this.props.currentroom;
+            
             var resultComponents = this.props.users.map(function(result) {
             // console.log("userlist curretn room", this.props.currentroom)
             
@@ -21,7 +22,7 @@ class UserList extends React.Component {
                         connecteduser = result.username;
                 } else {
                         // hyperlink not dsipalying properlyx
-                        connecteduser = <div className="room-list-other" onClick={() => component.props.privateChat(result.username)}> {result.username} </div>
+                        connecteduser = <div className="room-list-other" onClick={() => component.props.switchRoom(result.username, 'Private')}> {result.username} </div>
                     
                 }
                 return <div className="row results" key={result._id}>

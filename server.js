@@ -28,7 +28,8 @@ var io = require('socket.io')(http);
 var Chat = require("./models/Chat.js");
 var Room = require("./models/Room.js");
 var ConnectedUser = require("./models/ConnectedUser.js");
-var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room};
+var PrivateChat = require("./models/PrivateChat.js");
+var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat};
 
 app.use( express.static(path.join(__dirname, 'public')));
 
