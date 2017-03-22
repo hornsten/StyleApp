@@ -32,7 +32,7 @@ class NavBar extends Component{
         var loginStatus = "";
         // hardcoding for now
         // this.props.loggedin = true;
-        var isloggedin = true; ///this needs to be replace dwith this.props.login
+        var isloggedin = false; ///this needs to be replace dwith this.props.login
         if (isloggedin === false){
             loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between"><li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
             style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>

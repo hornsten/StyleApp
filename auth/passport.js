@@ -26,6 +26,7 @@ module.exports = function (passport) {
         // redirect_uri = "https://www.facebook.com/connect/login_success.html
         // passReqToCallback : true,
         // profileFields: ['id', 'emails', 'name'] //This
+         profileFields: ['id', 'emails', 'link',  'name',  'updated_time', 'verified'],
 
 
     },
@@ -34,31 +35,31 @@ module.exports = function (passport) {
 
             // asynchronous
             process.nextTick(function () {
-                // User.findOne({ 'facebook.id': profile.id }, function (err, user) {
-                //     if (err)
-                //         return done(err);
+                User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+                    if (err)
+                        return done(err);
 
-                //     if (user) {
-                //         return done(null, user); // user found, return that user
-                //     }
+                    if (user) {
+                        return done(null, user); // user found, return that user
+                    }
 
-                //     else {
-                //         // if there is no user, create them
-                //         var newUser = new User();
-
-                //         newUser.facebook.id = profile.id;
-                //         newUser.facebook.token = token;
-                //         newUser.username = profile.displayName;
-                //         // newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                //         // newUser.facebook.photo = profile.photo;
-                //         newUser.facebook.link = profile.link;
-                //         newUser.save(function (err) {
-                //             if (err)
-                //                 throw err;
-                //             return done(null, newUser);
-                //         });
-                //     }
-                // });
+                    else {
+                        // if there is no user, create them
+                        var newUser = new User();
+                        
+                        newUser.facebook.id = profile.id;
+                        newUser.facebook.token = token;
+                        newUser.facebook.name = profile.displayName;
+                        // newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                        // newUser.facebook.photo = profile.photo;
+                        newUser.facebook.link = profile.link;
+                        newUser.save(function (err) {
+                            if (err)
+                                throw err;
+                            return done(null, newUser);
+                        });
+                    }
+                });
             });
 
         }));

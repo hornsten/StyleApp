@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 
 // Create a Schema for capturing clicks. We'll use clickID to update the same clickCounter
 var UserSchema = new Schema({
-  username: {type : String, required : true},
+  // username: {type : String, required : false},
   facebook: {
     id: String,
     token: String,
@@ -16,17 +16,18 @@ var UserSchema = new Schema({
     // photo: String,
     link:String,
   },
-  userprofile: {
-    // whatever fields we need for the bio page / profile page
-    created_at: {type : Date, required : true, default: Date.now}
-  },
-  chat: {
-      isConnected: {type : Boolean,  default: false},
-      room: {type : String, required : true, unique : false},
-      socketid: {type : String, required : true, unique : false},
-      created_at: {type : Date, required : true, default: Date.now}
-  },
-  created_at: {type : Date, required : true, default: Date.now}
+  // userprofile: {
+  //   // whatever fields we need for the bio page / profile page
+  //   created_at: {type : Date, required : false, default: Date.now}
+  // },
+  // email: {type : String, required : false},
+  // chat: {
+  //     isConnected: {type : Boolean,  default: false},
+  //     room: {type : String, required : true, unique : false},
+  //     socketid: {type : String, required : false, unique : false},
+  //     created_at: {type : Date, required : false, default: Date.now}
+  // },
+  // created_at: {type : Date, required : false, default: Date.now}
 });
 
 // Create the Model

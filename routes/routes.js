@@ -17,7 +17,7 @@ app.get('/', function(req, res){
     })
 
     //route for fb authentication and login
-    app.get('/auth/facebook', passport.authenticate('facebook'));
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
 // passport.authorize('facebook', { scope : ['email'] }));
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
