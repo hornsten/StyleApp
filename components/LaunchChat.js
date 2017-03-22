@@ -4,6 +4,8 @@ import React from "react";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
+ 
+
 
 // import io from 'socket.io-client'
 // // let socket = io(`http://localhost:8000`)
@@ -14,6 +16,7 @@ class LaunchChat extends React.Component {
         super(props)
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
         this.updateUsername = this.updateUsername.bind(this);
+        chathelper.handle_connection(store);
 
     }
     updateUsername(e){
@@ -23,18 +26,24 @@ class LaunchChat extends React.Component {
             username: e.target.value
         })
     }
-    addUser(username){
+    saveUsername(e){
         // dispatches updates to redux store to update the state 
-        //*** put all sockets in separate helper file  ***/
-        // socket.emit('adduser', username);
-        chathelper.adduser(username);
+        if (e.keyCode == 13) {
+         chathelper.adduser(e.target.value, store);
+         e.target.value="";
+        
+       }
+       
+    }
+    componentDidMount() {
+        this.textInput.focus();
     }
     render() {
+
         return (<div className="row text-center" id="usernameinput">
                     <div className="col-md-12">
-                    <strong>USERNAME</strong>
-                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  className="form-control"  />
-                    <button type="button" onClick={() => this.addUser(this.props.username)}>Add User</button>
+                    <strong>USERNAME</strong>   Temp Instructions: Hit Enter to Save Username then select the room.
+                    <input type="text" value={this.props.username}  onChange={this.updateUsername}  onKeyUp={this.saveUsername} className="form-control"   ref={input => this.textInput = input}/>
                     </div>
                 </div>);
     }
@@ -45,6 +54,7 @@ class LaunchChat extends React.Component {
 const mapStateToProps = (store,ownProps) => {
     return {
         username: store.chatState.username,
+        connected: store.chatState.connected,
 
     }
 };

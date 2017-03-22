@@ -9,6 +9,7 @@ class RoomList extends React.Component {
     }
     render() {
         var component = this;
+        
         if (this.props.rooms){
                 var room = ""; // to be set as a prp this.props.currentroom
                 var currentroom = this.props.currentroom;
@@ -18,7 +19,7 @@ class RoomList extends React.Component {
                     room = result.room;
                 } else {
                     // hyperlink not dsipalying properlyx
-                    room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room)}> {result.room} </div>
+                    room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room, "Group")}> {result.room} </div>
                     console.log(room);
             }
                 return <div className="row results" key={result._id}>

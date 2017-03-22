@@ -2,7 +2,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 
-import ChatSection from "./ChatSection.js";
+import GroupChatSection from "./GroupChatSection.js";
 import Users from "./Users.js";
 import Rooms from "./Rooms.js";
 import helper from "../app/utils/helper.js";
@@ -10,7 +10,7 @@ import chathelper from "../app/utils/chathelper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 
-class ViewChat extends React.Component {
+class GroupChat extends React.Component {
     constructor(props) {
         super(props);
 
@@ -19,17 +19,11 @@ class ViewChat extends React.Component {
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
 
-
-
     }
    componentDidMount(){
-
-
         helper.getRoomList().then((response) => {
             this.handleRoomData(response)
         })      
-
-
     }
 
     handleRoomData(response){
@@ -39,22 +33,23 @@ class ViewChat extends React.Component {
             rooms: response.data
         })
     }
-    switchRoom(newroom){
-       chathelper.switchRoom(newroom, store);
+    switchRoom(newroom, chattype){
+       chathelper.switchRoom(newroom, chattype, store);
+    }
+    privateChat(chatuser){
+       chathelper.privateChat(chatuser, store);
     }
     render() {
-        // console.log(this.props.rooms, "this.props.rooms");
+    
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
-                        CHAT USER {this.props.chatuser}  {this.props.chatmsg}
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>
                         <div className="col-xs-8 col-s-8 col-md-8">
-                            <ChatSection currentroom={this.props.currentroom} username={this.props.username}/>
-                            {this.props.chatuser}  {this.props.chatmsg}
+                            <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
-                            <Users users={this.props.users}/>
+                            <Users users={this.props.users} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div> 
                     </div>);
         }
@@ -71,5 +66,5 @@ const mapStateToProps = (store,ownProps) => {
 };
 
 
-export default connect(mapStateToProps)(ViewChat);
+export default connect(mapStateToProps)(GroupChat);
 

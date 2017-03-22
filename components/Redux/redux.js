@@ -9,13 +9,19 @@ const chatReducer = (state={}, action) => {
         case 'ROOM_LIST':
             return Object.assign({},state, {rooms: action.rooms});
         case 'UPDATE_ROOM':
-            return Object.assign({room: "room1"},state, {currentroom: action.currentroom});
+            return Object.assign({},state, {currentroom: action.currentroom});
         case 'ADD_USERNAME':
             return Object.assign({},state, {username: action.username});
         case 'ADD_MESSAGE':
             return Object.assign({},state, {message: action.message});
         case 'CHAT':
             return Object.assign({},state, {chat: action.chat});
+        case 'SERVER':
+            return Object.assign({},state, {server: action.server});
+        case 'PRIVATE_MESSAGE':
+            return Object.assign({},state, {privatemessage: action.privatemessage});
+        case 'CONNECTED':
+            return Object.assign({},state, {connected: action.connected});
         }
     return state;
 }

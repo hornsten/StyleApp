@@ -3,10 +3,10 @@ import ReactRouter from "react-router";
 import IndexRoute from "react-router";
 import ChatMain from "../components/ChatMain.js";
 import Container from "../components/Main.js"
-import { Router, Route, hashHistory } from 'react-router'; 
+import {Router, Route, hashHistory} from "react-router";
+import GroupChat from "../components/GroupChat.js";
+import PrivateChat from "../components/PrivateChat.js";
 
-import ViewChat from "../components/ViewChat.js";
-import LaunchChat from "../components/LaunchChat.js";
 
 // e.g. sample
 // var routes = (
@@ -30,21 +30,12 @@ import LaunchChat from "../components/LaunchChat.js";
 
 var routes = (
     <Router history={hashHistory}>
-
-      <Route path='/' component={Main} />
- 
-  </Router>
-)
-
-
-
-/*var routes = (
-    <Router history={hashHistory}>
-        <IndexRoute component={Container} />
-        <Route path='/' component={Container} /> 
-        <Route path='/' component={ChatMain} />
-        
+        <Route path='/' component={Main} />
+        <Route IndexRoute path="/" component={ChatMain} >
+            <Route path='/group' component={GroupChat} />
+            <Route path='/private' component={PrivateChat} />
+        </Route>
     </Router>
-)*/
+)
 
 export default routes;
