@@ -47,9 +47,11 @@ module.exports = function (passport) {
                         // if there is no user, create them
                          var newUser = new User();
 
-                        newUser.facebook.id = profile.id;
+                         newUser.facebook.id = profile.id;
                         newUser.facebook.token = token;
                         newUser.facebook.name = profile.displayName;
+                        newUser.facebook.firstName= profile.name.givenName;
+                        newUser.facebook.lastName =  profile.name.familyName,
                         newUser.facebook.email = profile.emails[0].value,
                     // newUser.facebook.picture = profile.photos[0].value;
                         newUser.facebook.link = profile.link;

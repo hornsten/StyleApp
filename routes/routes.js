@@ -15,9 +15,9 @@ app.get('/', function(req, res){
         req.logout();
         res.redirect('/');
     })
+  //route for fb authentication and login
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email'] }));
 
- //route for fb authentication and login
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
             failureRedirect: '/'}), function(req,res){
