@@ -26,7 +26,7 @@ module.exports = function (passport) {
         // redirect_uri = "https://www.facebook.com/connect/login_success.html
         // passReqToCallback : true,
         // profileFields: ['id', 'emails', 'name'] //This
-         profileFields: ['id', 'emails', 'link',  'name',  'updated_time', 'verified'],
+         profileFields: ['id', 'emails', 'name']
 
 
     },
@@ -45,13 +45,13 @@ module.exports = function (passport) {
 
                     else {
                         // if there is no user, create them
-                        var newUser = new User();
-                        
+                         var newUser = new User();
+
                         newUser.facebook.id = profile.id;
                         newUser.facebook.token = token;
                         newUser.facebook.name = profile.displayName;
-                        // newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                        // newUser.facebook.photo = profile.photo;
+                        newUser.facebook.email = profile.emails[0].value,
+                    // newUser.facebook.picture = profile.photos[0].value;
                         newUser.facebook.link = profile.link;
                         newUser.save(function (err) {
                             if (err)

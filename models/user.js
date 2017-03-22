@@ -1,6 +1,3 @@
-// Include the Mongoose Dependencies
-
-var mongoose = require("mongoose");
 
 var mongoose = require('../config/connection.js');
 var Schema = mongoose.Schema;

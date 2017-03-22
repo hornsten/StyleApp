@@ -26,6 +26,7 @@ var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server
 var Chat = require("./models/Chat.js");
+var User = require("./models/user.js");
 var Room = require("./models/Room.js");
 var ConnectedUser = require("./models/ConnectedUser.js");
 var PrivateChat = require("./models/PrivateChat.js");
