@@ -21,7 +21,8 @@ app.get('/', function(req, res){
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
             failureRedirect: '/'}), function(req,res){
-                console.log(req)
+                console.log(req.user.username);
+                
             //successful auth  , redirect home 
             res.redirect('http://localhost:8080/#');
             // res.sendFile(__dirname + "../../public/Home.html");
@@ -38,11 +39,23 @@ app.get('/', function(req, res){
 			res.json(results)
 		});
 	});
+
+    app.get('/user', function(req, res){
+		// models.Room.find({}, function(err, results){
+	
+		models.User.find({_id: req.session.passport.user }, function(err, results){
+		console.log("user", results); 
+		if (err) return console.log(err);
+			res.json(results)
+		});
+        // res.json(req.session.passport.user);
+	});
 ////
 }
 
 function isLoggedIn(req, res,next){
     if(req.isAuthenticated())
+
         return next();
         //if not logged in redirect to home page
     res.redirect('/');

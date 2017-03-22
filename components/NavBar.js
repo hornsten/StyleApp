@@ -71,7 +71,7 @@ class NavBar extends Component{
 
             <div className="container">
                     <div className="col-md-8">
-                    <div id="myNavbar" class="collapse navbar-collapse top_nav">
+                    <div id="myNavbar" className="collapse navbar-collapse top_nav">
                         <nav className="navbar navbar-light bg-faded rounded mb-3">
                             
                             

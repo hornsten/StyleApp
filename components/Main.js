@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import NavBar from './NavBar';
+import helper from "../app/utils/helper.js";
 
 
 class Main extends Component{
@@ -9,7 +10,10 @@ class Main extends Component{
         super(props);
         // this.state = {}; //setting initial default state
     }
-
+    componentDidMount(){
+        //get user details
+        helper.getUserDetails(store);
+    }
     render(){
         return(
             <div>

@@ -26,10 +26,19 @@ var helpers = {
 //         })
         
 //    },
+  getUserDetails: function(store){
+      return fetch('/user', { credentials : 'same-origin' }).then(function(response){
+           console.log(response);
+      })
+        //   store.dispatch({type: "ADD_USER", connected: false})
+          
+        
+  },
+
 
    getRoomList: function(){
         // sends get request to apiController to query database for all rooms
-        return axios.get('/chat/rooms').then(function(response) {
+        return axios.get('/chat/rooms', { credentials : 'same-origin' }).then(function(response) {
             console.log(response);
             return response;
         })
