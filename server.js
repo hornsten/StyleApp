@@ -43,16 +43,17 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(bodyParser.text({ type: 'text/html' }));
 
 // -------------------------------------------------
-app.use(session({secret: cookieSecret,
-                saveUninitialized: true,
-                resave: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({secret: cookieSecret,
+//                 saveUninitialized: true,
+//                 resave: true
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-//Facebook Login oauth routes
-require('./auth/passport')(passport);
-require('./routes/routes.js')(app,passport);
+// //Facebook Login oauth routes
+// require('./auth/passport')(passport);
+// require('./routes/routes.js')(app,passport);
+require('./routes/routes.js')(app);
 
 http.listen(8080, function(){
 console.log('listening on *:8080');
