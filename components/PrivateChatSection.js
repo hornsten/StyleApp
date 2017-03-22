@@ -68,7 +68,10 @@ class ChatSection extends React.Component {
         this.textInput.focus();
     }
     render() {
-
+       console.log("this.props.privatemessage", this.props.privatemessage);
+       if (this.props.privatemessage){
+            var alertMessage = this.props.privatemessage;
+       }
        var chatmessage = this.props.chat;
        if (this.props.chat){
             var resultComponents = this.props.chat.map(function(result) {
@@ -95,6 +98,9 @@ class ChatSection extends React.Component {
                         <div>
                             {headerText}
                         </div>
+                    </div>
+                    <div className="row text-center">
+                           { alertMessage }
                     </div>
                     <hr />
                     <div className="row">
@@ -137,6 +143,7 @@ const mapStateToProps = (store,ownProps) => {
         message: store.chatState.message,
         chat: store.chatState.chat,
         server: store.chatState.server,
+        privatemessage: store.chatState.privatemessage,
     }
 };
 

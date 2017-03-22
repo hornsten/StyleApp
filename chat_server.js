@@ -29,7 +29,7 @@ var heartbeatObj = {};
 // all connected clients
 io.sockets.on('connection', function (socket) {
 
-	// TO DO on connection automatically join room1
+	// TO DO on connection automatically join room1 so put first two function connected user and adduser in the "on connection"" part directoy
 	// Add user to database on connection then update room later when they select a room / prvt chat
 	socket.on('adduser', function(username){
 		// find if there, then update
@@ -47,12 +47,7 @@ io.sockets.on('connection', function (socket) {
 					console.log(err);
 				})
 				// trying to find all connected users for Private Chat and onlly those in a Room for Group Ch}
-
-		}
-		// var newConnectedUser = new models.ConnectedUser({room: "NewConnection", username: username, socketid: socket.id, created_at:  Date.now()});
-		// newConnectedUser.save().then(function(err, newconnection){
-		// 	// console.log("connections", newconnection)
-		// });
+			}
 		})
 
 	})
@@ -147,6 +142,8 @@ io.sockets.on('connection', function (socket) {
 		var oldroom = socket.room;
 		socket.leave(socket.room);
 		var chatWithUser = newroom;
+		var currentSocket = socket;
+		// var userSession = socket.id;
 		if (chattype === 'Private'){
 			// the "newroom" variable stores the private chat username for chattype "Private" so it can now be extracted
 			// var chatWithUser = newroom;
@@ -175,29 +172,52 @@ io.sockets.on('connection', function (socket) {
 				// want to send user notification that you want a private chat
 				// first get their socket id then send a message
 				models.ConnectedUser.findOne({username: chatWithUser}).exec(function(err, results){
-					console.log("socketid", results.socketid);
-					var socket = results.socketid;
-					console.log(socket, "socket");
-					// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
-					// socket.to(results.socketid).emit('privatemessage', 'I just met you');
-					var message = username + ' would like to have private style consultation.';
-					console.log("message", message);
-					// *** WORKING HERE -- problem if you try to connect to stale socket that did not disconnect properly
-					// io.sockets.connected[results.socketid].emit('privatemessage', message);
-					// do a volatile emit in case socket id is stale
-					var currentTime = Date.now();
-					
-					if (chatWithUser in heartbeatObj){
-						var timeElapsed = (currentTime - heartbeatObj[chatWithUser]);
-						console.log(timeElapsed);
-						if (timeElapsed < 6000){
-							io.sockets.connected[results.socketid].volatile.emit('privatemessage', message);
-						} 
+					console.log(results);
+					if (results === null){
+						// no connected user
+						// tell requestor user not available
+						var message = chatWithUser + " is not currently online";
+						if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
+					} else {
+						// load previous chat
+						var cutoff = new Date();
+						cutoff.setDate(cutoff.getDate()-1);
+						models.Chat
+							.find({room: currentSocket.room, "created_at": {"$gte": cutoff }})
+							.sort({'date': -1})
+							.exec(function(err, results) {
+								if (err) return console.log(err);
+								// just send to current client that switched rooms not everyone
+								currentSocket.emit('updatechat', results);
+							});
+						console.log("socketid", results.socketid);
+						var socket = results.socketid;
+						console.log(socket, "socket");
+						// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
+						// socket.to(results.socketid).emit('privatemessage', 'I just met you');
+						var message = username + ' would like to have private style consultation.';
+						console.log("message", message);
+						// *** WORKING HERE -- problem if you try to connect to stale socket that did not disconnect properly
+						// io.sockets.connected[results.socketid].emit('privatemessage', message);
+						// do a volatile emit in case socket id is stale
+						var currentTime = Date.now();
+						// check if socket is active - heartbeat should have been received within last 60 secs
+						// can be problems 
+						if (chatWithUser in heartbeatObj){
+							var timeElapsed = (currentTime - heartbeatObj[chatWithUser]);
+							console.log(timeElapsed);
+							if (timeElapsed < 60000){
+								if (io.sockets.connected[results.socketid]) io.sockets.connected[results.socketid].volatile.emit('privatemessage', message);
+							} 
+						} else {
+							var message = chatWithUser + " is not currently online";
+							if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
+							// socket.emit('connectedusers', results);
+
+						}
 
 					}
 					
-				
-					// io.sockets.broadcast.to(results.socketid).emit('privatemessage', message);
 				})
 				 
 			})
@@ -214,9 +234,7 @@ io.sockets.on('connection', function (socket) {
 				// update private chat connected users list with a list of  all connected users
 				models.ConnectedUser.find({}, function(err, results){ 
 				if (err) return console.log(err)
-					// console.log("conneced users on join private chat", results);
 					// send to current client that switched to prvt room not everyone
-					// socket.emit('connectedusers', results);
 					// tell all users in the "Private" chat area
 					io.sockets.in("Private").emit('connectedusers', results);
 					// and to current user if in a private chat

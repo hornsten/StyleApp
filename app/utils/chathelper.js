@@ -4,12 +4,38 @@ import io from 'socket.io-client';
 
 
 // const setDataSource = require('./datasource.js');
-var socket = io();
 
+var socketEndpoint = "http://localhost:8080";
+var socket = io(socketEndpoint, {
+    'forceNew': false,
+    'reconnect': false,
+    transports: ['websocket']
+});;
 
-  var chathelper = {
+// Connect
+var chathelper = {
+        // var self = this;
+
+        handle_connection: (store) => {
+            var reduxstore = store;
+            socket.on('connect', () => {
+                var connected = true;
+                if (connected) {
+                    reduxstore.dispatch({type: "CONNECTED", connected: true})
+                }
+                console.log("connected")
+            });
+        
+            socket.on('disconnect', () => {
+                reduxstore.dispatch({type: "CONNECTED", connected: false})
+                console.log("disconnected")
+            });
+        },
+
+        // var chathelper = {
+
         //Opens the Group Component and sets  the default Room
-        startchat: function(username, store){
+        startchat: (username, store) => {
             // for now its the same as add user - this area needs cleaning up once FB auth implemented
             var defaultRoom = "room1";
             socket.emit('connectuser', username, defaultRoom);
@@ -21,7 +47,7 @@ var socket = io();
         },
          //Opens the Private Chat Component and has no default Room - the user must select a private chat
          // ***MAKE THESE DRY startchat and startprvtchat
-        startprvtchat: function(username, store){
+        startprvtchat: (username, store) => {
             // for now its the same as add user - this area needs cleaning up once FB auth implemented
             var defaultRoom = "Private";
             socket.emit('connectuser', username, defaultRoom);
@@ -33,11 +59,11 @@ var socket = io();
         },
         // this handles changes from one group room to another
         // chattype = Private or Group
-        switchRoom: function(newroom, chattype, store){
+        switchRoom: (newroom, chattype, store) => {
             socket.emit('switchRoom', newroom, chattype);
             // display current room -- need to get room for private chat
             // if (chattype = "Group"){
-                console.log(newroom, "newroom", "chattype", chattype);
+                // console.log(newroom, "newroom", "chattype", chattype);
                 store.dispatch({ 
                 type: 'UPDATE_ROOM',
                 currentroom: newroom,
@@ -59,7 +85,7 @@ var socket = io();
         //     })
         // },
         // adds user - maybe do on component will mount wiht FB auth
-        adduser: function(username, store){
+        adduser: (username, store) => {
         // this area needs cleaning up once FB auth implemented
             // var defaultRoom = "room1";
             socket.emit('adduser', username);
@@ -70,8 +96,8 @@ var socket = io();
 
         },
         // sends group chat to server
-        sendchat: function(message, store){
-            console.log("message received", message)
+        sendchat: (message, store) => {
+            // console.log("message received", message)
             socket.emit('sendchat', message);
         },
         // // sends private chat to server
@@ -81,9 +107,9 @@ var socket = io();
 
 // Listeners Section -- these wait for incoming data from the server and the data received triggers actions on the  dom - state changes
         // takes in the latest chat data 
-        updatechat_listener: function(store){
+        updatechat_listener: (store) => {
             socket.on('updatechat', function (data){
-                console.log("is the data in here", data)
+                // console.log("is the data in here", data)
                 store.dispatch({ 
                     type: 'CHAT',
                     chat: data
@@ -91,9 +117,9 @@ var socket = io();
             })
         },
         // takes in the latest list of connected users
-        connected_users: function(store){
+        connected_users: (store) => {
            socket.on('connectedusers', function (response){
-              console.log("in connectedusers", response)
+            //   console.log("in connectedusers", response)
               // update the redux store
               store.dispatch({ 
                   type: 'USER_LIST',
@@ -105,10 +131,10 @@ var socket = io();
 
         // not currently working!!!
         // service messages from server - including requests for private chat
-        server_messages: function(store){
+        server_messages: (store) => {
 
            socket.on('servermessage', function (response){
-              console.log("in connectedusers", response)
+   //           console.log("in connectedusers", response)
               // update the redux store
               store.dispatch({ 
                   type: 'SERVER',
@@ -117,10 +143,10 @@ var socket = io();
             })
         },
 
-        private_message: function(store){
+        private_message: (store) => {
 
            socket.on('privatemessage', function (response){
-              console.log("in private messages", response);
+            //   console.log("in private messages", response);
             //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
             //   var str = response;
             //   var responseToJSON = JSON.parse(JSON.stringify( str ));
@@ -133,21 +159,7 @@ var socket = io();
                   privatemessage: response
               })
             })
-        },
-
-
-//         // Add a connect listener
-// socket.on('connect',function() {
-// 	console.log('Client has connected to the server!');
-// });
-// // Add a connect listener
-// socket.on('message',function(data) {
-// 	console.log('Received a message from the server!',data);
-// });
-// // Add a disconnect listener
-// socket.on('disconnect',function() {
-// 	console.log('The client has disconnected!');
-// });
+        }
     }
 
 export default chathelper;
