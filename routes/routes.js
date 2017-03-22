@@ -1,23 +1,11 @@
 module.exports = function(app, passport){
-    
-
-    // //get the user id
-    // app.get('/getUserId', isLoggedIn, function(req, res){
-    //     res.send(req.user.id);
-    // })
-
-    //check user us authenticated
-
-    app.get('/auth', function(req, res, next){
-        var recentAuth = req.session.recentAuth;
-        req.session.recentAuth = null;
-        res.json({
-            isAuthenticated: req.isAuthenticated(),
-            user: req.user
-        });
-    });
-
     //route for facebook logout
+var path = require('path');
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + "../../public/index.html");
+})
+
 
     app.get('/logout', isLoggedIn, function(req, res){
         req.logout();
@@ -28,12 +16,13 @@ module.exports = function(app, passport){
     app.get('/auth/facebook', passport.authenticate('facebook'));
 
 
-    app.get('/auth/facebook/callback*', passport.authenticate('facebook',{
-        successRedirect: '/',
-        failureRedirect: '/'}), function(req,res){
+   app.get('/auth/facebook/callback', passport.authenticate('facebook',{
+            failureRedirect: '/'}), function(req,res){
+                console.log(req)
             //successful auth  , redirect home 
-            req.session.recentAuth = true;
-            res.redirect('/');
+            res.redirect('http://localhost:8080/#');
+            // res.sendFile(__dirname + "../../public/Home.html");
+            // res.sendFile(path.resolve('public/profile.html'));
         }
         );
 }

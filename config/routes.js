@@ -2,7 +2,8 @@ import React from "react";
 import ReactRouter from "react-router";
 import IndexRoute from "react-router";
 import ChatMain from "../components/ChatMain.js";
-import {Router, Route, hashHistory} from "react-router";
+import Container from "../components/Main.js"
+import { Router, Route, hashHistory } from 'react-router'; 
 
 import ViewChat from "../components/ViewChat.js";
 import LaunchChat from "../components/LaunchChat.js";
@@ -29,8 +30,21 @@ import LaunchChat from "../components/LaunchChat.js";
 
 var routes = (
     <Router history={hashHistory}>
-        <Route path='/' component={ChatMain} />
-    </Router>
+
+      <Route path='/' component={Main} />
+ 
+  </Router>
 )
+
+
+
+/*var routes = (
+    <Router history={hashHistory}>
+        <IndexRoute component={Container} />
+        <Route path='/' component={Container} /> 
+        <Route path='/' component={ChatMain} />
+        
+    </Router>
+)*/
 
 export default routes;

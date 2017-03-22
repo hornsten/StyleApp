@@ -25,10 +25,10 @@ var io = require('socket.io')(http);
 
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server
-var Chat = require("./models/Chat.js");
-var Room = require("./models/Room.js");
-var ConnectedUser = require("./models/ConnectedUser.js");
-var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room};
+// var Chat = require("./models/Chat.js");
+// var Room = require("./models/Room.js");
+// var ConnectedUser = require("./models/ConnectedUser.js");
+// var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room};
 
 app.use( express.static(path.join(__dirname, 'public')));
 
@@ -50,25 +50,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // populate database initially - dont erase existing data
-require("./controllers/apiController.js")(app, models);
-require("./chat_server.js")(io, models);
-
-http.listen(PORT, function(){
-  console.log('listening on *:' + PORT);
-});
+// require("./controllers/apiController.js")(app, models);
+// require("./chat_server.js")(io, models);
 
 
 // MongoDB configuration (Change this URL to your own DB)
-mongoose.connect("mongodb://localhost/userDB");
-var db = mongoose.connection;
+// mongoose.connect("mongodb://localhost/styleapp");
+// var db = mongoose.connection;
 
-db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
-});
+// db.on("error", function(err) {
+//   console.log("Mongoose Error: ", err);
+// });
 
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
+// db.once("open", function() {
+//   console.log("Mongoose connection successful.");
+// });
 
 //Facebook Login oauth routes
 require('./auth/passport')(passport);
