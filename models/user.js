@@ -17,8 +17,9 @@ var UserSchema = new Schema({
     link:String,
   },
   // userprofile: {
+      // isComplete: Boolean
   //   // whatever fields we need for the bio page / profile page
-  //   created_at: {type : Date, required : false, default: Date.now}
+  //   //
   // },
   // email: {type : String, required : false},
   // chat: {
@@ -27,6 +28,19 @@ var UserSchema = new Schema({
   //     socketid: {type : String, required : false, unique : false},
   //     created_at: {type : Date, required : false, default: Date.now}
   // },
+  // magazines: {
+      // title:
+      // content_1:
+      // content_2:
+      // etc
+      //   //whatever info
+      //img1 etc
+      // created_at: {type : Date, required : false, default: Date.now}
+
+
+  // }
+
+  // }
   // created_at: {type : Date, required : false, default: Date.now}
 });
 

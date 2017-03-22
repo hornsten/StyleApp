@@ -31,9 +31,8 @@ app.get('/', function(req, res){
         );
 
 
-// Fiona --- I added my routes here -- please check i did it right!
-	app.get('/chat/rooms', passport.authenticate('facebook',{
-            failureRedirect: '/'}), function(req, res){
+// removed this path from FB auth - cors issue
+	app.get('/chat/rooms', function(req, res){
 		models.Room.find({}, function(err, results){
 		console.log("rooms", results); 
 		if (err) return console.log(err);
