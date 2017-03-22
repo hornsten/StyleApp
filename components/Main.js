@@ -1,22 +1,55 @@
 import React, { Component } from 'react';
-
-
+import {connect } from 'react-redux';
+import store from './Redux/redux.js';
 import NavBar from './NavBar';
 
 
 class Main extends Component{
-    constructor(){
-        super();
-        this.state = {}; //setting initial default state
+    constructor(props){
+        super(props);
+        // this.state = {}; //setting initial default state
     }
 
     render(){
         return(
             <div>
-               <NavBar user= {this.state.user} />
+             
+                  <div className="container">
+
+                    <div className="masthead">
+                       <div className="col-md-10"><NavBar user= {this.props.username} /></div>
+                       
+                    </div>
+
+
+                    <div className="jumbotron">
+                        <h1>Main Header</h1>
+                        
+                    </div>
+
+                    <div className="row main-content">
+                        
+                        Maybe put table of results in here
+                        
+                    </div>
+
+                    
+                    <footer className="footer">
+                        <p>&copy; Company 2017</p>
+                    </footer>
+
+                    </div> 
             </div>
+
         )
     }
 }
 
-export default Main;
+const mapStateToProps = (store,ownProps) => {
+    return {
+        username: store.userState.username,
+    }
+};
+
+
+export default connect(mapStateToProps)(Main);

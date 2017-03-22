@@ -25,8 +25,20 @@ const chatReducer = (state={}, action) => {
         }
     return state;
 }
+//  The below are required and map to the components dispatcher
+const userReducer = (state={}, action) => {
+    switch(action.type){
+        case 'ADD_USERNAME':
+            return Object.assign({},state, {username: action.username});
+        case 'IS_LOGGED_IN':
+            return Object.assign({},state, {loggedin: action.loggedin});
+        }
+    return state;
+}
+
 const reducers = combineReducers({
-    chatState : chatReducer
+    chatState : chatReducer,
+    userState : userReducer,
 })
 
 var store = createStore(reducers);
