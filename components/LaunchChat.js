@@ -4,6 +4,8 @@ import React from "react";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
+ 
+
 
 // import io from 'socket.io-client'
 // // let socket = io(`http://localhost:8000`)
@@ -14,6 +16,7 @@ class LaunchChat extends React.Component {
         super(props)
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
         this.updateUsername = this.updateUsername.bind(this);
+        chathelper.handle_connection(store);
 
     }
     updateUsername(e){
@@ -51,6 +54,7 @@ class LaunchChat extends React.Component {
 const mapStateToProps = (store,ownProps) => {
     return {
         username: store.chatState.username,
+        connected: store.chatState.connected,
 
     }
 };

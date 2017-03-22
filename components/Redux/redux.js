@@ -20,6 +20,8 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {server: action.server});
         case 'PRIVATE_MESSAGE':
             return Object.assign({},state, {privatemessage: action.privatemessage});
+        case 'CONNECTED':
+            return Object.assign({},state, {connected: action.connected});
         }
     return state;
 }

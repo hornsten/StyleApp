@@ -43,9 +43,10 @@ class ChatMain extends React.Component {
 };
 
 const mapStateToProps = (store,ownProps) => {
-
+    
     return {
         username: store.chatState.username,
+        connected: store.chatState.connected,
     }
 };
 
