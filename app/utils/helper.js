@@ -27,8 +27,10 @@ var helpers = {
         
 //    },
   getUserDetails: function(store){
-      return fetch('/user', { credentials : 'same-origin' }).then(function(response){
-           console.log(response);
+
+       return fetch('/user', { credentials : 'same-origin' }).then(function(result){
+           console.log(result);
+            //   store.dispatch({type: "ADD_USER", connected: false})
       })
         //   store.dispatch({type: "ADD_USER", connected: false})
           
@@ -39,7 +41,7 @@ var helpers = {
    getRoomList: function(){
         // sends get request to apiController to query database for all rooms
         return axios.get('/chat/rooms', { credentials : 'same-origin' }).then(function(response) {
-            console.log(response);
+            // console.log(response);
             return response;
         })
         

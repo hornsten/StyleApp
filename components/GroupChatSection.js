@@ -125,8 +125,7 @@ class GroupChatSection extends React.Component {
 };
 
 const mapStateToProps = (store,ownProps) => {
-    console.log("message",store.chatState.message);
-    console.log("chat", store.chatState.chat);
+
     return {
         message: store.chatState.message,
         chat: store.chatState.chat,

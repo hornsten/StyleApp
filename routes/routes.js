@@ -41,13 +41,18 @@ app.get('/', function(req, res){
 	});
 
     app.get('/user', function(req, res){
+        var userdetails = req.session.passport.user;
 		// models.Room.find({}, function(err, results){
-	
-		models.User.find({_id: req.session.passport.user }, function(err, results){
-		console.log("user", results); 
-		if (err) return console.log(err);
-			res.json(results)
-		});
+	   if (userdetails){
+            models.User.find({_id: req.session.passport.user}, function(err, results){
+                    console.log("user", results); 
+                    if (err) return console.log(err);
+                        res.json(results);
+                    });
+       } else {
+           res.json({})
+       }
+		
         // res.json(req.session.passport.user);
 	});
 ////

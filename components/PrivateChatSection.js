@@ -68,7 +68,7 @@ class ChatSection extends React.Component {
         this.textInput.focus();
     }
     render() {
-       console.log("this.props.privatemessage", this.props.privatemessage);
+    //    console.log("this.props.privatemessage", this.props.privatemessage);
        if (this.props.privatemessage){
             var alertMessage = this.props.privatemessage;
        }
@@ -137,8 +137,7 @@ class ChatSection extends React.Component {
 };
 
 const mapStateToProps = (store,ownProps) => {
-    console.log("message",store.chatState.message);
-    console.log("chat", store.chatState.chat);
+ 
     return {
         message: store.chatState.message,
         chat: store.chatState.chat,
