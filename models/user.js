@@ -6,12 +6,12 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   // username: {type : String, required : false},
   facebook: {
-    id: String,
+      id: String,
     token: String,
-    // email: String,
-    // name: String,
+    email: String,
+    name: String,
     // photo: String,
-    link:String,
+    link:String
   },
   // userprofile: {
   //   // whatever fields we need for the bio page / profile page
