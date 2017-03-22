@@ -1,4 +1,8 @@
-module.exports = function(app, passport){
+var request = require('request'); 
+var path = require('path');
+var React = require('react');
+
+module.exports = function(app, passport, models){
     //route for facebook logout
 var path = require('path');
 
@@ -25,6 +29,18 @@ app.get('/', function(req, res){
             // res.sendFile(path.resolve('public/profile.html'));
         }
         );
+
+
+// Fiona --- I added my routes here -- please check i did it right!
+	app.get('/chat/rooms', passport.authenticate('facebook',{
+            failureRedirect: '/'}), function(req, res){
+		models.Room.find({}, function(err, results){
+		console.log("rooms", results); 
+		if (err) return console.log(err);
+			res.json(results)
+		});
+	});
+////
 }
 
 function isLoggedIn(req, res,next){

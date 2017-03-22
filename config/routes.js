@@ -30,7 +30,8 @@ import PrivateChat from "../components/PrivateChat.js";
 
 var routes = (
     <Router history={hashHistory}>
-        <Route IndexRoute path="/" component={ChatMain} >
+        <Route path="/" component={Main} />
+        <Route IndexRoute path="/chat" component={ChatMain} >
             <Route path='/group' component={GroupChat} />
             <Route path='/private' component={PrivateChat} />
         </Route>
