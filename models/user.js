@@ -6,10 +6,12 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   // username: {type : String, required : false},
   facebook: {
-      id: String,
+       id: String,
     token: String,
     email: String,
     name: String,
+    firstName:String,
+    lastName : String,
     // photo: String,
     link:String
   },
