@@ -1,0 +1,231 @@
+#canvas-wrap { position:relative; width:300px; height:600px }
+#canvas-wrap canvas { position:absolute; top:0; left:0; z-index:0 }
+
+.clothes-drop {
+
+height: 100%;
+}
+.clothes-items {
+border: 1px solid silver;
+height: 100%;
+}
+
+.backdrop {
+    height: 65rem;
+    overflow: hidden;
+}
+
+.bg {
+   background-color: #eee;
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+    border: 0.5px dashed grey;
+ 
+}
+
+.closet-container {
+    height: 65rem;
+}
+.closet-block {
+    height: 65rem;
+}
+.closet-tabs-container {
+    height: 200px;
+    /*overflow: hidden;*/
+}
+
+.closet-tabs-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.closet-tabs-container ul li {
+    display: inline-block;
+    padding: 4px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    margin: 0 4px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+     -webkit-transition: all 0.15s ease-out 0s;
+    -moz-transition: all 0.15s ease-out 0s;
+    transition: all 0.15s ease-out 0s;
+
+}
+
+.closet-tabs-container ul li:hover {
+     color: #00d8ff;
+}
+
+img {
+     cursor: move; 
+     overflow: hidden;
+
+}
+
+.target {
+
+    left: 0;
+    top: 0;
+    display:block;
+    position: absolute;
+}
+
+.top {
+
+height: 30rem;
+width: 29rem;
+z-index: 5;
+
+}
+
+.bottom {
+z-index: 4;
+width:23rem;
+height: 45rem;
+ }
+
+.accessory {
+z-index: 5;
+width: 10rem;
+height: 10rem;
+}
+
+.bag {
+ height: 15rem;
+ width:15rem;
+z-index: 6;
+
+}
+.shoes {   
+    height: 15rem;
+    width: 15rem;
+}
+
+.flair {
+    height: 11rem;
+    width: 11rem;
+}
+
+
+.backdrop {
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+.teal {
+background-image: url('../img/teal-stripe.jpg');
+}
+
+.paris {
+background-image: url('../img/paris-background.jpg');
+}
+
+.mag {
+ background-image: url('../img/mag-background.jpg');   
+}
+.full {
+     background: transparent;
+    left: 0px;
+    top: 0px;
+    display:block;
+    position: absolute;
+   
+}
+
+.rel {
+    position: relative;
+}
+
+.poly-top {
+left: 1rem;
+top: 1rem;
+transform: matrix(0.99978, -0.02083, 0.02083, 0.99978, 0, 0);
+}
+.poly-bottom{
+left: 25rem;
+ top: 2rem;
+transform: matrix(0.98582, -0.16781, 0.16781, 0.98582, 0, 0);
+}
+.poly-bag{
+left: 10rem;
+top: 29rem;
+transform: matrix(0.95654, 0.29162, -0.29162, 0.95654, 0, 0);
+}
+.poly-shoes{
+left: 13rem;
+top: 48rem;
+ transform: matrix(0.90439, 0.42666, -0.42666, 0.90439, 0, 0);
+  z-index: 3;
+}
+.poly-flair{
+left: 24rem;
+top: 45rem;
+z-index:4;
+}
+.poly-accessory{
+left: 3rem;
+top: 34rem;
+transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+.mag-top {
+left: 1rem;
+top: 1rem;
+ 
+}
+.mag-bottom{
+left: 30rem;
+ top: 17rem;
+}
+.mag-bag{
+left: 10rem;
+top: 29rem;
+}
+.mag-shoes{
+left: 27rem;
+top: 40rem;
+z-index: 5;
+}
+.mag-flair{
+left: 24rem;
+top: 30rem;
+z-index: 5;
+}
+.mag-accessory{
+left: 3rem;
+top: 34rem;
+transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+.paris-top {
+left: 0;
+top: 0;
+}
+.paris-bottom{
+left: 40rem;
+ top: 17rem;
+}
+.paris-bag{
+left: 30rem;
+top: 6rem;
+}
+.paris-shoes{
+left: 27rem;
+top: 40rem;
+z-index: 5;
+}
+.paris-flair{
+left: 12rem;
+top: 40rem;
+z-index: 5;
+}
+.paris-accessory{
+left: 3rem;
+top: 34rem;
+transform: matrix(1, 0, 0, 1, 0, 0);
+}
