@@ -23,28 +23,32 @@ class NavBar extends Component{
         }
     }
     handleLogout(){
-        // do something with FB auth
+        // do something with FB auth  ----
         store.dispatch({type: "IS_LOGGED_IN", loggedin: false})
     }
     render(){
+        console.log(this.props.loggedin);
+         console.log(this.props.username);
         const loggedin = this.props.loggedin;
         const user = this.props.username;
         var loginStatus = "";
+        var component = this;
         // hardcoding for now
         // this.props.loggedin = true;
-        var isloggedin = false; ///this needs to be replace dwith this.props.login
-        if (isloggedin === false){
+        var isloggedin = this.props.loggedin; ///this needs to be replace dwith this.props.login
+        
+            if (isloggedin === false){
             loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between"><li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
             style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>
 
             <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button"></i>Login with facebook</a>
             </li></ul>)
-        } else {
+            } else {
             // need to put link to logout part....
                 loginStatus =  <ul className="nav navbar-nav text-md-center justify-content-md-between"><li className="nav-item">
                         <a className="nav-button log-out-button show" href= "#" onClick={() => this.handleLogout()}> Log Out</a>
                     </li>
-                                        <li className="nav-item">
+                    <li className="nav-item">
                         <a className="nav-link" href="#">Create</a>
                     </li>
                     <li className="nav-item">
@@ -64,7 +68,20 @@ class NavBar extends Component{
                     </li>
                     </ul>
 
-        }
+            }
+
+
+if (this.props.loggedin === true){
+   var loggedInUser = <div className="col-md-4">
+        <span className="navbar-text">
+                    
+                Logged in: {user}
+        
+        </span>
+    </div>
+}
+        
+        
    
 
         return(
@@ -81,13 +98,7 @@ class NavBar extends Component{
                         </nav>
                     </div>
                     </div>
-                    <div className="col-md-4">
-                        <span className="navbar-text">
-                                  
-                               Logged in: {this.props.username}  USERNAME
-                       
-                        </span>
-                    </div>
+                    {loggedInUser}
                 </div>
 
 

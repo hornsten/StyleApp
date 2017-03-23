@@ -19,9 +19,9 @@ var app = express();
 app.use(cookieParser());
 // Run Morgan for Logging
 app.use(logger("dev"));
-
+var allowedOrigins = "http://localhost:* http://127.0.0.1:* https://www.facebook.com/*";
 var http = require('http').Server(app);
-var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000});
+var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000, 'origins': allowedOrigins});
 
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server

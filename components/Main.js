@@ -21,7 +21,7 @@ class Main extends Component{
                   <div className="container">
 
                     <div className="masthead">
-                       <div className="col-md-10"><NavBar user= {this.props.username} /></div>
+                       <div className="col-md-10"><NavBar /></div>
                        
                     </div>
 
@@ -49,11 +49,11 @@ class Main extends Component{
     }
 }
 
-const mapStateToProps = (store,ownProps) => {
-    return {
-        username: store.userState.username,
-    }
-};
+// const mapStateToProps = (store,ownProps) => {
+//     return {
+//         username: store.userState.username,
+//     }
+// };
 
 
-export default connect(mapStateToProps)(Main);
+export default Main;

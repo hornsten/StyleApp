@@ -31,8 +31,17 @@ app.get('/', function(req, res){
         );
 
 
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header('Access-Control-Allow-Methods', 'GET');
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+
 // removed this path from FB auth - cors issue
 	app.get('/chat/rooms', function(req, res){
+        //to allow CORS
+        
 		models.Room.find({}, function(err, results){
 		console.log("rooms", results); 
 		if (err) return console.log(err);
@@ -41,20 +50,28 @@ app.get('/', function(req, res){
 	});
 
     app.get('/user', function(req, res){
+                //to allow CORS
+        // res.header("Access-Control-Allow-Origin", "*");
+        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var userdetails = req.session.passport.user;
 		// models.Room.find({}, function(err, results){
 	   if (userdetails){
             models.User.find({_id: req.session.passport.user}, function(err, results){
-                    console.log("user", results); 
-                    if (err) return console.log(err);
-                        res.json(results);
+                    console.log("user detaiks", results); 
+                    
+                    res.json(results);
+                    // if (err) return console.log(err);
+                        
                     });
        } else {
-           res.json({})
+            
+            res.json({})
        }
 		
         // res.json(req.session.passport.user);
 	});
+ // to allow CORS
+
 ////
 }
 
