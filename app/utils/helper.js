@@ -35,7 +35,7 @@ var helpers = {
             var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
             console.log(username);
             console.log(store);
-            store.dispatch({type: "ADD_USER", username: username})
+            store.dispatch({type: "ADD_USERNAME", username: username})
             store.dispatch({type: "IS_LOGGED_IN", loggedin: "true"})
       })
   

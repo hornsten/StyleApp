@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import { Link } from 'react-router';
+import chathelper from "../app/utils/chathelper.js";
 
 class NavBar extends Component{
     constructor(props) {
@@ -35,18 +36,14 @@ class NavBar extends Component{
         var component = this;
         // hardcoding for now
         // this.props.loggedin = true;
-        var isloggedin = this.props.loggedin; ///this needs to be replace dwith this.props.login
-        
-            if (isloggedin === false){
-            loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between"><li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
-            style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>
+        var isloggedin = this.props.loggedin; 
+        //   <a className="nav-button log-out-button show" href= "#" onClick={() => this.handleLogout()}> Log Out</a>
 
-            <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button"></i>Login with facebook</a>
-            </li></ul>)
-            } else {
-            // need to put link to logout part....
-                loginStatus =  <ul className="nav navbar-nav text-md-center justify-content-md-between"><li className="nav-item">
-                        <a className="nav-button log-out-button show" href= "#" onClick={() => this.handleLogout()}> Log Out</a>
+            if (isloggedin){
+ // need to put link to logout part....
+                   loginStatus =  <ul className="nav navbar-nav text-md-center justify-content-md-between">
+                   <li className="nav-item">
+                        <Link to='/' onClick={() => this.handleLogout()}>Log Out</Link>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#">Create</a>
@@ -67,11 +64,20 @@ class NavBar extends Component{
                         </div>
                     </li>
                     </ul>
+            
+            } else {
+                loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between"><li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
+            style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>
+
+            <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button"></i>Login with facebook</a>
+            </li></ul>)
+           
+
 
             }
 
 
-if (this.props.loggedin === true){
+if (isloggedin){
    var loggedInUser = <div className="col-md-4">
         <span className="navbar-text">
                     

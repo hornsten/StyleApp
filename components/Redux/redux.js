@@ -27,10 +27,13 @@ const chatReducer = (state={}, action) => {
 }
 //  The below are required and map to the components dispatcher
 const userReducer = (state={}, action) => {
+  
     switch(action.type){
         case 'ADD_USERNAME':
+            console.log("add usernamer", action.username);
             return Object.assign({},state, {username: action.username});
         case 'IS_LOGGED_IN':
+          console.log("logged in", action.loggedin);
             return Object.assign({},state, {loggedin: action.loggedin});
         }
     return state;

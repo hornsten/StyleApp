@@ -6,6 +6,7 @@ import Main from "../components/Main.js"
 import {Router, Route, hashHistory} from "react-router";
 import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
+import NavBar from "../components/NavBar.js";
 
 
 // e.g. sample
@@ -30,10 +31,12 @@ import PrivateChat from "../components/PrivateChat.js";
 
 var routes = (
     <Router history={hashHistory}>
-        <Route path="/" component={Main} />
-        <Route IndexRoute path="/chat" component={ChatMain} >
-            <Route path='/group' component={GroupChat} />
-            <Route path='/private' component={PrivateChat} />
+        <Route path="/" component={Main} >
+            <Route IndexRoute path="/" component={NavBar} />
+            <Route path="/chat" component={ChatMain} >
+                <Route path='/group' component={GroupChat} />
+                <Route path='/private' component={PrivateChat} />
+            </Route>
         </Route>
     </Router>
 )

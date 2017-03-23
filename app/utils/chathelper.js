@@ -16,20 +16,33 @@ var socket = io(socketEndpoint, {
 var chathelper = {
         // var self = this;
 
-        handle_connection: (store) => {
+        handle_connection: (store, username) => {
             var reduxstore = store;
             socket.on('connect', () => {
                 var connected = true;
                 if (connected) {
                     reduxstore.dispatch({type: "CONNECTED", connected: true})
                 }
-                console.log("connected")
+                socket.emit('adduser', username);
+                console.log("connected", username);
             });
         
             socket.on('disconnect', () => {
                 reduxstore.dispatch({type: "CONNECTED", connected: false})
                 console.log("disconnected")
             });
+        },
+
+ 
+        adduser: (username, store) => {
+        // this area needs cleaning up once FB auth implemented
+            // var defaultRoom = "room1";
+           
+            // store.dispatch({ 
+            //   type: 'UPDATE_ROOM',
+            //   currentroom: defaultRoom,  // default room
+            // })
+
         },
 
         // var chathelper = {
@@ -76,25 +89,7 @@ var chathelper = {
             // }
         
         },
-        // this handles changes from private chat room to another
-        // privateChat: function(chatuser, store){
-        //     socket.emit('switchPrivateRoom', chatuser);
-        //     store.dispatch({ 
-        //       type: 'UPDATE_ROOM',
-        //       currentroom: chatuser,
-        //     })
-        // },
-        // adds user - maybe do on component will mount wiht FB auth
-        adduser: (username, store) => {
-        // this area needs cleaning up once FB auth implemented
-            // var defaultRoom = "room1";
-            socket.emit('adduser', username);
-            // store.dispatch({ 
-            //   type: 'UPDATE_ROOM',
-            //   currentroom: defaultRoom,  // default room
-            // })
 
-        },
         // sends group chat to server
         sendchat: (message, store) => {
             // console.log("message received", message)

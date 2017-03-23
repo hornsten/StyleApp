@@ -30,6 +30,7 @@ class Main extends Component{
                         <h1>Main Header</h1>
                         
                     </div>
+                    {this.props.children}
 
                     <div className="row main-content">
                         

@@ -14,6 +14,7 @@ class ChatMain extends React.Component {
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handlePrvtClick = this.handlePrvtClick.bind(this);
+        chathelper.handle_connection(store, this.props.username);
     }
     handleGroupClick() {
         // dispatches updates to redux store to update the state 
@@ -35,7 +36,6 @@ class ChatMain extends React.Component {
                         <li><Link to='/private' onClick={this.handlePrvtClick.bind(this)}>Private Chat</Link></li>
                     </ul>
                     </div>
-                    <LaunchChat />
                     {this.props.children}
                     
                 </div>);
