@@ -22,6 +22,9 @@ class GroupChatSection extends React.Component {
         chathelper.server_messages(store);
         chathelper.private_message(store);
 
+
+
+
     }
     addMessage(e, message) {
         // tell server to execute 'sendchat' and send along one paramete
@@ -33,6 +36,23 @@ class GroupChatSection extends React.Component {
             })
         }
     }
+    uploadFile(e) {
+        // tell server to execute 'sendchat' and send along one paramete
+        // if (e.keyCode == 13) {
+        //     chathelper.sendchat(message);
+        //     store.dispatch({ 
+        //         type: 'ADD_MESSAGE',
+        //         message: ""
+        //     })
+        // }
+        console.log("calling this", e.target.value);
+  
+
+        // var uploadelem = this.fileInput.files;
+        // console.log("uploadelem", uploadelem);
+        chathelper.file_upload(e);
+        
+    }
     updateMessage(e){
         store.dispatch({ 
             type: 'ADD_MESSAGE',
@@ -42,6 +62,9 @@ class GroupChatSection extends React.Component {
     }
     componentDidMount() {
         this.textInput.focus();
+        // var uploadelem = this.fileInput.files;
+        // console.log("uploadelem", uploadelem);
+        // chathelper.file_upload(uploadelem);
         
     }
     componentDidUpdate(){
@@ -55,6 +78,7 @@ class GroupChatSection extends React.Component {
         //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
         // node.scrollTo(0,node.body.scrollHeight);
     }
+    
     render() {
 
 
@@ -62,9 +86,17 @@ class GroupChatSection extends React.Component {
        if (this.props.chat){
            if (this.props.chat.length !== 0){
                 var resultComponents = this.props.chat.map(function(result) {
+                    console.log(result.type)
+                if (result.type === "file"){
+                    var chatmessage = <img src={result.message} alt="File Not Found" />
+                    console.log("chatmessage", chatmessage);
+                } else {
+                    var chatmessage =  <div className="col-md-8">{result.message}</div>
+                }
+              
                 return <div className="row results" key={result._id}>
                     <div className="col-md-2"><strong>{result.username}</strong></div> 
-                    <div className="col-md-8"> {result.message}</div>
+                            { chatmessage }
                     <div className="col-md-2"></div>
                 </div>
                 });
@@ -105,7 +137,7 @@ class GroupChatSection extends React.Component {
                     <div className="row">
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
-
+                                <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" defaultValue={this.props.file} onChange={this.uploadFile} /><br /> 
                                 <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"   onKeyUp={(e) => this.addMessage(e, this.props.message)}  ref={input => this.textInput = input} />
     
                             </div>
@@ -128,9 +160,11 @@ const mapStateToProps = (store,ownProps) => {
 
     return {
         message: store.chatState.message,
+        file: store.chatState.file,
         chat: store.chatState.chat,
         server: store.chatState.server,
         privatemessage: store.chatState.privatemessage,
+
     }
 
 };

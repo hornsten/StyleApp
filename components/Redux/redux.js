@@ -22,6 +22,8 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {privatemessage: action.privatemessage});
         case 'CONNECTED':
             return Object.assign({},state, {connected: action.connected});
+        case 'FILE_UPLOAD':
+            return Object.assign({},state, {file: action.file});
         }
     return state;
 }

@@ -26,7 +26,7 @@ module.exports = function (passport) {
         // redirect_uri = "https://www.facebook.com/connect/login_success.html
         // passReqToCallback : true,
         // profileFields: ['id', 'emails', 'name'] //This
-         profileFields: ['id', 'emails', 'name']
+        sprofileFields: ['id', 'email', 'first_name', 'last_name']
 
 
     },
