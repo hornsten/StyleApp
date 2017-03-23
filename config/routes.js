@@ -7,7 +7,7 @@ import {Router, Route, hashHistory} from "react-router";
 import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
 import NavBar from "../components/NavBar.js";
-
+import ClosetPicker from "../components/ClosetPicker.js";
 
 // e.g. sample
 // var routes = (s
@@ -37,6 +37,7 @@ var routes = (
                 <Route path='/group' component={GroupChat} />
                 <Route path='/private' component={PrivateChat} />
             </Route>
+            <Route path='/closet' component={ClosetPicker} />
         </Route>
     </Router>
 )
