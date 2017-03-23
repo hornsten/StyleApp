@@ -41,7 +41,7 @@ io.sockets.on('connection', function (socket) {
         var fs = require('fs');
        console.log("getggine  in here");
         //path to store uploaded files (NOTE: presumed you have created the folders)
-        var fileName = './public/assets/img/' + name;
+        var fileName = __dirname + '/public/assets/img/' + name;
 		console.log(fileName);
 		
 		
@@ -56,7 +56,8 @@ io.sockets.on('connection', function (socket) {
 					// save to data base
 					// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
 					// console.log(message);
-					var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: fileName, type: "file", created_at:  Date.now()});
+					var savefileName = '/assets/img/' + name;
+					var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
 					newChatMessage.save().then(function(){
 							var cutoff = new Date();
 							cutoff.setDate(cutoff.getDate()-1);
