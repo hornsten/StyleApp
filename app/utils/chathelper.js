@@ -1,7 +1,8 @@
 // import io from 'socket.io-client'
 // let socket = io(`http://localhost:8000`)
 import io from 'socket.io-client';
-
+// for file uploads
+import SocketIOFileUpload from 'socketio-file-upload';
 
 // const setDataSource = require('./datasource.js');
 
@@ -23,6 +24,7 @@ var chathelper = {
                 if (connected) {
                     reduxstore.dispatch({type: "CONNECTED", connected: true})
                 }
+
                 socket.emit('adduser', username);
                 console.log("connected", username);
             });
@@ -136,6 +138,28 @@ var chathelper = {
                   server: response
               })
             })
+        },
+        
+        file_upload: (e) => {
+            var files = e.target.files || e.dataTransfer.files;
+            console.log(files, "files");
+            if (files) {
+                 console.log(files[0], "in here?");
+                //send only the first one
+                var file = files[0];
+                //read the file content and prepare to send it
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    console.log('Sending file...');
+                    //get all content
+                    var buffer = e.target.result;
+                    //send the content via socket
+                    socket.emit('send-file', file.name, buffer);
+                };
+                 reader.readAsBinaryString(file);
+            }
         },
 
         private_message: (store) => {

@@ -10,15 +10,24 @@ var session = require("express-session");
 var express = require('express');
 var path =require('path');
 var cookieSecret = 'anything';
-
+var cors = require('express-cors');
 
 // var methodOverride = require('method-override');
 var PORT = process.env.PORT || 8080;
 var app = express();
 
+
+
 app.use(cookieParser());
 // Run Morgan for Logging
 app.use(logger("dev"));
+// to handle CORS issues when doing a GET locally after Auth with Facebook 
+// turns out it is a problem on the FB side! Need to let them know to allow authentication from localhost:8080.
+app.use(cors({
+    allowedOrigins: [
+        'facebook.com', 'localhost:8080',
+    ]
+}))
 var allowedOrigins = "http://localhost:* http://127.0.0.1:* https://www.facebook.com/*";
 var http = require('http').Server(app);
 var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000, 'origins': allowedOrigins});
@@ -56,7 +65,7 @@ app.use(passport.session());
 require('./auth/passport')(passport);
 require('./routes/routes.js')(app, passport, models);
 // require("./controllers/apiController.js")(app, models);
-require("./chat_server.js")(io, models);
+require("./chat_server.js")(app, io, models);
 
 
 http.listen(8080, function(){
