@@ -31,10 +31,12 @@ var helpers = {
   getUserDetails: function(store){
 
        return axios.get('/user', { credentials : 'same-origin' }).then(function(result){
-            console.log("result", result.data);
-            var username = result.data.facebook.firstName +" " + result.data.facebook.lastName;
+            console.log("result", result.data[0]);
+            var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
+            console.log(username);
+            console.log(store);
             store.dispatch({type: "ADD_USER", username: username})
-            store.dispatch({type: "IS_LOGGED_IN", loggedin: true})
+            store.dispatch({type: "IS_LOGGED_IN", loggedin: "true"})
       })
   
         
