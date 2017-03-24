@@ -140,27 +140,38 @@ var chathelper = {
             })
         },
         
-        file_upload: (e) => {
-            var files = e.target.files || e.dataTransfer.files;
-           
-            if (files) {
-                console.log(e.target.result, "in here?");
-                //send only the first one
-                var file = files[0];
-                //read the file content and prepare to send it
+        file_upload: (e, sourceType) => {
+            // sourceType ="upload" or "dnd"
+            
+            var url = e.dataTransfer.getData('text/plain-text');
+           console.log(url);
+            if (sourceType === "upload"){
+                var files = e.target.files || e.dataTransfer.files 
+                if (files) {
+                    //send only the first one
+                    var file = files[0];
+                    //read the file content and prepare to send it
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        console.log('Sending file...');
+                        //get all content
+                        var buffer = e.target.result;
+                    
+                        //send the content via socket
+                        socket.emit('send-file', file.name, buffer);
+                    };
+                    //  reader.readAsDataURL(file);
+                    reader.readAsBinaryString(file);
+                } 
 
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    console.log('Sending file...');
-                    //get all content
-                    var buffer = e.target.result;
-                   
-                    //send the content via socket
-                    socket.emit('send-file', file.name, buffer);
-                };
-                 reader.readAsBinaryString(file);
+            } else if (sourceType === "dnd"){
+ console.log(url);
+                // if (url !== ""){
+                     socket.emit('send-url', url);
+                // }
             }
+ 
+
         },
 
         private_message: (store) => {

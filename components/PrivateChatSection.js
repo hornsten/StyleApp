@@ -26,6 +26,28 @@ class ChatSection extends React.Component {
         //     this.updatechat(username, data);
         // })
     }
+     ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
+    ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
+    ondrop(e) {
+            console.log(" is this being called ondrop");
+            this.className = 'success';
+            e.preventDefault && e.preventDefault();
+            chathelper.file_upload(e, "dnd");
+            // this.className = '';
+            // e.dataTransfer.getData('text/plain-text');
+        //    console.log(url, "url");
+        //     // now do something with:
+        //     var files = e.dataTransfer.files;
+
+        //     // process all File objects
+        //     // for (var i = 0, file; file = files[i]; i++) {
+        //         console.log( files, "files");
+        //     // }
+
+           
+
+            return false;
+};
     // updatechat(username, data){
     //         console.log("callint this udate caht function", username, data);
     //         store.dispatch({ 
@@ -74,14 +96,25 @@ class ChatSection extends React.Component {
        }
        var chatmessage = this.props.chat;
        if (this.props.chat){
-            var resultComponents = this.props.chat.map(function(result) {
-            return <div className="row results" key={result._id}>
-                <div className="col-md-2"><strong>{result.username}</strong></div> 
-                <div className="col-md-8"> {result.message}</div>
-                <div className="col-md-2"></div>
-            </div>
-            // chatdisplay = <div id="conversation"><strong>{chatmessage.username}</strong> {chatmessage.message}</div>
-        });
+           if (this.props.chat.length !== 0){
+                var resultComponents = this.props.chat.map(function(result) {
+                    console.log(result.type)
+                if (result.type === "file"){
+                    var chatmessage = <img src={result.message} alt="File Not Found" />
+                    console.log("chatmessage", chatmessage);
+                } else {
+                    var chatmessage =  <div className="col-md-8">{result.message}</div>
+                }
+              
+                return <div className="row results" key={result._id}>
+                    <div className="col-md-2"><strong>{result.username}</strong></div> 
+                            { chatmessage }
+                    <div className="col-md-2"></div>
+                </div>
+                });
+
+           }
+
        }
        if (this.props.currentroom === "Private"){
             var message = <div className="col-xs-12 col-md-12">You are in the <strong> {this.props.currentroom} </strong> chat area.</div>
@@ -119,6 +152,11 @@ class ChatSection extends React.Component {
                     <div className="row">
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
+                                 <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}> Drop here</div>
+                                <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" defaultValue={this.props.file} onChange={this.uploadFile} /><br /> 
+             
+        
+
                                 <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"  onKeyUp={(e) => this.addMessage(e, this.props.message)}  ref={input => this.textInput = input}/>
                             </div>
                         <div className="col-md-2"></div>

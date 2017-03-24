@@ -9,7 +9,8 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client';
-import FileDragAndDrop from 'react-file-drag-and-drop';
+
+
 // let socket = io(`http://localhost:8000`)
 var socket = io.connect();
 
@@ -52,7 +53,7 @@ class GroupChatSection extends React.Component {
 
         // var uploadelem = this.fileInput.files;
         // console.log("uploadelem", uploadelem);
-        chathelper.file_upload(e);
+        chathelper.file_upload(e, "upload");
         
     }
     updateMessage(e){
@@ -67,8 +68,41 @@ class GroupChatSection extends React.Component {
         // var uploadelem = this.fileInput.files;
         // console.log("uploadelem", uploadelem);
         // chathelper.file_upload(uploadelem);
+
+            // var doc = this.refs.drop;
+             
+
+
         
     }
+//    ondragstart(e) { 
+//                 this.className = 'hover'; 
+//                 e.dataTransfer.setData('text/html', this.innerHTML); 
+//                 return false; 
+//     }
+
+    ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
+    ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
+    ondrop(e) {
+            console.log(" is this being called ondrop");
+            this.className = 'success';
+            e.preventDefault && e.preventDefault();
+            chathelper.file_upload(e, "dnd");
+            // this.className = '';
+            // e.dataTransfer.getData('text/plain-text');
+        //    console.log(url, "url");
+        //     // now do something with:
+        //     var files = e.dataTransfer.files;
+
+        //     // process all File objects
+        //     // for (var i = 0, file; file = files[i]; i++) {
+        //         console.log( files, "files");
+        //     // }
+
+           
+
+            return false;
+};
     componentDidUpdate(){
         // scroll to bottom of chat history
         var node = this.refs.chathistory;
@@ -80,34 +114,7 @@ class GroupChatSection extends React.Component {
         //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
         // node.scrollTo(0,node.body.scrollHeight);
     }
-//     preventDefault(event) {
-//     event.preventDefault();
-//   }
 
-//   drop(event) {
-
-//     event.preventDefault();
-
-//     var data;
-
-//     try {
-//       data = JSON.parse(event.dataTransfer.getData('text'));
-//     } catch (e) {
-//       // If the text data isn't parsable we'll just ignore it.
-//       return;
-//     }
-
-//     // Do something with the data
-//     window.alert(JSON.stringify(data, null, 2));
-
-//   }
-handleDrop(dataTransfer) {
-    var files = dataTransfer.files;
-    ///To do tmr
-    // chathelper.file_upload("file", e, "file");
- 
-    // Do something with dropped files... 
-  }
  
 
     render() {
@@ -173,16 +180,13 @@ handleDrop(dataTransfer) {
                     <div className="row">
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
+                            <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}> Drop here</div>
                                 <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" defaultValue={this.props.file} onChange={this.uploadFile} /><br /> 
-                                      <div>
-        <h1>Please drop your files</h1>
-        <div style={style}>
-          <FileDragAndDrop onDrop={this.handleDrop}>
-            Drop files here...
-          </FileDragAndDrop>
-        </div>
-      </div>
+             
+        
                                 <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"   onKeyUp={(e) => this.addMessage(e, this.props.message)} onDrop={this.uploadFile} ref={input => this.textInput = input} />
+
+                                                        
                             </div>
                         <div className="col-md-2"></div>
                     </div>
