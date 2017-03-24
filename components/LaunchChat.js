@@ -16,7 +16,7 @@ class LaunchChat extends React.Component {
         super(props)
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
         this.updateUsername = this.updateUsername.bind(this);
-        chathelper.handle_connection(store);
+        // chathelper.handle_connection(store);
 
     }
     updateUsername(e){
