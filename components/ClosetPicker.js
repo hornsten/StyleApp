@@ -6,7 +6,7 @@ import Clothesbin from './Clothesbin';
 import Image from './Image';
 import ItemTypes from './ItemTypes';
 import ClosetItems from "./ClosetItems.js";
-// var html2canvas = require('html2canvas');
+var html2canvas = require('html2canvas');
 
 
 @DragDropContext(HTML5Backend)
