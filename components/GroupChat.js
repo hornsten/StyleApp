@@ -19,12 +19,27 @@ class GroupChat extends React.Component {
         // this.handleUserData = this.handleUserData.bind(this);
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
+        // this.ondragstart = this.ondragstart.bind(this);
 
     }
    componentDidMount(){
         helper.getRoomList().then((response) => {
             this.handleRoomData(response)
-        })      
+        })   
+            // var img = window.refs.dragimg.sgetDOMNode().src;
+            var img = this.refs.drag;
+            console.log("img", img);
+           
+           
+           
+            
+            // doc.allowDrop = function(event) {
+            //    console.log(event, "allowDrop");
+            //     event.preventDefault();
+            // }
+           
+
+        
     }
 
     handleRoomData(response){
@@ -40,19 +55,46 @@ class GroupChat extends React.Component {
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
     }
-    dragStart(event){
-//         event.preventDefault();
-//         // e.dataTransfer.setData('file'); 
-//         var files = event.dataTransfer.files;
-//         console.log(files);
-// //   var file = event.dataTransfer.mozGetDataAt("application/x-moz-file", 0);
-//   console.log(file);
-//   // dt.mozSetDataAt("image/png", stream, 0);
-// dt.mozSetDataAt("application/x-moz-file", file, 0);
-// // dt.setData("text/uri-list", imageurl);
-// dt.setData("text/plain", imageurl);
 
+
+    ondragstart(e){
+        // var imageSrc = ReactDOM.findDOMNode(this.drag)
+        // console.log("img", imageSrc);
+        // e.dataTransfer.setData('text/uri-list', imageSrc);
+   
+        // e.dataTransfer.setData('text/uri-list',   e.target.src);
+        // /console.log(e.target.result, "result");
+        // console.log(result);
+        // e.target.src gives the url of the file but I only want the file username
+        // so this should be put in the id field and grabbed from there
+        e.dataTransfer.setData('text/plain-text',e.target.id );
+        console.log(e.target.id, "id");
+        // img.dataTransfer.setData('text/plain', 'Drag Me Button');
+        this.className = 'hover'; 
+        return false;
     }
+    // ondragover(e) { this.className = 'hover'; return false; };
+//     ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
+// //     ondrop(e) {
+// //             console.log(" is this being called ondrop");
+// //             this.className = 'success';
+// //             e.preventDefault && e.preventDefault();
+// //             this.className = '';
+
+// //             // now do something with:
+// //             var files = e.dataTransfer.files;
+
+// //             // process all File objects
+// //             // for (var i = 0, file; file = files[i]; i++) {
+// //                 console.log( files, "files");
+// //             // }
+
+           
+
+// //             return false;
+// };
+
+
     render() {
     
         return (<div className="row">
@@ -63,7 +105,9 @@ class GroupChat extends React.Component {
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-4 col-md-4">
-                            <img src="assets/img/github.png"  />
+                             <img id="github.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/github.png" /> Drop here
+                                <img id="linkedin.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/linkedin.png" /> Drop here
+
                         </div> 
                     </div>);
         }

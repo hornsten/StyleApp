@@ -81,6 +81,69 @@ io.sockets.on('connection', function (socket) {
         });
 
     });
+
+	socket.on('send-url', function(url) {
+		
+		// maybe just save name and pull it back later on correct path
+		var savefileName = '/assets/img/' + url;
+		console.log(savefileName); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
+		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
+		newChatMessage.save().then(function(){
+				var cutoff = new Date();
+				cutoff.setDate(cutoff.getDate()-1);
+				models.Chat
+					.find({room: socket.room, "created_at": {"$gte": cutoff }})
+					.sort({'date': -1})
+					.exec(function(err, results) {
+						if (err) return console.log(err);
+						// to everyone in that room including current client
+						// console.log("socket room for sendngchat back", socket.room);
+						// don't want any broadcasts to all private users not in 1-1 chat
+						if (socket.room !== "Private"){
+							io.sockets.in(socket.room).emit('updatechat', results);
+						}
+						
+					});
+				})	
+
+	});
+		
+		// // save to data base
+
+        // fs.open(fileName, 'a', 0755, function(err, fd) {
+        //     if (err) throw err;
+
+        //     fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
+        //         fs.close(fd, function() {
+        //             console.log('File saved successful!');
+		// 			// save to data base
+		// 			// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
+		// 			// console.log(message);
+		// 			var savefileName = '/assets/img/' + name;
+		// 			var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
+		// 			newChatMessage.save().then(function(){
+		// 					var cutoff = new Date();
+		// 					cutoff.setDate(cutoff.getDate()-1);
+		// 					models.Chat
+		// 						.find({room: socket.room, "created_at": {"$gte": cutoff }})
+		// 						.sort({'date': -1})
+		// 						.exec(function(err, results) {
+		// 							if (err) return console.log(err);
+		// 							// to everyone in that room including current client
+		// 							// console.log("socket room for sendngchat back", socket.room);
+		// 							// don't want any broadcasts to all private users not in 1-1 chat
+		// 							if (socket.room !== "Private"){
+		// 								io.sockets.in(socket.room).emit('updatechat', results);
+		// 							}
+									
+		// 						});
+		// 					})	
+
+        //         });
+        //     })
+        // });
+
+
 	// TO DO on connection automatically join room1 so put first two function connected user and adduser in the "on connection"" part directoy
 	// Add user to database on connection then update room later when they select a room / prvt chat
 	socket.on('adduser', function(username){

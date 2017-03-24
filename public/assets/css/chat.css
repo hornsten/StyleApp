@@ -29,6 +29,12 @@
     margin-bottom: 30px;
     
 }
+.hover {
+    background-color: yellow;
+}
+.success {
+    background-color: green;
+}
 #username {
     width:200px;
 }

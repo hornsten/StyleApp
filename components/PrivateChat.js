@@ -39,6 +39,22 @@ class PrivateChat extends React.Component {
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
     }
+    ondragstart(e){
+        // var imageSrc = ReactDOM.findDOMNode(this.drag)
+        // console.log("img", imageSrc);
+        // e.dataTransfer.setData('text/uri-list', imageSrc);
+   
+        // e.dataTransfer.setData('text/uri-list',   e.target.src);
+        // /console.log(e.target.result, "result");
+        // console.log(result);
+        // e.target.src gives the url of the file but I only want the file username
+        // so this should be put in the id field and grabbed from there
+        e.dataTransfer.setData('text/plain-text',e.target.id );
+        console.log(e.target.id, "id");
+        // img.dataTransfer.setData('text/plain', 'Drag Me Button');
+        this.className = 'hover'; 
+        return false;
+    }
     render() {
         // console.log(this.props.rooms, "this.props.rooms");
         return (<div className="row">
@@ -49,7 +65,9 @@ class PrivateChat extends React.Component {
                             <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-2 col-md-2">
-                           Favorite Stylistas
+                           <img id="github.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/github.png" /> Drop here
+                             <img id="linkedin.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/linkedin.png" /> Drop here
+
                         </div> 
 
                     </div>);
