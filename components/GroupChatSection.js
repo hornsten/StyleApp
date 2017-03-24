@@ -8,7 +8,8 @@ import React from "react";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import FileDragAndDrop from 'react-file-drag-and-drop';
 // let socket = io(`http://localhost:8000`)
 var socket = io.connect();
 
@@ -46,6 +47,7 @@ class GroupChatSection extends React.Component {
         //     })
         // }
         console.log("calling this", e.target.value);
+       
   
 
         // var uploadelem = this.fileInput.files;
@@ -78,8 +80,42 @@ class GroupChatSection extends React.Component {
         //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
         // node.scrollTo(0,node.body.scrollHeight);
     }
-    
+//     preventDefault(event) {
+//     event.preventDefault();
+//   }
+
+//   drop(event) {
+
+//     event.preventDefault();
+
+//     var data;
+
+//     try {
+//       data = JSON.parse(event.dataTransfer.getData('text'));
+//     } catch (e) {
+//       // If the text data isn't parsable we'll just ignore it.
+//       return;
+//     }
+
+//     // Do something with the data
+//     window.alert(JSON.stringify(data, null, 2));
+
+//   }
+handleDrop(dataTransfer) {
+    var files = dataTransfer.files;
+    ///To do tmr
+    // chathelper.file_upload("file", e, "file");
+ 
+    // Do something with dropped files... 
+  }
+ 
+
     render() {
+        var style = {
+  width: '100px',
+  height: '100px'
+};
+
 
 
        var chatmessage = this.props.chat;
@@ -138,8 +174,15 @@ class GroupChatSection extends React.Component {
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
                                 <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" defaultValue={this.props.file} onChange={this.uploadFile} /><br /> 
-                                <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"   onKeyUp={(e) => this.addMessage(e, this.props.message)}  ref={input => this.textInput = input} />
-    
+                                      <div>
+        <h1>Please drop your files</h1>
+        <div style={style}>
+          <FileDragAndDrop onDrop={this.handleDrop}>
+            Drop files here...
+          </FileDragAndDrop>
+        </div>
+      </div>
+                                <input type="text" value={this.props.message}  onChange={this.updateMessage}  className="form-control"   onKeyUp={(e) => this.addMessage(e, this.props.message)} onDrop={this.uploadFile} ref={input => this.textInput = input} />
                             </div>
                         <div className="col-md-2"></div>
                     </div>

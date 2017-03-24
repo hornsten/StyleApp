@@ -46,7 +46,7 @@ class NavBar extends Component{
                         <Link to='/' onClick={() => this.handleLogout()}>Log Out</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Create</a>
+                       <Link to='/closet'>Create</Link>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#">My Magazine</a>

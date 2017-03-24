@@ -5,12 +5,10 @@ import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Clothesbin from './Clothesbin';
 import Image from './Image';
 import ItemTypes from './ItemTypes';
-import ClosetItems from "./ClosetItems.js";
 var html2canvas = require('html2canvas');
 
-
 @DragDropContext(HTML5Backend)
-class ClosetPicker extends React.Component {
+class ClosetItems extends React.Component {
    constructor(props) {
       super(props);
     this.state = {
@@ -67,25 +65,7 @@ e.preventDefault();
     //   })
 
 const { images, clothesbins } = this.state; 
-      return (
-         <section className="container-fluid closet-container">
-        
-            <div id='clothesSet' className="col-md-7 closet-block rel"> 
-
-        <div className="clothes-items backdrop mag" style={{ overflow: 'hidden', clear: 'both' }}>
-          {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
-          
-            <Clothesbin
-              accepts={accepts}
-              lastDroppedItem={lastDroppedItem}
-              onDrop={item => this.handleDrop(index, item)}
-              key={index}
-            />,
-          )}
-        </div>       
-      </div>
-             <div className="col-md-5 closet-block">
-             <div className="clothes-items">
+      return (<div className="clothes-items">
                     <div className="closet-tabs-container">
                         <ul>
                             <li>Shoes</li>
@@ -110,9 +90,7 @@ const { images, clothesbins } = this.state;
                  </div>
             </div>
             </div>
-   
-    </div>
-</section>
+      
       )
    }
    handleDrop(index, item) {
@@ -133,4 +111,4 @@ const { images, clothesbins } = this.state;
   }
 }
 
-export default ClosetPicker;
+export default ClosetItems;

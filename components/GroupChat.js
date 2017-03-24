@@ -9,6 +9,7 @@ import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
+import ClosetItems from "./ClosetItems.js";
 
 class GroupChat extends React.Component {
     constructor(props) {
@@ -39,17 +40,30 @@ class GroupChat extends React.Component {
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
     }
+    dragStart(event){
+//         event.preventDefault();
+//         // e.dataTransfer.setData('file'); 
+//         var files = event.dataTransfer.files;
+//         console.log(files);
+// //   var file = event.dataTransfer.mozGetDataAt("application/x-moz-file", 0);
+//   console.log(file);
+//   // dt.mozSetDataAt("image/png", stream, 0);
+// dt.mozSetDataAt("application/x-moz-file", file, 0);
+// // dt.setData("text/uri-list", imageurl);
+// dt.setData("text/plain", imageurl);
+
+    }
     render() {
     
         return (<div className="row">
                         <div className="col-xs-4 col-s-2 col-md-2">
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>
-                        <div className="col-xs-8 col-s-8 col-md-8">
+                        <div className="col-xs-8 col-s-6 col-md-6">
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
-                        <div className="col-s-2 col-s-2 col-md-2">
-                            <Users users={this.props.users} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
+                        <div className="col-s-2 col-s-4 col-md-4">
+                            <img src="assets/img/github.png"  />
                         </div> 
                     </div>);
         }

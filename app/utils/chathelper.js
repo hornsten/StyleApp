@@ -142,9 +142,9 @@ var chathelper = {
         
         file_upload: (e) => {
             var files = e.target.files || e.dataTransfer.files;
-            console.log(files, "files");
+           
             if (files) {
-                 console.log(files[0], "in here?");
+                console.log(e.target.result, "in here?");
                 //send only the first one
                 var file = files[0];
                 //read the file content and prepare to send it
@@ -155,6 +155,7 @@ var chathelper = {
                     console.log('Sending file...');
                     //get all content
                     var buffer = e.target.result;
+                   
                     //send the content via socket
                     socket.emit('send-file', file.name, buffer);
                 };

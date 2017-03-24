@@ -55,9 +55,9 @@ app.get('/', function(req, res){
                 //to allow CORS
         // res.header("Access-Control-Allow-Origin", "*");
         // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        var userdetails = req.session.passport.user;
+        // var userdetails = req.session.passport.user;
 		// models.Room.find({}, function(err, results){
-	   if (userdetails){
+	   if ( req.isAuthenticated()){
             models.User.find({_id: req.session.passport.user}, function(err, results){
                     console.log("user detaiks", results); 
                     
