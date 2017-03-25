@@ -1,0 +1,112 @@
+#myNavbar,.footer {
+    border-radius: 0;
+     font-size: 1.5rem;
+     padding-top: 3.5rem;
+}
+
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.footer {
+    background: black;
+}
+
+li.dropdown-menu {
+    list-style-type: none;
+    color: black;
+}
+
+li.dropdown-menu:hover {
+     color: #e1818f;
+}
+
+ul ul, ol ul {
+    list-style-type: none;
+   
+}
+
+li.navbar-text {
+    color: #fff;
+    text-decoration: none;
+}
+
+li.navbar-text:hover {
+      color: #e1818f;
+     
+}
+
+#myNavbar.navbar-inverse .navbar-nav>li>a, .footer>li>a {
+    color: #fff;
+}
+#myNavbar.navbar-inverse .navbar-nav>li>a:hover, .footer>li>a:hover {
+    color: #e1818f;
+}
+#myNavbar.navbar-inverse {
+  background-color: #020202;
+  border-color: #222121;
+}
+#myNavbar
+.navbar-inverse .navbar-brand {
+  color: #f8fbfb;
+}
+#myNavbar.navbar-inverse .navbar-nav> .active > a:focus {
+  color:  #e1818f;
+  background-color: #222121;
+}
+#myNavbar navbar-inverse .navbar-nav> .open > a,
+#myNavbar navbar-inverse .navbar-nav> .open > a:hover,
+#myNavbar navbar-inverse .navbar-nav> .open > a:focus {
+  color:  #e1818f;
+  background-color: #222121;
+}
+#myNavbar navbar-inverse .navbar-toggle {
+  border-color: #222121;
+}
+#myNavbar navbar-inverse .navbar-toggle:hover,
+#myNavbar navbar-inverse .navbar-toggle:focus {
+  background-color: #222121;
+}
+#myNavbar navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #f8fbfb;
+}
+#myNavbar navbar-inverse .navbar-collapse,
+#myNavbar navbar-inverse .navbar-form {
+  border-color: #f8fbfb;
+}
+#myNavbar navbar-inverse .navbar-link {
+  color: #f8fbfb;
+}
+#myNavbar navbar-inverse .navbar-link:hover {
+  color:  #e1818f;
+}
+
+@media (max-width: 767px) {
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #f8fbfb;
+  }
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color:  #e1818f;
+  }
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
+  #myNavbar navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color:  #e1818f;
+    background-color: #222121;
+  }
+}
+ #brand {
+    font-size: 4rem;
+    font-weight: bolder;
+    color:  #e1818f;
+    font-family: 'Clicker Script', cursive;
+    padding-right: 5rem;
+}
+
+ul {
+    text-decoration: none;
+}

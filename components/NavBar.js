@@ -3,6 +3,13 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import { Link } from 'react-router';
 import chathelper from "../app/utils/chathelper.js";
+import FaCommentO from 'react-icons/lib/fa/comment-o';
+import FaUser from 'react-icons/lib/fa/user';
+import FaUserPlus from 'react-icons/lib/fa/user-plus';
+import FaLeanpub from 'react-icons/lib/fa/leanpub';
+import FaLightbulbO from 'react-icons/lib/fa/lightbulb-o';
+import FaUnlock from 'react-icons/lib/fa/unlock';
+import FaLock from 'react-icons/lib/fa/lock';
 
 class NavBar extends Component{
     constructor(props) {
@@ -42,34 +49,37 @@ class NavBar extends Component{
             if (isloggedin){
  // need to put link to logout part....
                    loginStatus =  <ul className="nav navbar-nav text-md-center justify-content-md-between">
+                   <li id="brand">Style App</li>
                    <li className="nav-item">
-                        <Link to='/' onClick={() => this.handleLogout()}>Log Out</Link>
+                        <Link to='/' onClick={() => this.handleLogout()}><FaLock className="icon"/> Log Out</Link>
                     </li>
                     <li className="nav-item">
-                       <Link to='/closet'>Create</Link>
+                       <Link to='/closet'><FaLightbulbO className="icon" /> Create</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">My Magazine</a>
+                        <a className="nav-link" href="#"><FaLeanpub className="icon" /> My Magazine</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">My Profile</a>
+                        <a className="nav-link" href="#"><FaUser className="icon" /> My Profile</a>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chat</a>
+                        <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <FaCommentO className="icon" /> Chat</a>
                         <div className="dropdown-menu" aria-labelledby="dropdown01">
                             <ul>
-                            <li><Link to='/group' onClick={this.handleGroupClick.bind(this)}>Group Chat</Link></li>
-                            <li><Link to='/private' onClick={this.handlePrvtClick.bind(this)}>Private Chat</Link></li>
+                            <li><Link to='/group' onClick={this.handleGroupClick.bind(this)}><FaUserPlus className="icon" /> Group Chat</Link></li>
+                            <li><Link to='/private' onClick={this.handlePrvtClick.bind(this)}><FaUser className="icon" /> Private Chat</Link></li>
                             </ul>
                         </div>
                     </li>
                     </ul>
             
             } else {
-                loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between"><li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
+                loginStatus = (<ul className="nav navbar-nav text-md-center justify-content-md-between">
+                     <li id="brand">Style App</li>
+                    <li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
             style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>
 
-            <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button"></i>Login with facebook</a>
+            <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button btn-outline"><FaLock className="icon"/></i> Login with Facebook</a>
             </li></ul>)
            
 
@@ -78,13 +88,13 @@ class NavBar extends Component{
 
 
 if (isloggedin){
-   var loggedInUser = <div className="col-md-4">
-        <span className="navbar-text">
+   var loggedInUser = <ul className="nav navbar-nav navbar-right">
+        <li className="navbar-link"><FaUnlock className='icon'/>
                     
-                Logged in: {user}
+                  Logged in: {user}
         
-        </span>
-    </div>
+        </li>
+    </ul>
 }
         
         
@@ -92,20 +102,16 @@ if (isloggedin){
 
         return(
 
-            <div className="container">
-                    <div className="col-md-8">
-                    <div id="myNavbar" className="collapse navbar-collapse top_nav">
-                        <nav className="navbar navbar-light bg-faded rounded mb-3">
-                            
-                            
+            <div>
+                <div>
+                    <div id="myNavbar" className="navbar navbar-inverse collapse navbar-collapse top_nav">
+                    
                             {loginStatus}
-
-            
-                        </nav>
+                             {loggedInUser}
                     </div>
-                    </div>
-                    {loggedInUser}
                 </div>
+                   
+            </div>
 
 
             /*<nav className="navbar navbar-fixed-top">
