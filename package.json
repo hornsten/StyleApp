@@ -4,9 +4,8 @@
   "description": "react app for saving and display NYT artices",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-    // "dev": "webpack & node server"
+    "test": "echo \"Error: no test specified\" && exit 1"
+    // "start": "node server.js"
   },
   "repository": {
     "type": "git",
