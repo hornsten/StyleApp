@@ -1,5 +1,5 @@
 {
-  "name": "styleapp",
+  "name": "StyleApp",
   "version": "1.0.0",
   "description": "react app for saving and display NYT artices",
   "main": "server.js",
