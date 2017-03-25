@@ -71,6 +71,11 @@ var chathelper = {
               type: 'UPDATE_ROOM',
               currentroom: defaultRoom,  // no default room
             })
+            // for now reset this property when link is clicked ...maybe set to default room later
+            store.dispatch({ 
+                type: 'CHATTING_WITH',
+                chatWithUser: "",
+            })
         },
         // this handles changes from one group room to another
         // chattype = Private or Group
@@ -79,10 +84,16 @@ var chathelper = {
             // display current room -- need to get room for private chat
             // if (chattype = "Group"){
                 // console.log(newroom, "newroom", "chattype", chattype);
-                store.dispatch({ 
+            store.dispatch({ 
                 type: 'UPDATE_ROOM',
-                currentroom: newroom,
+                currentroom: newroom, //make this "Private" for private users
+            })
+            if (chattype === "Private"){
+                store.dispatch({ 
+                    type: 'CHATTING_WITH',
+                    chatWithUser: newroom,
                 })
+            }
             // } else  if (chattype = "Private"){
                 // store.dispatch({ 
                 //     type: 'UPDATE_ROOM',
@@ -143,7 +154,7 @@ var chathelper = {
         file_upload: (e, sourceType) => {
             // sourceType ="upload" or "dnd"
             
-            var url = e.dataTransfer.getData('text/plain-text');
+           
            console.log(url);
             if (sourceType === "upload"){
                 var files = e.target.files || e.dataTransfer.files 
@@ -165,7 +176,8 @@ var chathelper = {
                 } 
 
             } else if (sourceType === "dnd"){
- console.log(url);
+                 var url = e.dataTransfer.getData('text/plain-text');
+ 
                 // if (url !== ""){
                      socket.emit('send-url', url);
                 // }
@@ -188,6 +200,10 @@ var chathelper = {
               store.dispatch({ 
                   type: 'PRIVATE_MESSAGE',
                   privatemessage: response
+              })
+               store.dispatch({ 
+                  type: 'PRIVATE_MODAL',
+                  showModal: true
               })
             })
         }
