@@ -4,7 +4,7 @@
   "description": "react app for saving and display NYT artices",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit"
   },
   "repository": {
     "type": "git",
