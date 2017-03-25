@@ -49,6 +49,7 @@ class NavBar extends Component{
             if (isloggedin){
  // need to put link to logout part....
                    loginStatus =  <ul className="nav navbar-nav text-md-center justify-content-md-between">
+                   
                    <li id="brand">Style App</li>
                    <li className="nav-item">
                         <Link to='/' onClick={() => this.handleLogout()}><FaLock className="icon"/> Log Out</Link>
@@ -96,15 +97,12 @@ if (isloggedin){
         </li>
     </ul>
 }
-        
-        
-   
 
         return(
 
             <div>
                 <div>
-                    <div id="myNavbar" className="navbar navbar-inverse collapse navbar-collapse top_nav">
+                    <div id="myNavbar" className="navbar navbar-inverse top_nav">
                     
                             {loginStatus}
                              {loggedInUser}
