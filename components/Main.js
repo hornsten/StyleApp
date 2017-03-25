@@ -18,13 +18,10 @@ class Main extends Component{
         return(
             <div>
              
-                  <div className="container">
-
-                    <div className="masthead">
-                       <div className="col-md-10"><NavBar /></div>
+                       <NavBar />
                        
-                    </div>
-
+                    
+                  <div className="container">
 
                     <div className="jumbotron">
                         <h1>Main Header</h1>
@@ -36,16 +33,15 @@ class Main extends Component{
                         
                         Maybe put table of results in here
                         
-                    </div>
-
                     
-                    <footer className="footer">
-                        <p>&copy; Company 2017</p>
-                    </footer>
-
-                    </div> 
             </div>
-
+                    </div>
+                        <div className="footer">    
+                             <div className="container">
+                                 <p className="text-muted">&copy; Company 2017</p>
+                            </div>
+                        </div>
+                    </div> 
         )
     }
 }
