@@ -61,6 +61,9 @@ app.use(session({secret: cookieSecret,
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
+
 // //Facebook Login oauth routes
 require('./auth/passport')(passport);
 require('./routes/routes.js')(app, passport, models);
