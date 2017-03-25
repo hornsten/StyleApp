@@ -9,6 +9,7 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client';
+import {Modal, Dialog, Button} from 'react-bootstrap';
 
 
 // let socket = io(`http://localhost:8000`)
@@ -23,9 +24,6 @@ class GroupChatSection extends React.Component {
         chathelper.connected_users(store);
         chathelper.server_messages(store);
         chathelper.private_message(store);
-
-
-
 
     }
     addMessage(e, message) {
@@ -47,7 +45,7 @@ class GroupChatSection extends React.Component {
         //         message: ""
         //     })
         // }
-        console.log("calling this", e.target.value);
+        console.log("calling this$$$", e.target.value);
        
   
 
@@ -69,8 +67,11 @@ class GroupChatSection extends React.Component {
         // console.log("uploadelem", uploadelem);
         // chathelper.file_upload(uploadelem);
 
-            // var doc = this.refs.drop;
-             
+        ///***** FOR TESTINg */
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: true
+        })
 
 
         
@@ -114,6 +115,12 @@ class GroupChatSection extends React.Component {
         //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
         // node.scrollTo(0,node.body.scrollHeight);
     }
+    closeModal(){
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: false
+        })
+    }
 
  
 
@@ -148,11 +155,26 @@ class GroupChatSection extends React.Component {
 
        }
        // if there is a message display it
-       console.log("this.props.privatemessage", this.props.privatemessage);
-       if (this.props.privatemessage){
-           
-            var alertMessage =   this.props.privatemessage;
-       }
+    //    console.log("this.props.privatemessage", this.props.privatemessage);
+    // var alertMessage = "";
+       if (this.props.showModal === true){
+                    var alertMessage = <Modal.Dialog show={this.props.showModal}>
+                        <Modal.Header>
+                        <Modal.Title>Modal title</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                          {this.props.privatemessage}
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                        <Button onClick={this.closeModal}>Close</Button>
+                    
+                        </Modal.Footer>
+
+                    </Modal.Dialog>
+       
+    }
  
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
@@ -164,9 +186,7 @@ class GroupChatSection extends React.Component {
                             {headerText}
                         </div>
                     </div>
-                    <div className="row text-center">
-                           { alertMessage }
-                    </div>
+
                     <hr />
              
 
@@ -178,6 +198,9 @@ class GroupChatSection extends React.Component {
                         </div>
                     </div>
                     <div className="row">
+                    <div className="static-modal">
+                        {alertMessage}
+                    </div>
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
                             <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}> Drop here</div>
@@ -211,6 +234,7 @@ const mapStateToProps = (store,ownProps) => {
         chat: store.chatState.chat,
         server: store.chatState.server,
         privatemessage: store.chatState.privatemessage,
+        showModal: store.chatState.showModal,
 
     }
 

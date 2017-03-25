@@ -80,6 +80,7 @@ const mapStateToProps = (store,ownProps) => {
         rooms: store.chatState.rooms,
         currentroom: store.chatState.currentroom,
         username: store.userState.username,
+        
 
     }
 };

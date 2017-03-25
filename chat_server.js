@@ -305,13 +305,13 @@ io.sockets.on('connection', function (socket) {
 								// just send to current client that switched rooms not everyone
 								currentSocket.emit('updatechat', results);
 							});
-						console.log("socketid", results.socketid);
+						// console.log("socketid", results.socketid);
 						var socket = results.socketid;
-						console.log(socket, "socket");
+						// console.log(socket, "socket");
 						// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
 						// socket.to(results.socketid).emit('privatemessage', 'I just met you');
 						var message = username + ' would like to have private style consultation.';
-						console.log("message", message);
+						// console.log("message", message);
 						// *** WORKING HERE -- problem if you try to connect to stale socket that did not disconnect properly
 						// io.sockets.connected[results.socketid].emit('privatemessage', message);
 						// do a volatile emit in case socket id is stale
