@@ -1,7 +1,7 @@
 {
   "name": "styleapp",
   "version": "1.0.0",
-  "description": "Style App",
+  "description": "StyleApp",
   "main": "server.js",
   "scripts": {
     "test": "node server.js",
