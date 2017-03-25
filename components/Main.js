@@ -23,10 +23,10 @@ class Main extends Component{
                     
                   <div className="container">
 
-                    <div className="jumbotron">
+                    {/*<div className="jumbotron">
                         <h1>Main Header</h1>
                         
-                    </div>
+                    </div>*/}
                     {this.props.children}
 
                     <div className="row main-content">

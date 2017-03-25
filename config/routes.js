@@ -2,10 +2,11 @@ import React from "react";
 import ReactRouter from "react-router";
 import IndexRoute from "react-router";
 import ChatMain from "../components/ChatMain.js";
-import Main from "../components/Main.js"
+import Main from "../components/Main.js";
 import {Router, Route, hashHistory} from "react-router";
 import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
+import ProfilePage from "../components/ProfilePage.js";
 import NavBar from "../components/NavBar.js";
 import ClosetPicker from "../components/ClosetPicker.js";
 
@@ -38,6 +39,7 @@ var routes = (
                 <Route path='/private' component={PrivateChat} />
             </Route>
             <Route path='/closet' component={ClosetPicker} />
+            <Route path='/profile' component={ProfilePage} />
         </Route>
     </Router>
 )
