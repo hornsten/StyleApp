@@ -203,6 +203,33 @@ var chathelper = {
  
 
         },
+    
+        img_upload: (image) => {
+        // sourceType ="upload" or "dnd"
+        
+            // if (image) {
+            //         var reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             console.log('Sending file...');
+            //             //get all content
+            //             var buffer = e.target.result;
+                    
+            //             //send the content via socket
+            //             // socket.emit('send-file', "TEST", buffer);
+                        socket.emit('img-file', "fionatest", image);
+            //         };
+            //         // send the content via socket
+             
+                
+        
+                    
+            //     };s
+            //     //  reader.readAsDataURL(file);
+            //     reader.readAsDataURL(image);
+    },
+
+
+
 
         private_message: (store) => {
 
