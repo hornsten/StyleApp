@@ -25,7 +25,7 @@ var callbackURL = process.env.FACEBOOK_URL || 'https://salty-castle-42236.heroku
         clientID: clientID,
         clientSecret:clientSecret,
         callbackURL: callbackURL,
-        sprofileFields: ['id', 'email', 'first_name', 'last_name']
+        profileFields: ['id', 'email', 'first_name', 'last_name']
 
 
     },
@@ -44,9 +44,9 @@ var callbackURL = process.env.FACEBOOK_URL || 'https://salty-castle-42236.heroku
 
                     else {
                         // if there is no user, create them
-                         var newUser = new User();
+                        var newUser = new User();
 
-                         newUser.facebook.id = profile.id;
+                        newUser.facebook.id = profile.id;
                         newUser.facebook.token = token;
                         newUser.facebook.name = profile.displayName;
                         newUser.facebook.firstName= profile.name.givenName;
