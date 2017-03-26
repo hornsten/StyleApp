@@ -90,13 +90,13 @@ opacity: 0.5;
 }
 
 .inactive {
-    background: 'transparent';
+    background: transparent;
     opacity: 1;
     border: none;
     }
 
 .canDrop {
-    background: 'teal';
+    background: black;
 }
 
 .dropped {
@@ -170,35 +170,39 @@ background-image: url('../img/paris-background.jpg');
     position: relative;
 }
 
+.target {
+    position:absolute;
+}
 .poly-top {
+
 left: 1rem;
 top: 1rem;
 transform: matrix(0.99978, -0.02083, 0.02083, 0.99978, 0, 0);
 }
-.poly-bottom{
-left: 25rem;
- top: 2rem;
+.poly-bottom {
+left: 1rem;
+ top: 1rem;
 transform: matrix(0.98582, -0.16781, 0.16781, 0.98582, 0, 0);
 }
 .poly-bag{
-left: 10rem;
-top: 29rem;
+left: 1rem;
+top: 1rem;
 transform: matrix(0.95654, 0.29162, -0.29162, 0.95654, 0, 0);
 }
 .poly-shoes{
-left: 13rem;
-top: 48rem;
+left: 1rem;
+top: 1rem;
  transform: matrix(0.90439, 0.42666, -0.42666, 0.90439, 0, 0);
   z-index: 3;
 }
 .poly-flair{
-left: 24rem;
-top: 45rem;
+left: 1rem;
+top: 1rem;
 z-index:4;
 }
 .poly-accessory{
-left: 3rem;
-top: 34rem;
+left: 1rem;
+top: 1rem;
 transform: matrix(1, 0, 0, 1, 0, 0);
 }
 

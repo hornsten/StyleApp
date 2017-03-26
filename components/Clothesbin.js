@@ -29,50 +29,46 @@ export default class Clothesbin extends Component {
    
   const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem } = this.props;
   const isActive = isOver && canDrop;
-  let className = 'poly rnd'
+  let className = 'rnd '
   if (isActive) {
-    className = 'rnd active noselect'
+    className = 'rnd active noselect ';
   } else if (canDrop) {
-    className = 'rnd canDrop'
+    className = 'rnd canDrop ';
   } else if (lastDroppedItem) {
-    className = 'rnd dropped noselect'
+    className = 'rnd dropped noselect ';
   }
     
+  let binClass = className + accepts[0]+ ' text-center noselect ' + 'poly-'+accepts[0];
 
-  let rootClass = accepts[0]+ ' text-center ';
-  let poly = rootClass + 'poly-'+accepts[0];
-  let mag= rootClass + 'mag-';
-  let paris= rootClass + 'paris-';
-  // let className = poly+accepts[0];
-    
+  
     return connectDropTarget(
 //Box is resizable.Wd be cool to make draggable, too. Also overflow hidden, border on select
-      <div className='noselect poly' style={{maxHeight:'100%',maxWidth:'100%',position:'relative' }}>
+      <div style={{maxHeight:'100%',maxWidth:'100%',position:'relative' }}>
          <Rnd
         
   
   ref={c => { this.rnd = c; }}
   initial={{
-    x: window.innerWidth / 2 - 200,
-    y: window.innerHeight / 2 - 80,
+    x: window.innerWidth /2-200,
+    y: window.innerHeight / 2-300,
     width: 200,
-    height: 160,
+    height: 200,
   }}
 
   minWidth={10}
   minHeight={10}
-  maxWidth={800}
-  maxHeight={400}
+  maxWidth={1000}
+  maxHeight={1000}
   
-  className={className}
+  className={binClass}
 >
-        {isActive ?
+        <h3 className='noselect text-center'>{isActive ?
            'Release to drop' :
           `${accepts.join(', ')}`
-        }
+        }</h3>
        
         {lastDroppedItem &&
-          <img className='noselect' style={{maxHeight:'100%',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
+          <img className='noselect' style={{maxHeight:'500rem',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
         }
        </Rnd>
        </div>,
