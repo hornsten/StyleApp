@@ -42,7 +42,7 @@ io.sockets.on('connection', function (socket) {
        console.log("getggine  in here");
         //path to store uploaded files (NOTE: presumed you have created the folders)
         var fileName = __dirname + '/public/assets/img/' + name;
-		console.log(fileName);
+		console.log("filename", fileName);
 		
 		
 		// save to data base
@@ -86,7 +86,7 @@ io.sockets.on('connection', function (socket) {
 		
 		// maybe just save name and pull it back later on correct path
 		var savefileName = '/assets/img/' + url;
-		console.log(savefileName); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
+		console.log(url); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
 		newChatMessage.save().then(function(){
 				var cutoff = new Date();
@@ -108,6 +108,24 @@ io.sockets.on('connection', function (socket) {
 
 	});
 		
+
+		socket.on('sendclosetpicker', function(item){
+
+			console.log("item", item)
+		})
+	socket.on('img-file', function(name, image) {
+        var fs = require('fs');
+       console.log("getggine  in here");
+        //path to store uploaded files (NOTE: presumed you have created the folders)
+        var fileName = __dirname + '/public/assets/img/' + name;
+		console.log(fileName);
+		
+		
+		
+
+		fs.writeFile(fileName, image, 'base64', function(err) {
+			console.log('File saved successful!');
+		});
 		// // save to data base
 
         // fs.open(fileName, 'a', 0755, function(err, fd) {
@@ -116,32 +134,34 @@ io.sockets.on('connection', function (socket) {
         //     fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
         //         fs.close(fd, function() {
         //             console.log('File saved successful!');
-		// 			// save to data base
-		// 			// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
-		// 			// console.log(message);
-		// 			var savefileName = '/assets/img/' + name;
-		// 			var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
-		// 			newChatMessage.save().then(function(){
-		// 					var cutoff = new Date();
-		// 					cutoff.setDate(cutoff.getDate()-1);
-		// 					models.Chat
-		// 						.find({room: socket.room, "created_at": {"$gte": cutoff }})
-		// 						.sort({'date': -1})
-		// 						.exec(function(err, results) {
-		// 							if (err) return console.log(err);
-		// 							// to everyone in that room including current client
-		// 							// console.log("socket room for sendngchat back", socket.room);
-		// 							// don't want any broadcasts to all private users not in 1-1 chat
-		// 							if (socket.room !== "Private"){
-		// 								io.sockets.in(socket.room).emit('updatechat', results);
-		// 							}
+		// // 			// save to data base
+		// // 			// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
+		// // 			// console.log(message);
+		// // 			var savefileName = '/assets/img/' + name;
+		// // 			var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
+		// // 			newChatMessage.save().then(function(){
+		// // 					var cutoff = new Date();
+		// // 					cutoff.setDate(cutoff.getDate()-1);
+		// // 					models.Chat
+		// // 						.find({room: socket.room, "created_at": {"$gte": cutoff }})
+		// // 						.sort({'date': -1})
+		// // 						.exec(function(err, results) {
+		// // 							if (err) return console.log(err);
+		// // 							// to everyone in that room including current client
+		// // 							// console.log("socket room for sendngchat back", socket.room);
+		// // 							// don't want any broadcasts to all private users not in 1-1 chat
+		// // 							if (socket.room !== "Private"){
+		// // 								io.sockets.in(socket.room).emit('updatechat', results);
+		// // 							}
 									
-		// 						});
-		// 					})	
+		// // 						});
+		// // 					})	
 
         //         });
         //     })
         // });
+
+    });
 
 
 	// TO DO on connection automatically join room1 so put first two function connected user and adduser in the "on connection"" part directoy
@@ -305,13 +325,13 @@ io.sockets.on('connection', function (socket) {
 								// just send to current client that switched rooms not everyone
 								currentSocket.emit('updatechat', results);
 							});
-						console.log("socketid", results.socketid);
+						// console.log("socketid", results.socketid);
 						var socket = results.socketid;
-						console.log(socket, "socket");
+						// console.log(socket, "socket");
 						// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
 						// socket.to(results.socketid).emit('privatemessage', 'I just met you');
 						var message = username + ' would like to have private style consultation.';
-						console.log("message", message);
+						// console.log("message", message);
 						// *** WORKING HERE -- problem if you try to connect to stale socket that did not disconnect properly
 						// io.sockets.connected[results.socketid].emit('privatemessage', message);
 						// do a volatile emit in case socket id is stale

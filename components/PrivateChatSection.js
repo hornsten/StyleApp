@@ -26,12 +26,31 @@ class ChatSection extends React.Component {
         //     this.updatechat(username, data);
         // })
     }
+     uploadFile(e) {
+        // tell server to execute 'sendchat' and send along one paramete
+        // if (e.keyCode == 13) {
+        //     chathelper.sendchat(message);
+        //     store.dispatch({ 
+        //         type: 'ADD_MESSAGE',
+        //         message: ""
+        //     })
+        // }
+        console.log("calling this$$$", e.target.value);
+       
+  
+
+        // var uploadelem = this.fileInput.files;
+        // console.log("uploadelem", uploadelem);
+        chathelper.file_upload(e, "upload");
+        
+    }
      ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
     ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
     ondrop(e) {
             console.log(" is this being called ondrop");
             this.className = 'success';
             e.preventDefault && e.preventDefault();
+            console.log("item draffed", e.dataTransfer.getData('text/plain-text'))
             chathelper.file_upload(e, "dnd");
             // this.className = '';
             // e.dataTransfer.getData('text/plain-text');
@@ -43,8 +62,8 @@ class ChatSection extends React.Component {
         //     // for (var i = 0, file; file = files[i]; i++) {
         //         console.log( files, "files");
         //     // }
+        //*****FOR TESTING */
 
-           
 
             return false;
 };
@@ -88,7 +107,21 @@ class ChatSection extends React.Component {
     }
     componentDidMount() {
         this.textInput.focus();
+        /// *****for testing only!!!
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: true
+        })
+           
     }
+    closeModal(){
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: false
+        })
+    }
+
+ 
     render() {
     //    console.log("this.props.privatemessage", this.props.privatemessage);
        if (this.props.privatemessage){
@@ -116,31 +149,47 @@ class ChatSection extends React.Component {
            }
 
        }
-       if (this.props.currentroom === "Private"){
-            var message = <div className="col-xs-12 col-md-12">You are in the <strong> {this.props.currentroom} </strong> chat area.</div>
-       } else {
-           var message = <div className="col-xs-12 col-md-12">You are chatting with <strong> {this.props.currentroom} </strong></div>
+        var alertMessage = "";
+        if (this.props.showModal === true){
+                    var alertMessage = <Modal dialogClassName="custom-modal" show={this.props.showModal}>
+                        <Modal.Header>
+                        <Modal.Title>Modal title</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                          {this.props.privatemessage}
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                        <Button onClick={this.closeModal}>Close</Button>
+                    
+                        </Modal.Footer>
+
+                    </Modal>
        }
+        var chattingwith = "";
+       if (this.props.chatWithUser){
+           var chattingWith = <div className="row text-center">You are chatting with {this.props.chatWithUser}</div>
+       }
+        var message = <div className="col-xs-12 col-md-12">You are in the <strong> {this.props.currentroom} </strong> chat area.</div>
+
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
            var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12">Welcome <strong>{this.props.username}</strong>!</div>
-           </div><div className="row text-center">{message}</div></div>
+           </div><div className="row text-center">{message}</div>
+           {chattingWith}</div>
             //   headerText += <div className="col-xs-6 col-md-3">You are in the {this.props.currentroom} Room</div>
             var chatDisplay = <div>
                     <div className="row">
                         <div>
                             {headerText}
                         </div>
+                    
                     </div>
-                    <div className="row text-center">
-                           { alertMessage }
-                    </div>
+
                     <hr />
-                    <div className="row">
-                        <div>
-                        {this.props.server}
-                        </div>
-                    </div>
+            
+        
 
                     <div className="chatbox row">
                         <div className="col-xs-12 col-md-12">    
@@ -181,6 +230,7 @@ const mapStateToProps = (store,ownProps) => {
         chat: store.chatState.chat,
         server: store.chatState.server,
         privatemessage: store.chatState.privatemessage,
+        chatWithUser: store.chatState.chatWithUser,
     }
 };
 

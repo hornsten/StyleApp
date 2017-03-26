@@ -28,6 +28,8 @@ var helpers = {
 //    },
 
 
+        
+
   getUserDetails: function(store){
 
        return axios.get('/user', { credentials : 'same-origin' }).then(function(result){

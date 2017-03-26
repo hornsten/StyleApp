@@ -34,12 +34,12 @@ var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000
 
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server
-var Chat = require("./models/Chat.js");
+var Chat = require("./models/chat.js");
 var User = require("./models/user.js");
-var Room = require("./models/Room.js");
-var ConnectedUser = require("./models/ConnectedUser.js");
-var PrivateChat = require("./models/PrivateChat.js");
-var Profile = require("./models/Profile.js");
+var Room = require("./models/room.js");
+var ConnectedUser = require("./models/connecteduser.js");
+var PrivateChat = require("./models/privatechat.js");
+var Profile = require("./models/profile.js");
 var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile};
 
 app.use( express.static(path.join(__dirname, 'public')));
@@ -61,6 +61,9 @@ app.use(session({secret: cookieSecret,
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
+
 // //Facebook Login oauth routes
 require('./auth/passport')(passport);
 require('./routes/routes.js')(app, passport, models);
@@ -68,7 +71,7 @@ require('./routes/routes.js')(app, passport, models);
 require("./chat_server.js")(app, io, models);
 
 
-http.listen(8080, function(){
+http.listen(PORT , function(){
 console.log('listening on *:8080');
 });
 

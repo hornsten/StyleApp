@@ -71,6 +71,11 @@ var chathelper = {
               type: 'UPDATE_ROOM',
               currentroom: defaultRoom,  // no default room
             })
+            // for now reset this property when link is clicked ...maybe set to default room later
+            store.dispatch({ 
+                type: 'CHATTING_WITH',
+                chatWithUser: "",
+            })
         },
         // this handles changes from one group room to another
         // chattype = Private or Group
@@ -79,10 +84,16 @@ var chathelper = {
             // display current room -- need to get room for private chat
             // if (chattype = "Group"){
                 // console.log(newroom, "newroom", "chattype", chattype);
-                store.dispatch({ 
+            store.dispatch({ 
                 type: 'UPDATE_ROOM',
-                currentroom: newroom,
+                currentroom: newroom, //make this "Private" for private users
+            })
+            if (chattype === "Private"){
+                store.dispatch({ 
+                    type: 'CHATTING_WITH',
+                    chatWithUser: newroom,
                 })
+            }
             // } else  if (chattype = "Private"){
                 // store.dispatch({ 
                 //     type: 'UPDATE_ROOM',
@@ -97,6 +108,13 @@ var chathelper = {
             // console.log("message received", message)
             socket.emit('sendchat', message);
         },
+
+                // sends group chat to server
+        sendclosetpicker: (item, store) => {
+            // console.log("message received", message)
+            socket.emit('sendclosetpicker', item);
+
+        },
         // // sends private chat to server
         // sendprvtchat: function(chatuser, message, store){
         //     socket.emit('sendprvtchat', chatuser, message);
@@ -104,6 +122,18 @@ var chathelper = {
 
 // Listeners Section -- these wait for incoming data from the server and the data received triggers actions on the  dom - state changes
         // takes in the latest chat data 
+
+        updatecloset_listener(updateClosetPicker){
+            socket.on('updatecloset', function (data){
+
+                // console.log("is the data in here", data)
+                store.dispatch({ 
+                    type: 'UPDATE_CLOSET_ITEMS',
+                    closetitems: data  // closet image data sent for updating 
+                })
+            })
+
+        },
         updatechat_listener: (store) => {
             socket.on('updatechat', function (data){
                 // console.log("is the data in here", data)
@@ -143,7 +173,7 @@ var chathelper = {
         file_upload: (e, sourceType) => {
             // sourceType ="upload" or "dnd"
             
-            var url = e.dataTransfer.getData('text/plain-text');
+           
            console.log(url);
             if (sourceType === "upload"){
                 var files = e.target.files || e.dataTransfer.files 
@@ -165,7 +195,9 @@ var chathelper = {
                 } 
 
             } else if (sourceType === "dnd"){
- console.log(url);
+                 var url = e.dataTransfer.getData('text/plain-text');
+                 console.log(url, "url");
+ 
                 // if (url !== ""){
                      socket.emit('send-url', url);
                 // }
@@ -173,6 +205,33 @@ var chathelper = {
  
 
         },
+    
+        img_upload: (image) => {
+        // sourceType ="upload" or "dnd"
+        
+            // if (image) {
+            //         var reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             console.log('Sending file...');
+            //             //get all content
+            //             var buffer = e.target.result;
+                    
+            //             //send the content via socket
+            //             // socket.emit('send-file', "TEST", buffer);
+                        socket.emit('img-file', "fionatest", image);
+            //         };
+            //         // send the content via socket
+             
+                
+        
+                    
+            //     };s
+            //     //  reader.readAsDataURL(file);
+            //     reader.readAsDataURL(image);
+    },
+
+
+
 
         private_message: (store) => {
 
@@ -188,6 +247,10 @@ var chathelper = {
               store.dispatch({ 
                   type: 'PRIVATE_MESSAGE',
                   privatemessage: response
+              })
+               store.dispatch({ 
+                  type: 'PRIVATE_MODAL',
+                  showModal: true
               })
             })
         }

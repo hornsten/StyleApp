@@ -20,13 +20,22 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {server: action.server});
         case 'PRIVATE_MESSAGE':
             return Object.assign({},state, {privatemessage: action.privatemessage});
+        case 'PRIVATE_MODAL':
+            return Object.assign({},state, {showModal: action.showModal});
         case 'CONNECTED':
             return Object.assign({},state, {connected: action.connected});
+        case 'CHATTING_WITH':
+            return Object.assign({},state, {chatWithUser: action.chatWithUser});
         case 'FILE_UPLOAD':
             return Object.assign({},state, {file: action.file});
+        case 'UPDATE_CLOSET_PICKER':
+            return Object.assign({},state, {updateClosetPicker: action.updateClosetPicker});
+        case 'UPDATE_CLOSET_ITEMS':
+            return Object.assign({},state, {updateClosetItems: action.updateClosetItems});
         }
     return state;
 }
+
 //  The below are required and map to the components dispatcher
 const userReducer = (state={}, action) => {
   
