@@ -108,6 +108,12 @@ var chathelper = {
             // console.log("message received", message)
             socket.emit('sendchat', message);
         },
+
+                // sends group chat to server
+        sendclosetpicker: (item, store) => {
+            // console.log("message received", message)
+            socket.emit('sendclosetpicker', item);
+        },
         // // sends private chat to server
         // sendprvtchat: function(chatuser, message, store){
         //     socket.emit('sendprvtchat', chatuser, message);
@@ -115,6 +121,18 @@ var chathelper = {
 
 // Listeners Section -- these wait for incoming data from the server and the data received triggers actions on the  dom - state changes
         // takes in the latest chat data 
+
+        updatecloset_listener(updateClosetPicker){
+            socket.on('updatecloset', function (data){
+
+                // console.log("is the data in here", data)
+                store.dispatch({ 
+                    type: 'UPDATE_CLOSET_ITEMS',
+                    closetitems: data  // closet image data sent for updating 
+                })
+            })
+
+        },
         updatechat_listener: (store) => {
             socket.on('updatechat', function (data){
                 // console.log("is the data in here", data)

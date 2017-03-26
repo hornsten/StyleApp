@@ -28,9 +28,14 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {chatWithUser: action.chatWithUser});
         case 'FILE_UPLOAD':
             return Object.assign({},state, {file: action.file});
+        case 'UPDATE_CLOSET_PICKER':
+            return Object.assign({},state, {updateClosetPicker: action.updateClosetPicker});
+        case 'UPDATE_CLOSET_ITEMS':
+            return Object.assign({},state, {updateClosetItems: action.updateClosetItems});
         }
     return state;
 }
+
 //  The below are required and map to the components dispatcher
 const userReducer = (state={}, action) => {
   

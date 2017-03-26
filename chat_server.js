@@ -108,6 +108,11 @@ io.sockets.on('connection', function (socket) {
 
 	});
 		
+
+		socket.on('sendclosetpicker', function(item){
+
+			console.log("item", item)
+		})
 		// // save to data base
 
         // fs.open(fileName, 'a', 0755, function(err, fd) {
