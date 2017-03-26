@@ -50,6 +50,7 @@ class ChatSection extends React.Component {
             console.log(" is this being called ondrop");
             this.className = 'success';
             e.preventDefault && e.preventDefault();
+            console.log("item draffed", e.dataTransfer.getData('text/plain-text'))
             chathelper.file_upload(e, "dnd");
             // this.className = '';
             // e.dataTransfer.getData('text/plain-text');

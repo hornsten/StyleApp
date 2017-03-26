@@ -108,6 +108,13 @@ var chathelper = {
             // console.log("message received", message)
             socket.emit('sendchat', message);
         },
+
+                // sends group chat to server
+        sendclosetpicker: (item, store) => {
+            // console.log("message received", message)
+            socket.emit('sendclosetpicker', item);
+
+        },
         // // sends private chat to server
         // sendprvtchat: function(chatuser, message, store){
         //     socket.emit('sendprvtchat', chatuser, message);
@@ -115,6 +122,18 @@ var chathelper = {
 
 // Listeners Section -- these wait for incoming data from the server and the data received triggers actions on the  dom - state changes
         // takes in the latest chat data 
+
+        updatecloset_listener(updateClosetPicker){
+            socket.on('updatecloset', function (data){
+
+                // console.log("is the data in here", data)
+                store.dispatch({ 
+                    type: 'UPDATE_CLOSET_ITEMS',
+                    closetitems: data  // closet image data sent for updating 
+                })
+            })
+
+        },
         updatechat_listener: (store) => {
             socket.on('updatechat', function (data){
                 // console.log("is the data in here", data)
@@ -177,6 +196,7 @@ var chathelper = {
 
             } else if (sourceType === "dnd"){
                  var url = e.dataTransfer.getData('text/plain-text');
+                 console.log(url, "url");
  
                 // if (url !== ""){
                      socket.emit('send-url', url);
@@ -185,6 +205,33 @@ var chathelper = {
  
 
         },
+    
+        img_upload: (image) => {
+        // sourceType ="upload" or "dnd"
+        
+            // if (image) {
+            //         var reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             console.log('Sending file...');
+            //             //get all content
+            //             var buffer = e.target.result;
+                    
+            //             //send the content via socket
+            //             // socket.emit('send-file', "TEST", buffer);
+                        socket.emit('img-file', "fionatest", image);
+            //         };
+            //         // send the content via socket
+             
+                
+        
+                    
+            //     };s
+            //     //  reader.readAsDataURL(file);
+            //     reader.readAsDataURL(image);
+    },
+
+
+
 
         private_message: (store) => {
 
