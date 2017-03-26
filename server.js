@@ -68,7 +68,7 @@ require('./routes/routes.js')(app, passport, models);
 require("./chat_server.js")(app, io, models);
 
 
-http.listen(8080, function(){
+http.listen(PORT , function(){
 console.log('listening on *:8080');
 });
 
