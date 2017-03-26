@@ -6,6 +6,7 @@ import Clothesbin from './Clothesbin';
 import Image from './Image';
 import ItemTypes from './ItemTypes';
 import ClosetItems from "./ClosetItems.js";
+
 var html2canvas = require('html2canvas');
 
 
@@ -72,7 +73,7 @@ const { images, clothesbins } = this.state;
         
             <div id='clothesSet' className="col-md-7 closet-block rel"> 
 
-        <div className="clothes-items backdrop mag" style={{ overflow: 'hidden', clear: 'both' }}>
+        <div className="clothes-items backdrop paris" style={{ overflow: 'hidden', clear: 'both' }}>
           {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
           
             <Clothesbin

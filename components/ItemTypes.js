@@ -5,5 +5,6 @@ export default {
   SHOES: 'shoes',
   BAG: 'bag',
   ACCESSORY: 'accessory',
-  FLAIR: 'flair'
+  FLAIR: 'flair',
+  BACKGROUND: 'background'
 };

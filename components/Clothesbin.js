@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import ItemTypes from './ItemTypes';
-
+import Resizable from 'react-resizable-box';
+  
 const clothesbinTarget = {
   drop(props, monitor) {
     props.onDrop(monitor.getItem());
@@ -40,20 +41,23 @@ export default class Clothesbin extends Component {
   let poly = rootClass + 'poly-';
   let mag= rootClass + 'mag-';
   let paris= rootClass + 'paris-';
-  let className = paris+accepts[0];
+  let className = poly+accepts[0];
     
     return connectDropTarget(
-
-      <div style={{ backgroundColor, opacity }} className={className}>
-        <div className={lastDroppedItem ? "hide-elm" : ''}>
+//Box is resizable.Wd be cool to make draggable, too. Also overflow hidden, border on select
+      <div style={{ maxHeight:'100%',maxWidth:'100%' }}>
+        <Resizable customClass="item"
+  width={320}
+  height={200} className={lastDroppedItem ? "hide-elm" : ''}>
         {isActive ?
           'Release to drop' :
           `${accepts.join(', ')}`
         }
-        </div>
+       
         {lastDroppedItem &&
-          <img style={{height:'100%',width:'auto'}} src={lastDroppedItem.src}></img>
+          <img style={{maxHeight:'100%',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
         }
+       </Resizable>
       </div>,
     );
 
