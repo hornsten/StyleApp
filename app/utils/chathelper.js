@@ -196,6 +196,7 @@ var chathelper = {
 
             } else if (sourceType === "dnd"){
                  var url = e.dataTransfer.getData('text/plain-text');
+                 
                  console.log(url, "url");
  
                 // if (url !== ""){

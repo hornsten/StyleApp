@@ -1,6 +1,10 @@
 var request = require('request'); 
 var path = require('path');
 var React = require('react');
+var fs = require('fs');
+var cloudinary = require('cloudinary');
+var cloudinary_keys = require('../auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 
 module.exports = function(app, passport, models){
     //route for facebook logout
@@ -29,6 +33,7 @@ app.get('/', function(req, res){
             // res.sendFile(path.resolve('public/profile.html'));
         }
         );
+
 
 //    app.post('/img', function(req, res){
 //         console.log(req.body, "req.body");
@@ -79,6 +84,91 @@ app.get('/', function(req, res){
 	});
 
   
+   app.get('/closet/image', function(req, res){
+        if ( req.isAuthenticated()){
+            console.log("in here????");
+             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){
+                
+                // return results.facebook.id;
+                // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
+                // need to query the database here for images for requesting user
+               console.log("in here???? tooo", results);
+               var userid =  results.facebook.id;
+                models.Closet.find({"userid": userid}).exec(function(err, items){
+                    if (err) return console.log(err); 
+                    // console.log("or in here???? ", items);
+                        res.json(items);
+                    })
+                
+             })
+        }
+   });
+
+    app.post('/closet/image/new', function(req, res){
+       if ( req.isAuthenticated()){
+            models.User.findOne({_id: req.session.passport.user}, function(err, results){
+                console.log(results, "results");
+                var userid = results.facebook.id;
+                var usernameNoSpaces = results.facebook.firstName+'_'+results.facebook.lastName;
+                // create a unique name for the file
+                var uniqueFileName = usernameNoSpaces + '_' + Date.now() + '_' + req.body.name;
+                //path to store uploaded files (NOTE: presumed you have created the folders)
+                // stored in temp area before being pushed to cloud
+                var fileName = __dirname + '/../public/assets/img/' + uniqueFileName;
+                // remove .png extension
+                var publicFileName = uniqueFileName.slice(0, -4);
+                console.log("new filename", fileName);
+                
+                fs.open(fileName, 'a', 0755, function(err, fd) {
+                if (err) throw err;
+
+                fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
+                    fs.close(fd, function() {
+                        console.log('File saved successful!');
+                        // var filePath = '/../public/assets/img/' + uniqueFileName;
+                        cloudinary.uploader.upload( fileName, function(result) { 
+
+
+                            console.log("result",result);
+                            // var filelocation = result.url;
+                            // save to the database
+                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, type: "ItemTypes.ACCESSORY", src: result.url, created_at:  Date.now()});
+                            newClosetItem.save().then(function(){
+                            		// need to updaet user closet too *****
+                            }).then(function(){
+                                //reqquer
+                                models.Closet.find({"userid": userid}).exec(function(err, items){
+                                    if (err) return console.log(err); 
+                                    // console.log("or in here???? ", items);
+                                        res.json(items);
+                                    })
+                            })
+                            // // remove file from from tmp area
+
+
+                        }, {
+                            public_id: publicFileName, 
+                            crop: 'limit',
+                            width: 2000,
+                            height: 2000,
+                            eager: [
+                            { width: 200, height: 200, crop: 'thumb',
+                                radius: 20 },
+                            { width: 100, height: 150, crop: 'fit', format: 'png' }
+                            ],                                     
+                            // tags: ['special', 'for_homepage']
+                        } );
+                    })
+                })
+
+        })
+                                
+        });
+
+        } 
+    //    res.end();
+})
+
     app.get('/user', function(req, res){
                 //to allow CORS
         // res.header("Access-Control-Allow-Origin", "*");

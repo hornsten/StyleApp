@@ -67,8 +67,8 @@ class GroupChat extends React.Component {
         // console.log(result);
         // e.target.src gives the url of the file but I only want the file username
         // so this should be put in the id field and grabbed from there
-        e.dataTransfer.setData('text/plain-text',e.target.id );
-        console.log(e.target.id, "id");
+        e.dataTransfer.setData('text/plain-text', e.target.src );
+        console.log(e.target.src, "src");
         // img.dataTransfer.setData('text/plain', 'Drag Me Button');
         this.className = 'hover'; 
         return false;
@@ -105,8 +105,8 @@ class GroupChat extends React.Component {
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
                         <div className="col-s-2 col-s-4 col-md-4">
-                             <img id="github.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/github.png" /> Drop here
-                             <img id="linkedin.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/linkedin.png" /> Drop here
+                             <img id="Fiona_Madronero_1490548135560_question.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="http://res.cloudinary.com/hvzbthwxc/image/upload/v1490552085/Fiona_Madronero_1490552085166_jackolantern.png" /> Drop here
+                             <img id="Fiona_Madronero_1490548273037_candy.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="http://res.cloudinary.com/hvzbthwxc/image/upload/v1490552085/Fiona_Madronero_1490552085166_jackolantern.png" /> Drop here
 
                         </div> 
                     </div>);

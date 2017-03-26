@@ -133,8 +133,8 @@ class ChatSection extends React.Component {
                 var resultComponents = this.props.chat.map(function(result) {
                     console.log(result.type)
                 if (result.type === "file"){
-                    var chatmessage = <img src={result.message} alt="File Not Found" />
-                    console.log("I am in privaet chat", chatmessage);
+                     var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
+                    // console.log("I am in privaet chat", chatmessage);
                 } else {
                     var chatmessage =  <div className="col-md-8">{result.message}</div>
                 }
