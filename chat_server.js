@@ -49,6 +49,8 @@ io.sockets.on('connection', function (socket) {
         //path to store uploaded files (NOTE: presumed you have created the folders)
 		// stored in temp area before being pushed to cloud
         var fileName = __dirname + '/public/assets/img/' + uniqueFileName;
+		// remove .png extension
+		var publicFileName = uniqueFileName.slice(0, -4);
 		console.log("new filename", fileName);
 		
 		
@@ -60,10 +62,11 @@ io.sockets.on('connection', function (socket) {
             fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
                 fs.close(fd, function() {
                     console.log('File saved successful!');
+					var filePath = '/public/assets/img/' + uniqueFileName;
 					cloudinary.uploader.upload(fileName, function(result) { 
 					     console.log(result) 
 					}, {
-						public_id: uniqueFileName, 
+						public_id: publicFileName, 
 						crop: 'limit',
 						width: 2000,
 						height: 2000,
