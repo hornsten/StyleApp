@@ -31,14 +31,14 @@ class ClosetPicker extends React.Component {
         
       ],
       images: [
-       { id: '201393774', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201393774.png' },
-        { id: '201234566', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201234566.png' },
-        { id: '199987425', type: ItemTypes.TOP, src:'../assets/img/top_199987425.png' },
-        { id: '201591292', type: ItemTypes.DRESS, src: '../assets/img/dress_201591292.png' },
-        { id: '567ec3a81fe', type: ItemTypes.BAG, src: '../assets/img/bag_567ec3a81fe.png' },
-        { id: '203456789', type: ItemTypes.ACCESSORY, src: '../assets/img/watch_203456789.png' },
-        { id: '683904dea', type: ItemTypes.FLAIR, src: '../assets/img/flair_683904dea.png' },
-        { id: '202012027', type: ItemTypes.SHOES, src: '../assets/img/shoes_202012027.png' },
+       { id: 'bottom_201393774.png', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201393774.png' },
+        { id: 'bottom_201234566.png', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201234566.png' },
+        { id: 'top_199987425.png', type: ItemTypes.TOP, src:'../assets/img/top_199987425.png' },
+        { id: 'dress_201591292.png', type: ItemTypes.DRESS, src: '../assets/img/dress_201591292.png' },
+        { id: 'bag_567ec3a81fe.png', type: ItemTypes.BAG, src: '../assets/img/bag_567ec3a81fe.png' },
+        { id: 'watch_203456789.png', type: ItemTypes.ACCESSORY, src: '../assets/img/watch_203456789.png' },
+        { id: 'flair_683904dea.png', type: ItemTypes.FLAIR, src: '../assets/img/flair_683904dea.png' },
+        { id: 'shoes_202012027.png', type: ItemTypes.SHOES, src: '../assets/img/shoes_202012027.png' },
       ],
       droppedImageIds: [],
     };
@@ -48,13 +48,33 @@ isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;
   }
 
+ondragstart(e){
+        // var imageSrc = ReactDOM.findDOMNode(this.drag)
+        // console.log("img", imageSrc);
+        // e.dataTransfer.setData('text/uri-list', imageSrc);
+   
+        // e.dataTransfer.setData('text/uri-list',   e.target.src);
+        // /console.log(e.target.result, "result");
+        // console.log(result);
+        // e.target.src gives the url of the file but I only want the file username
+        // so this should be put in the id field and grabbed from there
+        e.dataTransfer.setData('text/plain-text',e.target.id );
+        console.log(e.target.id, "id");
+        // img.dataTransfer.setData('text/plain', 'Drag Me Button');
+        this.className = 'hover'; 
+        return false;
+    }
 
  handleClick(e) {
 e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
       onrendered: function (canvas) {
-                    var img = canvas.toDataURL("image/png")
+                    var img = canvas.toDataURL("image/png");
+                    var data = img.replace(/^data:image\/\w+;base64,/, "");
+                    console.log(data,"data");
+                 
+                    chathelper.img_upload(data);
                     // window.open(img);
         }
     });

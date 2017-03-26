@@ -113,6 +113,7 @@ var chathelper = {
         sendclosetpicker: (item, store) => {
             // console.log("message received", message)
             socket.emit('sendclosetpicker', item);
+
         },
         // // sends private chat to server
         // sendprvtchat: function(chatuser, message, store){
@@ -195,6 +196,7 @@ var chathelper = {
 
             } else if (sourceType === "dnd"){
                  var url = e.dataTransfer.getData('text/plain-text');
+                 console.log(url, "url");
  
                 // if (url !== ""){
                      socket.emit('send-url', url);

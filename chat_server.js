@@ -42,7 +42,7 @@ io.sockets.on('connection', function (socket) {
        console.log("getggine  in here");
         //path to store uploaded files (NOTE: presumed you have created the folders)
         var fileName = __dirname + '/public/assets/img/' + name;
-		console.log(fileName);
+		console.log("filename", fileName);
 		
 		
 		// save to data base
@@ -86,7 +86,7 @@ io.sockets.on('connection', function (socket) {
 		
 		// maybe just save name and pull it back later on correct path
 		var savefileName = '/assets/img/' + url;
-		console.log(savefileName); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
+		console.log(url); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
 		newChatMessage.save().then(function(){
 				var cutoff = new Date();
