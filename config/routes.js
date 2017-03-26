@@ -3,7 +3,7 @@ import ReactRouter from "react-router";
 import IndexRoute from "react-router";
 import ChatMain from "../components/ChatMain.js";
 import Main from "../components/Main.js"
-import {Router, Route, hashHistory} from "react-router";
+import {Router, Route, hashHistory, browserHistory} from "react-router";
 import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
 import NavBar from "../components/NavBar.js";
@@ -30,7 +30,7 @@ import ClosetPicker from "../components/ClosetPicker.js";
 //   </Router>
 
 var routes = (
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
         <Route path="/" component={Main} >
             <Route IndexRoute path="/" component={NavBar} />
             <Route path="/chat" component={ChatMain} >
