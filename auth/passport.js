@@ -50,8 +50,8 @@ var callbackURL = process.env.FACEBOOK_URL || 'https://salty-castle-42236.heroku
                         newUser.facebook.token = token;
                         newUser.facebook.name = profile.displayName;
                         newUser.facebook.firstName= profile.name.givenName;
-                        newUser.facebook.lastName =  profile.name.familyName,
-                        newUser.facebook.email = profile.emails[0].value,
+                        newUser.facebook.lastName =  profile.name.familyName;
+                        newUser.facebook.email = profile.emails[0].value;
                     // newUser.facebook.picture = profile.photos[0].value;
                         newUser.facebook.link = profile.link;
                         newUser.save(function (err) {
