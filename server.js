@@ -38,7 +38,7 @@ var Chat = require("./models/chat.js");
 var User = require("./models/user.js");
 var Room = require("./models/room.js");
 var ConnectedUser = require("./models/connecteduser.js");
-var PrivateChat = require("./models/privateChat.js");
+var PrivateChat = require("./models/privatechat.js");
 var Profile = require("./models/profile.js");
 var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile};
 
