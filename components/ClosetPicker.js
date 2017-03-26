@@ -101,6 +101,17 @@ e.preventDefault();
     //       return <img id={imgKey} key={imgKey} src={closetItems[imgKey].src}/>
     //   })
 
+/////*********Jess I removed this for now as its causing an errorn and i cnant test heroku sorry! It crashes the server. */
+          // {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
+          
+          //   <Clothesbin
+          //     accepts={accepts}
+          //     lastDroppedItem={lastDroppedItem}
+          //     onDrop={item => this.handleDrop(index, item)}
+          //     key={index}
+          //   />,
+          // )}
+
 const { images, clothesbins } = this.state; 
       return (
          <section className="container-fluid closet-container">
@@ -108,15 +119,7 @@ const { images, clothesbins } = this.state;
             <div id='clothesSet' className="col-md-7 closet-block rel"> 
 
         <div className="clothes-items backdrop paris" style={{ overflow: 'hidden', clear: 'both' }}>
-          {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
-          
-            <Clothesbin
-              accepts={accepts}
-              lastDroppedItem={lastDroppedItem}
-              onDrop={item => this.handleDrop(index, item)}
-              key={index}
-            />,
-          )}
+
         </div>       
       </div>
              <div className="col-md-5 closet-block">
