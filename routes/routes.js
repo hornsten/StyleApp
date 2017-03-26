@@ -24,7 +24,7 @@ app.get('/', function(req, res){
                 console.log(req.user.username);
                 
             //successful auth  , redirect home 
-            res.redirect('http://localhost:8080/#');
+            res.redirect('https://salty-castle-42236.herokuapp.com');
             // res.sendFile(__dirname + "../../public/Home.html");
             // res.sendFile(path.resolve('public/profile.html'));
         }

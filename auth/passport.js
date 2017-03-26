@@ -18,18 +18,13 @@ module.exports = function (passport) {
 
 var clientID = process.env.FACEBOOK_CLIENTID || '1454706357935887';
 var clientSecret = process.env.FACEBOOK_SECRET || 'fc82402acee632c6c9c3c43dffd33804';
-var callbackURL = process.env.FACEBOOK_URL || 'http://localhost:8080/auth/facebook/callback';
+var callbackURL = process.env.FACEBOOK_URL || 'https://salty-castle-42236.herokuapp.com/auth/facebook/callback';
 
     passport.use(new FacebookStrategy({
         // clientID: keys.facebookAuth.clientID,
         clientID: clientID,
         clientSecret:clientSecret,
         callbackURL: callbackURL,
-        // passReqToCallback:'http://localhost:3000/auth/facebook/callback',
-        // passReqToCallback:'http://localhost:3000/oauth/v1/authorize?response_type=code&redirect_uri='+http://localhost:3000/
-        // redirect_uri = "https://www.facebook.com/connect/login_success.html
-        // passReqToCallback : true,
-        // profileFields: ['id', 'emails', 'name'] //This
         sprofileFields: ['id', 'email', 'first_name', 'last_name']
 
 
