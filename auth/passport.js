@@ -16,9 +16,9 @@ module.exports = function (passport) {
         })
     })
 
-var clientID = FACEBOOK_CLIENTID || '1454706357935887';
-var clientSecret = FACEBOOK_SECRET || 'fc82402acee632c6c9c3c43dffd33804';
-var callbackURL = FACEBOOK_URL || 'http://localhost:8080/auth/facebook/callback';
+var clientID = process.env.FACEBOOK_CLIENTID || '1454706357935887';
+var clientSecret = process.env.FACEBOOK_SECRET || 'fc82402acee632c6c9c3c43dffd33804';
+var callbackURL = process.env.FACEBOOK_URL || 'http://localhost:8080/auth/facebook/callback';
 
     passport.use(new FacebookStrategy({
         // clientID: keys.facebookAuth.clientID,
