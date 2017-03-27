@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import update from 'react/lib/update';
+import ReactDOM from "react-dom";
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Clothesbin from './Clothesbin';
 import Image from './Image';
 import ItemTypes from './ItemTypes';
-import ClosetItems from "./ClosetItems.js";
+import {connect } from 'react-redux';
+import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
+import helper from "../app/utils/helper.js";
 var html2canvas = require('html2canvas');
 
 
@@ -14,6 +17,8 @@ var html2canvas = require('html2canvas');
 class ClosetPicker extends React.Component {
    constructor(props) {
       super(props);
+      chathelper.updatecloset_listener(store);
+      this.uploadFile = this.uploadFile.bind(this);
     this.state = {
       clothesbins: [
          { accepts: [ItemTypes.TOP], lastDroppedItem: null },
@@ -22,19 +27,19 @@ class ClosetPicker extends React.Component {
            { accepts: [ItemTypes.FLAIR], lastDroppedItem: null},
            { accepts: [ItemTypes.SHOES], lastDroppedItem: null},
          { accepts: [ItemTypes.BOTTOM,ItemTypes.DRESS], lastDroppedItem: null }
-        
+
         
       ],
-      images: [
-       { id: '201393774', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201393774.png' },
-        { id: '201234566', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201234566.png' },
-        { id: '199987425', type: ItemTypes.TOP, src:'../assets/img/top_199987425.png' },
-        { id: '201591292', type: ItemTypes.DRESS, src: '../assets/img/dress_201591292.png' },
-        { id: '567ec3a81fe', type: ItemTypes.BAG, src: '../assets/img/bag_567ec3a81fe.png' },
-        { id: '203456789', type: ItemTypes.ACCESSORY, src: '../assets/img/watch_203456789.png' },
-        { id: '683904dea', type: ItemTypes.FLAIR, src: '../assets/img/flair_683904dea.png' },
-        { id: '202012027', type: ItemTypes.SHOES, src: '../assets/img/shoes_202012027.png' },
-      ],
+      // images: [
+      //  { id: '201393774', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201393774.png' },
+      //   { id: '201234566', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201234566.png' },
+      //   { id: '199987425', type: ItemTypes.TOP, src:'../assets/img/top_199987425.png' },
+      //   { id: '201591292', type: ItemTypes.DRESS, src: '../assets/img/dress_201591292.png' },
+      //   { id: '567ec3a81fe', type: ItemTypes.BAG, src: '../assets/img/bag_567ec3a81fe.png' },
+      //   { id: '203456789', type: ItemTypes.ACCESSORY, src: '../assets/img/watch_203456789.png' },
+      //   { id: '683904dea', type: ItemTypes.FLAIR, src: '../assets/img/flair_683904dea.png' },
+      //   { id: '202012027', type: ItemTypes.SHOES, src: '../assets/img/shoes_202012027.png' },
+      // ],
       droppedImageIds: [],
     };
   }
@@ -42,8 +47,60 @@ class ClosetPicker extends React.Component {
 isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;
   }
+  componentDidMount(){
+    // get images for each section
+    helper.getImages(store, "top");
+    helper.getImages(store, "bottom");
+    helper.getImages(store, "accessory");
+    helper.getImages(store, "shoes");
+    helper.getImages(store, "bag");
+    helper.getImages(store, "dress");
+    helper.getImages(store, "flair");
+    ReactDOM.findDOMNode(this.inputEntry).value = "";
+    // set to default initially
+    store.dispatch({ 
+      type: 'ITEM_CHANGE',
+      item: "SELECT"
+    })
 
+    store.dispatch({ 
+      type: 'SUCCESSFUL_SAVE',
+      imagesavedsuccess: false
+    })
+  }
+uploadFile(e) {
+  var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
+  // console.log(itemType, "itemType");
+  // console.log("calling this$$$", e.target.value);
+  // Make sure a valid type entered before saving file
+  // console.log("this.props.itemtype", this.props.itemtype);
+   // Make sure a valid type entered before saving file
+  // console.log("itemtype", itemType);
+  //reset old error message
+  store.dispatch({ 
+  type: 'CLOSET_ERROR',
+  closeterror: false
+})
+  if (this.props.item !== "SELECT"){
+     helper.uploadToCloset(e, itemType, store);   
+  } 
+  else {
+    // send error message
+    store.dispatch({ 
+      type: 'CLOSET_ERROR',
+      closeterror: true
+    })
+     
+   
+    // send error message
+    // store.dispatch({ 
+    //   type: 'INPUT_FILE',
+    //   file: e.target.files
+    // })
 
+  }
+
+}
  handleClick(e) {
 e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
@@ -89,7 +146,27 @@ e.preventDefault();
   
   })
 }
+handleItemType(e){
+  // console.log("item type chagne this$$$", e.target.id);
+  store.dispatch({ 
+      type: 'TYPE_CHANGE',
+      itemtype: e.target.value
+  })
+  store.dispatch({ 
+      type: 'ITEM_CHANGE',
+      item: e.target.value
+  })
+  store.dispatch({ 
+    type: 'SUCCESSFUL_SAVE',
+    imagesavedsuccess: false
+  })
 
+
+
+  // reset any old file in input box
+  ReactDOM.findDOMNode(this.inputEntry).value = "";
+
+}
 
    render() {
        
@@ -113,6 +190,103 @@ e.preventDefault();
           // )}
 
 const { images, clothesbins } = this.state; 
+var {topResults, dressResults, bottomResults, shoeResults,bagResults,accessoryResults,  flairResults} = "";
+
+if (this.props.top){
+  topResults = this.props.top.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+} 
+if (this.props.dress){
+  dressResults = this.props.dress.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+if (this.props.bottom){
+  bottomResults = this.props.bottom.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+
+if (this.props.shoes){
+  shoeResults = this.props.shoes.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+
+if (this.props.bag){
+  bagResults = this.props.bag.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+
+if (this.props.accessory){
+  accessoryResults = this.props.accessory.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+if (this.props.flair){
+  flairResults = this.props.flair.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                             key={result.type+'_'+index}
+                            />,
+                        )
+
+}
+      var error = "";
+      if (this.props.closeterror){
+         error = <div><strong>Please enter a valid clothing TYPE for your item!</strong><br/></div>
+      }
+      var message = "";
+      if (this.props.imagesavedsuccess){
+         message = "File Successfully Saved";
+      }
       return (
          <section className="container-fluid closet-container">
         
@@ -130,28 +304,61 @@ const { images, clothesbins } = this.state;
            )}
         </div>       
       </div>
+      <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+        <div className="form-group">
+        {error}
+        <label for="sel1">Select list Item Type, then upload file:</label>
+        <select class="form-control" ref={ref => this.closetItemType = ref} onChange={(e) => this.handleItemType(e)} id="closetItemType">
+          <option selected="selected" value={this.props.item}>SELECT</option>
+          <option id="bottom" value="bottom">BOTTOM</option>
+          <option id="top" value="top">TOP</option>
+          <option id="dress" value="dresss">DRESS</option>
+          <option id="bag" value="bag">BAG</option>
+          <option id="accessory" value="accessory">ACCESSORY</option>
+          <option id="flair" value="flair">FLAIR</option>
+          <option id="shoes" value="shoes">SHOES</option>
+        </select>
+      </div> 
+        <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
+         {message}
              <div className="col-md-5 closet-block">
              <div className="clothes-items">
                     <div className="closet-tabs-container">
-                        <ul>
+                        <div className="row">
                             <li>Shoes</li>
-                            <li>Shirts</li>
+                            { shoeResults}
+                        </div>
+                        <div className="row">
+                            <li>Tops</li>
+                            {topResults}
+                         </div>
+                         <div className="row">
                             <li>Dresses</li>
-                        </ul>
+                            { dressResults}
+                        </div>
+                         <div className="row">
+                            <li>Bags</li>
+                            { bagResults}
+                        </div>
+                         <div className="row">
+                            <li>Accessories</li>
+                            { accessoryResults}
+                        </div>
+                        <div className="row">
+                            <li>Flair</li>
+                            {flairResults}
+                        </div>
+                        <div className="row">
+                            <li>Bottoms</li>
+                            {bottomResults}
+                        </div>
+                      
                         <div id="gallery">
                         
                         {/*{clothesImages}*/}
                          <div style={{ overflow: 'hidden', clear: 'both' }}>
-                        {images.map(({ id,src, type }, index) =>
-                            <Image
-                            id={id}
-                            src={src}
-                            type={type}
-                            isDropped={this.isDropped(src)}
-                            key={index}
-                            />,
-                        )}
-                        <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+                            
+                       
                     </div>
                  </div>
             </div>
@@ -179,4 +386,34 @@ const { images, clothesbins } = this.state;
   }
 }
 
-export default ClosetPicker;
+const mapStateToProps = (store,ownProps) => {
+
+    return {
+        // message: store.chatState.message,
+        // file: store.chatState.file,
+        // chat: store.chatState.chat,
+        // server: store.chatState.server,
+        // privatemessage: store.chatState.privatemessage,
+        // showModal: store.chatState.showModal,
+        updateClosetPicker: store.closetState.updateClosetPicker,
+        updateClosetItems: store.closetState.updateClosetItems,
+        images: store.closetState.images,
+        itemtype: store.closetState.itemtype,
+        closeterror: store.closetState.closeterror,
+        item: store.closetState.item,
+        file: store.closetState.file, 
+        imagesavedsuccess: store.closetState.imagesavedsuccess, 
+        top: store.closetState.top, 
+        bottom: store.closetState.bottom, 
+        shoes: store.closetState.shoes, 
+        bag: store.closetState.bag, 
+        accessory: store.closetState.accessory, 
+        dress: store.closetState.dress, 
+        flair: store.closetState.flair,   
+    }
+
+};
+
+export default connect(mapStateToProps)(ClosetPicker);
+
+           

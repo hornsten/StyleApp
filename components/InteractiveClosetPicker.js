@@ -6,7 +6,7 @@ import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Clothesbin from './Clothesbin';
 import Image from './Image';
 import ItemTypes from './ItemTypes';
-import ClosetItems from "./ClosetItems.js";
+// import ClosetItems from "./ClosetItems.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
@@ -67,7 +67,7 @@ uploadFile(e) {
   closeterror: false
 })
   if (this.props.item !== "SELECT"){
-     helper.uploadToCloset(e, store);
+     helper.uploadToCloset(e, this.props.itemtype, store);
     
       // RESET DOM
      

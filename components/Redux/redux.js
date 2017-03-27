@@ -48,6 +48,8 @@ const userReducer = (state={}, action) => {
 }
 
 const closetReducer = (state={}, action) => {
+
+
   
     switch(action.type){
         case 'UPDATE_CLOSET_PICKER':
@@ -56,6 +58,20 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {updateClosetItems: action.updateClosetItems});
         case 'UPDATE_IMAGES':
             return Object.assign({},state, {images: action.images});
+        case 'CLOSET_TOP':
+            return Object.assign({},state, {top: action.top});
+        case 'CLOSET_BOTTOM':
+            return Object.assign({},state, {bottom: action.bottom});
+        case 'CLOSET_SHOES':
+            return Object.assign({},state, {shoes: action.shoes});
+        case 'CLOSET_BAG':
+            return Object.assign({},state, {bag: action.bag});
+        case 'CLOSET_ACCESSORY':
+            return Object.assign({},state, {accessory: action.accessory});
+        case 'CLOSET_DRESS':
+            return Object.assign({},state, {dress: action.dress});
+        case 'CLOSET_FLAIR':
+            return Object.assign({},state, {flair: action.flair});
         case 'CLOSET_UPLOAD':
             return Object.assign({},state, {clothing: action.clothing});
         case 'TYPE_CHANGE':

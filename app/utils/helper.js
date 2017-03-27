@@ -25,18 +25,63 @@ var helpers = {
 //             return response;
 //         })
         
-//    },
+//    },,
 
 
-    getImages: function(store){
-        return axios.get('/closet/image', { credentials : 'same-origin' }).then(function(result){
+    getImages: function(store, item){
+        console.log(item, "item")
+        return axios.get('/closet/image/'+item, { credentials : 'same-origin' }).then(function(result){
            if (result){
-                // console.log("result", result.data[0]);
+                console.log("results.data", result.data.results);
                 // var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
                 // console.log(username);
-                console.log("result images", result);
-                store.dispatch({type: "UPDATE_IMAGES", images: result.data})
-               
+                // console.log("result images", result);
+                // store.dispatch({type: "UPDATE_IMAGES", images: result.data})
+                 console.log("result.type", result.data.type);
+                if (result.data.type === "bottom"){
+                    store.dispatch({ 
+                        type: 'CLOSET_BOTTOM',
+                        bottom: result.data.results
+                    })
+
+                } else  if (result.data.type  === "top"){
+                    store.dispatch({ 
+                        type: 'CLOSET_TOP',
+                        top: result.data.results
+                    })
+                    
+
+                } else  if (result.data.type  === "bag"){
+                    store.dispatch({ 
+                        type: 'CLOSET_BAG',
+                        bag: result.data.results
+                    })
+
+                } else  if (result.data.type  === "dress"){
+                    store.dispatch({ 
+                        type: 'CLOSET_DRESS',
+                        dress: result.data.results
+                    })
+
+                } else  if (result.data.type  === "shoes"){
+                    store.dispatch({ 
+                        type: 'CLOSET_SHOES',
+                        shoes: result.data.results
+                    })
+
+                } else  if (result.data.type  === "accessory"){
+                    store.dispatch({ 
+                        type: 'CLOSET_ACCESSORY',
+                        accessory: result.data.results
+                    })
+
+                } else  if (result.data.type  === "flair"){
+                    store.dispatch({ 
+                        type: 'CLOSET_FLAIR',
+                        flair: result.data.results
+                    })
+
+                }
 
            }
 
@@ -44,7 +89,7 @@ var helpers = {
         
     },
 
-  uploadToCloset: function(e, store){
+  uploadToCloset: function(e, type, store){
                 var files = e.target.files || e.dataTransfer.files 
                 if (files) {
                     //send only the first one
@@ -57,36 +102,82 @@ var helpers = {
                         var buffer = e.target.result;
                         var postObj = {
                             name: file.name,
-                            buffer: buffer
-                        }
+                            buffer: buffer,
+                            type: type,
+                        };
                     
                         return axios.post('/closet/image/new', postObj).then(function(result){
-                            console.log(result);
-                            // reset values
-                               store.dispatch({ 
-                                    type: 'CLOSET_ERROR',
-                                    closeterror: false
-                                })
-                        
+                            console.log("result.type", result.type);
+                            if (result.data.type === "bottom"){
                                 store.dispatch({ 
-                                    type: 'TYPE_CHANGE',
-                                    itemtype: ""
+                                    type: 'CLOSET_BOTTOM',
+                                    bottom: result.data.results
+                                })
+
+                            } else  if (result.data.type  === "top"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_TOP',
+                                    top: result.data.results
                                 })
                                 
-                                store.dispatch({ 
-                                    type: 'INPUT_FILE',
-                                    file: ""
-                                })
-                               
-                                store.dispatch({ 
-                                    type: 'SUCCESSFUL_SAVE',
-                                    imagesavedsuccess: true
-                                })  
 
-                                 store.dispatch({
-                                     type: "UPDATE_IMAGES", 
-                                     images: result.data
+                            } else  if (result.data.type  === "bag"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_BAG',
+                                    bag: result.data.results
                                 })
+
+                            } else  if (result.data.type  === "dress"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_DRESS',
+                                    dress: result.data.results
+                                })
+
+                            } else  if (result.data.type  === "shoes"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_SHOES',
+                                    shoes: result.data.results
+                                })
+
+                            } else  if (result.data.type  === "accessory"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_ACCESSORY',
+                                    accessory: result.data.results
+                                })
+
+                            } else  if (result.data.type  === "flair"){
+                                store.dispatch({ 
+                                    type: 'CLOSET_FLAIR',
+                                    flair: result.data.results
+                                })
+
+                            }
+
+                        // reset values
+                            store.dispatch({ 
+                                type: 'CLOSET_ERROR',
+                                closeterror: false
+                            })
+                    
+                            store.dispatch({ 
+                                type: 'TYPE_CHANGE',
+                                itemtype: ""
+                            })
+                            
+                            store.dispatch({ 
+                                type: 'INPUT_FILE',
+                                file: ""
+                            })
+                            
+                            store.dispatch({ 
+                                type: 'SUCCESSFUL_SAVE',
+                                imagesavedsuccess: true
+                            })  
+
+                            store.dispatch({
+                                    type: "UPDATE_IMAGES", 
+                                    images: result.data
+                            })
 
                                 // this.getImages(store);
                                 
