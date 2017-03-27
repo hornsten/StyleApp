@@ -11,8 +11,11 @@ var profileSchema = new Schema({
   email: {type : String, required : false},     //From FB hopefully
   userprofile: {
       isComplete: Boolean,
-      photo_img:  { data: Buffer, contentType: String }
-    // whatever fields we need for the bio page / profile page
+      photo_img:  { data: Buffer, contentType: String },
+ // whatever fields we need for the bio page / profile page
+    style_motto: {type: String},
+    blurb: {type: String},
+    joined_date: {type: Date, default:Date.now}
     //
   },
   chat: {

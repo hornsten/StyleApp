@@ -61,7 +61,7 @@ class NavBar extends Component{
                         <a className="nav-link" href="#"><FaLeanpub className="icon" /> My Magazine</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#"><FaUser className="icon" /> My Profile</a>
+                        <Link to='/profile'><FaUser className="icon" /> My Profile</Link>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <FaCommentO className="icon" /> Chat</a>
