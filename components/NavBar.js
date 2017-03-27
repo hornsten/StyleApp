@@ -10,6 +10,7 @@ import FaLeanpub from 'react-icons/lib/fa/leanpub';
 import FaLightbulbO from 'react-icons/lib/fa/lightbulb-o';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import FaLock from 'react-icons/lib/fa/lock';
+import FaFacebook from 'react-icons/lib/fa/facebook';
 
 class NavBar extends Component{
     constructor(props) {
@@ -61,7 +62,7 @@ class NavBar extends Component{
                         <a className="nav-link" href="#"><FaLeanpub className="icon" /> My Magazine</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#"><FaUser className="icon" /> My Profile</a>
+                        <Link to='/profile'><FaUser className="icon" /> My Profile</Link>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <FaCommentO className="icon" /> Chat</a>
@@ -80,7 +81,7 @@ class NavBar extends Component{
                     <li className={`nav user-photo  ${user && user.facebook && user.facebook.photo && 'show'}`}
             style={user && user.facebook && user.facebook.photo && {backgroundImage: `url(${user.facebook.photo})`}}>
 
-            <a href = "/auth/facebook"><i className="fa fa-facebook o-auth-button btn-outline"><FaLock className="icon"/></i> Login with Facebook</a>
+            <a href = "/auth/facebook"><FaFacebook className="icon"/> Login with Facebook</a>
             </li></ul>)
            
 

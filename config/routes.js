@@ -8,6 +8,7 @@ import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
 import NavBar from "../components/NavBar.js";
 import ClosetPicker from "../components/ClosetPicker.js";
+import Profile from "../components/Profile.js";
 
 // e.g. sample
 // var routes = (s
@@ -38,6 +39,7 @@ var routes = (
                 <Route path='/private' component={PrivateChat} />
             </Route>
             <Route path='/closet' component={ClosetPicker} />
+             <Route path='/profile' component={Profile} />
         </Route>
     </Router>
 )
