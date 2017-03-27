@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import '../public/assets/css/profile.css';
+import FaCamera from 'react-icons/lib/fa/camera';
+
 import ReactModal from 'react-modal';
 class Profile extends React.Component {
       constructor(props) {
@@ -43,8 +45,10 @@ class Profile extends React.Component {
               <div>
                 <div className="panel panel-default"> 
                 <div className="panel-body">Panel Content</div>
+                <div>
                 <img src= {"../assets/img/empty_avatar.jpg"} style={{width: 120, height: 120}}/>
-                 
+                 <FaCamera className="icon"/>Add photo
+                 </div>
                 <ul>      
                          
                     <li>style motto: {}</li>
@@ -73,8 +77,8 @@ class Profile extends React.Component {
                                 style={{
                                     
                                     content: {
-                                        color: 'lightsteelblue',
-                                        height:750,
+                                       
+                                        height:700,
                                         width: 750,
                                         top: 200,
                                         left: 400
@@ -101,8 +105,8 @@ class Profile extends React.Component {
            style={{
                                     
                                     content: {
-                                        color: 'lightsteelblue',
-                                        height:750,
+                                      
+                                        height:700,
                                         width: 750,
                                         top: 200,
                                         left: 400
