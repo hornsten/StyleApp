@@ -56,7 +56,7 @@ class Profile extends React.Component {
                     <li>blurb:{}</li>
 
                 </ul>
-                <button onClick={this.handleClick} className="btn btn-primary btn-lg">edit</button>
+                <button onClick={this.handleClick} className="btn btn-primary outline round btn-lg">edit</button>
 
                 </div>
 {/*   div for adding personal style images*/}
