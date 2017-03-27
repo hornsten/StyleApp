@@ -152,59 +152,70 @@ io.sockets.on('connection', function (socket) {
 	});
 		
 
-		socket.on('sendclosetpicker', function(item){
+	// socket.on('sendclosetpicker', function(item){
 
-			console.log("item", item)
+	// 	console.log("item", item)
+	// })
+
+//  socket.emit('img-file', tmpfilename, userid, image);
+	socket.on('img-file', function(name, userid, image) {
+			var fs = require('fs');
+			var usernameNoSpaces = socket.username.replace(/\s/g, '_');
+			// create a unique name for the file
+			var uniqueFileName = usernameNoSpaces + '_' + Date.now() + '_' + name;
+			//path to store uploaded files (NOTE: presumed you have created the folders)
+			// stored in temp area before being pushed to cloud
+			var fileName = __dirname + '/public/assets/img/' + uniqueFileName;
+			var fileNameWithExtension = fileName + '.png';
+			// // remove .png extension
+			// var publicFileName = uniqueFileName.slice(0, -4);
+			//path to store uploaded files (NOTE: presumed you have created the folders)
+			// var fileName = __dirname + '/public/assets/img/' + name;
+			console.log("fileNameWithExtension", fileNameWithExtension);
+
+			fs.writeFile(fileNameWithExtension, image, 'base64', function(err) {
+				// console.log('File saved successful!');
+				cloudinary.uploader.upload(fileNameWithExtension, function(result) { 
+					// var filelocation = result.url;
+					// save to the database
+					var newMagazineItem = new models.Magazine({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, src: result.url, created_at:  Date.now()});
+					newMagazineItem.save().then(function(){
+						if (err) return console.log(err); 
+						console.log("saving item to db");
+						return;
+							// need to updaet user closet too *****
+					})
+					// .then(function(){
+					// 	//reqquer
+					// 	// models.Magazine.find({"userid": userid}).exec(function(err, magazines){
+					// 	// 	if (err) return console.log(err); 
+							
+					// 	// 	// console.log("or in here???? ", items);
+					// 	// 		res.json(magazines);
+					// 	// 	})
+					// })
+					// // remove file from from tmp area
+
+
+				}, {
+					public_id: publicFileName, 
+					crop: 'limit',
+					width: 2000,
+					height: 2000,
+					eager: [
+					{ width: 200, height: 200, crop: 'thumb',
+						radius: 20 },
+					{ width: 100, height: 150, crop: 'fit', format: 'png' }
+					],                                     
+					// tags: ['special', 'for_homepage']
+				} );
+
+
+
+			// });
+
+
 		})
-
-
-	socket.on('img-file', function(name, image) {
-        var fs = require('fs');
-       console.log("getggine  in here");
-        //path to store uploaded files (NOTE: presumed you have created the folders)
-        var fileName = __dirname + '/public/assets/img/' + name;
-		console.log(fileName);
-		
-		
-		
-
-		fs.writeFile(fileName, image, 'base64', function(err) {
-			console.log('File saved successful!');
-		});
-		// // save to data base
-
-        // fs.open(fileName, 'a', 0755, function(err, fd) {
-        //     if (err) throw err;
-
-        //     fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
-        //         fs.close(fd, function() {
-        //             console.log('File saved successful!');
-		// // 			// save to data base
-		// // 			// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
-		// // 			// console.log(message);
-		// // 			var savefileName = '/assets/img/' + name;
-		// // 			var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
-		// // 			newChatMessage.save().then(function(){
-		// // 					var cutoff = new Date();
-		// // 					cutoff.setDate(cutoff.getDate()-1);
-		// // 					models.Chat
-		// // 						.find({room: socket.room, "created_at": {"$gte": cutoff }})
-		// // 						.sort({'date': -1})
-		// // 						.exec(function(err, results) {
-		// // 							if (err) return console.log(err);
-		// // 							// to everyone in that room including current client
-		// // 							// console.log("socket room for sendngchat back", socket.room);
-		// // 							// don't want any broadcasts to all private users not in 1-1 chat
-		// // 							if (socket.room !== "Private"){
-		// // 								io.sockets.in(socket.room).emit('updatechat', results);
-		// // 							}
-									
-		// // 						});
-		// // 					})	
-
-        //         });
-        //     })
-        // });
 
     });
 

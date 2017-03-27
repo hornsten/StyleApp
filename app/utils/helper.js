@@ -199,11 +199,11 @@ var helpers = {
 
        return axios.get('/user', { credentials : 'same-origin' }).then(function(result){
            if (result){
-                console.log("result", result.data[0]);
                 var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
-                console.log(username);
-                console.log(store);
+                var userid = result.data[0].facebook.id;
+                 console.log("userid", userid);
                 store.dispatch({type: "ADD_USERNAME", username: username})
+                store.dispatch({type: "ADD_USERID", userid: userid})
                 store.dispatch({type: "IS_LOGGED_IN", loggedin: "true"})
 
            }

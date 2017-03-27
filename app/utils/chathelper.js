@@ -234,7 +234,7 @@ var chathelper = {
 
         },
     
-        img_upload: (image) => {
+        img_upload: (image, userid) => {
         // sourceType ="upload" or "dnd"
         
             // if (image) {
@@ -246,7 +246,8 @@ var chathelper = {
                     
             //             //send the content via socket
             //             // socket.emit('send-file', "TEST", buffer);
-                        socket.emit('img-file', "fionatest", image);
+                        var tmpfilename = userid + "_New_Look";
+                        socket.emit('img-file', tmpfilename, userid, image);
             //         };
             //         // send the content via socket
              

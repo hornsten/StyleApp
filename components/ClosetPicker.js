@@ -132,9 +132,16 @@ e.preventDefault();
                     //     + "3gAAAABJRU5ErkJggg==";
                     // strip off the data: url prefix to get just the base64-encoded bytes
                     var data = img.replace(/^data:image\/\w+;base64,/, "");
-                    console.log(data,"data");
+                   
+                  //  if (this.props.userid) {
+
+                      // console.log(this.props.userid, "userid");
+                      var userid = this.props.userid;
                  
-                    chathelper.img_upload(data);
+                      chathelper.img_upload(data, userid);
+
+                  //  }
+                   
                 
                     // .replace(/^data:image\/png;base64,/, "");
                     // var binaryData = new Buffer(img, 'base64').toString('binary');
@@ -425,6 +432,7 @@ const mapStateToProps = (store,ownProps) => {
         // server: store.chatState.server,
         // privatemessage: store.chatState.privatemessage,
         // showModal: store.chatState.showModal,
+        userid: store.userState.userid,
         updateClosetPicker: store.closetState.updateClosetPicker,
         updateClosetItems: store.closetState.updateClosetItems,
         images: store.closetState.images,
