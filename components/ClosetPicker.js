@@ -27,7 +27,6 @@ class ClosetPicker extends React.Component {
            { accepts: [ItemTypes.FLAIR], lastDroppedItem: null},
            { accepts: [ItemTypes.SHOES], lastDroppedItem: null},
          { accepts: [ItemTypes.BOTTOM,ItemTypes.DRESS], lastDroppedItem: null }
-
         
       ],
       // images: [
@@ -289,11 +288,11 @@ if (this.props.flair){
          message = "File Successfully Saved";
       }
       return (
-         <section className="container-fluid closet-container">
+         <section className="closet-container">
         
-            <div id='clothesSet' className="col-md-7 closet-block rel"> 
+            <div id='clothesSet' className="col-md-6 closet-block rel"> 
 
-        <div className="clothes-items backdrop paris" style={{ overflow: 'hidden', clear: 'both' }}>
+        <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
           
              <Clothesbin
@@ -304,8 +303,8 @@ if (this.props.flair){
              />,
            )}
         </div>
-         <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
-        <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
+         <button onClick={this.handleClick} className="btn btn-primary outline round btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-primary outline round btn-lg">Reset</button>       
       </div>
         <div className="form-group">
         {error}
@@ -323,9 +322,22 @@ if (this.props.flair){
       </div> 
         <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
          {message}
-             <div className="col-md-5 closet-block">
-             <div className="clothes-items">
+             <div className="col-md-6 closet-block">
+            
                     <div className="closet-tabs-container">
+                       <div className="clothes-items">
+               <ul className='nav nav-tabs'>
+                
+                <li role="presentation"><img src='../assets/img/i-shirt.png'></img></li>
+                 <li role="presentation"><img src='../assets/img/i-pants.png'></img></li>
+                 <li role="presentation"><img src='../assets/img/i-dress.png'></img></li>
+                   <li role="presentation"><img src='../assets/img/i-shoes.png'></img></li>
+                  <li role="presentation"><img src='../assets/img/i-purse.png'></img></li>
+                  <li role="presentation"><img src='../assets/img/i-accessory.png'></img></li>
+                 <li role="presentation"><img src='../assets/img/i-flair.png'></img></li>
+                 <li role="presentation"><img src='../assets/img/i-background.png'></img></li>
+                 </ul>
+                         <ul className="nav nav-tabs"> 
                         <div className="row">
                             <li>Shoes</li>
                             { shoeResults}
@@ -354,7 +366,7 @@ if (this.props.flair){
                             <li>Bottoms</li>
                             {bottomResults}
                         </div>
-                      
+                  </ul>    
                         <div id="gallery">
                         
                         {/*{clothesImages}*/}
