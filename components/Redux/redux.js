@@ -43,6 +43,8 @@ const userReducer = (state={}, action) => {
         case 'IS_LOGGED_IN':
           console.log("logged in", action.loggedin);
             return Object.assign({},state, {loggedin: action.loggedin});
+        // case 'UPDATE_PROFILE':
+        //     return Object.assign({}, state, {profile: action.profile});
         }
     return state;
 }

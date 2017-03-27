@@ -46,9 +46,10 @@ class Profile extends React.Component {
                 <div className="panel panel-default"> 
                 <div className="panel-body">Panel Content</div>
                 <div>
+                    {/*<h3>{this.props.username}</h3>*/}
                 <img src= {"../assets/img/empty_avatar.jpg"} style={{width: 120, height: 120}}/>
                  <FaCamera className="icon"/>Add photo
-                 </div>
+                  
                 <ul>      
                          
                     <li>style motto: {}</li>
@@ -78,15 +79,15 @@ class Profile extends React.Component {
                                     
                                     content: {
                                        
-                                        height:700,
+                                        height:750,
                                         width: 750,
-                                        top: 200,
+                                        top: 100,
                                         left: 400
 
                                     }
                                   }}
                                 >
-                                <p>Some text wil go here </p>
+                                <p>{this.props.username}</p>
 
                                   <img src= {"../assets/img/blkwhite.jpg"} 
                                  style={{width: 500, height: 500}}/>
@@ -106,9 +107,9 @@ class Profile extends React.Component {
                                     
                                     content: {
                                       
-                                        height:700,
+                                        height:750,
                                         width: 750,
-                                        top: 200,
+                                        top: 100,
                                         left: 400
 
                                     }
