@@ -307,7 +307,6 @@ if (this.props.flair){
          <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
         <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
       </div>
-      <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
         <div className="form-group">
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
@@ -315,7 +314,7 @@ if (this.props.flair){
           <option selected="selected" value={this.props.item}>SELECT</option>
           <option id="bottom" value="bottom">BOTTOM</option>
           <option id="top" value="top">TOP</option>
-          <option id="dress" value="dresss">DRESS</option>
+          <option id="dress" value="dress">DRESS</option>
           <option id="bag" value="bag">BAG</option>
           <option id="accessory" value="accessory">ACCESSORY</option>
           <option id="flair" value="flair">FLAIR</option>
