@@ -6,9 +6,9 @@ var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 
 cloudinary.config({ 
-  cloud_name: process.node.CLOUDINARY_NAME, 
-  api_key: process.node.CLOUDINARY_API, 
-  api_secret: process.node.CLOUDINARY_SECRET
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API, 
+  api_secret: process.env.CLOUDINARY_SECRET
 });
 
 // for heroku
