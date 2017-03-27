@@ -12,6 +12,7 @@ var closetSchema = new Schema({
     imageid: {type : String, required : true, unique : false},
     type: {type : String, required : true, unique : false},
     src: {type : String, required : true, unique : false},
+    filename: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}
  
 });

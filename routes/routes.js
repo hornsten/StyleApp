@@ -84,27 +84,31 @@ app.get('/', function(req, res){
 	});
 
   
-   app.get('/closet/image', function(req, res){
+   app.get('/closet/image/:item', function(req, res){
         if ( req.isAuthenticated()){
-            console.log("in here????");
+            var type = req.params.item;
+            // console.log("in here item" , type);
              models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){
                 
                 // return results.facebook.id;
                 // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
                 // need to query the database here for images for requesting user
-               console.log("in here???? tooo", results);
-               var userid =  results.facebook.id;
-                models.Closet.find({"userid": userid}).exec(function(err, items){
-                    if (err) return console.log(err); 
-                    // console.log("or in here???? ", items);
-                        res.json(items);
-                    })
+            //    console.log("in here???? tooo", results);
+            var userid =  results.facebook.id;
+            models.Closet.find({"userid": userid, "type" : type}).exec(function(err, items){
+                                    if (err) return console.log(err); 
+                                        var returnObj= {type: type,
+                                        results: items}
+                                        console.log(returnObj);
+                                    // console.log("or in here???? ", items);
+                                        res.json(returnObj);
+                })
                 
              })
         }
    });
 
-    app.post('/closet/image/new', function(req, res){
+    app.post('/closet/image/new/', function(req, res){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
                 console.log(results, "results");
@@ -132,15 +136,20 @@ app.get('/', function(req, res){
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, type: "ItemTypes.ACCESSORY", src: result.url, created_at:  Date.now()});
+                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.url, created_at:  Date.now()});
                             newClosetItem.save().then(function(){
+                                if (err) return console.log(err); 
+                                console.log("saving item to db");
+                                return;
                             		// need to updaet user closet too *****
                             }).then(function(){
                                 //reqquer
-                                models.Closet.find({"userid": userid}).exec(function(err, items){
+                                models.Closet.find({"userid": userid, type: req.body.type}).exec(function(err, items){
                                     if (err) return console.log(err); 
+                                        returnObj= {type: req.body.type,
+                                        results: items}
                                     // console.log("or in here???? ", items);
-                                        res.json(items);
+                                        res.json(returnObj);
                                     })
                             })
                             // // remove file from from tmp area
