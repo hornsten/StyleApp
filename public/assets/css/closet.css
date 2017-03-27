@@ -90,6 +90,7 @@ border: 1px dotted dimgray;
 overflow:hidden;
 background: #eee;
 opacity: 0.5;
+color: #000;
 }
 
 .inactive {
@@ -208,8 +209,12 @@ z-index:4;
 top: 25rem;*/
 transform: matrix(1, 0, 0, 1, 0, 0);
 }
-h3 {
+
+#drop-tag {
     padding: 0 3rem;
+    font-family: 'Clicker Script', cursive;
+    position:absolute;
+    font-size:3.5rem;
 }
 
 /*.mag-top {
