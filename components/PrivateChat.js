@@ -51,8 +51,8 @@ class PrivateChat extends React.Component {
         // console.log(result);
         // e.target.src gives the url of the file but I only want the file username
         // so this should be put in the id field and grabbed from there
-        e.dataTransfer.setData('text/plain-text',e.target.id );
-        console.log(e.target.id, "id");
+        e.dataTransfer.setData('text/plain-text', e.target.src );
+        console.log(e.target.src, "src");
         // img.dataTransfer.setData('text/plain', 'Drag Me Button');
         this.className = 'hover'; 
         return false;
