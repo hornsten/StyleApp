@@ -5,8 +5,18 @@ var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
-var cloudinary_keys = require('./auth/cloudinary_keys');
-cloudinary.config(cloudinary_keys);
+
+var cloudinary = require('cloudinary');
+// var cloudinary_keys = require('../auth/cloudinary_keys');
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API, 
+  api_secret: process.env.CLOUDINARY_SECRET
+});
+
+// var cloudinary_keys = require('./auth/cloudinary_keys');
+// cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
