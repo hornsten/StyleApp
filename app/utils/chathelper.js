@@ -7,11 +7,12 @@ import SocketIOFileUpload from 'socketio-file-upload';
 // const setDataSource = require('./datasource.js');
 
 var socketEndpoint = process.env.SOCKET_ENDPOINT;
-var socket = io(socketEndpoint, {
-    'forceNew': false,
-    'reconnect': false,
-    transports: ['websocket']
-});;
+// var socket = io({
+//     'forceNew': false,
+//     'reconnect': false,
+//     transports: ['websocket']
+// });;
+var socket = io();
 
 // Connect
 var chathelper = {
