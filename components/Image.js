@@ -65,7 +65,7 @@ ondragstart(e){
     return connectDragSource(
         <div style={{ ...style, opacity }} >
          {isDropped ?
-          <img style={{Height:'100%'}} className='noselect' src={src}></img> :
+          <img style={{height:'100%',width:'auto'}} className='noselect' src={src}></img> :
           <img  style={{height:'80%', width: 'auto'}} src={src} id={id}  ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  ></img>
         }
         </div>,

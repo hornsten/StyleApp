@@ -43,7 +43,6 @@ isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;
   }
 
-
  handleClick(e) {
 e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
@@ -91,6 +90,7 @@ e.preventDefault();
 }
 
 
+
    render() {
        
     // let {dashboard, dispatch} = this.props;
@@ -128,7 +128,9 @@ const { images, clothesbins } = this.state;
                key={index}
              />,
            )}
-        </div>       
+        </div>
+         <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
       </div>
              <div className="col-md-5 closet-block">
              <div className="clothes-items">
@@ -151,7 +153,7 @@ const { images, clothesbins } = this.state;
                             key={index}
                             />,
                         )}
-                        <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+                       
                     </div>
                  </div>
             </div>

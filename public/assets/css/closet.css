@@ -11,7 +11,7 @@ height: 100%;
 }
 
 .backdrop {
-    height: 65rem;
+    height: 55rem;
     overflow: hidden;
 }
 
@@ -24,11 +24,14 @@ height: 100%;
  
 }
 
+#clothesSet {
+    height: 55rem;
+}
 .closet-container {
-    height: 65rem;
+    height: 55rem;
 }
 .closet-block {
-    height: 65rem;
+    height: 55rem;
 }
 .closet-tabs-container {
     height: 200px;
@@ -69,8 +72,8 @@ img {
 
 .top {
 
-height: 30rem;
-width: 29rem;
+height: 100rem;
+width: 100rem;
 z-index: 5;
 
 }
@@ -175,38 +178,41 @@ background-image: url('../img/paris-background.jpg');
 }
 .poly-top {
 
-left: 1rem;
-top: 1rem;
+/*left: 1rem;
+top: 1rem;*/
 transform: matrix(0.99978, -0.02083, 0.02083, 0.99978, 0, 0);
 }
 .poly-bottom {
-left: 1rem;
- top: 1rem;
+/*left: 30rem;
+ top: 3rem;*/
 transform: matrix(0.98582, -0.16781, 0.16781, 0.98582, 0, 0);
 }
 .poly-bag{
-left: 1rem;
-top: 1rem;
+/*left: 25rem;
+top: 15rem;*/
 transform: matrix(0.95654, 0.29162, -0.29162, 0.95654, 0, 0);
 }
 .poly-shoes{
-left: 1rem;
-top: 1rem;
+/*left: 20rem;
+top: 35rem;*/
  transform: matrix(0.90439, 0.42666, -0.42666, 0.90439, 0, 0);
   z-index: 3;
 }
 .poly-flair{
-left: 1rem;
-top: 1rem;
+/*left: 5rem;
+top: 25rem;*/
 z-index:4;
 }
 .poly-accessory{
-left: 1rem;
-top: 1rem;
+/*left: 38rem;
+top: 25rem;*/
 transform: matrix(1, 0, 0, 1, 0, 0);
 }
+h3 {
+    padding: 0 3rem;
+}
 
-.mag-top {
+/*.mag-top {
 left: 1rem;
 top: 1rem;
  
@@ -261,7 +267,7 @@ z-index: 5;
 left: 3rem;
 top: 34rem;
 transform: matrix(1, 0, 0, 1, 0, 0);
-}
+}*/
 
 .noselect {
 -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
