@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import ItemTypes from './ItemTypes';
-import Resizable from 'react-resizable-box';
-  
+// import Resizable from 'react-resizable-box';
+import Rnd from 'react-rnd';
+
 const clothesbinTarget = {
   drop(props, monitor) {
     props.onDrop(monitor.getItem());
@@ -28,37 +29,49 @@ export default class Clothesbin extends Component {
    
   const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem } = this.props;
   const isActive = isOver && canDrop;
+  let className = 'rnd '
+  if (isActive) {
+    className = 'rnd active noselect ';
+  } else if (canDrop) {
+    className = 'rnd canDrop ';
+  } else if (lastDroppedItem) {
+    className = 'rnd dropped noselect ';
+  }
     
-    let backgroundColor = 'transparent';
-    let opacity = '1';
-    if (isActive) {
-      backgroundColor = 'darkgreen';
-    } else if (canDrop) {
-      backgroundColor = 'darkkhaki';
-    } 
+  let binClass = className + accepts[0]+ ' text-center noselect ' + 'poly-'+accepts[0];
 
-  let rootClass = accepts[0]+ ' target text-center ';
-  let poly = rootClass + 'poly-';
-  let mag= rootClass + 'mag-';
-  let paris= rootClass + 'paris-';
-  let className = poly+accepts[0];
-    
+  
     return connectDropTarget(
 //Box is resizable.Wd be cool to make draggable, too. Also overflow hidden, border on select
-      <div style={{ maxHeight:'100%',maxWidth:'100%' }}>
-        <Resizable customClass="item"
-  width={320}
-  height={200} className={lastDroppedItem ? "hide-elm" : ''}>
-        {isActive ?
-          'Release to drop' :
+      <div style={{maxHeight:'100%',maxWidth:'100%',position:'relative' }}>
+         <Rnd
+        
+  
+  ref={c => { this.rnd = c; }}
+  initial={{
+    x: window.innerWidth /2-200,
+    y: window.innerHeight / 2-300,
+    width: 200,
+    height: 200,
+  }}
+
+  minWidth={10}
+  minHeight={10}
+  maxWidth={1000}
+  maxHeight={1000}
+  
+  className={binClass}
+>
+        <h3 className='noselect text-center'>{isActive ?
+           'Release to drop' :
           `${accepts.join(', ')}`
-        }
+        }</h3>
        
         {lastDroppedItem &&
-          <img style={{maxHeight:'100%',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
+          <img className='noselect' style={{maxHeight:'500rem',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
         }
-       </Resizable>
-      </div>,
+       </Rnd>
+       </div>,
     );
 
   }

@@ -45,6 +45,7 @@ io.sockets.on('connection', function (socket) {
         var fs = require('fs');
        console.log("getggine  in here");
 	    var usernameNoSpaces = socket.username.replace(/\s/g, '_');
+		// create a unique name for the file
 	    var uniqueFileName =   usernameNoSpaces + '_' + Date.now() + '_' + name;
         //path to store uploaded files (NOTE: presumed you have created the folders)
 		// stored in temp area before being pushed to cloud
@@ -64,7 +65,32 @@ io.sockets.on('connection', function (socket) {
                     console.log('File saved successful!');
 					var filePath = '/public/assets/img/' + uniqueFileName;
 					cloudinary.uploader.upload(fileName, function(result) { 
-					     console.log(result) 
+
+
+					    console.log("url",result.url);
+						var filelocation = result.url;
+						// save to the database
+						var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: filelocation, type: "file", created_at:  Date.now()});
+						newChatMessage.save().then(function(){
+								var cutoff = new Date();
+								cutoff.setDate(cutoff.getDate()-1);
+								models.Chat
+									.find({room: socket.room, "created_at": {"$gte": cutoff }})
+									.sort({'date': -1})
+									.exec(function(err, results) {
+										if (err) return console.log(err);
+										// to everyone in that room including current client
+										// console.log("socket room for sendngchat back", socket.room);
+										// don't want any broadcasts to all private users not in 1-1 chat
+										if (socket.room !== "Private"){
+											io.sockets.in(socket.room).emit('updatechat', results);
+										}
+										
+									});
+								})	
+						    // // remove file from from tmp area
+							// TODO
+
 					}, {
 						public_id: publicFileName, 
 						crop: 'limit',
@@ -81,24 +107,7 @@ io.sockets.on('connection', function (socket) {
 					// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
 					// console.log(message);
 					// var savefileName = '/assets/img/' + name;
-					var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: uniqueFileName, type: "file", created_at:  Date.now()});
-					newChatMessage.save().then(function(){
-							var cutoff = new Date();
-							cutoff.setDate(cutoff.getDate()-1);
-							models.Chat
-								.find({room: socket.room, "created_at": {"$gte": cutoff }})
-								.sort({'date': -1})
-								.exec(function(err, results) {
-									if (err) return console.log(err);
-									// to everyone in that room including current client
-									// console.log("socket room for sendngchat back", socket.room);
-									// don't want any broadcasts to all private users not in 1-1 chat
-									if (socket.room !== "Private"){
-										io.sockets.in(socket.room).emit('updatechat', results);
-									}
-									
-								});
-							})	
+			
 
                 });
             })
@@ -109,7 +118,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('send-url', function(url) {
 		
 		// maybe just save name and pull it back later on correct path
-		var savefileName = '/assets/img/' + url;
+		var savefileName = url;
 		console.log(url); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
 		newChatMessage.save().then(function(){

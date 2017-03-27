@@ -28,10 +28,7 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {chatWithUser: action.chatWithUser});
         case 'FILE_UPLOAD':
             return Object.assign({},state, {file: action.file});
-        case 'UPDATE_CLOSET_PICKER':
-            return Object.assign({},state, {updateClosetPicker: action.updateClosetPicker});
-        case 'UPDATE_CLOSET_ITEMS':
-            return Object.assign({},state, {updateClosetItems: action.updateClosetItems});
+        
         }
     return state;
 }
@@ -50,9 +47,39 @@ const userReducer = (state={}, action) => {
     return state;
 }
 
+const closetReducer = (state={}, action) => {
+  
+    switch(action.type){
+        case 'UPDATE_CLOSET_PICKER':
+            return Object.assign({},state, {updateClosetPicker: action.updateClosetPicker});
+        case 'UPDATE_CLOSET_ITEMS':
+            return Object.assign({},state, {updateClosetItems: action.updateClosetItems});
+        case 'UPDATE_IMAGES':
+            return Object.assign({},state, {images: action.images});
+        case 'CLOSET_UPLOAD':
+            return Object.assign({},state, {clothing: action.clothing});
+        case 'TYPE_CHANGE':
+            return Object.assign({},state, {itemtype: action.itemtype});
+        case 'ITEM_CHANGE':
+            return Object.assign({},state, {item: action.item});
+        case 'CLOSET_ERROR':
+        console.log("closeterror");
+            return Object.assign({},state, {closeterror: action.closeterror});
+        case 'INPUT_FILE':
+         console.log("file");
+            return Object.assign({},state, {file: action.file});
+        case 'SUCCESSFUL_SAVE':
+         console.log("imagesavedsuccess");
+            return Object.assign({},state, {imagesavedsuccess: action.imagesavedsuccess});
+        }
+        
+    return state;
+}
+
 const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
+    closetState: closetReducer,
 })
 
 var store = createStore(reducers);

@@ -3,8 +3,7 @@ import { DragSource } from 'react-dnd';
 import ItemTypes from './ItemTypes';
 
 const style = {
-  // border: '1px dashed gray',
-  backgroundColor: 'eee',
+backgroundColor: 'transparent',
  height: '10rem',
   width: '10rem',
  padding: '1rem',
@@ -13,6 +12,8 @@ const style = {
   lineHeight: 'normal',
   cursor: 'move',
   float: 'left',
+  display: 'inline-block',
+  verticalAlign: 'middle'
 };
 
 const imageSource = {
@@ -64,7 +65,7 @@ ondragstart(e){
     return connectDragSource(
         <div style={{ ...style, opacity }} >
          {isDropped ?
-          <img style={{height:'100%'}} src={src}></img> :
+          <img style={{Height:'100%'}} className='noselect' src={src}></img> :
           <img  style={{height:'80%', width: 'auto'}} src={src} id={id}  ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  ></img>
         }
         </div>,
