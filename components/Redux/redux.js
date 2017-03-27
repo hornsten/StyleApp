@@ -49,10 +49,7 @@ const userReducer = (state={}, action) => {
     return state;
 }
 
-const closetReducer = (state={}, action) => {
-
-
-  
+const closetReducer = (state={}, action) => { 
     switch(action.type){
         case 'UPDATE_CLOSET_PICKER':
             return Object.assign({},state, {updateClosetPicker: action.updateClosetPicker});
@@ -94,10 +91,26 @@ const closetReducer = (state={}, action) => {
     return state;
 }
 
+
+const interactiveClosetReducer = (state={}, action) => { 
+    switch(action.type){
+        case 'UPDATE_INDEX':
+            console.log("UPDATE_INDEX");
+            return Object.assign({},state, {interactiveindex: action.interactiveindex});
+        case 'UPDATE_ITEM':
+            console.log("UPDATE_ITEM");
+            return Object.assign({},state, {interactiveitem: action.interactiveitem});
+        }
+        
+    return state;
+}
+
+
 const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
     closetState: closetReducer,
+    interactiveClosetState: interactiveClosetReducer,
 })
 
 var store = createStore(reducers);

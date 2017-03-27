@@ -17,7 +17,8 @@ var html2canvas = require('html2canvas');
 class ClosetPicker extends React.Component {
    constructor(props) {
       super(props);
-      chathelper.updatecloset_listener(store);
+      // chathelper.updatecloset_listener(store);
+      this.resetClothesbins = this.resetClothesbins.bind(this);
       this.uploadFile = this.uploadFile.bind(this);
     this.state = {
       clothesbins: [
@@ -42,6 +43,21 @@ class ClosetPicker extends React.Component {
       droppedImageIds: [],
     };
   }
+
+  resetClothesbins(){
+  // just sets them back to inital state
+this.setState({
+        clothesbins: [
+          { accepts: [ItemTypes.TOP], lastDroppedItem: null },
+          { accepts: [ItemTypes.BAG], lastDroppedItem: null},
+          { accepts: [ItemTypes.ACCESSORY], lastDroppedItem: null },
+          { accepts: [ItemTypes.FLAIR], lastDroppedItem: null},
+          { accepts: [ItemTypes.SHOES], lastDroppedItem: null},
+          { accepts: [ItemTypes.BOTTOM,ItemTypes.DRESS], lastDroppedItem: null }]});
+
+           this.setState({droppedImageIds: []});
+
+}
 
 isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;

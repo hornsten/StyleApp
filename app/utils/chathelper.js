@@ -115,6 +115,14 @@ var chathelper = {
             socket.emit('sendclosetpicker', item);
 
         },
+
+         getIndexAndItem: (index, item) => {
+
+              socket.emit('interactive_closet', item, index);
+
+
+         },
+
         // // sends private chat to server
         // sendprvtchat: function(chatuser, message, store){
         //     socket.emit('sendprvtchat', chatuser, message);
@@ -123,17 +131,35 @@ var chathelper = {
 // Listeners Section -- these wait for incoming data from the server and the data received triggers actions on the  dom - state changes
         // takes in the latest chat data 
 
-        updatecloset_listener(updateClosetPicker){
-            socket.on('updatecloset', function (data){
+        // updatecloset_listener(updateClosetPicker){
+        //     socket.on('updatecloset', function (data){
 
-                // console.log("is the data in here", data)
+        //         // console.log("is the data in here", data)
+        //         store.dispatch({ 
+        //             type: 'UPDATE_CLOSET_ITEMS',
+        //             closetitems: data  // closet image data sent for updating 
+        //         })
+        //     })
+
+        // },
+
+        updateclothesbin: (store) => {
+             socket.on('updateclothesbin', function (data){
+                console.log("is the closthes bin in here", data.item, data.index);
                 store.dispatch({ 
-                    type: 'UPDATE_CLOSET_ITEMS',
-                    closetitems: data  // closet image data sent for updating 
+                    type: 'UPDATE_ITEM',
+                    interactiveitem: data.item
                 })
+                store.dispatch({ 
+                    type: 'UPDATE_INDEX',
+                    interactiveindex: data.index
+                })
+                
             })
 
         },
+
+
         updatechat_listener: (store) => {
             socket.on('updatechat', function (data){
                 // console.log("is the data in here", data)

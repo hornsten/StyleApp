@@ -26,6 +26,12 @@ var helpers = {
 //         })
         
 //    },,
+//  getClothesBin: function(store, item){
+        
+
+
+        
+// },
 
 
     getImages: function(store, item){
