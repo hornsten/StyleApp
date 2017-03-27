@@ -10,6 +10,9 @@ import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client';
 import {Modal, Dialog, Button} from 'react-bootstrap';
+// import cloudinary from 'cloudinary';
+// var cloudinary_keys = require('./auth/cloudinary_keys');
+// cloudinary.config(cloudinary_keys);
 
 
 // let socket = io(`http://localhost:8000`)
@@ -126,21 +129,26 @@ class GroupChatSection extends React.Component {
 
     render() {
         var style = {
-  width: '100px',
-  height: '100px'
-};
-
-
+        width: '100px',
+        height: '100px'
+        };
 
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
                 var resultComponents = this.props.chat.map(function(result) {
-                    console.log(result.type)
+                  console.log("Im in group chat");
                 if (result.type === "file"){
-                    var chatmessage = <img src={result.message} alt="File Not Found" />
-                    console.log("chatmessage", chatmessage);
-                } else {
+                    //  var publicFileName = result.message;
+                    //  console.log(publicFileName, "publicFileName");
+                    //  var chatmessage = cloudinary.image(publicFileName, { width: 100, height: 150, crop: "fill" });
+                    //    console.log(cloudinary.image(publicFileName, { width: 100, height: 150, crop: "fill" }), "image chatmessage");
+                    var fileLocation = "https://res.cloudinary.com/hvzbthwxc/image/upload/c_fit,h_150,w_100/v1490548588/" + result.message;
+                    console.log("testtset", fileLocation);
+                    var chatmessage = <img src={fileLocation} alt="File Not Found" />
+                    // console.log("chatmessage", chatmessage);
+                } else if  (result.type === "text"){
+                    console.log("in here", result.type);
                     var chatmessage =  <div className="col-md-8">{result.message}</div>
                 }
               
@@ -158,7 +166,7 @@ class GroupChatSection extends React.Component {
     //    console.log("this.props.privatemessage", this.props.privatemessage);
     // var alertMessage = "";
        if (this.props.showModal === true){
-                    var alertMessage = <Modal.Dialog show={this.props.showModal}>
+                    var alertMessage = <Modal.Dialog>
                         <Modal.Header>
                         <Modal.Title>Modal title</Modal.Title>
                         </Modal.Header>

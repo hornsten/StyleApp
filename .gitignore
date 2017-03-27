@@ -1,4 +1,5 @@
-auth/keys.js
+/auth/cloudinary_keys.js
+/auth/keys.js
 node_modules
 .DS_Store
 npm-debug.log

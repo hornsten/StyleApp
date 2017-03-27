@@ -3,6 +3,10 @@ function chat_server(app, io, models){
 
 var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
+// import siofu from 'socketio-file-upload';
+var cloudinary = require('cloudinary');
+var cloudinary_keys = require('./auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
@@ -40,9 +44,14 @@ io.sockets.on('connection', function (socket) {
 	socket.on('send-file', function(name, buffer) {
         var fs = require('fs');
        console.log("getggine  in here");
+	    var usernameNoSpaces = socket.username.replace(/\s/g, '_');
+	    var uniqueFileName =   usernameNoSpaces + '_' + Date.now() + '_' + name;
         //path to store uploaded files (NOTE: presumed you have created the folders)
-        var fileName = __dirname + '/public/assets/img/' + name;
-		console.log("filename", fileName);
+		// stored in temp area before being pushed to cloud
+        var fileName = __dirname + '/public/assets/img/' + uniqueFileName;
+		// remove .png extension
+		var publicFileName = uniqueFileName.slice(0, -4);
+		console.log("new filename", fileName);
 		
 		
 		// save to data base
@@ -53,11 +62,26 @@ io.sockets.on('connection', function (socket) {
             fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
                 fs.close(fd, function() {
                     console.log('File saved successful!');
+					var filePath = '/public/assets/img/' + uniqueFileName;
+					cloudinary.uploader.upload(fileName, function(result) { 
+					     console.log(result) 
+					}, {
+						public_id: publicFileName, 
+						crop: 'limit',
+						width: 2000,
+						height: 2000,
+						eager: [
+						{ width: 200, height: 200, crop: 'thumb',
+							radius: 20 },
+						{ width: 100, height: 150, crop: 'fit', format: 'png' }
+						],                                     
+						// tags: ['special', 'for_homepage']
+					} );
 					// save to data base
 					// message = '<img src={\''+ fileName + '} alt="\''+ name + '"/>';
 					// console.log(message);
-					var savefileName = '/assets/img/' + name;
-					var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
+					// var savefileName = '/assets/img/' + name;
+					var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: uniqueFileName, type: "file", created_at:  Date.now()});
 					newChatMessage.save().then(function(){
 							var cutoff = new Date();
 							cutoff.setDate(cutoff.getDate()-1);
@@ -113,6 +137,8 @@ io.sockets.on('connection', function (socket) {
 
 			console.log("item", item)
 		})
+
+
 	socket.on('img-file', function(name, image) {
         var fs = require('fs');
        console.log("getggine  in here");

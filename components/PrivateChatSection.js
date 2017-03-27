@@ -134,7 +134,7 @@ class ChatSection extends React.Component {
                     console.log(result.type)
                 if (result.type === "file"){
                     var chatmessage = <img src={result.message} alt="File Not Found" />
-                    console.log("chatmessage", chatmessage);
+                    console.log("I am in privaet chat", chatmessage);
                 } else {
                     var chatmessage =  <div className="col-md-8">{result.message}</div>
                 }
