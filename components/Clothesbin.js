@@ -45,8 +45,8 @@ export default class Clothesbin extends Component {
   if (accepts[0]==='bottom') {
     height=500;
   } else if (accepts[0]==='flair' || accepts[0]==='accessory') {
-    width=130;
-    height=130;
+    width=135;
+    height=135;
   } else if (accepts[0]==='shoes') {
     width=125;
     height=150;
@@ -71,10 +71,10 @@ export default class Clothesbin extends Component {
   
   className={binClass}
 >
-        <h4 style={{position:'absolute'}} className='noselect text-center'><span className='spacer'></span>{isActive ?
+        <p id='drop-tag' className='noselect text-center'><span className='spacer'></span>{isActive ?
            'Release to drop' :
           `${accepts.join(', ')}`
-        }</h4>
+        }</p>
        
         {lastDroppedItem &&
           <img className='noselect' style={{maxHeight:'100%',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
