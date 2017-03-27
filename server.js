@@ -41,7 +41,8 @@ var ConnectedUser = require("./models/connecteduser.js");
 var PrivateChat = require("./models/privatechat.js");
 var Profile = require("./models/profile.js");
 var Closet = require("./models/closet.js");
-var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Closet": Closet};
+var InteractiveClothesBin = require("./models/interactiveclothesbin.js");
+var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Closet": Closet, "InteractiveClothesBin": InteractiveClothesBin};
 
 app.use( express.static(path.join(__dirname, 'public')));
 

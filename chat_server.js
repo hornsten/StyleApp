@@ -446,7 +446,40 @@ io.sockets.on('connection', function (socket) {
 
 	})
 
+    socket.on('interactive_closet', function(item, index){
+		console.log(item, "item", index , "index");  //item contains id and src
+        console.log(socket.room, "room"); 
+		// now save these to the database for the current room  / private conversation
+		// make sure there is a valid converation going on
+		if (socket.room !== "Private"){
+		
 
+		    var returnObj= { index: index, item: item};
+			console.log("data to be sent for interactive", returnObj);
+			/// for testing
+			io.sockets.in(socket.room).emit('updateclothesbin', returnObj);
+			/// for prod - only emit to other party
+			// socket.broadcast.to(socket.room).emit('updateclothesbin', result);
+
+			// we dont need to save - just emit to other party in conversation
+			// var newInteractiveClothesBin = new models.InteractiveClothesBin({conversationid: socket.room, index: index, item: item});
+			// newInteractiveClothesBin.save(function(){
+				
+				// console.log("error", err);
+				// console.log("result", result);
+				// emit to other user
+				// io.sockets.in(socket.room).emit('updateclothesbin', results);
+				// sending to all clients in 'game' room(channel) except sender
+			
+				// console.log(socket.room);
+				
+
+			// });
+
+		}
+		
+
+	})
 
 	// when the user disconnects - delete from ConnectedUser collection
 	// **** NB on logout remove user from ConnectedUser table too IF still there after disconnect - so wont fall over on private message emit to invalid socketid
