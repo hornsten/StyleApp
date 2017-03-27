@@ -6,7 +6,7 @@ import SocketIOFileUpload from 'socketio-file-upload';
 
 // const setDataSource = require('./datasource.js');
 
-var socketEndpoint = process.env.SOCKET_ENDPOINT || "http://localhost:8080";
+var socketEndpoint = process.env.SOCKET_ENDPOINT;
 var socket = io(socketEndpoint, {
     'forceNew': false,
     'reconnect': false,
