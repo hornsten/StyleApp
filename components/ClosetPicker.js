@@ -311,7 +311,7 @@ if (this.props.flair){
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
         <select class="form-control" ref={ref => this.closetItemType = ref} onChange={(e) => this.handleItemType(e)} id="closetItemType">
-          <option selected="selected" value={this.props.item}>SELECT</option>
+          <option selected="selected" value="SELECT">SELECT</option>
           <option id="bottom" value="bottom">BOTTOM</option>
           <option id="top" value="top">TOP</option>
           <option id="dress" value="dress">DRESS</option>
