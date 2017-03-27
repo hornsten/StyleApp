@@ -168,6 +168,7 @@ handleItemType(e){
 
 }
 
+
    render() {
        
     // let {dashboard, dispatch} = this.props;
@@ -302,7 +303,9 @@ if (this.props.flair){
                key={index}
              />,
            )}
-        </div>       
+        </div>
+         <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
       </div>
       <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
         <div className="form-group">

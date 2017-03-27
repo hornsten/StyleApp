@@ -40,19 +40,28 @@ export default class Clothesbin extends Component {
     
   let binClass = className + accepts[0]+ ' text-center noselect ' + 'poly-'+accepts[0];
 
-  
+  let height=200;
+  let width=200;
+  if (accepts[0]==='bottom') {
+    height=500;
+  } else if (accepts[0]==='flair' || accepts[0]==='accessory') {
+    width=135;
+    height=135;
+  } else if (accepts[0]==='shoes') {
+    width=125;
+    height=150;
+  }
+
     return connectDropTarget(
 //Box is resizable.Wd be cool to make draggable, too. Also overflow hidden, border on select
-      <div style={{maxHeight:'100%',maxWidth:'100%',position:'relative' }}>
+      <div style={{position:'relative' }}>
          <Rnd
-        
-  
   ref={c => { this.rnd = c; }}
   initial={{
-    x: window.innerWidth /2-200,
+    x: window.innerWidth /2-600,
     y: window.innerHeight / 2-300,
-    width: 200,
-    height: 200,
+    width: width,
+    height: height,
   }}
 
   minWidth={10}
@@ -62,13 +71,13 @@ export default class Clothesbin extends Component {
   
   className={binClass}
 >
-        <h3 className='noselect text-center'>{isActive ?
+        <p id='drop-tag' className='noselect text-center'><span className='spacer'></span>{isActive ?
            'Release to drop' :
           `${accepts.join(', ')}`
-        }</h3>
+        }</p>
        
         {lastDroppedItem &&
-          <img className='noselect' style={{maxHeight:'500rem',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
+          <img className='noselect' style={{maxHeight:'100%',maxWidth:'100%'}} src={lastDroppedItem.src}></img>
         }
        </Rnd>
        </div>,
