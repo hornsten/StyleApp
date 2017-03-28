@@ -43,7 +43,7 @@ export default class Clothesbin extends Component {
   let height=200;
   let width=200;
   if (accepts[0]==='bottom') {
-    height=500;
+    height=400;
   } else if (accepts[0]==='flair' || accepts[0]==='accessory') {
     width=135;
     height=135;

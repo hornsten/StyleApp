@@ -72,9 +72,9 @@ img {
 
 .top {
 
-height: 100rem;
-width: 100rem;
-z-index: 5;
+/*height: 100rem;
+width: 100rem;*/
+z-index: 6;
 
 }
 
@@ -118,8 +118,7 @@ color: #000;
 
 .bottom {
 z-index: 4;
-width:23rem;
-height: 45rem;
+
  }
 
 .accessory {
@@ -174,9 +173,14 @@ background-image: url('../img/paris-background.jpg');
     position: relative;
 }
 
+.scroll-flow {
+overflow:auto;
+}
+
 .target {
     position:absolute;
 }
+
 .poly-top {
 
 /*left: 1rem;
@@ -215,6 +219,10 @@ transform: matrix(1, 0, 0, 1, 0, 0);
     font-family: 'Clicker Script', cursive;
     position:absolute;
     font-size:3.5rem;
+}
+
+select.form-control {
+    -webkit-appearance: none;
 }
 
 /*.mag-top {

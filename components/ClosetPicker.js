@@ -319,14 +319,16 @@ if (this.props.flair){
              />,
            )}
         </div>
-         <button onClick={this.handleClick} className="btn btn-primary outline round btn-lg">Save</button>
-        <button onClick={this.resetClothesbins} className="btn btn-primary outline round btn-lg">Reset</button>       
+         <button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-default btn-pink outline round btn-lg">Reset</button>       
       </div>
+      <div className="col-md-6 closet-block rel">
+        <div className="row">
         <div className="form-group">
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
         <select class="form-control" ref={ref => this.closetItemType = ref} onChange={(e) => this.handleItemType(e)} id="closetItemType">
-          <option selected="selected" value="SELECT">SELECT</option>
+          <option defaultValue="selected" value="SELECT">SELECT</option>
           <option id="bottom" value="bottom">BOTTOM</option>
           <option id="top" value="top">TOP</option>
           <option id="dress" value="dress">DRESS</option>
@@ -338,13 +340,14 @@ if (this.props.flair){
       </div> 
         <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
          {message}
-             <div className="col-md-6 closet-block">
+        </div>
+        <div className="row"> 
             
                     <div className="closet-tabs-container">
-                       <div className="clothes-items">
-               <ul className='nav nav-tabs'>
+                       <div className="clothes-items scroll-flow">
+               <ul className='nav nav-tabs nav-justified'>
                 
-                <li role="presentation"><img src='../assets/img/i-shirt.png'></img></li>
+                <li role="presentation"><a href='#'><img src='../assets/img/i-shirt.png'></img></a></li>
                  <li role="presentation"><img src='../assets/img/i-pants.png'></img></li>
                  <li role="presentation"><img src='../assets/img/i-dress.png'></img></li>
                    <li role="presentation"><img src='../assets/img/i-shoes.png'></img></li>
@@ -353,41 +356,41 @@ if (this.props.flair){
                  <li role="presentation"><img src='../assets/img/i-flair.png'></img></li>
                  <li role="presentation"><img src='../assets/img/i-background.png'></img></li>
                  </ul>
-                         <ul className="nav nav-tabs"> 
-                        <div className="row">
-                            <li>Shoes</li>
-                            { shoeResults}
-                        </div>
-                        <div className="row">
-                            <li>Tops</li>
+                         {/*<ul className="nav nav-tabs"> 
+                        <div className="row">*/}
+                            {/*<li>Shoes</li>*/}
+                            {shoeResults}
+                        {/*</div>*/}
+                        {/*<div className="row">*/}
+                            {/*<li>Tops</li>*/}
                             {topResults}
-                         </div>
-                         <div className="row">
-                            <li>Dresses</li>
+                         {/*</div>*/}
+                         {/*<div className="row">*/}
+                            {/*<li>Dresses</li>*/}
                             { dressResults}
-                        </div>
-                         <div className="row">
-                            <li>Bags</li>
+                        {/*</div>*/}
+                         {/*<div className="row">*/}
+                            {/*<li>Bags</li>*/}
                             { bagResults}
-                        </div>
-                         <div className="row">
-                            <li>Accessories</li>
+                        {/*</div>*/}
+                         {/*<div className="row">*/}
+                            {/*<li>Accessories</li>*/}
                             { accessoryResults}
-                        </div>
-                        <div className="row">
-                            <li>Flair</li>
+                        {/*</div>*/}
+                        {/*<div className="row">*/}
+                            {/*<li>Flair</li>*/}
                             {flairResults}
-                        </div>
-                        <div className="row">
-                            <li>Bottoms</li>
+                        {/*</div>*/}
+                        {/*<div className="row">*/}
+                            {/*<li>Bottoms</li>*/}
                             {bottomResults}
-                        </div>
-                  </ul>    
+                        {/*</div>*/}
+                  {/*</ul>    */}
                         <div id="gallery">
                         
                         {/*{clothesImages}*/}
                          <div style={{ overflow: 'hidden', clear: 'both' }}>
-                            
+                            //this is where the sets will go?
                        
                     </div>
                  </div>
@@ -395,6 +398,7 @@ if (this.props.flair){
             </div>
    
     </div>
+</div>
 </section>
       )
    }
