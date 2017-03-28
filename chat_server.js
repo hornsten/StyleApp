@@ -6,7 +6,7 @@ var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
 
-var cloudinary = require('cloudinary');
+// // var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 
 cloudinary.config({ 
@@ -160,45 +160,51 @@ io.sockets.on('connection', function (socket) {
 //  socket.emit('img-file', tmpfilename, userid, image);
 	socket.on('img-file', function(name, userid, image) {
 			var fs = require('fs');
-			var usernameNoSpaces = socket.username.replace(/\s/g, '_');
+			// var usernameNoSpaces = socket.username.replace(/\s/g, '_');
 			// create a unique name for the file
-			var uniqueFileName = usernameNoSpaces + '_' + Date.now() + '_' + name;
+			var uniqueFileName = name + '_' + Date.now() ;
 			//path to store uploaded files (NOTE: presumed you have created the folders)
 			// stored in temp area before being pushed to cloud
-			var fileName = __dirname + '/public/assets/img/' + uniqueFileName;
-			var fileNameWithExtension = fileName + '.png';
+			var filePath = __dirname + '/public/assets/img/' + uniqueFileName + '.png';
+			var fileNameWithExtension = uniqueFileName + '.png';
 			// // remove .png extension
 			// var publicFileName = uniqueFileName.slice(0, -4);
 			//path to store uploaded files (NOTE: presumed you have created the folders)
 			// var fileName = __dirname + '/public/assets/img/' + name;
-			console.log("fileNameWithExtension", fileNameWithExtension);
+			// console.log("fileNameWithExtension", fileNameWithExtension);
+			console.log("filePath", filePath);
+			console.log("uniqueFileName", uniqueFileName);
 
-			fs.writeFile(fileNameWithExtension, image, 'base64', function(err) {
+
+			fs.writeFile(filePath, image, 'base64', function(err) {
 				// console.log('File saved successful!');
-				cloudinary.uploader.upload(fileNameWithExtension, function(result) { 
+				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
+					console.log("result", result);
 					// save to the database
-					var newMagazineItem = new models.Magazine({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, src: result.url, created_at:  Date.now()});
+					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url});
 					newMagazineItem.save().then(function(){
 						if (err) return console.log(err); 
-						console.log("saving item to db");
-						return;
+							console.log("saving item to db");
+						// return;
 							// need to updaet user closet too *****
 					})
-					// .then(function(){
-					// 	//reqquer
-					// 	// models.Magazine.find({"userid": userid}).exec(function(err, magazines){
-					// 	// 	if (err) return console.log(err); 
+					.then(function(){
+						//reqquer
+						models.Magazine.find({"userid": userid}).exec(function(err, magazines){
+							if (err) return console.log(err); 
 							
-					// 	// 	// console.log("or in here???? ", items);
-					// 	// 		res.json(magazines);
-					// 	// 	})
-					// })
+							// console.log("or in here???? ", items);
+								// res.json(magazines);
+								// emit to listener to update state
+								socket.emit('newmagazine', magazines);
+							})
+					})
 					// // remove file from from tmp area
 
 
 				}, {
-					public_id: publicFileName, 
+					public_id: uniqueFileName, 
 					crop: 'limit',
 					width: 2000,
 					height: 2000,

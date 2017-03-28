@@ -36,7 +36,7 @@ var helpers = {
 
     getImages: function(store, item){
         console.log(item, "item")
-        return axios.get('/closet/image/'+item, { credentials : 'same-origin' }).then(function(result){
+        return axios.get('/closet/image/'+item).then(function(result){
            if (result){
                 console.log("results.data", result.data.results);
                 // var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
@@ -197,7 +197,7 @@ var helpers = {
 
   getUserDetails: function(store){
 
-       return axios.get('/user', { credentials : 'same-origin' }).then(function(result){
+       return axios.get('/user', { credentials : true }).then(function(result){
            if (result){
                 var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
                 var userid = result.data[0].facebook.id;
@@ -222,9 +222,42 @@ var helpers = {
         })
         
 
+   },
+
+   getMagazines: function(store, userid){
+        console.log("being called");
+       return axios.get('/magazine/'+userid, { credentials : 'same-origin' }).then(function(response) {
+            console.log("magazine", response);
+            store.dispatch({type: "NEW_MAGAZINES", magazines: response.data})
+            return ;
+        })
+
    }
    
-
+    // img_upload: (image, userid) => {
+    //         // sourceType ="upload" or "dnd"
+            
+    //             // if (image) {
+    //             //         var reader = new FileReader();
+    //             //         reader.onload = function(e) {
+    //             //             console.log('Sending file...');
+    //             //             //get all content
+    //             //             var buffer = e.target.result;
+                        
+    //             //             //send the content via socket
+    //             //             // socket.emit('send-file', "TEST", buffer);
+    //                         var tmpfilename = userid + "_New_Look";
+    //                         socket.emit('img-file', tmpfilename, userid, image);
+    //             //         };
+    //             //         // send the content via socket
+                
+                    
+            
+                        
+    //             //     };s
+    //             //     //  reader.readAsDataURL(file);
+    //             //     reader.readAsDataURL(image);
+    //     }
 
  };
 // We export the helpers function (which contains getGithubInfo)

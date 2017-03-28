@@ -59,6 +59,9 @@ class NavBar extends Component{
                        <Link to='/closet'><FaLightbulbO className="icon" /> Create</Link>
                     </li>
                     <li className="nav-item">
+                       <Link to='/home'><FaLightbulbO className="icon" /> Temp home link</Link>
+                    </li>
+                    <li className="nav-item">
                         <a className="nav-link" href="#"><FaLeanpub className="icon" /> My Magazine</a>
                     </li>
                     <li className="nav-item">

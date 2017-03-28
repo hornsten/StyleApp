@@ -5,13 +5,14 @@ var fs = require('fs');
 var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 
+// for heroku
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
   api_key: process.env.CLOUDINARY_API, 
   api_secret: process.env.CLOUDINARY_SECRET
 });
 
-// for heroku
+
 // cloudinary.config(cloudinary_keys);
 
 module.exports = function(app, passport, models){
@@ -23,7 +24,7 @@ app.get('/', function(req, res){
 })
 
 
-    app.get('/logout', isLoggedIn, function(req, res){
+    app.get('/logout', isLoggedIn, function(req, res, next){
         req.logout();
         res.redirect('/');
     })
@@ -32,7 +33,7 @@ app.get('/', function(req, res){
 
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
-            failureRedirect: '/'}), function(req,res){
+            failureRedirect: '/'}), function(req,res, next){
                 console.log(req.user.username);
                 
             //successful auth  , redirect home 
@@ -62,7 +63,7 @@ app.get('/', function(req, res){
 //     })
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
-            failureRedirect: '/'}), function(req,res){
+            failureRedirect: '/'}), function(req,res, next){
                 console.log(req.user.username);
                 
             //successful auth  , redirect home 
@@ -81,7 +82,7 @@ app.get('/', function(req, res){
     // });
 
 // removed this path from FB auth - cors issue
-	app.get('/chat/rooms', function(req, res){
+	app.get('/chat/rooms', function(req, res, next){
         //to allow CORS
         
 		models.Room.find({}, function(err, results){
@@ -92,7 +93,7 @@ app.get('/', function(req, res){
 	});
 
   
-   app.get('/closet/image/:item', function(req, res){
+   app.get('/closet/image/:item', function(req, res, next){
         if ( req.isAuthenticated()){
             var type = req.params.item;
             // console.log("in here item" , type);
@@ -116,7 +117,40 @@ app.get('/', function(req, res){
         }
    });
 
-    app.post('/closet/image/new/', function(req, res){
+   app.get('/magazine/:userid', function(req, res,next){
+       if ( req.isAuthenticated()){
+            var userid = req.params.userid;
+            console.log("in here mag");
+             models.Magazine.find({"userid": userid}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             })
+        }
+
+   })
+
+//     app.get('/image/:filename', function(req, res){
+//        if ( req.isAuthenticated()){
+//             var filename = req.params.filename;
+            
+//              models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){
+//                 var userid = results.facebook.id;
+//                 console.log(userid," and ", filename);
+//                 models.Closet.findOne({"userid": userid, "filename": filename }).exec(function(err, image){
+//                     console.log("in router", image.src);
+//                     // res.type('png');  
+//                     // res.json(image.src) 
+
+//                     var imageDownload = cloudinary.image(filename);
+//                         console.log(imageDownload);
+//                     // res.sendFile(imageDownload);
+//                 })
+//              })
+//         }
+
+//    })
+
+    app.post('/closet/image/new/', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
                 console.log(results, "results");
@@ -144,7 +178,7 @@ app.get('/', function(req, res){
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.url, created_at:  Date.now()});
+                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.secure_url, created_at:  Date.now()});
                             newClosetItem.save().then(function(){
                                 if (err) return console.log(err); 
                                 console.log("saving item to db");
@@ -186,7 +220,7 @@ app.get('/', function(req, res){
     //    res.end();
 })
 
-    app.get('/user', function(req, res){
+    app.get('/user', function(req, res, next){
                 //to allow CORS
         // res.header("Access-Control-Allow-Origin", "*");
         // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -208,7 +242,11 @@ app.get('/', function(req, res){
         // res.json(req.session.passport.user);
 	});
  // to allow CORS
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 ////
 }
 

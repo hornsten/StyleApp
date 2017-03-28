@@ -18,6 +18,7 @@ class InteractiveClosetPicker extends React.Component {
    constructor(props) {
       super(props);
       chathelper.updateclothesbin(store);
+      chathelper.new_magazine_item_listener(store);
       this.resetClothesbins = this.resetClothesbins.bind(this);
       // chathelper.updatecloset_listener(store);  // commented out for now as i dont think this does anything
       this.uploadFile = this.uploadFile.bind(this);
@@ -106,7 +107,8 @@ uploadFile(e) {
 
 }
  handleClick(e) {
-e.preventDefault();
+  var userid = this.props.userid;
+  e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
       onrendered: function (canvas) {
@@ -121,9 +123,8 @@ e.preventDefault();
           //     + "3gAAAABJRU5ErkJggg==";
           // strip off the data: url prefix to get just the base64-encoded bytes
           var data = img.replace(/^data:image\/\w+;base64,/, "");
-          console.log(data,"data");
         
-          chathelper.img_upload(data, this.props.userid);
+          chathelper.img_upload(data, userid);
       
           // .replace(/^data:image\/png;base64,/, "");
           // var binaryData = new Buffer(img, 'base64').toString('binary');
@@ -317,7 +318,7 @@ if (this.props.flair){
         
             <div id='clothesSet' className="col-md-7 closet-block rel"> 
 
-        <div className="clothes-items backdrop paris" style={{ overflow: 'hidden', clear: 'both' }}>
+        <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
           
              <Clothesbin
@@ -328,7 +329,7 @@ if (this.props.flair){
              />,
            )}
         </div>
-         <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+         <button onClick={(e) => this.handleClick(e)} className="btn btn-primary btn-lg">Save</button>
         <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
       </div>
         <div className="form-group">

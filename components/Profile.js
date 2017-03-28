@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import '../public/assets/css/profile.css';
 import FaCamera from 'react-icons/lib/fa/camera';
 
 import ReactModal from 'react-modal';
@@ -42,27 +41,34 @@ class Profile extends React.Component {
     
      render(){
           return(
-              <div>
-                <div className="panel panel-default"> 
-                <div className="panel-body">Panel Content</div>
-                <div>
-                    {/*<h3>{this.props.username}</h3>*/}
-                <img src= {"../assets/img/empty_avatar.jpg"} style={{width: 120, height: 120}}/>
-                 <FaCamera className="icon"/>Add photo
+  <div>         
+  <div className="jumbotron sharp"> 
+              
+               
+                    
+<div className="row">
+    <div className="col-xs-2">
+<img className='thumbnail' src= {"../assets/img/empty_avatar.jpg"} style={{width: 150, height: 150}}/>
+</div>
+<div className="col-xs-10">
+                
                   
                 <ul>      
-                         
+                  {/*<h3>{this.props.username}</h3>*/}
+                    <li><h3 className='username'>passionista123</h3></li>    
                     <li>style motto: {}</li>
                     <li>blurb:{}</li>
-
+                    <li><FaCamera className="icon"/> Add Photo</li>
+                    <li><button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">edit</button></li>
                 </ul>
-                <button onClick={this.handleClick} className="btn btn-primary outline round btn-lg">edit</button>
 
-                </div>
+</div>  
+</div>
+ </div>
 {/*   div for adding personal style images*/}
-                    <div className="panel panel-default">
-                     <div className="panel-body">Panel Content</div>
-                            <div>
+                    <div className="row">
+                    
+                          
                                 {/*<button onClick={this.handleOpenModal}>Trigger Modal</button>*/}
                                 
                                 <img src= {"../assets/img/blkwhite.jpg"} onClick={this.handleOpenModal}
@@ -124,9 +130,9 @@ class Profile extends React.Component {
         </ReactModal>
 
                             </div>
-                     </div>
-            </div>
-          </div>
+                     
+        
+  </div>
           )
       }
 }
