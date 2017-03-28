@@ -25,7 +25,7 @@ app.use(logger("dev"));
 // turns out it is a problem on the FB side! Need to let them know to allow authentication from localhost:8080.
 app.use(cors({
     allowedOrigins: [
-        'facebook.com', 'localhost:8080',
+        'facebook.com', 'localhost:8080', 'res.cloudinary.com/'
     ]
 }))
 var allowedOrigins = "http://localhost:* http://127.0.0.1:* https://www.facebook.com/*";
@@ -35,7 +35,7 @@ var http = require('http').Server(app);
 // var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000, 'origins': allowedOrigins});
 
 
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {'origins': allowedOrigins});
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server
 var Chat = require("./models/chat.js");
