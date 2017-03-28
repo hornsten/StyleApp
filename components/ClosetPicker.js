@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Clothesbin from './Clothesbin';
 import Image from './Image';
+import Magazine from './Magazine';
 import ItemTypes from './ItemTypes';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
@@ -20,16 +21,17 @@ class ClosetPicker extends React.Component {
       // chathelper.updatecloset_listener(store);
       this.resetClothesbins = this.resetClothesbins.bind(this);
       this.uploadFile = this.uploadFile.bind(this);
-    this.state = {
-      clothesbins: [
-         { accepts: [ItemTypes.TOP], lastDroppedItem: null },
-         { accepts: [ItemTypes.BAG], lastDroppedItem: null},
-        { accepts: [ItemTypes.ACCESSORY], lastDroppedItem: null },
-           { accepts: [ItemTypes.FLAIR], lastDroppedItem: null},
-           { accepts: [ItemTypes.SHOES], lastDroppedItem: null},
-         { accepts: [ItemTypes.BOTTOM,ItemTypes.DRESS], lastDroppedItem: null }
-        
-      ],
+      chathelper.new_magazine_item_listener(store);
+      this.state = {
+        clothesbins: [
+            { accepts: [ItemTypes.TOP], lastDroppedItem: null },
+            { accepts: [ItemTypes.BAG], lastDroppedItem: null},
+            { accepts: [ItemTypes.ACCESSORY], lastDroppedItem: null },
+            { accepts: [ItemTypes.FLAIR], lastDroppedItem: null},
+            { accepts: [ItemTypes.SHOES], lastDroppedItem: null},
+            { accepts: [ItemTypes.BOTTOM,ItemTypes.DRESS], lastDroppedItem: null }
+          
+        ],
       // images: [
       //  { id: '201393774', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201393774.png' },
       //   { id: '201234566', type: ItemTypes.BOTTOM,src:'../assets/img/bottom_201234566.png' },
@@ -64,6 +66,7 @@ isDropped(imageId) {
   }
   componentDidMount(){
     // get images for each section
+    helper.getMagazines(store, this.props.userid);
     helper.getImages(store, "top");
     helper.getImages(store, "bottom");
     helper.getImages(store, "accessory");
@@ -82,6 +85,12 @@ isDropped(imageId) {
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
+  }
+  componentWillUpdate() {
+    console.log("componentWillUpdate", this.props)
+  }
+  componentWillMount(){
+     console.log("compoenet will mount", this.props)
   }
 uploadFile(e) {
   var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
@@ -117,6 +126,7 @@ uploadFile(e) {
 
 }
  handleClick(e) {
+  var userid = this.props.userid;
 e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
@@ -136,9 +146,12 @@ e.preventDefault();
                   //  if (this.props.userid) {
 
                       // console.log(this.props.userid, "userid");
-                      var userid = this.props.userid;
-                 
-                      chathelper.img_upload(data, userid);
+                    // console.log("store", store.getState());
+ 
+                    // var userid = component.props.userid;
+        
+                    chathelper.img_upload(data, userid);
+                    // var userid = this.props.userid;
 
                   //  }
                    
@@ -166,7 +179,7 @@ e.preventDefault();
                     // window.open(img);
         }
   
-  })
+  });
 }
 handleItemType(e){
   // console.log("item type chagne this$$$", e.target.id);
@@ -326,7 +339,7 @@ if (this.props.flair){
              />,
            )}
         </div>
-         <button onClick={this.handleClick} className="btn btn-primary outline round btn-lg">Save</button>
+         <button onClick={(e) => this.handleClick(e)}  className="btn btn-primary outline round btn-lg">Save</button>
         <button onClick={this.resetClothesbins} className="btn btn-primary outline round btn-lg">Reset</button>       
       </div>
         <div className="form-group">
@@ -390,6 +403,10 @@ if (this.props.flair){
                             {bottomResults}
                         </div>
                   </ul>    
+                  <ul>
+                    <Magazine />
+                  </ul>
+
                         <div id="gallery">
                         
                         {/*{clothesImages}*/}
@@ -426,13 +443,8 @@ if (this.props.flair){
 const mapStateToProps = (store,ownProps) => {
 
     return {
-        // message: store.chatState.message,
-        // file: store.chatState.file,
-        // chat: store.chatState.chat,
-        // server: store.chatState.server,
-        // privatemessage: store.chatState.privatemessage,
-        // showModal: store.chatState.showModal,
-        userid: store.userState.userid,
+        test: store.chatState.test,
+        userid: store.chatState.userid,
         updateClosetPicker: store.closetState.updateClosetPicker,
         updateClosetItems: store.closetState.updateClosetItems,
         images: store.closetState.images,

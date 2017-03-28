@@ -143,6 +143,17 @@ var chathelper = {
         //     })
 
         // },
+       new_magazine_item_listener: (store) => {
+            socket.on('newmagazine', function (data){
+                // console.log("is the data in here", data)
+                console.log("magazines", data);
+
+                store.dispatch({ 
+                    type: 'NEW_MAGAZINES',
+                    magazines: data
+                })
+            })
+        },
 
         updateclothesbin: (store) => {
              socket.on('updateclothesbin', function (data){

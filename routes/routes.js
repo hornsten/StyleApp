@@ -3,16 +3,17 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys');
-
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+var cloudinary_keys = require('../auth/cloudinary_keys');
 
 // for heroku
-// cloudinary.config(cloudinary_keys);
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
+
+
+cloudinary.config(cloudinary_keys);
 
 module.exports = function(app, passport, models){
     //route for facebook logout
@@ -116,6 +117,18 @@ app.get('/', function(req, res){
         }
    });
 
+   app.get('/magazine/:userid', function(req, res){
+       if ( req.isAuthenticated()){
+            var userid = req.params.userid;
+            console.log("in here mag");
+             models.Magazine.find({"userid": userid}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             })
+        }
+
+   })
+
     app.post('/closet/image/new/', function(req, res){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
@@ -144,7 +157,7 @@ app.get('/', function(req, res){
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.url, created_at:  Date.now()});
+                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.secure_url, created_at:  Date.now()});
                             newClosetItem.save().then(function(){
                                 if (err) return console.log(err); 
                                 console.log("saving item to db");

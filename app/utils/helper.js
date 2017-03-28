@@ -222,6 +222,16 @@ var helpers = {
         })
         
 
+   },
+
+   getMagazines: function(store, userid){
+        console.log("being called");
+       return axios.get('/magazine/'+userid, { credentials : 'same-origin' }).then(function(response) {
+            console.log("magazine", response);
+            store.dispatch({type: "NEW_MAGAZINES", magazines: response.data})
+            return ;
+        })
+
    }
    
 
