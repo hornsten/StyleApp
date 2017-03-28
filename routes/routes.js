@@ -3,17 +3,17 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-var cloudinary_keys = require('../auth/cloudinary_keys');
+// var cloudinary_keys = require('../auth/cloudinary_keys');
 
 // for heroku
-// cloudinary.config({ 
-//   cloud_name: process.env.CLOUDINARY_NAME, 
-//   api_key: process.env.CLOUDINARY_API, 
-//   api_secret: process.env.CLOUDINARY_SECRET
-// });
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API, 
+  api_secret: process.env.CLOUDINARY_SECRET
+});
 
 
-cloudinary.config(cloudinary_keys);
+// cloudinary.config(cloudinary_keys);
 
 module.exports = function(app, passport, models){
     //route for facebook logout
