@@ -340,8 +340,8 @@ if (this.props.flair){
            )}
         </div>
 
-         <button onClick={(e) => this.handleClick(e)}  className="btn btn-primary outline round btn-lg">Save</button>
-        <button onClick={this.resetClothesbins} className="btn btn-primary outline round btn-lg">Reset</button>       
+         <button onClick={(e) => this.handleClick(e)}  className="btn btn-pink outline round btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>       
 
       </div>
       <div className="col-md-6 closet-block rel">
@@ -408,17 +408,17 @@ if (this.props.flair){
                             {bottomResults}
 
                         {/*</div> </ul> */ }
-                    
+               
+
+                        <div id="gallery">
+                         
+                        {/*{clothesImages}*/}
+                         <div style={{ overflow: 'hidden', clear: 'both' }}>
+                           <div className="magazine">    
                   <ul>
                     <Magazine />
                   </ul>
-
-
-                        <div id="gallery">
-                        
-                        {/*{clothesImages}*/}
-                         <div style={{ overflow: 'hidden', clear: 'both' }}>
-                            //this is where the sets will go?
+              </div> 
                        
                     </div>
                  </div>
