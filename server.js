@@ -11,27 +11,28 @@ var express = require('express');
 var path =require('path');
 var cookieSecret = 'anything';
 var cors = require('express-cors');
+var request = require('request');
 
-// var methodOverride = require('method-override');
 var PORT = process.env.PORT || 8080;
 var app = express();
 
-var proxy = require('html2canvas-proxy');
 
-
-// to handle cors issues with html2canvas and cloudinary
-app.use('http://localhost:8080/', proxy());
+// // to handle cors issues with html2canvas and cloudinary;
+// put this proxy before body parser middleware
+app.use('/proxy/', function(req, res) {  
+        // take raw url and remove first / before passing it to the req.
+        var rawurl = req.url;
+        rawurl.substr(rawurl.indexOf('/') + 1);
+        console.log(raw);
+        req.pipe(request(rawurl)).pipe(res);
+});
 
 app.use(cookieParser());
 // Run Morgan for Logging
 app.use(logger("dev"));
 // to handle CORS issues when doing a GET locally after Auth with Facebook 
 // turns out it is a problem on the FB side! Need to let them know to allow authentication from localhost:8080.
-app.use(cors({
-    allowedOrigins: [
-        'facebook.com', 'localhost:8080', 'res.cloudinary.com/'
-    ]
-}))
+app.use(cors())
 var allowedOrigins = "http://localhost:* http://127.0.0.1:* https://www.facebook.com/*";
 var http = require('http').Server(app);
 

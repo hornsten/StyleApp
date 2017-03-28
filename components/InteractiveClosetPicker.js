@@ -111,7 +111,9 @@ uploadFile(e) {
   e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-       logging: true,
+      logging: true,
+      allowTaint: true, 
+      proxy: 'http://localhost:8080',
       onrendered: function (canvas) {
           var img = canvas.toDataURL();
 
@@ -223,7 +225,7 @@ if (this.props.top){
   topResults = this.props.top.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                            src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -235,7 +237,7 @@ if (this.props.dress){
   dressResults = this.props.dress.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                            src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -247,7 +249,7 @@ if (this.props.bottom){
   bottomResults = this.props.bottom.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -260,7 +262,7 @@ if (this.props.shoes){
   shoeResults = this.props.shoes.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -273,7 +275,7 @@ if (this.props.bag){
   bagResults = this.props.bag.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -286,7 +288,7 @@ if (this.props.accessory){
   accessoryResults = this.props.accessory.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                            src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -298,7 +300,7 @@ if (this.props.flair){
   flairResults = this.props.flair.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                            src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                              key={result.type+'_'+index}
