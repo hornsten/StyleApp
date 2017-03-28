@@ -111,6 +111,7 @@ uploadFile(e) {
   e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
+       logging: true,
       onrendered: function (canvas) {
           var img = canvas.toDataURL();
 
@@ -142,7 +143,7 @@ uploadFile(e) {
           //     // URL.revokeObjectURL(url);
           //   // };
           // }) 
-          // window.open(img);
+          window.open(img);
         }
   
   })
