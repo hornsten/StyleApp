@@ -30,7 +30,11 @@ app.use(cors({
 }))
 var allowedOrigins = "http://localhost:* http://127.0.0.1:* https://www.facebook.com/*";
 var http = require('http').Server(app);
+
+/// time out was causing heroku problems!!
 // var io = require('socket.io')(http, {'pingInterval': 20000, 'pingTimeout': 60000, 'origins': allowedOrigins});
+
+
 var io = require('socket.io')(http);
 // having a problem trying to require the models in chat_server.js and apiController.js - mongoose error: "MongooseError: Cannot overwrite `ConnectedUser` model once compiled."
 // soln pass them as arg to chat_server
@@ -40,9 +44,10 @@ var Room = require("./models/room.js");
 var ConnectedUser = require("./models/connecteduser.js");
 var PrivateChat = require("./models/privatechat.js");
 var Profile = require("./models/profile.js");
+var Magazine = require("./models/magazine.js");
 var Closet = require("./models/closet.js");
 var InteractiveClothesBin = require("./models/interactiveclothesbin.js");
-var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Closet": Closet, "InteractiveClothesBin": InteractiveClothesBin};
+var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Magazine": Magazine, "Closet": Closet, "InteractiveClothesBin": InteractiveClothesBin};
 
 app.use( express.static(path.join(__dirname, 'public')));
 

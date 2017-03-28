@@ -143,6 +143,17 @@ var chathelper = {
         //     })
 
         // },
+       new_magazine_item_listener: (store) => {
+            socket.on('newmagazine', function (data){
+                // console.log("is the data in here", data)
+                console.log("magazines", data);
+
+                store.dispatch({ 
+                    type: 'NEW_MAGAZINES',
+                    magazines: data
+                })
+            })
+        },
 
         updateclothesbin: (store) => {
              socket.on('updateclothesbin', function (data){
@@ -234,7 +245,7 @@ var chathelper = {
 
         },
     
-        img_upload: (image) => {
+        img_upload: (image, userid) => {
         // sourceType ="upload" or "dnd"
         
             // if (image) {
@@ -246,7 +257,8 @@ var chathelper = {
                     
             //             //send the content via socket
             //             // socket.emit('send-file', "TEST", buffer);
-                        socket.emit('img-file', "fionatest", image);
+                        var tmpfilename = userid + "_New_Look";
+                        socket.emit('img-file', tmpfilename, userid, image);
             //         };
             //         // send the content via socket
              

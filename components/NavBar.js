@@ -152,6 +152,7 @@ if (isloggedin){
 const mapStateToProps = (store,ownProps) => {
     return {
         username: store.userState.username,
+        userid: store.userState.userid,
         loggedin: store.userState.loggedin,
 
     }
