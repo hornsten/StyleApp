@@ -16,7 +16,11 @@ var cors = require('express-cors');
 var PORT = process.env.PORT || 8080;
 var app = express();
 
+var proxy = require('html2canvas-proxy');
 
+
+// to handle cors issues with html2canvas and cloudinary
+app.use('http://localhost:8080/', proxy());
 
 app.use(cookieParser());
 // Run Morgan for Logging
