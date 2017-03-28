@@ -85,7 +85,7 @@ const { images, clothesbins } = this.state;
                             key={index}
                             />,
                         )}
-                        <button onClick={this.handleClick} className="btn btn-primary btn-lg">Save</button>
+                        <button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">Save</button>
                     </div>
                  </div>
             </div>
