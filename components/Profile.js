@@ -66,8 +66,8 @@ class Profile extends React.Component {
 </div>
  </div>
 {/*   div for adding personal style images*/}
-                    <div className="panel panel-default">
-                     <div className="panel-body">Panel Content</div>
+                    <div className="row">
+                    
                           
                                 {/*<button onClick={this.handleOpenModal}>Trigger Modal</button>*/}
                                 
