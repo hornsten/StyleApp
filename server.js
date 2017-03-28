@@ -19,11 +19,11 @@ var app = express();
 
 // // to handle cors issues with html2canvas and cloudinary;
 // put this proxy before body parser middleware
-app.use('/proxy/', function(req, res) {  
+app.use('/proxy', function(req, res) {  
         // take raw url and remove first / before passing it to the req.
         var rawurl = req.url;
         rawurl.substr(rawurl.indexOf('/') + 1);
-        // console.log(raw);
+        console.log(rawurl);
         req.pipe(request(rawurl)).pipe(res);
 });
 
