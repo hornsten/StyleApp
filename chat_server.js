@@ -9,14 +9,14 @@ var cloudinary = require('cloudinary');
 // // var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 
-// cloudinary.config({ 
-//   cloud_name: process.env.CLOUDINARY_NAME, 
-//   api_key: process.env.CLOUDINARY_API, 
-//   api_secret: process.env.CLOUDINARY_SECRET
-// });
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API, 
+  api_secret: process.env.CLOUDINARY_SECRET
+});
 
-var cloudinary_keys = require('./auth/cloudinary_keys');
-cloudinary.config(cloudinary_keys);
+// var cloudinary_keys = require('./auth/cloudinary_keys');
+// cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
@@ -182,7 +182,7 @@ io.sockets.on('connection', function (socket) {
 					// var filelocation = result.url;
 					console.log("result", result);
 					// save to the database
-					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.url});
+					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url});
 					newMagazineItem.save().then(function(){
 						if (err) return console.log(err); 
 							console.log("saving item to db");
