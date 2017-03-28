@@ -62,13 +62,30 @@ ondragstart(e){
     const { id, src, isDropped, isDragging, connectDragSource } = this.props;
     const opacity = isDragging ? 0.4 : 1;
 
+    // var Img1 = new Iamge("100%", auto);
+    // Img1.crossOrigin = "Anonymous";
+    //  Img1.className = "noselect";
+    // Img1.src = {src};
+
+    // var myImage = new Image('80%', auto);
+    // myImage.crossOrigin = "Anonymous";
+    // myImage.className = "drag";
+    // myImage.src = {src};
+    // myImage.id ={id};
+    // myImage.ref = ref => this.drag = ref;
+    // myImage.onD
+    // console.log(myImage);
+
     return connectDragSource(
         <div style={{ ...style, opacity }} >
          {isDropped ?
-          <img style={{height:'100%',width:'auto'}} className='noselect' src={src}></img> :
-          <img  style={{height:'80%', width: 'auto'}} src={src} id={id}  ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  ></img>
+          <img style={{height:'100%',width:'auto'}} className='noselect' crossOrigin="anonymous" src={src}  ></img> :
+          <img style={{height:'80%', width: 'auto'}} crossOrigin="anonymous" src={src} id={id}  ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}></img>
         }
         </div>,
     );
+
+
+ 
   }
 }

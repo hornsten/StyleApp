@@ -66,7 +66,7 @@ isDropped(imageId) {
   }
   componentDidMount(){
     // get images for each section
-    helper.getMagazines(store, this.props.userid);
+ 
     helper.getImages(store, "top");
     helper.getImages(store, "bottom");
     helper.getImages(store, "accessory");
@@ -128,10 +128,17 @@ uploadFile(e) {
  handleClick(e) {
   var userid = this.props.userid;
 e.preventDefault();
+console.log("clothes items", document.getElementsByClassName('clothes-items')[1].innerHTML);
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-      onrendered: function (canvas) {
+      logging: true,
+      // useCORS: true,
+      // taintTest: true,
+      allowTaint: true,
+      onrendered: function (canvas) {  
+                // console.log(canvas.toJSON());
                     var img = canvas.toDataURL();
+                   
 
 //  console.log(img,"img");
                     // fs = require('fs');
@@ -141,6 +148,7 @@ e.preventDefault();
                     //     + "NAAAAKElEQVQ4jWNgYGD4Twzu6FhFFGYYNXDUwGFpIAk2E4dHDRw1cDgaCAASFOffhEIO"
                     //     + "3gAAAABJRU5ErkJggg==";
                     // strip off the data: url prefix to get just the base64-encoded bytes
+                    
                     var data = img.replace(/^data:image\/\w+;base64,/, "");
                    
                   //  if (this.props.userid) {
@@ -150,7 +158,9 @@ e.preventDefault();
  
                     // var userid = component.props.userid;
         
+
                     chathelper.img_upload(data, userid);
+                 
                     // var userid = this.props.userid;
 
                   //  }
@@ -176,7 +186,7 @@ e.preventDefault();
 
 
                    
-                    // window.open(img);
+                     window.open(img);
         }
   
   });
@@ -228,8 +238,10 @@ handleItemType(e){
 const { images, clothesbins } = this.state; 
 var {topResults, dressResults, bottomResults, shoeResults,bagResults,accessoryResults,  flairResults} = "";
 
+
 if (this.props.top){
   topResults = this.props.top.map((result, index) =>
+
                             <Image
                             id={result.imageid}
                             src={result.src}
@@ -256,7 +268,7 @@ if (this.props.bottom){
   bottomResults = this.props.bottom.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -269,7 +281,7 @@ if (this.props.shoes){
   shoeResults = this.props.shoes.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -295,7 +307,7 @@ if (this.props.accessory){
   accessoryResults = this.props.accessory.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                             key={result.type+'_'+index}
@@ -307,7 +319,7 @@ if (this.props.flair){
   flairResults = this.props.flair.map((result, index) =>
                             <Image
                             id={result.imageid}
-                            src={result.src}
+                             src={result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
                              key={result.type+'_'+index}
@@ -421,8 +433,6 @@ if (this.props.flair){
                             //this is where the sets will go?
                        
                     </div>
-                 </div>
-            </div>
             </div>
    
     </div>

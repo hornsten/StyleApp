@@ -318,7 +318,7 @@ if (this.props.flair){
         
             <div id='clothesSet' className="col-md-7 closet-block rel"> 
 
-        <div className="clothes-items backdrop paris" style={{ overflow: 'hidden', clear: 'both' }}>
+        <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
           
              <Clothesbin
