@@ -10,16 +10,16 @@
     outline: 0 none;
 }
  
-.btn-primary {
+.btn-pink {
     background: #e1818f;
     color: #ffffff;
 }
  
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+.btn-pink:hover, .btn-pink:focus, .btn-pink:active, .btn-pink.active, .open > .dropdown-toggle.btn-pink {
     background:  #d65b6d;
 }
  
-.btn-primary:active, .btn-primary.active {
+.btn-pink:active, .btn-pink.active {
     background: #da344c;
     box-shadow: none;
 }
@@ -29,16 +29,16 @@
 	padding: 12px 22px;
 }
 
-.btn-primary.outline {
+.btn-pink.outline {
 	border: 2px solid #e1818f;
 	color: #e1818f;
 }
 
-.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+.btn-pink.outline:hover, .btn-pink.outline:focus, .btn-pink.outline:active, .btn-pink.outline.active, .open > .dropdown-toggle.btn-pink {
 	color:  #d65b6d;
 	border-color:  #d65b6d;
 }
-.btn-primary.outline:active, .btn-primary.outline.active {
+.btn-pink.outline:active, .btn-pink.outline.active {
 	border-color: #da344c;
 	color: #da344c;
 	box-shadow: none;
