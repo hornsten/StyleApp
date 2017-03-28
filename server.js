@@ -20,10 +20,12 @@ var app = express();
 // // to handle cors issues with html2canvas and cloudinary;
 // put this proxy before body parser middleware
 app.use('/proxy', function(req, res) {  
+        // seems to be an extra / on the path in HEROKU
         // take raw url and remove first / before passing it to the req.
         var rawurl = req.url;
-        rawurl.substr(rawurl.indexOf('/') + 1);
-        console.log(rawurl);
+        // + 1 for local +2 for heroku
+        rawurl.substr(rawurl.indexOf('/') + 2);
+        console.log("raw", rawurl);
         req.pipe(request(rawurl)).pipe(res);
 });
 
