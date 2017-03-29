@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Clothesbin from './Clothesbin';
 import Image from './Image';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Magazine from './Magazine';
 import ItemTypes from './ItemTypes';
 import {connect } from 'react-redux';
@@ -367,56 +368,49 @@ if (this.props.flair){
             
                     <div className="closet-tabs-container">
                        <div className="clothes-items scroll-flow">
-               <ul className='nav nav-tabs nav-justified'>
-                
-                <li role="presentation"><a href='#'><img src='../assets/img/i-shirt.png'></img></a></li>
-                 <li role="presentation"><img src='../assets/img/i-pants.png'></img></li>
-                 <li role="presentation"><img src='../assets/img/i-dress.png'></img></li>
-                   <li role="presentation"><img src='../assets/img/i-shoes.png'></img></li>
-                  <li role="presentation"><img src='../assets/img/i-purse.png'></img></li>
-                  <li role="presentation"><img src='../assets/img/i-accessory.png'></img></li>
-                 <li role="presentation"><img src='../assets/img/i-flair.png'></img></li>
-                 <li role="presentation"><img src='../assets/img/i-background.png'></img></li>
-                 </ul>
-                         {/*<ul className="nav nav-tabs"> 
-                        <div className="row">*/}
-                            {/*<li>Shoes</li>*/}
-                            {shoeResults}
-                        {/*</div>*/}
-                        {/*<div className="row">*/}
-                            {/*<li>Tops</li>*/}
-                            {topResults}
-                         {/*</div>*/}
-                         {/*<div className="row">*/}
-                            {/*<li>Dresses</li>*/}
-                            { dressResults}
-                        {/*</div>*/}
-                         {/*<div className="row">*/}
-                            {/*<li>Bags</li>*/}
-                            { bagResults}
-                        {/*</div>*/}
-                         {/*<div className="row">*/}
-                            {/*<li>Accessories</li>*/}
-                            { accessoryResults}
-                        {/*</div>*/}
-                        {/*<div className="row">*/}
-                            {/*<li>Flair</li>*/}
-                            {flairResults}
-                        {/*</div>*/}
-                        {/*<div className="row">*/}
-                            {/*<li>Bottoms</li>*/}
-                            {bottomResults}
+              
 
-                        {/*</div> </ul> */ }
-               
+      <Tabs
+        onSelect={this.handleSelect}
+        selectedIndex={2}>
+            <TabList>
+                  <Tab><img className='icons' src='../assets/img/i-shirt.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-pants.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-dress.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-shoes.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-purse.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-accessory.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-flair.png'></img></Tab>
+                  <Tab><img className='icons' src='../assets/img/i-background.png'></img></Tab>
+            </TabList>
+      
+                  <TabPanel>
+                      {topResults}
+                  </TabPanel>
+                  <TabPanel>
+                      {bottomResults}
+                  </TabPanel>
+                  <TabPanel>
+                      {dressResults}
+                  </TabPanel>
+                  <TabPanel>
+                     {shoeResults}
+                  </TabPanel>
+                  <TabPanel>
+                     {bagResults}
+                  </TabPanel>
+                  <TabPanel>
+                     {accessoryResults}
+                  </TabPanel>
+                  <TabPanel>
+                      {flairResults}
+                  </TabPanel>
+                  <TabPanel>
+                     No Backgrounds
+                  </TabPanel>
+    </Tabs>
 
-                        <div id="gallery">
-                         
-                        {/*{clothesImages}*/}
-                         <div style={{ overflow: 'hidden', clear: 'both' }}>
-                            
-                    </div>
-                 </div>
+                        
             </div>
           </div>
             <div className="row">
