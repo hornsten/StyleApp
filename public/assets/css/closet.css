@@ -64,10 +64,9 @@ height: 100%;
      color: #00d8ff;
 }
 
-img {
+.drag-image {
      cursor: move; 
      overflow: hidden;
-
 }
 
 .top {
@@ -225,6 +224,10 @@ select.form-control {
     -webkit-appearance: none;
 }
 
+.icons {
+    height:3rem;
+    width:3rem;
+}
 /*.mag-top {
 left: 1rem;
 top: 1rem;
