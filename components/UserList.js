@@ -11,17 +11,20 @@ class UserList extends React.Component {
     render() {
         if (this.props.users){
             var currentusername =  this.props.currentuser;
+            var chatWithUser = this.props.chatWithUser;
             var connecteduser = "";
             var component=this;
             var currentroom = this.props.currentroom;
             console.log( this.props.users, "in users");
             var resultComponents = this.props.users.map(function(result) {
             // check to see if this is the current user or a user with which we are already having a prvate chat - if so don;t add hyperlink
+
             console.log("result.username ", result.username );
             console.log("currentusername", currentusername);
-            console.log("currentroom", currentroom);
-            
-            if ((result.username === currentroom) || (result.username === currentusername)) {
+            console.log("chatWithUser", chatWithUser);
+            if ((result.username === currentusername) || (result.username === chatWithUser)){
+            console.log("in hyperlink area ",  result.username);
+   
                     connecteduser = result.username;
             } else {
                     // hyperlink not dsipalying properlyx
