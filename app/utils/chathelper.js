@@ -26,7 +26,7 @@ var chathelper = {
                     reduxstore.dispatch({type: "CONNECTED", connected: true})
                 }
 
-                socket.emit('adduser', username);
+                // socket.emit('adduser', username);
                 // console.log("connected", username);
             });
         
@@ -37,16 +37,16 @@ var chathelper = {
         },
 
  
-        // adduser: (username, store) => {
-        // // this area needs cleaning up once FB auth implemented
-        //     // var defaultRoom = "room1";
+        adduser: (username, store) => {
+        // this area needs cleaning up once FB auth implemented
+            // var defaultRoom = "room1";
            
-        //     // store.dispatch({ 
-        //     //   type: 'UPDATE_ROOM',
-        //     //   currentroom: defaultRoom,  // default room
-        //     // })
+            // store.dispatch({ 
+            //   type: 'UPDATE_ROOM',
+            //   currentroom: defaultRoom,  // default room
+            // })
 
-        // },
+        },
 
         // var chathelper = {
 
