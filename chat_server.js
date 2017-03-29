@@ -6,14 +6,14 @@ var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
 
-// var cloudinary_keys = require('./auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+var cloudinary_keys = require('./auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
@@ -495,7 +495,9 @@ io.sockets.on('connection', function (socket) {
 					io.sockets.in("Private").emit('connectedusers', results);
 					// and to current user if in a private chat
 					// console.log("switchrooom 2", results);
-					socket.emit('connectedusers', results);
+					// socket.emit('connectedusers', results);
+					io.sockets.sockets[currentSocket.id].emit('connectedusers', results);
+
 				});
 
 			} else if (chattype === "Group"){
