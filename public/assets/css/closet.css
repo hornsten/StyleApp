@@ -64,10 +64,9 @@ height: 100%;
      color: #00d8ff;
 }
 
-img {
+.drag-image {
      cursor: move; 
      overflow: hidden;
-
 }
 
 .top {
