@@ -15,26 +15,37 @@ class Magazine extends React.Component {
     }
     render() {
         var component = this;
-        
+        console.log(this.props.magazines);
         if (this.props.magazines){
           
                 var resultComponents = this.props.magazines.map(function(result) {
                 // dont hyperlink current room
            
-                return <div className="row results" key={result._id}>
-                    <div className="col-md-4 text-center"><img src={result.src} style={{height:'50%', width: 'auto'}} /></div>
+                return <div className="results" key={result._id}>
+                    <div className="col-sm-6 col-md-4">
+                        <div className="thumbnail">
+                        <img src={result.src} />
+                        <div class="caption">
+        <h3>Thumbnail label</h3>
+        <p>...</p>
+        <p><a href="#" className="btn btn-pink round" role="button">Button</a> <a href="#" className="btn btn-pink outline round" role="button">Button</a></p>
+      </div>
+                        </div>
+                        </div>
                 </div>
             })
         }
        
 // <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
-                    <div className="col-sm-12 magazines"><h1>My Magazines</h1>
+                    <div className="col-xs-12 magazines"><h1>My Magazines</h1>
                         <div className="row results">{resultComponents}</div>
                     </div>  
                 </div>) 
             }
 };
+
+
 
 const mapStateToProps = (store,ownProps) => {
 
