@@ -27,26 +27,26 @@ var chathelper = {
                 }
 
                 socket.emit('adduser', username);
-                console.log("connected", username);
+                // console.log("connected", username);
             });
         
             socket.on('disconnect', () => {
                 reduxstore.dispatch({type: "CONNECTED", connected: false})
-                console.log("disconnected")
+                // console.log("disconnected")
             });
         },
 
  
-        adduser: (username, store) => {
-        // this area needs cleaning up once FB auth implemented
-            // var defaultRoom = "room1";
+        // adduser: (username, store) => {
+        // // this area needs cleaning up once FB auth implemented
+        //     // var defaultRoom = "room1";
            
-            // store.dispatch({ 
-            //   type: 'UPDATE_ROOM',
-            //   currentroom: defaultRoom,  // default room
-            // })
+        //     // store.dispatch({ 
+        //     //   type: 'UPDATE_ROOM',
+        //     //   currentroom: defaultRoom,  // default room
+        //     // })
 
-        },
+        // },
 
         // var chathelper = {
 
@@ -73,10 +73,11 @@ var chathelper = {
               currentroom: defaultRoom,  // no default room
             })
             // for now reset this property when link is clicked ...maybe set to default room later
-            store.dispatch({ 
-                type: 'CHATTING_WITH',
-                chatWithUser: "",
-            })
+            // commented out 28 Mar
+            // store.dispatch({ 
+            //     type: 'CHATTING_WITH',
+            //     chatWithUser: "",
+            // })
         },
         // this handles changes from one group room to another
         // chattype = Private or Group
@@ -85,22 +86,22 @@ var chathelper = {
             // display current room -- need to get room for private chat
             // if (chattype = "Group"){
                 // console.log(newroom, "newroom", "chattype", chattype);
-            store.dispatch({ 
-                type: 'UPDATE_ROOM',
-                currentroom: newroom, //make this "Private" for private users
-            })
+     
             if (chattype === "Private"){
+                 store.dispatch({ 
+                type: 'UPDATE_ROOM',
+                currentroom: "Private", //make this "Private" for private users
+                })
                 store.dispatch({ 
                     type: 'CHATTING_WITH',
                     chatWithUser: newroom,
                 })
+            } else {
+                store.dispatch({ 
+                    type: 'UPDATE_ROOM',
+                    currentroom: newroom, //make this "Private" for private users
+                })
             }
-            // } else  if (chattype = "Private"){
-                // store.dispatch({ 
-                //     type: 'UPDATE_ROOM',
-                //     currentroom: newroom,
-                // })
-            // }
         
         },
 
@@ -182,9 +183,9 @@ var chathelper = {
             })
         },
         // takes in the latest list of connected users
-        connected_users: (store) => {
+        connected_users: (store, component) => {
            socket.on('connectedusers', function (response){
-            //   console.log("in connectedusers", response)
+              console.log("in connectedusers", component, response)
               // update the redux store
               store.dispatch({ 
                   type: 'USER_LIST',

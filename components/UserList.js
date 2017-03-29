@@ -14,7 +14,7 @@ class UserList extends React.Component {
             var connecteduser = "";
             var component=this;
             var currentroom = this.props.currentroom;
-            
+            console.log( this.props.users, "in users");
             var resultComponents = this.props.users.map(function(result) {
             // check to see if this is the current user or a user with which we are already having a prvate chat - if so don;t add hyperlink
             console.log("result.username ", result.username );

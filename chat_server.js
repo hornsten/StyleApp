@@ -6,19 +6,19 @@ var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
 
-// var cloudinary_keys = require('./auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+var cloudinary_keys = require('./auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
 // rooms available in chat - populate from database 
-// var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
+var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
 // models.Room.find({}, function(err, results){  
 // 	if (err) return console.log(err);
 // 	for (var i = 0; i< results.length; i++){
@@ -27,15 +27,15 @@ app.use(siofu.router);
 // // 	}	
 // // })
 // // save rooms to database -- only for testing purposes
-// for (var i = 0; i < rooms.length; i++){
-// 	console.log("rooms",rooms[i] , "date",  Date.now())
-// 	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
-// 	roomList.save(function (err) {
-// 		// console.log("saved:" + rooms[i]); 
-// 		if (err) return console.log(err);
-// 		console.log("saved:" ); 
-// 	})
-// }
+for (var i = 0; i < rooms.length; i++){
+	console.log("rooms",rooms[i] , "date",  Date.now())
+	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
+	roomList.save(function (err) {
+		// console.log("saved:" + rooms[i]); 
+		if (err) return console.log(err);
+		console.log("saved:" ); 
+	})
+}
 
 // when the server starts - clear out connected users in database
 
@@ -169,9 +169,7 @@ io.sockets.on('connection', function (socket) {
 			//path to store uploaded files (NOTE: presumed you have created the folders)
 			// var fileName = __dirname + '/public/assets/img/' + name;
 			// console.log("fileNameWithExtension", fileNameWithExtension);
-			console.log("filePath", filePath);
-			console.log("uniqueFileName", uniqueFileName);
-
+		
 
 			fs.writeFile(filePath, image, 'base64', function(err) {
 				// console.log('File saved successful!');
@@ -249,11 +247,12 @@ io.sockets.on('connection', function (socket) {
 	var lastHeartBeat = Date.now();
 	// when the client emits 'connectuser', this listens and executes
 	// it updates the users room and sends back the latest connected user data and chat history for that room
-	// this is when you select link to "Group" or "Private" chats
+	// this is activated when you select link to "Group" or "Private" chats
 	socket.on('connectuser', function(username, defaultRoom){
 		// maybe ping when needed would be better??
 		socket.conn.on('heartbeat', function(lastHeartBeat) {
 			// store heartbeats to verify socket connections later
+			console.log("heartbeat")
 			lastHeartBeat = Date.now();
 			heartbeatObj[socket.username] = lastHeartBeat;
 		});
@@ -277,6 +276,7 @@ io.sockets.on('connection', function (socket) {
 						searchObj = {room: defaultRoom}
 					} 
 					models.ConnectedUser.find(searchObj).exec(function (err, results) {
+						console.log("connected users when first connect to ", results, defaultRoom);
 						io.sockets.in(defaultRoom).emit('connectedusers', results);
 					})
 
@@ -371,7 +371,10 @@ io.sockets.on('connection', function (socket) {
 						// no connected user
 						// tell requestor user not available
 						var message = chatWithUser + " is not currently online";
-						if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
+						// added 28 Mar
+						currentSocket.emit('privatemessage', message);
+						// removed 28 Mar
+						// if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
 					} else {
 						// load previous chat
 						var cutoff = new Date();
@@ -385,30 +388,36 @@ io.sockets.on('connection', function (socket) {
 								currentSocket.emit('updatechat', results);
 							});
 						// console.log("socketid", results.socketid);
-						var socket = results.socketid;
+						var userSocket = results.socketid;
+						
 						// console.log(socket, "socket");
 						// io.sockets.to(results.socketid).emit("privatemessage", 'I just met you');
 						// socket.to(results.socketid).emit('privatemessage', 'I just met you');
 						var message = username + ' would like to have private style consultation.';
+						// added 28 Mar
+						// userSocket.emit('privatemessage', message);
+						socket.broadcast.to(userSocket).emit('privatemessage', message);
+// }
 						// console.log("message", message);
 						// *** WORKING HERE -- problem if you try to connect to stale socket that did not disconnect properly
 						// io.sockets.connected[results.socketid].emit('privatemessage', message);
 						// do a volatile emit in case socket id is stale
-						var currentTime = Date.now();
+						// var currentTime = Date.now();
 						// check if socket is active - heartbeat should have been received within last 60 secs
 						// can be problems 
-						if (chatWithUser in heartbeatObj){
-							var timeElapsed = (currentTime - heartbeatObj[chatWithUser]);
-							console.log(timeElapsed);
-							if (timeElapsed < 60000){
-								if (io.sockets.connected[results.socketid]) io.sockets.connected[results.socketid].volatile.emit('privatemessage', message);
-							} 
-						} else {
-							var message = chatWithUser + " is not currently online";
-							if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
-							// socket.emit('connectedusers', results);
+						// if (chatWithUser in heartbeatObj){
+						// 	var timeElapsed = (currentTime - heartbeatObj[chatWithUser]);
+						// 	console.log(timeElapsed);
+						// 	if (timeElapsed < 60000){
+						// 		if (io.sockets.connected[results.socketid]) 
+								// io.sockets.connected[results.socketid].volatile.emit('privatemessage', message);
+							// } 
+						// } else {
+						// 	var message = chatWithUser + " is not currently online";
+						// 	if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
+						// 	// socket.emit('connectedusers', results);
 
-						}
+						// }
 
 					}
 					
@@ -430,8 +439,10 @@ io.sockets.on('connection', function (socket) {
 				if (err) return console.log(err)
 					// send to current client that switched to prvt room not everyone
 					// tell all users in the "Private" chat area
+					console.log("switchrooom 1", results);
 					io.sockets.in("Private").emit('connectedusers', results);
 					// and to current user if in a private chat
+					console.log("switchrooom 2", results);
 					socket.emit('connectedusers', results);
 				});
 
@@ -443,15 +454,18 @@ io.sockets.on('connection', function (socket) {
 					// send updated user list to everyone in that room
 					io.sockets.in(newroom).emit('connectedusers', results);
 				});
+				// get users in the old room from database and sent to all users in old room - updates user connected list
+
+					models.ConnectedUser.find({room: oldroom}, function(err, results){ 
+				if (err) return console.log(err)
+					// send updated user list to everyone in that room
+					console.log("switchrooom old room 1 ", oldroom, results);
+					io.sockets.in(oldroom).emit('connectedusers', results);
+				});
 		
 			}
 
-			// get users in the old room from database and sent to all users in old room - updates user connected list
-			models.ConnectedUser.find({room: oldroom}, function(err, results){ 
-			if (err) return console.log(err)
-				// send updated user list to everyone in that room
-				io.sockets.in(oldroom).emit('connectedusers', results);
-			});
+			
 
 	
 		}).then(function(){
@@ -517,6 +531,7 @@ io.sockets.on('connection', function (socket) {
 			models.ConnectedUser.find({room: socket.room}, function(err, results){ 
 			if (err) return console.log(err)
 				// send updated user list to everyone in that room
+				console.log("disconect  1", results);
 				io.sockets.in(socket.room).emit('connectedusers', results);
 			});
 		});
