@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
 
 
 					    console.log("url",result.url);
-						var filelocation = result.url;
+						var filelocation = result.secure_url;
 						// save to the database
 						var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: filelocation, type: "file", created_at:  Date.now()});
 						newChatMessage.save().then(function(){
