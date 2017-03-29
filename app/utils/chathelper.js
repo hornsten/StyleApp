@@ -72,6 +72,10 @@ var chathelper = {
               type: 'UPDATE_ROOM',
               currentroom: defaultRoom,  // no default room
             })
+            store.dispatch({ 
+                type: 'CHATTING_WITH',
+                chatWithUser: "",
+            })
             // for now reset this property when link is clicked ...maybe set to default room later
             // commented out 28 Mar
             // store.dispatch({ 

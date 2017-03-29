@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 import GroupChatSection from "./GroupChatSection.js";
-import Users from "./Users.js";
+import NonActiveUserList from "./NonActiveUserList.js";
 import Rooms from "./Rooms.js";
 import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
@@ -104,11 +104,11 @@ class GroupChat extends React.Component {
                         <div className="col-xs-8 col-s-6 col-md-6">
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
-                        <div className="col-s-2 col-s-4 col-md-4">
-                             <img id="Fiona_Madronero_1490548135560_question.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="http://res.cloudinary.com/hvzbthwxc/image/upload/v1490552085/Fiona_Madronero_1490552085166_jackolantern.png" /> Drop here
-                             <img id="Fiona_Madronero_1490548273037_candy.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="http://res.cloudinary.com/hvzbthwxc/image/upload/v1490552085/Fiona_Madronero_1490552085166_jackolantern.png" /> Drop here
-
-                        </div> 
+                        <div className="user-list">
+                            <strong>Connected Stylistas</strong>
+                            <NonActiveUserList users={this.props.users} />
+                                    
+                        </div>
                     </div>);
         }
     };
