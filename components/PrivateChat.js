@@ -36,11 +36,16 @@ class PrivateChat extends React.Component {
         })
     }
     switchRoom(newroom, chattype){
+        console.log("switch room before", store.getState());
        chathelper.switchRoom(newroom, chattype, store);
+       console.log("switch room after", store.getState());
     }
-    privateChat(chatuser){
-       chathelper.privateChat(chatuser, store);
-    }
+    // removed 28 Mar 
+    // privateChat(chatuser){
+    //     console.log("prvt chat user", store.getState());
+    //    chathelper.privateChat(chatuser, store);
+    //    console.log("prvt chat user", store.getState());
+    // }
     ondragstart(e){
         // var imageSrc = ReactDOM.findDOMNode(this.drag)
         // console.log("img", imageSrc);

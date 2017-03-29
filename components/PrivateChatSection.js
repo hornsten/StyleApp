@@ -19,8 +19,9 @@ class ChatSection extends React.Component {
 
         // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
-        chathelper.connected_users(store);
+        chathelper.connected_users(store, "private");
         chathelper.server_messages(store);
+        console.log("constructor", store.getState());
         // socket.on('updatechat', (username, data) => {   
         //      console.log("socket", username, data);
         //     this.updatechat(username, data);
@@ -44,13 +45,13 @@ class ChatSection extends React.Component {
         chathelper.file_upload(e, "upload");
         
     }
-     ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
+    ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
     ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
     ondrop(e) {
-            console.log(" is this being called ondrop");
+            // console.log(" is this being called ondrop");
             this.className = 'success';
             e.preventDefault && e.preventDefault();
-            console.log("item draffed", e.dataTransfer.getData('text/plain-text'))
+            // console.log("item draffed", e.dataTransfer.getData('text/plain-text'))
             chathelper.file_upload(e, "dnd");
             // this.className = '';
             // e.dataTransfer.getData('text/plain-text');
@@ -93,6 +94,9 @@ class ChatSection extends React.Component {
                 type: 'ADD_MESSAGE',
                 message: ""
             })
+
+           console.log("add Message", store.getState());
+
         }
 
 
@@ -107,6 +111,7 @@ class ChatSection extends React.Component {
     }
     componentDidMount() {
         this.textInput.focus();
+         console.log("did mount", store.getState());
         /// *****for testing only!!!
         store.dispatch({ 
             type: 'PRIVATE_MODAL',
@@ -131,7 +136,7 @@ class ChatSection extends React.Component {
        if (this.props.chat){
            if (this.props.chat.length !== 0){
                 var resultComponents = this.props.chat.map(function(result) {
-                    console.log(result.type)
+                    // console.log(result.type)
                 if (result.type === "file"){
                      var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
                     // console.log("I am in privaet chat", chatmessage);

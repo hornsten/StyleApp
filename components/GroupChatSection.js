@@ -27,7 +27,7 @@ class GroupChatSection extends React.Component {
         super(props);
 
         chathelper.updatechat_listener(store);
-        chathelper.connected_users(store);
+        chathelper.connected_users(store, "group");
         chathelper.server_messages(store);
         chathelper.private_message(store);
 

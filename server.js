@@ -25,9 +25,9 @@ app.use('/proxy', function(req, res) {
         var rawurl = req.url;
         // + 1 for local +2 for heroku
         // rawurl.substr(rawurl.indexOf('/') + 1);
-        var newUrl = rawurl.replace(/^\/+/g, '');
-        console.log("raw", newUrl);
-        req.pipe(request(newUrl)).pipe(res);
+        var newurl = rawurl.replace(/^\/+/g, '');
+        console.log("raw", newurl);
+        req.pipe(request(newurl)).pipe(res);
 });
 
 app.use(cookieParser());
