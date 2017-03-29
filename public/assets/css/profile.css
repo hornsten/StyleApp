@@ -1,4 +1,4 @@
-.container .jumbotron { 
+.container-fluid .jumbotron { 
     background: transparent;
     border-radius: 0;
     border-bottom: 5px double #000;
