@@ -37,8 +37,17 @@ class PrivateChat extends React.Component {
     }
     switchRoom(newroom, chattype){
         console.log("switch room before", store.getState());
+       // reset noticification if user clicks on this private chat
+        if (newroom === this.props.privateChatWaiting){
+                // reset this prop
+                store.dispatch({ 
+                    type: 'PRIVATE_CHAT_WAITING',
+                    privateChatWaiting: ""
+                })
+        }   
        chathelper.switchRoom(newroom, chattype, store);
        console.log("switch room after", store.getState());
+  
     }
     // removed 28 Mar 
     // privateChat(chatuser){
@@ -101,6 +110,7 @@ const mapStateToProps = (store,ownProps) => {
         currentroom: store.chatState.currentroom,
         username: store.userState.username,
         chatWithUser: store.chatState.chatWithUser,
+        privateChatWaiting: store.chatState.privateChatWaiting,
         
 
     }

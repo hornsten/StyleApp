@@ -67,8 +67,25 @@ class GroupChatSection extends React.Component {
         })
 
     }
+    componentDidUpdate() {
+        var node = ReactDOM.findDOMNode(this.chat);
+        console.log(node);
+        node.scrollTop = node.scrollHeight;
+    }
     componentDidMount() {
         this.textInput.focus();
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: false
+        })
+        store.dispatch({ 
+            type: 'PRIVATE_MESSAGE',
+            privatemessage: ""
+        })
+
+        var node = ReactDOM.findDOMNode(this.chat);
+        console.log(node);
+        node.scrollTop = node.scrollHeight;
         // var uploadelem = this.fileInput.files;
         // console.log("uploadelem", uploadelem);
         // chathelper.file_upload(uploadelem);
@@ -110,17 +127,17 @@ class GroupChatSection extends React.Component {
 
             return false;
 };
-    componentDidUpdate(){
-        // scroll to bottom of chat history
-        var node = this.refs.chathistory;
-        console.log("node",node);
-        console.log(node.scrollBottom);
-        if (node.length > 0){
-          node.scrollTop = -node.scrollHeight;
-        }
-        //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-        // node.scrollTo(0,node.body.scrollHeight);
-    }
+    // componentDidUpdate(){
+    //     // scroll to bottom of chat history
+    //     var node = this.refs.chathistory;
+    //     console.log("node",node);
+    //     console.log(node.scrollBottom);
+    //     if (node.length > 0){
+    //       node.scrollTop = -node.scrollHeight;
+    //     }
+    //     //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+    //     // node.scrollTo(0,node.body.scrollHeight);
+    // }
     closeModal(){
         store.dispatch({ 
             type: 'PRIVATE_MODAL',
@@ -135,7 +152,9 @@ class GroupChatSection extends React.Component {
         width: '100px',
         height: '100px'
         };
-
+        console.log("this.props.privatemessage", this.props.privatemessage);
+        // console.log("this.props.privatemessage store", store.getState());
+        console.log("this.props.showModal", this.props.showModal);
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
@@ -184,8 +203,7 @@ class GroupChatSection extends React.Component {
 
                     <hr />
              
-
-                    <div className="chatbox row" ref="chathistory">
+                    <div className="chatbox row"  ref={ref => this.chat = ref} >
                         <div className="col-xs-12 col-md-12">    
                             <div className="row" >{resultComponents}</div>                     
                         <div>
@@ -229,8 +247,9 @@ const mapStateToProps = (store,ownProps) => {
         chat: store.chatState.chat,
         server: store.chatState.server,
         privatemessage: store.chatState.privatemessage,
+        chatWithUser: store.chatState.chatWithUser,
         showModal: store.chatState.showModal,
-
+        privateChatWaiting: store.chatState.privateChatWaiting,
     }
 
 };

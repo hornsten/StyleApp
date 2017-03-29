@@ -28,6 +28,8 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {privatemessage: action.privatemessage});
         case 'PRIVATE_MODAL':
             return Object.assign({},state, {showModal: action.showModal});
+        case 'PRIVATE_CHAT_WAITING':
+            return Object.assign({},state, {privateChatWaiting: action.privateChatWaiting})
         case 'CONNECTED':
             return Object.assign({},state, {connected: action.connected});
         case 'CHATTING_WITH':

@@ -55,6 +55,9 @@
     right: 0;
     background-color: none;
 }
+.private-chat-waiting {
+    color: darkmagenta;
+}
 /*@media only screen and (max-width: 991px) {
     .user-list {
         display: none;

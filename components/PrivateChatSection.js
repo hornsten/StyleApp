@@ -9,11 +9,12 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client'
+import {Modal, Dialog, Button} from 'react-bootstrap';
 // let socket = io(`http://localhost:8000`)
 var socket = io.connect();
 
 
-class ChatSection extends React.Component {
+class PrivateChatSection extends React.Component {
     constructor(props) {
         super(props);
 
@@ -111,21 +112,48 @@ class ChatSection extends React.Component {
        
 
     }
+
+    componentDidUpdate() {
+        var node = ReactDOM.findDOMNode(this.chat);
+        console.log(node);
+        node.scrollTop = node.scrollHeight;
+    }
     componentDidMount() {
         this.textInput.focus();
-         console.log("did mount", store.getState());
+        console.log("did mount", store.getState());
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: false
+        })
+        store.dispatch({ 
+            type: 'PRIVATE_MESSAGE',
+            privatemessage: ""
+        })
+
+        var node = ReactDOM.findDOMNode(this.chat);
+        console.log(node);
+        node.scrollTop = node.scrollHeight;
+        // var chatDiv = ReactDOM.findDOMNode(this.chat);
+        // console.log("chatDV",chatDiv );
+        // chatDiv.scrollTop = chatDiv.scrollHeight;
         /// *****for testing only!!!
         // store.dispatch({ 
         //     type: 'PRIVATE_MODAL',
         //     showModal: false
         // })
-           
-    }
-    closeModal(){
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: false
-        })
+//            var objDiv = document.getElementById("your_div");
+// objDiv.scrollTop = objDiv.scrollHeight;
+//     }
+//     closeModal(){
+//         store.dispatch({ 
+//             type: 'PRIVATE_MODAL',
+//             showModal: false
+//         })
+
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MESSAGE',
+        //     privatemessage: ''
+        // })
     }
 
  
@@ -177,8 +205,7 @@ class ChatSection extends React.Component {
                     </Modal>
        }
         var chattingwith = "";
-        console.log("this.props.chatWithUser", this.props.chatWithUser);
-        console.log("this.props.chatWithUser store", store.getState());
+        
 
        if (this.props.chatWithUser){
            var chattingWith = <div className="row text-center">You are chatting with {this.props.chatWithUser}</div>
@@ -203,7 +230,7 @@ class ChatSection extends React.Component {
             
         
 
-                    <div className="chatbox row">
+                    <div className="chatbox row"  ref={ref => this.chat = ref} >
                         <div className="col-xs-12 col-md-12">    
                             <div className="row">{resultComponents}</div>                     
                         <div>
@@ -243,8 +270,10 @@ const mapStateToProps = (store,ownProps) => {
         server: store.chatState.server,
         privatemessage: store.chatState.privatemessage,
         chatWithUser: store.chatState.chatWithUser,
+        privateChatWaiting: store.chatState.privateChatWaiting,
+        showModal: store.chatState.showModal,
     }
 };
 
-export default connect(mapStateToProps)(ChatSection);
+export default connect(mapStateToProps)(PrivateChatSection);
 // export default ChatSection;

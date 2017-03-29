@@ -90,17 +90,21 @@ var chathelper = {
             // display current room -- need to get room for private chat
             // if (chattype = "Group"){
                 // console.log(newroom, "newroom", "chattype", chattype);
-     
+                
+            console.log("chatwaiting", newroom, "newroom")
+             
+
             if (chattype === "Private"){
-                 store.dispatch({ 
+                
+                store.dispatch({ 
                 type: 'UPDATE_ROOM',
                 currentroom: "Private", //make this "Private" for private users
-            })
-            console.log("is ths chat with user beign fired", newroom);
-            store.dispatch({ 
-                type: 'CHATTING_WITH',
-                chatWithUser: newroom,
-            })
+                })
+                console.log("is ths chat with user beign fired", newroom);
+                store.dispatch({ 
+                    type: 'CHATTING_WITH',
+                    chatWithUser: newroom,
+                })
             } else {
                 store.dispatch({ 
                     type: 'UPDATE_ROOM',
@@ -300,7 +304,11 @@ var chathelper = {
                   type: 'PRIVATE_MODAL',
                   showModal: true
               })
-              console.log("store obj in privaet message", store.getState())
+             store.dispatch({ 
+                  type: 'PRIVATE_CHAT_WAITING',
+                  privateChatWaiting: response
+              })
+              console.log("show modal initially set", store.getState())
             })
         }
     }

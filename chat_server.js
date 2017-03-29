@@ -248,7 +248,7 @@ io.sockets.on('connection', function (socket) {
 
 	// })
 
-	var lastHeartBeat = Date.now();
+	// var lastHeartBeat = Date.now();
 	// when the client emits 'connectuser', this listens and executes
 	// it updates the users room and sends back the latest connected user data and chat history for that room
 	// this is activated when you select link to "Group" or "Private" chats
@@ -281,14 +281,22 @@ io.sockets.on('connection', function (socket) {
 				// get users connected to a chat room
 				// var searchObj = {};
 				// whatever room you are in you want the list of conected users
-						// if (defaultRoom !== "Private"){
+				if (defaultRoom !== "Private"){
 					var	searchObj = {room: defaultRoom}
 					// } 
 					console.log("is this the private room?", defaultRoom)
 					models.ConnectedUser.find(searchObj).exec(function (err, results) {
 					// console.log("connected users when first connect to ", results, defaultRoom);
-					io.sockets.in(defaultRoom).emit('connectedusers', results);
-				})
+						io.sockets.in(defaultRoom).emit('connectedusers', results);
+					})
+				} else {
+					// send all connected users to user list in Private area
+					models.ConnectedUser.find({}).exec(function (err, results) {
+					// console.log("connected users when first connect to ", results, defaultRoom);
+						io.sockets.in('Private').emit('connectedusers', results);
+					})
+
+				}
 
 			}).then(function(){
 					if (defaultRoom !== "Private"){
@@ -388,9 +396,9 @@ io.sockets.on('connection', function (socket) {
 						// tell requestor user not available
 					
 						var message = chatWithUser + " is not currently online";
-						console.log("if no user send messsage: " , message);
+						// console.log("if no user send messsage: " , message);
 						// added 28 Mar
-						console.log(currentSocket, "**********currentsocket");
+						// console.log(currentSocket, "**********currentsocket");
 						// currentSocket.emit('privatemessage', message);
 						// io.sockets.sockets[currentSocket.id].emit('privatemessage', message);
 						// socket.to(currentSocket.id).emit('privatemessage', results);
@@ -415,7 +423,7 @@ io.sockets.on('connection', function (socket) {
 								io.sockets.sockets[currentSocket.id].emit('updatechat', results);
 								return;
 							}).then(function(){
-								var message = username.toString() + ' would like to have private style consultation.';
+								// var message = username.toString() + ' would like to have private style consultation.';
 								console.log("should be in here: " , message,"socket  ", userSocket);
 								io.sockets.sockets[userSocket].emit('privatemessage', username.toString())
 								return;

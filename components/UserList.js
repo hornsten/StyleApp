@@ -1,7 +1,8 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-
+import {connect } from 'react-redux';
+import store from './Redux/redux.js';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -16,17 +17,25 @@ class UserList extends React.Component {
             var component=this;
             var currentroom = this.props.currentroom;
             console.log( this.props.users, "in users");
+            var chatWaiting = this.props.privateChatWaiting;
             var resultComponents = this.props.users.map(function(result) {
             // check to see if this is the current user or a user with which we are already having a prvate chat - if so don;t add hyperlink
 
-            console.log("result.username ", result.username );
-            console.log("currentusername", currentusername);
-            console.log("chatWithUser", chatWithUser);
+           
+            console.log("chatWaiting", chatWaiting);
+             console.log("chatWithUser", chatWithUser);
+            
             if ((result.username === currentusername) || (result.username === chatWithUser)){
             console.log("in hyperlink area ",  result.username);
    
                     connecteduser = result.username;
+            } else if (result.username === chatWaiting){ 
+                    // maybe colour or animate!!!
+                    connecteduser = <div className="room-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}><strong className="private-chat-waiting">{result.username}</strong></div>
+
+
             } else {
+
                     // hyperlink not dsipalying properlyx
                     connecteduser = <div className="room-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}> {result.username} </div>
                 
@@ -47,4 +56,12 @@ class UserList extends React.Component {
             }
 };
 
-export default UserList;
+const mapStateToProps = (store,ownProps) => {
+    return {
+        privateChatWaiting:  store.chatState.privateChatWaiting,
+    }
+};
+
+
+export default connect(mapStateToProps)(UserList);
+
