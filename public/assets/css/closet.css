@@ -225,6 +225,10 @@ select.form-control {
     -webkit-appearance: none;
 }
 
+.icons {
+    height:3rem;
+    width:3rem;
+}
 /*.mag-top {
 left: 1rem;
 top: 1rem;
