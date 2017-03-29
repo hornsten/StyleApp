@@ -115,10 +115,10 @@ class ChatSection extends React.Component {
         this.textInput.focus();
          console.log("did mount", store.getState());
         /// *****for testing only!!!
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: true
-        })
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MODAL',
+        //     showModal: false
+        // })
            
     }
     closeModal(){

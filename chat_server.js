@@ -282,12 +282,13 @@ io.sockets.on('connection', function (socket) {
 				// var searchObj = {};
 				// whatever room you are in you want the list of conected users
 						// if (defaultRoom !== "Private"){
-						var	searchObj = {room: defaultRoom}
-						// } 
-						models.ConnectedUser.find(searchObj).exec(function (err, results) {
-							// console.log("connected users when first connect to ", results, defaultRoom);
-							io.sockets.in(defaultRoom).emit('connectedusers', results);
-						})
+					var	searchObj = {room: defaultRoom}
+					// } 
+					console.log("is this the private room?", defaultRoom)
+					models.ConnectedUser.find(searchObj).exec(function (err, results) {
+					// console.log("connected users when first connect to ", results, defaultRoom);
+					io.sockets.in(defaultRoom).emit('connectedusers', results);
+				})
 
 			}).then(function(){
 					if (defaultRoom !== "Private"){
@@ -311,7 +312,7 @@ io.sockets.on('connection', function (socket) {
 					}
 			})
 		}
-		console.log("username, defaultRoom", username, defaultRoom);
+		// console.log("username, defaultRoom", username, defaultRoom);
 
 	});
 
@@ -342,7 +343,7 @@ io.sockets.on('connection', function (socket) {
 
 
 	socket.on('switchRoom', function(newroom, chattype){
-			console.log("******* switch room user to chat initial socket id", socket.id);
+			// console.log("******* / room user to chat initial socket id", socket.id);
 
 		// console.log("newroom / private user ", newroom, "old room ", socket.room,  "chattype", chattype);
 		// leave the current room (stored in session
@@ -381,10 +382,11 @@ io.sockets.on('connection', function (socket) {
 				// first get their socket id then send a message
 				models.ConnectedUser.findOne({username: chatWithUser}).exec(function(err, results){
 					console.log("this is where privaet message is sent - finding user" , results);
+				
 					if (results === null){
 						// no connected user
 						// tell requestor user not available
-						
+					
 						var message = chatWithUser + " is not currently online";
 						console.log("if no user send messsage: " , message);
 						// added 28 Mar
@@ -398,7 +400,8 @@ io.sockets.on('connection', function (socket) {
 						// if (io.sockets.connected[currentSocket.id]) io.sockets.connected[currentSocket.id].volatile.emit('privatemessage', message);
 					} else {
 						// load previous chat
-						console.log("should be in here: " , results);
+						var userSocket = results.socketid;	
+						console.log("userSocket: " , userSocket);
 						var cutoff = new Date();
 						cutoff.setDate(cutoff.getDate()-1);
 						models.Chat
@@ -408,14 +411,14 @@ io.sockets.on('connection', function (socket) {
 								if (err) return console.log(err);
 								// just send to current client  / socket.id that switched rooms not everyone
 								// currentSocket.emit('updatechat', results);
+								
 								io.sockets.sockets[currentSocket.id].emit('updatechat', results);
-
-							}).then(function(results){
-
-								var userSocket = results.socketid;
-								var message = username + ' would like to have private style consultation.';
-								io.sockets.sockets[userSocket].emit('privatemessage', message)
-
+								return;
+							}).then(function(){
+								var message = username.toString() + ' would like to have private style consultation.';
+								console.log("should be in here: " , message,"socket  ", userSocket);
+								io.sockets.sockets[userSocket].emit('privatemessage', username.toString())
+								return;
 							}).then(function(){
 								models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}).exec(function (err, results) {
 										// update private chat connected users list with a list of  all connected users
