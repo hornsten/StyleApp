@@ -25,7 +25,7 @@ class Magazine extends React.Component {
                     <div className="col-sm-6 col-md-4">
                         <div className="thumbnail">
                         <img src={result.src} />
-                        <div class="caption">
+                        <div className="caption">
         <h3>Thumbnail label</h3>
         <p>...</p>
         <p><a href="#" className="btn btn-pink round" role="button">Button</a> <a href="#" className="btn btn-pink outline round" role="button">Button</a></p>

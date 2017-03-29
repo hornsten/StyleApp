@@ -21,7 +21,7 @@ class Main extends Component{
                        <NavBar  />
                        
                     
-                  <div className="container">
+                  <div className="container-fluid">
 
                     {this.props.children}
 

@@ -24,51 +24,28 @@ height: 100%;
  
 }
 
-#clothesSet {
-    height: 55rem;
-}
+
 .closet-container {
     height: 55rem;
 }
-.closet-block {
-    height: 55rem;
-}
+
 .closet-tabs-container {
-    height: 30rem;
-    /*overflow: hidden;*/
-}
-
-.closet-tabs-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-}
-
-.closet-tabs-container ul li {
-    display: inline-block;
-    padding: 4px;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    margin: 0 4px;
-    text-align: center;
-    font-weight: bold;
-    cursor: pointer;
-     -webkit-transition: all 0.15s ease-out 0s;
-    -moz-transition: all 0.15s ease-out 0s;
-    transition: all 0.15s ease-out 0s;
-
-}
-
-.closet-tabs-container ul li:hover {
-     color: #00d8ff;
+    height: 45rem;
+    border: 1px solid silver;
+    overflow: scroll;
 }
 
 .drag-image {
      cursor: move; 
      overflow: hidden;
 }
+div.form-group {
+    margin-bottom: 0;
+}
 
+#upload {
+    margin-top: 0;
+}
 .top {
 
 /*height: 100rem;
@@ -181,35 +158,22 @@ overflow:auto;
 }
 
 .poly-top {
-
-/*left: 1rem;
-top: 1rem;*/
 transform: matrix(0.99978, -0.02083, 0.02083, 0.99978, 0, 0);
 }
 .poly-bottom {
-/*left: 30rem;
- top: 3rem;*/
 transform: matrix(0.98582, -0.16781, 0.16781, 0.98582, 0, 0);
 }
 .poly-bag{
-/*left: 25rem;
-top: 15rem;*/
 transform: matrix(0.95654, 0.29162, -0.29162, 0.95654, 0, 0);
 }
 .poly-shoes{
-/*left: 20rem;
-top: 35rem;*/
  transform: matrix(0.90439, 0.42666, -0.42666, 0.90439, 0, 0);
   z-index: 3;
 }
 .poly-flair{
-/*left: 5rem;
-top: 25rem;*/
 z-index:4;
 }
 .poly-accessory{
-/*left: 38rem;
-top: 25rem;*/
 transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
@@ -228,62 +192,30 @@ select.form-control {
     height:3rem;
     width:3rem;
 }
-/*.mag-top {
-left: 1rem;
-top: 1rem;
- 
-}
-.mag-bottom{
-left: 30rem;
- top: 17rem;
-}
-.mag-bag{
-left: 10rem;
-top: 29rem;
-}
-.mag-shoes{
-left: 27rem;
-top: 40rem;
-z-index: 5;
-}
-.mag-flair{
-left: 24rem;
-top: 30rem;
-z-index: 5;
-}
-.mag-accessory{
-left: 3rem;
-top: 34rem;
-transform: matrix(1, 0, 0, 1, 0, 0);
+
+.black   { background-color: #000; }
+.black select   { color: #fff; }
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
 }
 
-.paris-top {
-left: 0;
-top: 0;
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
 }
-.paris-bottom{
-left: 40rem;
- top: 17rem;
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
 }
-.paris-bag{
-left: 30rem;
-top: 6rem;
-}
-.paris-shoes{
-left: 27rem;
-top: 40rem;
-z-index: 5;
-}
-.paris-flair{
-left: 12rem;
-top: 40rem;
-z-index: 5;
-}
-.paris-accessory{
-left: 3rem;
-top: 34rem;
-transform: matrix(1, 0, 0, 1, 0, 0);
-}*/
 
 .noselect {
 -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
