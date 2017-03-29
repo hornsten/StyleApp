@@ -28,7 +28,7 @@ class GroupChatSection extends React.Component {
 
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store, "group");
-        chathelper.server_messages(store);
+        // chathelper.server_messages(store);
         chathelper.private_message(store);
 
     }
@@ -74,10 +74,10 @@ class GroupChatSection extends React.Component {
         // chathelper.file_upload(uploadelem);
 
         ///***** FOR TESTINg */
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: true
-        })
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MODAL',
+        //     showModal: true
+        // })
 
 
         

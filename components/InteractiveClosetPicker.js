@@ -44,6 +44,8 @@ isDropped(imageId) {
   }
   componentDidMount(){
     // get images for each section
+
+    console.log("store Obj in interactive did mount", store.getState());
     helper.getImages(store, "top");
     helper.getImages(store, "bottom");
     helper.getImages(store, "accessory");
@@ -62,6 +64,7 @@ isDropped(imageId) {
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
+     
     // reset any old data // also call this in any reset button
 
     store.dispatch({ 
@@ -72,6 +75,7 @@ isDropped(imageId) {
         type: 'UPDATE_ITEM',
         interactiveitem: {}
     })
+    console.log("store Obj in interactive did mount  after initial states", store.getState());
   }
 uploadFile(e) {
   var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
@@ -113,7 +117,7 @@ uploadFile(e) {
       background: '#fff',
       logging: true,
       allowTaint: true, 
-      proxy: 'http://localhost:8080',
+      // proxy: 'http://localhost:8080',  // removed 29 Mar
       onrendered: function (canvas) {
           var img = canvas.toDataURL();
 
@@ -145,7 +149,7 @@ uploadFile(e) {
           //     // URL.revokeObjectURL(url);
           //   // };
           // }) 
-          window.open(img);
+          // window.open(img);
         }
   
   })
@@ -166,6 +170,7 @@ handleItemType(e){
   })
 
 
+    console.log("store Obj in interactive on regular state change", store.getState());
 
   // reset any old file in input box
   ReactDOM.findDOMNode(this.inputEntry).value = "";
@@ -196,6 +201,7 @@ onStateChange(){
         $push: [this.props.interactiveitem.id],
       } : {},
     }));
+    console.log("store Obj in interactive on interactive state change", store.getState());
 }
 
 resetClothesbins(){
@@ -224,7 +230,7 @@ var {topResults, dressResults, bottomResults, shoeResults,bagResults,accessoryRe
 if (this.props.top){
   topResults = this.props.top.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -236,7 +242,7 @@ if (this.props.top){
 if (this.props.dress){
   dressResults = this.props.dress.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -248,7 +254,7 @@ if (this.props.dress){
 if (this.props.bottom){
   bottomResults = this.props.bottom.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                              src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -261,7 +267,7 @@ if (this.props.bottom){
 if (this.props.shoes){
   shoeResults = this.props.shoes.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                              src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -274,7 +280,7 @@ if (this.props.shoes){
 if (this.props.bag){
   bagResults = this.props.bag.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                              src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -287,7 +293,7 @@ if (this.props.bag){
 if (this.props.accessory){
   accessoryResults = this.props.accessory.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}
@@ -299,7 +305,7 @@ if (this.props.accessory){
 if (this.props.flair){
   flairResults = this.props.flair.map((result, index) =>
                             <Image
-                            id={result.imageid}
+                            id={result.src}
                             src={'/proxy/'+result.src}
                             type={result.type}
                             isDropped={this.isDropped(result.src)}

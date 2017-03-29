@@ -20,7 +20,9 @@ class ChatSection extends React.Component {
         // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store, "private");
-        chathelper.server_messages(store);
+        // chathelper.server_messages(store);
+        chathelper.private_message(store);
+
         console.log("constructor", store.getState());
         // socket.on('updatechat', (username, data) => {   
         //      console.log("socket", username, data);
@@ -113,10 +115,10 @@ class ChatSection extends React.Component {
         this.textInput.focus();
          console.log("did mount", store.getState());
         /// *****for testing only!!!
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: true
-        })
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MODAL',
+        //     showModal: false
+        // })
            
     }
     closeModal(){
@@ -128,10 +130,9 @@ class ChatSection extends React.Component {
 
  
     render() {
-    //    console.log("this.props.privatemessage", this.props.privatemessage);
-       if (this.props.privatemessage){
-            var alertMessage = this.props.privatemessage;
-       }
+        console.log("this.props.privatemessage", this.props.privatemessage);
+        console.log("this.props.privatemessage store", store.getState());
+        console.log("this.props.showModal", this.props.showModal);
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
@@ -155,6 +156,9 @@ class ChatSection extends React.Component {
 
        }
         var alertMessage = "";
+    //     if (this.props.privatemessage){
+    //         var alertMessage = this.props.privatemessage;
+    //    }
         if (this.props.showModal === true){
                     var alertMessage = <Modal dialogClassName="custom-modal" show={this.props.showModal}>
                         <Modal.Header>
@@ -173,6 +177,9 @@ class ChatSection extends React.Component {
                     </Modal>
        }
         var chattingwith = "";
+        console.log("this.props.chatWithUser", this.props.chatWithUser);
+        console.log("this.props.chatWithUser store", store.getState());
+
        if (this.props.chatWithUser){
            var chattingWith = <div className="row text-center">You are chatting with {this.props.chatWithUser}</div>
        }

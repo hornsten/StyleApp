@@ -81,7 +81,7 @@ class PrivateChat extends React.Component {
                                 <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                             </div>
                             <div className="row">
-                                <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom}/>
+                                <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom} chatWithUser={this.props.chatWithUser}/>
                             </div> 
                         </div>
                         <div className="col-s-12 col-s-8 col-md-8">
@@ -100,6 +100,7 @@ const mapStateToProps = (store,ownProps) => {
         rooms: store.chatState.rooms,
         currentroom: store.chatState.currentroom,
         username: store.userState.username,
+        chatWithUser: store.chatState.chatWithUser,
         
 
     }

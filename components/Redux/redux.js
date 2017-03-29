@@ -16,8 +16,8 @@ const chatReducer = (state={}, action) => {
         case 'ADD_USERID':
             console.log("ADD_USERID");
             return Object.assign({},state, {userid: action.userid})
-        case 'ADD_USERNAME':
-            return Object.assign({},state, {username: action.username});
+        // case 'ADD_USERNAME':
+        //     return Object.assign({},state, {username: action.username});
         case 'ADD_MESSAGE':
             return Object.assign({},state, {message: action.message});
         case 'CHAT':

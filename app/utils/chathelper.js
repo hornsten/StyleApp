@@ -26,7 +26,7 @@ var chathelper = {
                     reduxstore.dispatch({type: "CONNECTED", connected: true})
                 }
 
-                socket.emit('adduser', username);
+                // socket.emit('adduser', username);
                 // console.log("connected", username);
             });
         
@@ -37,16 +37,16 @@ var chathelper = {
         },
 
  
-        // adduser: (username, store) => {
-        // // this area needs cleaning up once FB auth implemented
-        //     // var defaultRoom = "room1";
+        adduser: (username, store) => {
+        // this area needs cleaning up once FB auth implemented
+            // var defaultRoom = "room1";
            
-        //     // store.dispatch({ 
-        //     //   type: 'UPDATE_ROOM',
-        //     //   currentroom: defaultRoom,  // default room
-        //     // })
+            // store.dispatch({ 
+            //   type: 'UPDATE_ROOM',
+            //   currentroom: defaultRoom,  // default room
+            // })
 
-        // },
+        },
 
         // var chathelper = {
 
@@ -72,6 +72,10 @@ var chathelper = {
               type: 'UPDATE_ROOM',
               currentroom: defaultRoom,  // no default room
             })
+            store.dispatch({ 
+                type: 'CHATTING_WITH',
+                chatWithUser: "",
+            })
             // for now reset this property when link is clicked ...maybe set to default room later
             // commented out 28 Mar
             // store.dispatch({ 
@@ -91,11 +95,12 @@ var chathelper = {
                  store.dispatch({ 
                 type: 'UPDATE_ROOM',
                 currentroom: "Private", //make this "Private" for private users
-                })
-                store.dispatch({ 
-                    type: 'CHATTING_WITH',
-                    chatWithUser: newroom,
-                })
+            })
+            console.log("is ths chat with user beign fired", newroom);
+            store.dispatch({ 
+                type: 'CHATTING_WITH',
+                chatWithUser: newroom,
+            })
             } else {
                 store.dispatch({ 
                     type: 'UPDATE_ROOM',
@@ -159,6 +164,7 @@ var chathelper = {
         updateclothesbin: (store) => {
              socket.on('updateclothesbin', function (data){
                 console.log("is the closthes bin in here", data.item, data.index);
+                console.log("store Obj in clothesbin", store.getState());
                 store.dispatch({ 
                     type: 'UPDATE_ITEM',
                     interactiveitem: data.item
@@ -167,6 +173,7 @@ var chathelper = {
                     type: 'UPDATE_INDEX',
                     interactiveindex: data.index
                 })
+                console.log("store Obj after dispatch clothesbin", store.getState());
                 
             })
 
@@ -213,7 +220,7 @@ var chathelper = {
             // sourceType ="upload" or "dnd"
             
            
-           console.log(url);
+        //    console.log(url);
             if (sourceType === "upload"){
                 var files = e.target.files || e.dataTransfer.files 
                 if (files) {
@@ -277,7 +284,7 @@ var chathelper = {
         private_message: (store) => {
 
            socket.on('privatemessage', function (response){
-            //   console.log("in private messages", response);
+              console.log("in private messages *******", response);
             //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
             //   var str = response;
             //   var responseToJSON = JSON.parse(JSON.stringify( str ));
@@ -293,6 +300,7 @@ var chathelper = {
                   type: 'PRIVATE_MODAL',
                   showModal: true
               })
+              console.log("store obj in privaet message", store.getState())
             })
         }
     }

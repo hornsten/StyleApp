@@ -217,6 +217,7 @@ class ClosetPicker extends React.Component {
     //       return <img id={imgKey} key={imgKey} src={closetItems[imgKey].src}/>
     //   })
 
+
     /////*********Jess I removed this for now as its causing an errorn and i cnant test heroku sorry! It crashes the server. */
     // {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
 
@@ -243,49 +244,43 @@ class ClosetPicker extends React.Component {
       )
 
     }
-    if (this.props.dress) {
-      dressResults = this.props.dress.map((result, index) =>
-        <Image
-          id={result.imageid}
+    
+if (this.props.dress){
+  dressResults = this.props.dress.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                             src={'/proxy/'+result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
 
-          src={'/proxy/' + result.src}
+}
+if (this.props.bottom){
+  bottomResults = this.props.bottom.map((result, index) =>
+                            <Image
+                            id={result.imageid}
 
-          type={result.type}
-          isDropped={this.isDropped(result.src)}
-          key={result.type + '_' + index}
-        />,
-      )
+                            src={'/proxy/'+result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+}
 
-    }
-    if (this.props.bottom) {
-      bottomResults = this.props.bottom.map((result, index) =>
-        <Image
-          id={result.imageid}
-
-          src={'/proxy/' + result.src}
-
-          type={result.type}
-          isDropped={this.isDropped(result.src)}
-          key={result.type + '_' + index}
-        />,
-      )
-
-    }
-
-    if (this.props.shoes) {
-      shoeResults = this.props.shoes.map((result, index) =>
-        <Image
-          id={result.imageid}
-
-          src={'/proxy/' + result.src}
-
-          type={result.type}
-          isDropped={this.isDropped(result.src)}
-          key={result.type + '_' + index}
-        />,
-      )
-
-    }
+if (this.props.shoes){
+  shoeResults = this.props.shoes.map((result, index) =>
+                            <Image
+                            id={result.imageid}
+                            src={'/proxy/'+result.src}
+                            type={result.type}
+                            isDropped={this.isDropped(result.src)}
+                            key={result.type+'_'+index}
+                            />,
+                        )
+}
 
     if (this.props.bag) {
       bagResults = this.props.bag.map((result, index) =>
