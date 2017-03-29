@@ -83,7 +83,8 @@ io.sockets.on('connection', function (socket) {
 								cutoff.setDate(cutoff.getDate()-1);
 								models.Chat
 									.find({room: socket.room, "created_at": {"$gte": cutoff }})
-									.sort({'date': -1})
+									// .sort({'date': -1})
+									.sort({'created_at': -1})
 									.exec(function(err, results) {
 										if (err) return console.log(err);
 										// to everyone in that room including current client
@@ -133,7 +134,8 @@ io.sockets.on('connection', function (socket) {
 				cutoff.setDate(cutoff.getDate()-1);
 				models.Chat
 					.find({room: socket.room, "created_at": {"$gte": cutoff }})
-					.sort({'date': -1})
+					// .sort({'date': -1})
+					.sort({'created_at': -1})
 					.exec(function(err, results) {
 						if (err) return console.log(err);
 						// to everyone in that room including current client
@@ -310,48 +312,7 @@ io.sockets.on('connection', function (socket) {
 			})
 		}
 		console.log("username, defaultRoom", username, defaultRoom);
-		// Group Users subscribe to a default room
-		// Private Chat Users are connected to a generic "Private" room until they start a private chat - no chats will be sent to this room, it is
-		// purely for connected userlist updates
-		/// get from FBAUTH.... then this function can be on connection instead
-		// store the username in the socket session for this client
-	
-		// update database or other datastore - map username to room and socket id
-		// if (username !== ""){
-		// 	models.ConnectedUser.findOneAndUpdate({username: username}, { $set: { room: defaultRoom, socketid: socket.id}}).exec(function(){
-		// 			// trying to find all connected users for Private Chat and onlly those in a Room for Group Chat
-		// 		    var searchObj = {};
-		// 			if (defaultRoom !== "Private"){
-		// 				searchObj = {room: defaultRoom}
-		// 			} 
-		// 			models.ConnectedUser.find(searchObj).exec(function (err, results) {
-		// 				// console.log("connected users when first connect to ", results, defaultRoom);
-		// 				io.sockets.in(defaultRoom).emit('connectedusers', results);
-		// 			})
 
-		// 	}).then(function(){
-		// 		// console.log("are we in here");
-		// 		if (defaultRoom !== "Private"){
-		// 			// send chat history for that room
-		// 			// console.log("are we in here");
-		// 			var cutoff = new Date();
-		// 			cutoff.setDate(cutoff.getDate()-1);
-		// 			models.Chat
-		// 				.find({room: socket.room, "created_at": {"$gte": cutoff }})
-		// 				.sort({'date': -1})
-		// 				.exec(function(err, results) {
-		// 					if (err) return console.log(err);
-		// 					// emit to current user only after they log in or join chat
-		// 					// console.log("results", results);
-		// 					socket.emit('updatechat', results);
-		// 				});
-		// 		} else {
-				
-		// 			// clear the chat window as no default private chats
-		// 			socket.emit('updatechat', []);
-		// 		}
-		// 	})
-		// }
 	});
 
 	// when the client emits 'sendchat', this listens and executes
@@ -491,7 +452,8 @@ io.sockets.on('connection', function (socket) {
 						cutoff.setDate(cutoff.getDate()-1);
 						models.Chat
 							.find({room: socket.room, "created_at": {"$gte": cutoff }})
-							.sort({'date': -1})
+							// .sort({'date': -1})
+							.sort({'created_at': -1})
 							.exec(function(err, results) {
 								if (err) return console.log(err);
 								// just send to current client that switched rooms not everyone

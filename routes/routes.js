@@ -5,7 +5,7 @@ var fs = require('fs');
 var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 // cloudinary.config(cloudinary_keys);
-// for heroku
+// // for heroku
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
   api_key: process.env.CLOUDINARY_API, 
