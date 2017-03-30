@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
-import Navbar from './Navbar';
+import NavBar from './NavBar';
 import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
 import ChatModal from  './ChatModal';
