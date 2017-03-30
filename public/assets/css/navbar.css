@@ -4,7 +4,10 @@
      padding-top: 3.5rem;
 }
 
-
+#brand a:hover {
+   
+    text-decoration: none;
+}
 .btn-outline {
     background-color: transparent;
     color: inherit;

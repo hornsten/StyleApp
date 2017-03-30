@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
-import NavBar from './NavBar';
+import Navbar from './Navbar';
 import helper from "../app/utils/helper.js";
 
 
@@ -18,7 +18,7 @@ class Main extends Component{
         return(
             <div>
              
-                       <NavBar  />
+                       <Navbar  />
                        
                     
                   <div className="container-fluid">
