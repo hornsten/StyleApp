@@ -10,6 +10,7 @@ import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client'
 import {Modal, Dialog, Button} from 'react-bootstrap';
+import ChatModal from  './ChatModal';
 // let socket = io(`http://localhost:8000`)
 var socket = io.connect();
 
@@ -22,7 +23,7 @@ class PrivateChatSection extends React.Component {
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store, "private");
         // chathelper.server_messages(store);
-        chathelper.private_message(store);
+        // chathelper.private_message(store);
 
         // console.log("constructor", store.getState());
         // socket.on('updatechat', (username, data) => {   
@@ -147,12 +148,12 @@ class PrivateChatSection extends React.Component {
 //     }
     }
 
-    closeModal(){
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: false
-        })
-    }
+    // closeModal(){
+    //     store.dispatch({ 
+    //         type: 'PRIVATE_MODAL',
+    //         showModal: false
+    //     })
+    // }
 
  
     render() {
@@ -185,25 +186,7 @@ class PrivateChatSection extends React.Component {
     //     if (this.props.privatemessage){
     //         var alertMessage = this.props.privatemessage;
     //    }
-        console.log("show modal private chat", this.props.showModal);
-         console.log("privatemessage private chat", this.props.privatemessage);
-        if (this.props.showModal === true){
-                    var alertMessage = <Modal dialogClassName="custom-modal" show={this.props.showModal}>
-                        <Modal.Header>
-                        <Modal.Title>Modal title</Modal.Title>
-                        </Modal.Header>
 
-                        <Modal.Body>
-                          {this.props.privatemessage}
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                        <Button onClick={this.closeModal}>Close</Button>
-                    
-                        </Modal.Footer>
-
-                    </Modal>
-       }
         var chattingwith = "";
         
 

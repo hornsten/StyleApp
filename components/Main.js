@@ -3,12 +3,15 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import NavBar from './NavBar';
 import helper from "../app/utils/helper.js";
-
+import chathelper from "../app/utils/chathelper.js";
+import ChatModal from  './ChatModal';
 
 class Main extends Component{
     constructor(props){
         super(props);
         // this.state = {}; //setting initial default state
+        // listens for private chat requests
+        chathelper.private_message(store);
     }
     componentDidMount(){
         //get user details
@@ -19,7 +22,7 @@ class Main extends Component{
             <div>
              
                        <NavBar  />
-                       
+                        <ChatModal />
                     
                   <div className="container-fluid">
 

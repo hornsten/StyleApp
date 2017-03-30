@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import FaCamera from 'react-icons/lib/fa/camera';
-
+import {Modal, Dialog, Button} from 'react-bootstrap';
 import ReactModal from 'react-modal';
 class Profile extends React.Component {
       constructor(props) {
@@ -45,7 +45,7 @@ class Profile extends React.Component {
   <div className="jumbotron sharp"> 
               
                
-                    
+<ChatModal />    
 <div className="row">
     <div className="col-xs-2">
 <img className='thumbnail' src= {"../assets/img/empty_avatar.jpg"} style={{width: 150, height: 150}}/>

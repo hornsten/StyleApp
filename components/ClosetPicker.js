@@ -13,6 +13,8 @@ import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import helper from "../app/utils/helper.js";
 import FaLeanpub from 'react-icons/lib/fa/leanpub';
+import {Modal, Dialog, Button} from 'react-bootstrap';
+import ChatModal from  './ChatModal';
 var html2canvas = require('html2canvas');
 
 
@@ -209,25 +211,6 @@ class ClosetPicker extends React.Component {
 
   render() {
 
-    // let {dashboard, dispatch} = this.props;
-    //   let {sideNavExpanded, onDisplay, closetItems} = dashboard;
-
-    //   let clothesImages = Object.keys(closetItems).map((imgKey,index)=> {
-
-    //       return <img id={imgKey} key={imgKey} src={closetItems[imgKey].src}/>
-    //   })
-
-
-    /////*********Jess I removed this for now as its causing an errorn and i cnant test heroku sorry! It crashes the server. */
-    // {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
-
-    //   <Clothesbin
-    //     accepts={accepts}
-    //     lastDroppedItem={lastDroppedItem}
-    //     onDrop={item => this.handleDrop(index, item)}
-    //     key={index}
-    //   />,
-    // )}
 
     const { images, clothesbins } = this.state;
     var {topResults, dressResults, bottomResults, shoeResults, bagResults, accessoryResults, flairResults} = "";
