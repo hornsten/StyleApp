@@ -67,14 +67,11 @@ class NavBar extends Component{
                     <li className="nav-item">
                         <Link to='/profile'><FaUser className="icon" /> My Profile</Link>
                     </li>
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <FaCommentO className="icon" /> Chat</a>
-                        <div className="dropdown-menu" aria-labelledby="dropdown01">
-                            <ul>
-                            <li><Link to='/group' onClick={this.handleGroupClick.bind(this)}><FaUserPlus className="icon" /> Group Chat</Link></li>
-                            <li><Link to='/private' onClick={this.handlePrvtClick.bind(this)}><FaUser className="icon" /> Private Chat</Link></li>
-                            </ul>
-                        </div>
+                    <li className="nav-item">
+                            <Link to='/private' onClick={this.handlePrvtClick.bind(this)}><FaUser className="icon" /> Style Consultation </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to='/group' onClick={this.handleGroupClick.bind(this)}><FaUserPlus className="icon" /> Collaborate </Link>
                     </li>
                     </ul>
             
