@@ -152,9 +152,8 @@ class GroupChatSection extends React.Component {
         width: '100px',
         height: '100px'
         };
-        // console.log("this.props.privatemessage", this.props.privatemessage);
-        // console.log("this.props.privatemessage store", store.getState());
-        // console.log("this.props.showModal", this.props.showModal);
+        console.log("show modal group chat", this.props.showModal);
+         console.log("privatemessage group chat", this.props.privatemessage);
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){

@@ -121,14 +121,15 @@ class PrivateChatSection extends React.Component {
     componentDidMount() {
         this.textInput.focus();
         // console.log("did mount", store.getState());
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: false
-        })
-        store.dispatch({ 
-            type: 'PRIVATE_MESSAGE',
-            privatemessage: ""
-        })
+        // commented out 29 Mar
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MODAL',
+        //     showModal: false
+        // })
+        // store.dispatch({ 
+        //     type: 'PRIVATE_MESSAGE',
+        //     privatemessage: ""
+        // })
 
         var node = ReactDOM.findDOMNode(this.chat);
         // console.log(node);
@@ -144,16 +145,13 @@ class PrivateChatSection extends React.Component {
 //            var objDiv = document.getElementById("your_div");
 // objDiv.scrollTop = objDiv.scrollHeight;
 //     }
-//     closeModal(){
-//         store.dispatch({ 
-//             type: 'PRIVATE_MODAL',
-//             showModal: false
-//         })
+    }
 
-        // store.dispatch({ 
-        //     type: 'PRIVATE_MESSAGE',
-        //     privatemessage: ''
-        // })
+    closeModal(){
+        store.dispatch({ 
+            type: 'PRIVATE_MODAL',
+            showModal: false
+        })
     }
 
  
@@ -187,6 +185,8 @@ class PrivateChatSection extends React.Component {
     //     if (this.props.privatemessage){
     //         var alertMessage = this.props.privatemessage;
     //    }
+        console.log("show modal private chat", this.props.showModal);
+         console.log("privatemessage private chat", this.props.privatemessage);
         if (this.props.showModal === true){
                     var alertMessage = <Modal dialogClassName="custom-modal" show={this.props.showModal}>
                         <Modal.Header>
