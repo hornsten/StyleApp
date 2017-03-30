@@ -163,18 +163,21 @@ app.get('/', function(req, res){
 //              })
 //         }
 
-//    })
+
+
 
 app.post('/profileimageupload', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
                 console.log(results);
+                var filepath = '/../public/assets/img/profileimg/' + req.body.name;
                 var fileName = __dirname + '/../public/assets/img/profileimg/' + req.body.name;
 
                 console.log(results, "results");
                 var userid = results.facebook.id;
                 // remove .png extension
                 // var publicFileName = uniqueFileName.slice(0, -4);
+                 var publicFileName = fileName.slice(0, -4);
                 console.log("new filename", fileName);
                 
                 fs.open(fileName, 'a', 0755, function(err, fd) {
@@ -184,7 +187,7 @@ app.post('/profileimageupload', function(req, res,next){
                     fs.close(fd, function() {
                         console.log('File saved successful!');
                         // var filePath = '/../public/assets/img/' + uniqueFileName;
-                        cloudinary.uploader.upload( fileName, function(result) { 
+                        cloudinary.uploader.upload( filepath, function(result) { 
 
                             console.log("result",result);
                             // var filelocation = result.url;
