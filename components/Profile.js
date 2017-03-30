@@ -40,16 +40,6 @@ class Profile extends React.Component {
  }
 
 uploadFile(e) {
-  // var inputfile = ReactDOM.findDOMNode(this.inputEntry).value;
-  // var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
-  // console.log(itemType, "itemType");
-  // console.log("calling this$$$", e.target.value);
-  // Make sure a valid type entered before saving file
-  // console.log("this.props.itemtype", this.props.itemtype);
-   // Make sure a valid type entered before saving file
-  // console.log("itemtype", itemType);
-  //reset old error message
-
      helper.uploadToProfile(e, store);   
 
 }
@@ -98,15 +88,16 @@ uploadFile(e) {
       }
           return(
   <div>         
-<InLineEdit />
+
 
       <div className="jumbotron sharp">     
             <div className="row">
                       <div className="col-xs-2">
                       <img className='thumbnail' src= {"../assets/img/empty_avatar.jpg"} style={{width: 150, height: 150}}/>
-                      
+                      <FaCamera className="icon"/>
                       <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload' accept='.png' 
                               name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
+                               
                       </div>
                       <div className="col-xs-10">                                        
                                       <ul>      
@@ -114,7 +105,7 @@ uploadFile(e) {
                                           <li><h3 className='username'>passionista123</h3></li>    
                                           <li>style motto: {}</li>
                                           <li>blurb:{}</li>
-                                          <li><FaCamera className="icon"/> Add Photo</li>
+                                         <InLineEdit message={} />
                                           <li><button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">edit</button></li>
                                       </ul>
 

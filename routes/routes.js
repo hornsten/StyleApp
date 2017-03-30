@@ -3,13 +3,19 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys');
+// var cloudinary_keys = require('../auth/cloudinary_keys.js');
 // cloudinary.config(cloudinary_keys);
 // for heroku
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
+
 cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
+  cloud_name: 'hvzbthwxc',
+  api_key: '488184131115429',
+  api_secret: 'P9jDCHR53fNRB6dyvXMzCsazl9U' 
 });
 
 
@@ -177,9 +183,7 @@ app.post('/profileimageupload', function(req, res,next){
                 var userid = results.facebook.id;
                 // remove .png extension
                 // var publicFileName = uniqueFileName.slice(0, -4);
-                 var publicFileName = fileName.slice(0, -4);
-                console.log("new filename", fileName);
-                
+                 
                 fs.open(fileName, 'a', 0755, function(err, fd) {
                 if (err) throw err;
 
@@ -193,7 +197,7 @@ app.post('/profileimageupload', function(req, res,next){
                             // var filelocation = result.url;
                             // save to the database
 
-                            var newimage = new models.UserInfo({  userid:userid, src: result.secure_url
+                            var newimage = new models.UserInfo({  userid:userid, imgsrc: result.secure_url
 });
                             newimage.save().then(function(){
                                 if (err) return console.log(err); 
@@ -214,7 +218,7 @@ app.post('/profileimageupload', function(req, res,next){
 
 
                         }, {
-                            public_id: publicFileName, 
+                            public_id: fileName, 
                             crop: 'limit',
                             width: 2000,
                             height: 2000,
