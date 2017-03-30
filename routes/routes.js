@@ -1,6 +1,3 @@
-
-
-
 var request = require('request'); 
 var path = require('path');
 var React = require('react');

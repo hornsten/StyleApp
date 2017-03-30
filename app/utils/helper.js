@@ -143,21 +143,31 @@ getBlurb: function(){
                 if (files) {
                     //send only the first one
                     var file = files[0];
+                    console.log(file);
                     //read the file content and prepare to send it
                     var reader = new FileReader();
+                    console.log("reader data", reader);
                     reader.onload = function(e) {
-       
                         var buffer = e.target.result;
+                        // console.log("is there any thing buffer ??", buffer);
                         var postObj = {
                             name: file.name,
-                            buffer: buffer,
-                            type: type,
+                            buffer: buffer
                         };
-                    
-                    //  reader.readAsDataURL(file);
+                        
+                        return axios.post('profileimageupload',postObj).then(function(result){
+                            console.log('result posting in route uplaod', result);
+                            if(result.data.type === 'profile_image'){
+                                 store.dispatch({
+                                    type:'UPDATE_PROFILEIMAGE',
+                                    profile_image: result.data.results
+                                })
+                            }
+                           
+                        })
+                    }//onload fn
                     reader.readAsBinaryString(file);
                 }
-            }
     },
     /////////////////////////////
 

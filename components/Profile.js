@@ -49,10 +49,9 @@ uploadFile(e) {
    // Make sure a valid type entered before saving file
   // console.log("itemtype", itemType);
   //reset old error message
-  
-  if (this.props.item !== "INPUT"){
+
      helper.uploadToProfile(e, store);   
-  } 
+
 }
 
   handleOpenModal () {
