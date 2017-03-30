@@ -6,7 +6,7 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import InLineEdit from './InLineEdit';
 import helper from "../app/utils/helper.js";
-const noImage = 'http://media.washtimes.com.s3.amazonaws.com/media/image/2014/01/04/people-steven-seagaljpeg-06962.jpg'
+const noImage = 'http://www.vistagardentampa.org/assets/empty_avatar.jpg'
 
 
 import ReactModal from 'react-modal';
@@ -93,7 +93,7 @@ uploadFile(e) {
       <div className="jumbotron sharp">     
             <div className="row">
                       <div className="col-xs-2">
-                      <img className='thumbnail' src= {"../assets/img/empty_avatar.jpg"} style={{width: 150, height: 150}}/>
+                      <img className='thumbnail' src= {noImage} style={{width: 180, height: 200}}/>
                       <FaCamera className="icon"/>
                       <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload' accept='.png' 
                               name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
@@ -103,10 +103,10 @@ uploadFile(e) {
                                       <ul>      
                                         <h3>{this.props.username}</h3>
                                           <li><h3 className='username'>passionista123</h3></li>    
-                                          <li>style motto: {}</li>
-                                          <li>blurb:{}</li>
-                                         <InLineEdit message={} />
-                                          <li><button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">edit</button></li>
+                                          {/*<li>style motto: {}</li>
+                                          <li>blurb:{}</li>*/}
+                                         <InLineEdit />
+                                          {/*<li><button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">edit</button></li>*/}
                                       </ul>
 
                       </div>  

@@ -8,6 +8,9 @@
 ul {
     list-style: none;
 }
+.icon{
+    color: #e1818f;
+}
 .input-names  {
     /*display: inline-block!important;*/
 

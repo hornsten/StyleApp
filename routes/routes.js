@@ -117,7 +117,7 @@ app.get('/', function(req, res){
 
    app.get('/profile/image', function(req, res, next){
         if ( req.isAuthenticated()){
-            var src = req.params.item;
+            var src = req.body.name;
             // console.log("in here item" , type);
              models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){              
                 // return results.facebook.id;
@@ -176,8 +176,8 @@ app.post('/profileimageupload', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
                 console.log(results);
-                var filepath = '/../public/assets/img/profileimg/' + req.body.name;
-                var fileName = __dirname + '/../public/assets/img/profileimg/' + req.body.name;
+                var filepath = '/../public/assets/img/' + req.body.name;
+                var fileName = __dirname + '/../public/assets/img/' + req.body.name;
 
                 console.log(results, "results");
                 var userid = results.facebook.id;
@@ -190,9 +190,8 @@ app.post('/profileimageupload', function(req, res,next){
                 fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
                     fs.close(fd, function() {
                         console.log('File saved successful!');
-                        // var filePath = '/../public/assets/img/' + uniqueFileName;
+                        // var filePath = '/../public/assets/img/profileimg' + uniqueFileName;
                         cloudinary.uploader.upload( filepath, function(result) { 
-
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database

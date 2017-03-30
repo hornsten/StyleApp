@@ -49,7 +49,7 @@ getProfileImage: function(store, item){
     })
 },
 
-getStyleMotto: function(){
+getStyleMotto: function(e,store){
     return axios.get('/updatestylemotto').then(function(result){
         if(result){
              if(result.data.type === 'stylemotto'){
@@ -62,7 +62,7 @@ getStyleMotto: function(){
     })
 },
 
-getBlurb: function(){
+getBlurb: function(e, store){
     return axios.get('/updateblurb').then(function(result){
         if(result){
              if(result.data.type === 'blurb'){
