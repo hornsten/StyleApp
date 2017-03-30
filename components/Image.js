@@ -52,7 +52,7 @@ ondragstart(e){
         // e.target.src gives the url of the file but I only want the file username
         // so this should be put in the id field and grabbed from there
         e.dataTransfer.setData('text/plain-text',e.target.id );
-        console.log(e.target.id, "id");
+        // console.log(e.target.id, "id");
         // img.dataTransfer.setData('text/plain', 'Drag Me Button');
         this.className = 'hover'; 
         return false;

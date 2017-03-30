@@ -96,31 +96,40 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {imagesavedsuccess: action.imagesavedsuccess});
         case 'NEW_MAGAZINES':
             return Object.assign({},state, {magazines: action.magazines});
-        }
-        
-    return state;
-}
-
-
-const interactiveClosetReducer = (state={}, action) => { 
-    switch(action.type){
         case 'UPDATE_INDEX':
             console.log("UPDATE_INDEX");
-            return Object.assign({},state, {interactiveindex: action.interactiveindex});
+            return Object.assign({},state, {index: action.index});
+        case 'UPDATE_ITEM_ID':
+            console.log("UPDATE_ITEM_ID");
+            return Object.assign({},state, {itemid: action.itemid});
+        case 'UPDATE_ITEM_SRC':
+            console.log("UPDATE_ITEM_SRC");
+            return Object.assign({},state, {itemsrc: action.itemsrc});
         case 'UPDATE_ITEM':
             console.log("UPDATE_ITEM");
-            return Object.assign({},state, {interactiveitem: action.interactiveitem});
+            return Object.assign({},state, {items: action.items});
         }
         
     return state;
 }
+
+// const closetItemsReducer = (state = [], action)  => {
+//     switch (action.type) {
+//         case 'CLOSET_ITEMS':
+//             return action.clothesbins;
+//         case 'DROPPED_ITEMS':
+//             return action.droppedImageIds;
+//         }
+//     return state;
+// }
 
 
 const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
     closetState: closetReducer,
-    interactiveClosetState: interactiveClosetReducer,
+   
+
 })
 
 var store = createStore(reducers);

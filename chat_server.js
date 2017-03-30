@@ -6,14 +6,14 @@ var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
 
-// var cloudinary_keys = require('./auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+var cloudinary_keys = require('./auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // for file uploads to chat socket
 app.use(siofu.router);
 
@@ -28,12 +28,12 @@ var rooms = ["room1", "room2", "room3"];  /// only needed when populating data
 // // })
 // // save rooms to database -- only for testing purposes
 for (var i = 0; i < rooms.length; i++){
-	console.log("rooms",rooms[i] , "date",  Date.now())
+	// console.log("rooms",rooms[i] , "date",  Date.now())
 	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
 	roomList.save(function (err) {
 		// console.log("saved:" + rooms[i]); 
 		if (err) return console.log(err);
-		console.log("saved:" ); 
+		// console.log("saved:" ); 
 	})
 }
 
@@ -127,7 +127,7 @@ io.sockets.on('connection', function (socket) {
 		
 		// maybe just save name and pull it back later on correct path
 		var savefileName = url;
-		console.log(url); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
+		// console.log(url); // these are internally saved files (ie already saved) so dont need to save the actual file just the name / link to it
 		var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: savefileName, type: "file", created_at:  Date.now()});
 		newChatMessage.save().then(function(){
 				var cutoff = new Date();
@@ -177,12 +177,12 @@ io.sockets.on('connection', function (socket) {
 				// console.log('File saved successful!');
 				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
-					console.log("result", result);
+					// console.log("result", result);
 					// save to the database
 					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url});
 					newMagazineItem.save().then(function(){
 						if (err) return console.log(err); 
-							console.log("saving item to db");
+							// console.log("saving item to db");
 						// return;
 							// need to updaet user closet too *****
 					})
@@ -253,8 +253,8 @@ io.sockets.on('connection', function (socket) {
 	// it updates the users room and sends back the latest connected user data and chat history for that room
 	// this is activated when you select link to "Group" or "Private" chats
 	socket.on('connectuser', function(username, defaultRoom){
-		console.log(username, "connected to chat ", defaultRoom);
-		console.log("******* connect user to chat initial socket id", socket.id);
+		// console.log(username, "connected to chat ", defaultRoom);
+		// console.log("******* connect user to chat initial socket id", socket.id);
 		if (username !== ""){
 			socket.username = username;
 			// store the room name in the socket session for this client
@@ -389,7 +389,7 @@ io.sockets.on('connection', function (socket) {
 				// want to send user notification that you want a private chat
 				// first get their socket id then send a message
 				models.ConnectedUser.findOne({username: chatWithUser}).exec(function(err, results){
-					console.log("this is where privaet message is sent - finding user" , results);
+					// console.log("this is where privaet message is sent - finding user" , results);
 				
 					if (results === null){
 						// no connected user
@@ -409,7 +409,7 @@ io.sockets.on('connection', function (socket) {
 					} else {
 						// load previous chat
 						var userSocket = results.socketid;	
-						console.log("userSocket: " , userSocket);
+						// console.log("userSocket: " , userSocket);
 						var cutoff = new Date();
 						cutoff.setDate(cutoff.getDate()-1);
 						models.Chat
@@ -424,7 +424,7 @@ io.sockets.on('connection', function (socket) {
 								return;
 							}).then(function(){
 								// var message = username.toString() + ' would like to have private style consultation.';
-								console.log("should be in here: " , message,"socket  ", userSocket);
+								// console.log("should be in here: " , message,"socket  ", userSocket);
 								io.sockets.sockets[userSocket].emit('privatemessage', username.toString())
 								return;
 							}).then(function(){
@@ -437,7 +437,7 @@ io.sockets.on('connection', function (socket) {
 											io.sockets.in("Private").emit('connectedusers', results);
 											// and to current user if in a private chat
 											// update the people in this new private chat
-											console.log("socket.room prvt chat", socket.room);
+											// console.log("socket.room prvt chat", socket.room);
 											io.sockets.in(socket.room).emit('connectedusers', results);
 										});
 								})
@@ -449,7 +449,7 @@ io.sockets.on('connection', function (socket) {
 			} else if (chattype === 'Group'){
 				socket.room = newroom;
 				socket.join(newroom);
-				console.log("newroom", newroom);
+				// console.log("newroom", newroom);
 
 				models.ConnectedUser.findOneAndUpdate({username: socket.username}, { $set: { room: newroom }}).exec(function (err, results) {
 				// update private chat connected users list with a list of  all connected users
@@ -471,7 +471,7 @@ io.sockets.on('connection', function (socket) {
 								socket.emit('updatechat', results);
 							});
 					}).then(function(){
-						console.log("oldroom", oldroom);
+						// console.log("oldroom", oldroom);
 						// get users in the old room from database and sent to all users in old room - updates user connected list
 						models.ConnectedUser.find({room: oldroom}, function(err, results){ 
 						if (err) return console.log(err)
@@ -497,6 +497,7 @@ io.sockets.on('connection', function (socket) {
 		    var returnObj= { index: index, item: item};
 			console.log("data to be sent for interactive", returnObj);
 			/// for testing
+			console.log("room", socket.room);
 			io.sockets.in(socket.room).emit('updateclothesbin', returnObj);
 			/// for prod - only emit to other party
 			// socket.broadcast.to(socket.room).emit('updateclothesbin', result);

@@ -13,6 +13,7 @@ import helper from "../app/utils/helper.js";
 var html2canvas = require('html2canvas');
 
 
+
 @DragDropContext(HTML5Backend)
 class InteractiveClosetPicker extends React.Component {
    constructor(props) {
@@ -20,6 +21,7 @@ class InteractiveClosetPicker extends React.Component {
       chathelper.updateclothesbin(store);
       chathelper.new_magazine_item_listener(store);
       this.resetClothesbins = this.resetClothesbins.bind(this);
+      this.updateClothesBin = this.updateClothesBin.bind(this);
       // chathelper.updatecloset_listener(store);  // commented out for now as i dont think this does anything
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
@@ -38,7 +40,40 @@ class InteractiveClosetPicker extends React.Component {
 
       
   }
-
+// componentWillReceiveProps(){
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// // shouldComponentUpdate(){
+// //   console.log("shouldComponentUpdate")
+// // }
+// componentWillUpdate(){
+//   console.log("componentWillUpdate")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// componentDidUpdate(){
+//   console.log("componentDidUpdate")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// componentWillMount(){
+//   console.log("componentWillMount")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
 isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;
   }
@@ -64,19 +99,34 @@ isDropped(imageId) {
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
-     
-    // reset any old data // also call this in any reset button
 
-    store.dispatch({ 
-        type: 'UPDATE_INDEX',
-        interactiveindex: -1
-    })
-    store.dispatch({ 
-        type: 'UPDATE_ITEM',
-        interactiveitem: {}
-    })
-    console.log("store Obj in interactive did mount  after initial states", store.getState());
-  }
+}
+componentDidUpdate(prevProps, prevState) {
+  // only update chart if the data has changed
+
+// console.log(prevProps, "prevprops");
+console.log(prevProps.index, this.props.index)
+console.log(prevProps.items , this.props.items) 
+console.log(prevProps.itemid, this.props.itemid)
+if ((prevProps.index !== this.props.index)){
+   console.log("this prpos**********d");
+   this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
+}
+// console.log("state of store", store.getState())
+// var Items = this.props.items;
+// var Index = this.props.index;
+// var ItemID = this.props.itemid
+// if  ((Items) && (Index) && (ItemID)){
+//   console.log("this prpos.", this.props.index, this.props.items, this.props.itemid);
+//   this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
+// }
+
+  // if (prevProps.data !== this.props.data) {
+  //   this.chart = c3.load({
+  //     data: this.props.data
+  //   });
+  // }
+}
 uploadFile(e) {
   var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
   // console.log(itemType, "itemType");
@@ -177,32 +227,7 @@ handleItemType(e){
 
 }
 
-onStateChange(){
 
-   // reset any old data before next update
-    store.dispatch({ 
-        type: 'UPDATE_ITEM',
-        interactiveitem: data.item
-    })
-    store.dispatch({ 
-        type: 'UPDATE_INDEX',
-        interactiveindex: data.index
-    })
-
-   this.setState(update(this.state, {
-      clothesbins: {
-        [this.props.interactiveindex]: {
-          lastDroppedItem: {
-            $set: this.props.interactiveitem,
-          },
-        },
-      },
-      droppedImageIds: this.props.interactiveitem.id ? {
-        $push: [this.props.interactiveitem.id],
-      } : {},
-    }));
-    console.log("store Obj in interactive on interactive state change", store.getState());
-}
 
 resetClothesbins(){
   // just sets them back to inital state
@@ -218,10 +243,11 @@ this.setState({
            this.setState({droppedImageIds: []});
 
 }
+
+// // 
    
    render() {
        
-
 
 
 const { images, clothesbins } = this.state; 
@@ -325,7 +351,7 @@ if (this.props.flair){
       return (
          <section className="container-fluid closet-container">
         
-            <div id='clothesSet' className="col-md-7 closet-block rel"> 
+            <div id='clothesSet' className="col-xs-12 col-md-7 closet-block rel"> 
 
         <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
@@ -404,6 +430,7 @@ if (this.props.flair){
 </section>
       )
    }
+   
    handleDrop(index, item) {
     const { id } = item;
 
@@ -411,10 +438,15 @@ if (this.props.flair){
     // then populate these with a local state chage passing in the index and item
     
     // step 1 - capture data and emit to server
+    console.log(index, "index",  item, "item" , id , "id");
     chathelper.getIndexAndItem(index, item);
-      
- 
-    this.setState(update(this.state, {
+    this.updateClothesBin(index,   item,  id );
+          
+  }
+
+    updateClothesBin(index, item, id){
+        console.log("this prpos**********d tooooo");
+          this.setState(update(this.state, {
       clothesbins: {
         [index]: {
           lastDroppedItem: {
@@ -426,30 +458,13 @@ if (this.props.flair){
         $push: [id],
       } : {},
     }));
-
-    // // reset any old data before next update
-    // store.dispatch({ 
-    //     type: 'UPDATE_ITEM',
-    //     interactiveitem: data.item
-    // })
-    // store.dispatch({ 
-    //     type: 'UPDATE_ITEM',
-    //     interactiveindex: data.index
-    // })
-          
-  }
-  
+    console.log("the clothesbin", this.state)
+    }
 }
 
 const mapStateToProps = (store,ownProps) => {
 
     return {
-        // message: store.chatState.message,
-        // file: store.chatState.file,
-        // chat: store.chatState.chat,
-        // server: store.chatState.server,
-        // privatemessage: store.chatState.privatemessage,
-        // showModal: store.chatState.showModal,
         userid: store.userState.userid,
         updateClosetPicker: store.closetState.updateClosetPicker,
         updateClosetItems: store.closetState.updateClosetItems,
@@ -466,8 +481,11 @@ const mapStateToProps = (store,ownProps) => {
         accessory: store.closetState.accessory, 
         dress: store.closetState.dress, 
         flair: store.closetState.flair,   
-        interactiveindex: store.interactiveClosetState.interactiveindex,
-        interactiveitem: store.interactiveClosetState.interactiveitem,
+        index: store.closetState.index,
+        itemid: store.closetState.itemid,
+        itemsrc: store.closetState.itemsrc,
+        items: store.closetState.items,
+
     }
 
 };

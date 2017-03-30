@@ -91,7 +91,8 @@ var chathelper = {
             // if (chattype = "Group"){
                 // console.log(newroom, "newroom", "chattype", chattype);
                 
-            console.log("chatwaiting", newroom, "newroom")
+           
+            // console.log("chatwaiting", newroom, "newroom")
              
 
             if (chattype === "Private"){
@@ -100,7 +101,7 @@ var chathelper = {
                 type: 'UPDATE_ROOM',
                 currentroom: "Private", //make this "Private" for private users
                 })
-                console.log("is ths chat with user beign fired", newroom);
+                // console.log("is ths chat with user beign fired", newroom);
                 store.dispatch({ 
                     type: 'CHATTING_WITH',
                     chatWithUser: newroom,
@@ -156,7 +157,7 @@ var chathelper = {
        new_magazine_item_listener: (store) => {
             socket.on('newmagazine', function (data){
                 // console.log("is the data in here", data)
-                console.log("magazines", data);
+                // console.log("magazines", data);
 
                 store.dispatch({ 
                     type: 'NEW_MAGAZINES',
@@ -167,15 +168,24 @@ var chathelper = {
 
         updateclothesbin: (store) => {
              socket.on('updateclothesbin', function (data){
-                console.log("is the closthes bin in here", data.item, data.index);
-                console.log("store Obj in clothesbin", store.getState());
+                // console.log("is the closthes bin in here", data.item, data.index);
+                // console.log("store Obj in clothesbin", store.getState());
+                console.log("Data", data);
+                store.dispatch({ 
+                    type: 'UPDATE_ITEM_ID',
+                    itemid: data.item.id
+                })
                 store.dispatch({ 
                     type: 'UPDATE_ITEM',
-                    interactiveitem: data.item
+                    items: data.item
+                })
+                store.dispatch({ 
+                    type: 'UPDATE_ITEM_SRC',
+                    itemsrc: data.item.src
                 })
                 store.dispatch({ 
                     type: 'UPDATE_INDEX',
-                    interactiveindex: data.index
+                    index: data.index
                 })
                 console.log("store Obj after dispatch clothesbin", store.getState());
                 
@@ -196,7 +206,7 @@ var chathelper = {
         // takes in the latest list of connected users
         connected_users: (store, component) => {
            socket.on('connectedusers', function (response){
-              console.log("in connectedusers", component, response)
+            //   console.log("in connectedusers", component, response)
               // update the redux store
               store.dispatch({ 
                   type: 'USER_LIST',
@@ -247,7 +257,7 @@ var chathelper = {
             } else if (sourceType === "dnd"){
                  var url = e.dataTransfer.getData('text/plain-text');
                  
-                 console.log(url, "url");
+                //  console.log(url, "url");
  
                 // if (url !== ""){
                      socket.emit('send-url', url);
@@ -288,7 +298,7 @@ var chathelper = {
         private_message: (store) => {
 
            socket.on('privatemessage', function (response){
-              console.log("in private messages *******", response);
+            //   console.log("in private messages *******", response);
             //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
             //   var str = response;
             //   var responseToJSON = JSON.parse(JSON.stringify( str ));
@@ -299,16 +309,14 @@ var chathelper = {
               store.dispatch({ 
                   type: 'PRIVATE_MESSAGE',
                   privatemessage: response
-              })
-               store.dispatch({ 
+              },{ 
                   type: 'PRIVATE_MODAL',
                   showModal: true
-              })
-             store.dispatch({ 
+              },{ 
                   type: 'PRIVATE_CHAT_WAITING',
                   privateChatWaiting: response
               })
-              console.log("show modal initially set", store.getState())
+            //   console.log("show modal initially set", store.getState())
             })
         }
     }

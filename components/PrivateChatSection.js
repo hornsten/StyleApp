@@ -24,7 +24,7 @@ class PrivateChatSection extends React.Component {
         // chathelper.server_messages(store);
         chathelper.private_message(store);
 
-        console.log("constructor", store.getState());
+        // console.log("constructor", store.getState());
         // socket.on('updatechat', (username, data) => {   
         //      console.log("socket", username, data);
         //     this.updatechat(username, data);
@@ -39,7 +39,7 @@ class PrivateChatSection extends React.Component {
         //         message: ""
         //     })
         // }
-        console.log("calling this$$$", e.target.value);
+        // console.log("calling this$$$", e.target.value);
        
   
 
@@ -98,7 +98,7 @@ class PrivateChatSection extends React.Component {
                 message: ""
             })
 
-           console.log("add Message", store.getState());
+        //    console.log("add Message", store.getState());
 
         }
 
@@ -115,12 +115,12 @@ class PrivateChatSection extends React.Component {
 
     componentDidUpdate() {
         var node = ReactDOM.findDOMNode(this.chat);
-        console.log(node);
+        // console.log(node);
         node.scrollTop = node.scrollHeight;
     }
     componentDidMount() {
         this.textInput.focus();
-        console.log("did mount", store.getState());
+        // console.log("did mount", store.getState());
         store.dispatch({ 
             type: 'PRIVATE_MODAL',
             showModal: false
@@ -131,7 +131,7 @@ class PrivateChatSection extends React.Component {
         })
 
         var node = ReactDOM.findDOMNode(this.chat);
-        console.log(node);
+        // console.log(node);
         node.scrollTop = node.scrollHeight;
         // var chatDiv = ReactDOM.findDOMNode(this.chat);
         // console.log("chatDV",chatDiv );
@@ -158,9 +158,9 @@ class PrivateChatSection extends React.Component {
 
  
     render() {
-        console.log("this.props.privatemessage", this.props.privatemessage);
-        console.log("this.props.privatemessage store", store.getState());
-        console.log("this.props.showModal", this.props.showModal);
+        // console.log("this.props.privatemessage", this.props.privatemessage);
+        // console.log("this.props.privatemessage store", store.getState());
+        // console.log("this.props.showModal", this.props.showModal);
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){

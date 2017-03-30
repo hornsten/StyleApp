@@ -7,12 +7,12 @@ var helpers = {
         console.log(item, "item")
         return axios.get('/closet/image/'+item).then(function(result){
            if (result){
-                console.log("results.data", result.data.results);
+                // console.log("results.data", result.data.results);
                 // var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
                 // console.log(username);
                 // console.log("result images", result);
                 // store.dispatch({type: "UPDATE_IMAGES", images: result.data})
-                 console.log("result.type", result.data.type);
+                //  console.log("result.type", result.data.type);
                 if (result.data.type === "bottom"){
                     store.dispatch({ 
                         type: 'CLOSET_BOTTOM',
@@ -72,7 +72,7 @@ var helpers = {
                     //read the file content and prepare to send it
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        console.log('Sending file...');
+                        // console.log('Sending file...');
                         //get all content
                         var buffer = e.target.result;
                         var postObj = {
@@ -82,7 +82,7 @@ var helpers = {
                         };
                     
                         return axios.post('/closet/image/new', postObj).then(function(result){
-                            console.log("result.type", result.type);
+                            // console.log("result.type", result.type);
                             if (result.data.type === "bottom"){
                                 store.dispatch({ 
                                     type: 'CLOSET_BOTTOM',
@@ -170,7 +170,7 @@ var helpers = {
            if (result){
                 var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
                 var userid = result.data[0].facebook.id;
-                 console.log("userid", userid);
+                //  console.log("userid", userid);
                 store.dispatch({type: "ADD_USERNAME", username: username})
                 store.dispatch({type: "ADD_USERID", userid: userid})
                 store.dispatch({type: "IS_LOGGED_IN", loggedin: "true"})
@@ -186,7 +186,7 @@ var helpers = {
    getRoomList: function(){
         // sends get request to apiController to query database for all rooms
         return axios.get('/chat/rooms', { credentials : 'same-origin' }).then(function(response) {
-            console.log("rooms", response);
+            // console.log("rooms", response);
             return response;
         })
         
@@ -196,7 +196,7 @@ var helpers = {
    getMagazines: function(store, userid){
         console.log("being called");
        return axios.get('/magazine/'+userid, { credentials : 'same-origin' }).then(function(response) {
-            console.log("magazine", response);
+            // console.log("magazine", response);
             store.dispatch({type: "NEW_MAGAZINES", magazines: response.data})
             return ;
         })

@@ -51,7 +51,7 @@ class GroupChatSection extends React.Component {
         //         message: ""
         //     })
         // }
-        console.log("calling this$$$", e.target.value);
+        // console.log("calling this$$$", e.target.value);
        
   
 
@@ -69,7 +69,7 @@ class GroupChatSection extends React.Component {
     }
     componentDidUpdate() {
         var node = ReactDOM.findDOMNode(this.chat);
-        console.log(node);
+        // console.log(node);
         node.scrollTop = node.scrollHeight;
     }
     componentDidMount() {
@@ -84,7 +84,7 @@ class GroupChatSection extends React.Component {
         })
 
         var node = ReactDOM.findDOMNode(this.chat);
-        console.log(node);
+        // console.log(node);
         node.scrollTop = node.scrollHeight;
         // var uploadelem = this.fileInput.files;
         // console.log("uploadelem", uploadelem);
@@ -108,7 +108,7 @@ class GroupChatSection extends React.Component {
     ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
     ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
     ondrop(e) {
-            console.log(" is this being called ondrop");
+            // console.log(" is this being called ondrop");
             this.className = 'success';
             e.preventDefault && e.preventDefault();
             chathelper.file_upload(e, "dnd");
@@ -152,9 +152,9 @@ class GroupChatSection extends React.Component {
         width: '100px',
         height: '100px'
         };
-        console.log("this.props.privatemessage", this.props.privatemessage);
+        // console.log("this.props.privatemessage", this.props.privatemessage);
         // console.log("this.props.privatemessage store", store.getState());
-        console.log("this.props.showModal", this.props.showModal);
+        // console.log("this.props.showModal", this.props.showModal);
        var chatmessage = this.props.chat;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
@@ -162,7 +162,7 @@ class GroupChatSection extends React.Component {
                 if (result.type === "file"){
                     var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
                 } else if  (result.type === "text"){
-                    console.log("in here", result.type);
+                    // console.log("in here", result.type);
                     var chatmessage =  <div className="col-md-8">{result.message}</div>
                 }
                 return <div className="row results" key={result._id}>
