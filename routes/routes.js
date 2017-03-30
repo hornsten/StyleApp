@@ -1,3 +1,6 @@
+
+
+
 var request = require('request'); 
 var path = require('path');
 var React = require('react');
@@ -5,7 +8,7 @@ var fs = require('fs');
 var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
 // cloudinary.config(cloudinary_keys);
-// // for heroku
+// for heroku
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
   api_key: process.env.CLOUDINARY_API, 
@@ -74,13 +77,6 @@ app.get('/', function(req, res){
         );
 
 
-    // app.use(function(req, res, next) {
-    //     res.header("Access-Control-Allow-Origin", "*");
-    //     res.header('Access-Control-Allow-Methods', 'GET');
-    //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    //     next();
-    // });
-
 // removed this path from FB auth - cors issue
 	app.get('/chat/rooms', function(req, res, next){
         //to allow CORS
@@ -97,8 +93,7 @@ app.get('/', function(req, res){
         if ( req.isAuthenticated()){
             var type = req.params.item;
             // console.log("in here item" , type);
-             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){
-                
+             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){              
                 // return results.facebook.id;
                 // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
                 // need to query the database here for images for requesting user
@@ -116,6 +111,29 @@ app.get('/', function(req, res){
              })
         }
    });
+
+   app.get('/profile/image', function(req, res, next){
+        if ( req.isAuthenticated()){
+            var src = req.params.item;
+            // console.log("in here item" , type);
+             models.UserInfo.findOne({_id: req.session.passport.user}).exec(function(err, results){              
+                // return results.facebook.id;
+                // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
+                // need to query the database here for images for requesting user
+            //    console.log("in here???? tooo", results);
+            var userid =  results.facebook.id;
+            models.UserInfo.find({"userid": userid}).exec(function(err, items){
+                                    if (err) return console.log(err); 
+                                        var returnObj= {src: fileName,
+                                        results: items}
+                                        console.log(returnObj);
+                                    // console.log("or in here???? ", items);
+                                        res.json(returnObj);
+                })          
+             })
+        }
+   });
+
 
    app.get('/magazine/:userid', function(req, res,next){
        if ( req.isAuthenticated()){
@@ -150,6 +168,107 @@ app.get('/', function(req, res){
 
 //    })
 
+app.post('/profileimageupload', function(req, res,next){
+       if ( req.isAuthenticated()){
+            models.User.findOne({_id: req.session.passport.user}, function(err, results){
+                console.log(results);
+                var fileName = __dirname + '/../public/assets/img/profileimg/' + req.body.name;
+
+                console.log(results, "results");
+                var userid = results.facebook.id;
+                // remove .png extension
+                // var publicFileName = uniqueFileName.slice(0, -4);
+                console.log("new filename", fileName);
+                
+                fs.open(fileName, 'a', 0755, function(err, fd) {
+                if (err) throw err;
+
+                fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
+                    fs.close(fd, function() {
+                        console.log('File saved successful!');
+                        // var filePath = '/../public/assets/img/' + uniqueFileName;
+                        cloudinary.uploader.upload( fileName, function(result) { 
+
+                            console.log("result",result);
+                            // var filelocation = result.url;
+                            // save to the database
+
+                            var newimage = new models.UserInfo({  userid:userid, src: result.secure_url
+});
+                            newimage.save().then(function(){
+                                if (err) return console.log(err); 
+                                console.log("saving item to db");
+                                return;
+                            		// need to updaet user closet too *****
+                            }).then(function(){
+                                //reqquer
+                                models.UserInfo.find({"userid": userid}).exec(function(err, items){
+                                    if (err) return console.log(err); 
+                                        returnObj= {userid: userid,
+                                        results: items}
+                                    // console.log("or in here???? ", items);
+                                        res.json(returnObj);
+                                    })
+                            })
+                            // // remove file from from tmp area
+
+
+                        }, {
+                            public_id: publicFileName, 
+                            crop: 'limit',
+                            width: 2000,
+                            height: 2000,
+                            eager: [
+                            { width: 200, height: 200, crop: 'thumb',
+                                radius: 20 },
+                            { width: 100, height: 150, crop: 'fit', format: 'png' }
+                            ],                                     
+                            // tags: ['special', 'for_homepage']
+                        } );
+                    })
+                })
+
+        })
+                                
+        });
+
+        } 
+    //    res.end();
+    })
+
+app.post('/updatestylemotto', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOne({_id: req.session.passport.user}, function(err, results){
+              var userid = results.facebook.id;
+               var newstylemotto = new models.UserInfo({ userid: userid,
+                   stylemotto: req.body.stylemotto})
+                   newstylemotto.save().then(function(){
+                       if (err) return console.log(err); 
+                                console.log("saving item to db");
+                                return;
+                   });
+
+        })
+    }
+})
+
+app.post('/updateblurb', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOne({_id: req.session.passport.user}, function(err, results){
+              var userid = results.facebook.id;
+               var newblurb = new models.UserInfo({ userid: userid,
+                   blurb: req.body.blurb})
+                   newblurb.save().then(function(){
+                       if (err) return console.log(err); 
+                                console.log("saving item to db");
+                                return;
+                   });
+
+        })
+    }
+})
+
+
     app.post('/closet/image/new/', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
@@ -178,7 +297,9 @@ app.get('/', function(req, res){
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, filename: uniqueFileName, type: req.body.type, src: result.secure_url, created_at:  Date.now()});
+                            var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, 
+                                filename: uniqueFileName, type: req.body.type, 
+                                src: result.secure_url, created_at:  Date.now()});
                             newClosetItem.save().then(function(){
                                 if (err) return console.log(err); 
                                 console.log("saving item to db");

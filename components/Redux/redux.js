@@ -16,8 +16,8 @@ const chatReducer = (state={}, action) => {
         case 'ADD_USERID':
             console.log("ADD_USERID");
             return Object.assign({},state, {userid: action.userid})
-        // case 'ADD_USERNAME':
-        //     return Object.assign({},state, {username: action.username});
+        case 'ADD_USERNAME':
+            return Object.assign({},state, {username: action.username});
         case 'ADD_MESSAGE':
             return Object.assign({},state, {message: action.message});
         case 'CHAT':
@@ -28,8 +28,6 @@ const chatReducer = (state={}, action) => {
             return Object.assign({},state, {privatemessage: action.privatemessage});
         case 'PRIVATE_MODAL':
             return Object.assign({},state, {showModal: action.showModal});
-        case 'PRIVATE_CHAT_WAITING':
-            return Object.assign({},state, {privateChatWaiting: action.privateChatWaiting})
         case 'CONNECTED':
             return Object.assign({},state, {connected: action.connected});
         case 'CHATTING_WITH':
@@ -51,11 +49,20 @@ const userReducer = (state={}, action) => {
         case 'IS_LOGGED_IN':
           console.log("logged in", action.loggedin);
             return Object.assign({},state, {loggedin: action.loggedin});
-        // case 'UPDATE_PROFILE':
-        //     return Object.assign({}, state, {profile: action.profile});
+        case 'UPDATE_PROFILEIMAGE':
+            console.log("updating profie image", action.profile_image);
+            return Object.assign({}, state, {profile_image: action.profile_image});
+        case 'UPDATE_STYLEMOTTO' :
+        console.log("updating style motto", action.stylemotto);
+        return Object.assign({}, state, {stylemotto: action.stylemotto});
+
+        case 'UPDATE_BLURB':
+            console.log("update blurb", action.blurb);
+            return Object.assign({},state, {blurb: action.blurb});
         }
     return state;
 }
+
 
 const closetReducer = (state={}, action) => { 
     switch(action.type){
@@ -96,44 +103,33 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {imagesavedsuccess: action.imagesavedsuccess});
         case 'NEW_MAGAZINES':
             return Object.assign({},state, {magazines: action.magazines});
-        case 'UPDATE_INDEX':
-            console.log("UPDATE_INDEX");
-            return Object.assign({},state, {index: action.index});
-        case 'UPDATE_ITEM_ID':
-            console.log("UPDATE_ITEM_ID");
-            return Object.assign({},state, {itemid: action.itemid});
-        case 'UPDATE_ITEM_SRC':
-            console.log("UPDATE_ITEM_SRC");
-            return Object.assign({},state, {itemsrc: action.itemsrc});
-        case 'UPDATE_ITEM':
-            console.log("UPDATE_ITEM");
-            return Object.assign({},state, {items: action.items});
         }
         
     return state;
 }
 
-// const closetItemsReducer = (state = [], action)  => {
-//     switch (action.type) {
-//         case 'CLOSET_ITEMS':
-//             return action.clothesbins;
-//         case 'DROPPED_ITEMS':
-//             return action.droppedImageIds;
-//         }
-//     return state;
-// }
+
+const interactiveClosetReducer = (state={}, action) => { 
+    switch(action.type){
+        case 'UPDATE_INDEX':
+            console.log("UPDATE_INDEX");
+            return Object.assign({},state, {interactiveindex: action.interactiveindex});
+        case 'UPDATE_ITEM':
+            console.log("UPDATE_ITEM");
+            return Object.assign({},state, {interactiveitem: action.interactiveitem});
+        }
+        
+    return state;
+}
 
 
 const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
     closetState: closetReducer,
-   
-
+    interactiveClosetState: interactiveClosetReducer,
 })
 
 var store = createStore(reducers);
 
 export default store;
-
-
