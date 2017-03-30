@@ -155,7 +155,7 @@ getBlurb: function(){
                             buffer: buffer
                         };
                         
-                        return axios.post('profileimageupload',postObj).then(function(result){
+                        return axios.post('/profileimageupload',postObj).then(function(result){
                             console.log('result posting in route uplaod', result);
                             if(result.data.type === 'profile_image'){
                                  store.dispatch({
