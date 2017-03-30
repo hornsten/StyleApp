@@ -33,15 +33,12 @@ import Home from "../components/Home.js";
 
 var routes = (
     <Router history={browserHistory}>
-        <Route path="/" component={Main} >
-            <Route IndexRoute path="/" component={NavBar} />
-            <Route path="/home" component={Home} />
-            <Route path="/chat" component={ChatMain} >
+        <Route component={Main} >
+                <Route path='/' component={Home} />
                 <Route path='/group' component={GroupChat} />
                 <Route path='/private' component={PrivateChat} />
-            </Route>
-            <Route path='/closet' component={ClosetPicker} />
-             <Route path='/profile' component={Profile} />
+                <Route path='/closet' component={ClosetPicker} />
+                <Route path='/profile' component={Profile} />
         </Route>
     </Router>
 )
