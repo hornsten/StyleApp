@@ -6,7 +6,7 @@ import Main from "../components/Main.js"
 import {Router, Route, hashHistory, browserHistory} from "react-router";
 import GroupChat from "../components/GroupChat.js";
 import PrivateChat from "../components/PrivateChat.js";
-import NavBar from "../components/NavBar.js";
+import Navbar from "../components/Navbar.js";
 import ClosetPicker from "../components/ClosetPicker.js";
 import Profile from "../components/Profile.js";
 import Home from "../components/Home.js";
