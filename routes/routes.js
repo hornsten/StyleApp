@@ -116,7 +116,7 @@ app.get('/', function(req, res){
         if ( req.isAuthenticated()){
             var src = req.params.item;
             // console.log("in here item" , type);
-             models.UserInfo.findOne({_id: req.session.passport.user}).exec(function(err, results){              
+             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){              
                 // return results.facebook.id;
                 // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
                 // need to query the database here for images for requesting user

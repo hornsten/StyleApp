@@ -1,10 +1,11 @@
 
-
+import ReactDOM from "react-dom";  ////This needed to be imported
 import React, { Component } from "react";
 import FaCamera from 'react-icons/lib/fa/camera';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import InLineEdit from './InLineEdit';
+import helper from "../app/utils/helper.js";
 const noImage = 'http://media.washtimes.com.s3.amazonaws.com/media/image/2014/01/04/people-steven-seagaljpeg-06962.jpg'
 
 
@@ -39,7 +40,7 @@ class Profile extends React.Component {
  }
 
 uploadFile(e) {
-  var inputfile = ReactDOM.findDOMNode(this.siofu_input).value;
+  // var inputfile = ReactDOM.findDOMNode(this.inputEntry).value;
   // var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
   // console.log(itemType, "itemType");
   // console.log("calling this$$$", e.target.value);
@@ -105,7 +106,7 @@ uploadFile(e) {
                       <div className="col-xs-2">
                       <img className='thumbnail' src= {"../assets/img/empty_avatar.jpg"} style={{width: 150, height: 150}}/>
                       
-                      <input type="file" id="siofu_input" label='Upload' accept='.png' 
+                      <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload' accept='.png' 
                               name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
                       </div>
                       <div className="col-xs-10">                                        
