@@ -1,7 +1,7 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-
+import ChatModal from  './ChatModal';
 import GroupChatSection from "./GroupChatSection.js";
 import NonActiveUserList from "./NonActiveUserList.js";
 import Rooms from "./Rooms.js";
@@ -9,6 +9,7 @@ import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
+import {Modal, Dialog, Button} from 'react-bootstrap';
 import ClosetItems from "./ClosetItems.js";
 
 class GroupChat extends React.Component {
@@ -98,6 +99,7 @@ class GroupChat extends React.Component {
     render() {
     
         return (<div className="row">
+                         <ChatModal />
                         <div className="col-xs-4 col-s-2 col-md-2">
                             <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
                         </div>

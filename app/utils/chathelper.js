@@ -298,25 +298,21 @@ var chathelper = {
         private_message: (store) => {
 
            socket.on('privatemessage', function (response){
-            //   console.log("in private messages *******", response);
-            //   var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }";
-            //   var str = response;
-            //   var responseToJSON = JSON.parse(JSON.stringify( str ));
-
-            //   var chatWithUser = responseToJSON.username;
-            //   console.log("chatWithUser", chatWithUser);
+                console.log("getting privaet message")
               // update the redux store
               store.dispatch({ 
                   type: 'PRIVATE_MESSAGE',
                   privatemessage: response
-              },{ 
+              }),
+               store.dispatch({ 
                   type: 'PRIVATE_MODAL',
-                  showModal: true
-              },{ 
+                  showChatModal: true
+              }), 
+               store.dispatch({ 
                   type: 'PRIVATE_CHAT_WAITING',
                   privateChatWaiting: response
               })
-            //   console.log("show modal initially set", store.getState())
+              console.log("show modal after message rec", store.getState())
             })
         }
     }

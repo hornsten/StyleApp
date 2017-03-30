@@ -3,7 +3,8 @@ import helper from "../app/utils/helper.js";
 import store from './Redux/redux.js';
 import ReactDOM from "react-dom";
 import Magazine from './Magazine';
-
+import {Modal, Dialog, Button} from 'react-bootstrap';
+import ChatModal from  './ChatModal';
 
 class Home extends React.Component {
       constructor(props) {
