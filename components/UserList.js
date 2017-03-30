@@ -24,7 +24,8 @@ class UserList extends React.Component {
 
            
             console.log("******chatWaiting", chatWaiting);
-            console.log("****chatWithUser", chatWithUser);
+            // console.log("****chatWithUser", chatWithUser);
+            console.log("looking for chatWaiting in USErlist", store.getState())
             
             if ((result.username === currentusername) || (result.username === chatWithUser)){
             console.log("in hyperlink area ",  result.username);

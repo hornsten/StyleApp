@@ -1,16 +1,17 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-
+import {Modal, Dialog, Button} from 'react-bootstrap';
 import PrivateChatSection from "./PrivateChatSection.js";
 import Users from "./Users.js";
 import InteractiveClosetPicker from "./InteractiveClosetPicker.js";
 import Rooms from "./Rooms.js";
 import helper from "../app/utils/helper.js";
 import chathelper from "../app/utils/chathelper.js";
-
+import ChatModal from  './ChatModal';
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
+
 
 class PrivateChat extends React.Component {
     constructor(props) {
@@ -84,7 +85,6 @@ class PrivateChat extends React.Component {
         // console.log(this.props.rooms, "this.props.rooms");
         return (<div className="row">
                  
-                        
                         <div className="col-xs-12 col-s-4 col-md-4">
                             <div className="row">
                                 <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>

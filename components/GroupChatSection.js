@@ -10,7 +10,7 @@ import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client';
 
-import {Modal, Dialog, Button} from 'react-bootstrap';
+// import {Modal, Dialog, Button} from 'react-bootstrap';
 // var fs = require('fs');
 // var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('./auth/cloudinary_keys');
@@ -29,7 +29,7 @@ class GroupChatSection extends React.Component {
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store, "group");
         // chathelper.server_messages(store);
-        chathelper.private_message(store);
+        // chathelper.private_message(store);
 
     }
     addMessage(e, message) {
@@ -138,12 +138,12 @@ class GroupChatSection extends React.Component {
     //     //  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
     //     // node.scrollTo(0,node.body.scrollHeight);
     // }
-    closeModal(){
-        store.dispatch({ 
-            type: 'PRIVATE_MODAL',
-            showModal: false
-        })
-    }
+    // closeModal(){
+    //     store.dispatch({ 
+    //         type: 'PRIVATE_MODAL',
+    //         showModal: false
+    //     })
+    // }
 
  
 
@@ -172,27 +172,27 @@ class GroupChatSection extends React.Component {
                 });
            }
        }
-       if (this.props.showModal === true){
-            var alertMessage = <Modal.Dialog>
-                <Modal.Header>
-                <Modal.Title>Modal title</Modal.Title>
-                </Modal.Header>
+    //    if (this.props.showModal === true){
+    //         var alertMessage = <Modal.Dialog>
+    //             <Modal.Header>
+    //             <Modal.Title>Modal title</Modal.Title>
+    //             </Modal.Header>
 
-                <Modal.Body>
-                    {this.props.privatemessage}
-                </Modal.Body>
+    //             <Modal.Body>
+    //                 {this.props.privatemessage}
+    //             </Modal.Body>
 
-                <Modal.Footer>
-                <Button onClick={this.closeModal}>Close</Button>
+    //             <Modal.Footer>
+    //             <Button onClick={this.closeModal}>Close</Button>
             
-                </Modal.Footer>
+    //             </Modal.Footer>
 
-            </Modal.Dialog>
-    }
+    //         </Modal.Dialog>
+    // }
        // only make visible if there is a connected user - for now its username but later make it connected...if (this.props.connected)
        if ( this.props.username ){
            var headerText = <div><div className="row text-center"><div className="col-xs-12 col-md-12"><strong>Welcome {this.props.username}!</strong></div></div><div className="row text-center"><div className="col-xs-12 col-md-12">You are in the <strong>{this.props.currentroom} </strong>Room!</div></div></div>
-
+ 
             var chatDislay = <div>
                     <div className="row">
                         <div>
@@ -210,9 +210,6 @@ class GroupChatSection extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                    <div className="static-modal">
-                        {alertMessage}
-                    </div>
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
                             <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}> Drop here</div>
@@ -233,6 +230,7 @@ class GroupChatSection extends React.Component {
        }
     
         return (<div>
+                 
                   {chatDislay}
                 </div>);
     }
