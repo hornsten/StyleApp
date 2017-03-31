@@ -375,7 +375,6 @@ if (this.props.shoes){
                   <Tab><img className='icons' src='../assets/img/i-purse.png'></img></Tab>
                   <Tab><img className='icons' src='../assets/img/i-accessory.png'></img></Tab>
                   <Tab><img className='icons' src='../assets/img/i-flair.png'></img></Tab>
-                  <Tab><img className='icons' src='../assets/img/i-background.png'></img></Tab>
                   <Tab><FaLeanpub className="icons" /></Tab>
 
                 </TabList>
@@ -401,9 +400,6 @@ if (this.props.shoes){
                 <TabPanel>
                   {flairResults}
                 </TabPanel>
-                <TabPanel>
-                  No Backgrounds
-                  </TabPanel>
                 <TabPanel>
                  <Magazine />
                   </TabPanel>

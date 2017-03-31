@@ -105,6 +105,7 @@ class GroupChat extends React.Component {
                         <div className="col-xs-8 col-s-6 col-md-6">
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
+                        <ClosetItems/>
                         <div className="user-list">
                             <strong>Connected Stylistas</strong>
                             <NonActiveUserList users={this.props.users} />
