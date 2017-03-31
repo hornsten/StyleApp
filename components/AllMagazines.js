@@ -31,7 +31,11 @@ class AllMagazines extends React.Component {
           
                 var resultComponents = this.props.allmagazines.map(function(result) {
                 // dont hyperlink current room
-                var profileUserid = result.magazine_profile[0].facebook.id;
+                // console.log("result", result)
+                if (result.magazine_profile){
+                      var profileUserid = result.magazine_profile[0].facebook.id;
+                }
+              
                 
                 return <div className="results" key={result._id}>
                     <div className="col-sm-6 col-md-4">

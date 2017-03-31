@@ -206,10 +206,24 @@ app.get('/', function(req, res){
 
  app.get('/magazine/keywords/:search', function(req, res,next){
             var searchTerm = req.params.search;
-            models.Magazine.find({description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
-                    console.log("in router", results);
-                    res.json(results)      
-            })
+            // models.Magazine.find({description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
+            //         console.log("in router", results);
+            //         res.json(results)      
+            // })
+             models.Magazine.aggregate([
+                    {
+               $lookup:
+                            {
+                            from: "users",
+                            localField: "userid",
+                            foreignField: "facebook.id",
+                            as: "magazine_profile"
+                            }
+                },  { $match: { 'description' : {$regex: searchTerm, $options: 'i'} } }
+                ]).exec(function(err, results){
+                     console.log("in router", results);
+                 res.json(results)      
+             })
 
 
  })
