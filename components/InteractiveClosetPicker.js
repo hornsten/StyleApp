@@ -22,6 +22,7 @@ class InteractiveClosetPicker extends React.Component {
       chathelper.new_magazine_item_listener(store);
       this.resetClothesbins = this.resetClothesbins.bind(this);
       this.updateClothesBin = this.updateClothesBin.bind(this);
+      this.updateDescription = this.updateDescription.bind(this);
       // chathelper.updatecloset_listener(store);  // commented out for now as i dont think this does anything
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
@@ -99,7 +100,10 @@ isDropped(imageId) {
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
-
+    store.dispatch({ 
+        type: 'SAVING_MAGAZINE_IMG',
+        saving_magazine_img: false
+    })
 }
 componentDidUpdate(prevProps, prevState) {
   // only update chart if the data has changed
@@ -162,6 +166,7 @@ uploadFile(e) {
 }
  handleClick(e) {
   var userid = this.props.userid;
+  var component = this;
   e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
@@ -169,6 +174,9 @@ uploadFile(e) {
       allowTaint: true, 
       // proxy: 'http://localhost:8080',  // removed 29 Mar
       onrendered: function (canvas) {
+
+
+        
           var img = canvas.toDataURL();
 
           //  console.log(img,"img");
@@ -181,8 +189,18 @@ uploadFile(e) {
           // strip off the data: url prefix to get just the base64-encoded bytes
           var data = img.replace(/^data:image\/\w+;base64,/, "");
         
-          chathelper.img_upload(data, userid);
-      
+          console.log("descrptoin is empty?", component.props);
+          if (component.props.description){
+          
+            chathelper.img_upload(data, userid, component.props.description, store);
+            // reset description
+            store.dispatch({ 
+                  type: 'ADD_DESCRIPTION',
+                  description: ""
+            })
+            
+          }
+        
           // .replace(/^data:image\/png;base64,/, "");
           // var binaryData = new Buffer(img, 'base64').toString('binary');
           // console.log(img);
@@ -244,7 +262,17 @@ this.setState({
 
 }
 
-// // 
+  updateDescription(e){
+        store.dispatch({ 
+            type: 'ADD_DESCRIPTION',
+            description: e.target.value
+        })
+        store.dispatch({ 
+              type: 'SAVING_MAGAZINE_IMG',
+              saving_magazine_img: false
+        })
+
+    }
    
    render() {
        
@@ -348,6 +376,10 @@ if (this.props.flair){
       if (this.props.imagesavedsuccess){
          message = "File Successfully Saved";
       }
+      var img_message = "";
+      if (this.props.saving_magazine_img){
+        img_message = "File Successfully Saved";
+      }
       return (
          <section className="container-fluid closet-container">
         
@@ -364,9 +396,13 @@ if (this.props.flair){
              />,
            )}
         </div>
-         <button onClick={(e) => this.handleClick(e)} className="btn btn-primary btn-lg">Save</button>
-        <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
-      </div>
+            {/* Needed to add a description for search and display */}
+            <input type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
+            <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
+            <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>
+            {img_message}    {/* Says File Saved Successfully */}
+          </div>
+
         <div className="form-group">
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
@@ -465,7 +501,7 @@ if (this.props.flair){
 const mapStateToProps = (store,ownProps) => {
 
     return {
-        userid: store.userState.userid,
+        userid: store.chatState.userid,
         updateClosetPicker: store.closetState.updateClosetPicker,
         updateClosetItems: store.closetState.updateClosetItems,
         images: store.closetState.images,
@@ -485,6 +521,8 @@ const mapStateToProps = (store,ownProps) => {
         itemid: store.closetState.itemid,
         itemsrc: store.closetState.itemsrc,
         items: store.closetState.items,
+        description: store.closetState.description,
+        saving_magazine_img: store.closetState.saving_magazine_img,
 
     }
 

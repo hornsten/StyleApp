@@ -160,11 +160,14 @@ io.sockets.on('connection', function (socket) {
 
 //  socket.emit('img-file', tmpfilename, userid, image);
 	socket.on('img-file', function(name, userid, image, description) {
-		// console.log("capturingdescription", description)
+
+		 console.log("****capturingdescription", description)
+		 	 console.log("****name", name)
 			var fs = require('fs');
 			// var usernameNoSpaces = socket.username.replace(/\s/g, '_');
 			// create a unique name for the file
 			var uniqueFileName = name + '_' + Date.now() ;
+			 console.log("****uniqueFileName",uniqueFileName);
 			//path to store uploaded files (NOTE: presumed you have created the folders)
 			// stored in temp area before being pushed to cloud
 			var filePath = __dirname + '/public/assets/img/' + uniqueFileName + '.png';
@@ -180,7 +183,7 @@ io.sockets.on('connection', function (socket) {
 				// console.log('File saved successful!');
 				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
-					// console.log("result", result);
+					console.log("result", result);
 					// save to the database
 					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url, "description": description});
 					newMagazineItem.save().then(function(){
@@ -194,7 +197,7 @@ io.sockets.on('connection', function (socket) {
 						models.Magazine.find({"userid": userid}).exec(function(err, magazines){
 							if (err) return console.log(err); 
 							
-							// console.log("or in here???? ", items);
+							console.log("or in here???? ");
 								// res.json(magazines);
 								// emit to listener to update state
 								socket.emit('newmagazine', magazines);

@@ -92,8 +92,8 @@ class ClosetPicker extends React.Component {
       imagesavedsuccess: false
     })
     store.dispatch({ 
-                  type: 'SAVING_MAGAZINE_IMG',
-                  saving_magazine_img: false
+        type: 'SAVING_MAGAZINE_IMG',
+        saving_magazine_img: false
     })
   }
   componentWillUpdate() {
