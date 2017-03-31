@@ -12,13 +12,8 @@ var cloudinary = require('cloudinary');
 //   api_secret: process.env.CLOUDINARY_SECRET
 // });
 
-<<<<<<< HEAD
-// var cloudinary_keys = require('./auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
-=======
 var cloudinary_keys = require('./auth/cloudinary_keys');
 cloudinary.config(cloudinary_keys);
->>>>>>> master
 // for file uploads to chat socket
 app.use(siofu.router);
 
