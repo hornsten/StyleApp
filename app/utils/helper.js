@@ -27,23 +27,45 @@ var helpers = {
 
 //    },,
 //  getClothesBin: function(store, item){
-
-
-getStyleMotto: function(e,store){
-    return axios.get('/updatestylemotto').then(function(result){
-        if(result){
-             if(result.data.type === 'stylemotto'){
-              store.dispatch({
+getStyleMotto(store){
+return axios.get('/updatestylemotto').then(function(result){
+            if(result){
+             store.dispatch({
                 type: 'UPDATE_STYLEMOTTO',
                 stylemotto: result.data.results
               })
-        }
-        }
+            }
+        })
+},
+     
+getBlurb(store){
+return axios.get('/updateblurb').then(function(result){
+            if(result){
+                console.log(result.data.results)
+                store.dispatch({
+                    type: 'UPDATE_BLURB',
+                    blurb: result.data.results
+                })
+            }
+        })
+},
+
+setStyleMotto: function(e,store){
+    var mottoObj = {stylemotto: e}
+    return axios.post('/updatestylemotto', mottoObj).then(function(result){
+         if (result){
+            console.log(result.data.results)
+             store.dispatch({
+                type: 'UPDATE_STYLEMOTTO',
+                stylemotto: result.data.results
+              })
+         }
     })
 },
 
-getBlurb: function(e, store){
-    return axios.get('/updateblurb').then(function(result){
+setBlurb: function(e, store){
+    var blurbObj = {blurb: e}
+    return axios.post('/updateblurb', blurbObj).then(function(result){
         if(result){
              if(result.data.type === 'blurb'){
               store.dispatch({
@@ -58,21 +80,16 @@ getBlurb: function(e, store){
 
 // },
 
-getProfileImage: function(store, item){
-    return axios.get('/profile/image').then(function(result){
-        if(result){
-            console.log("result form profile: ", result.data.results);
-
-            
-            if(result.data.type === 'profile_image'){
-              store.dispatch({
-                type: 'UPDATE_PROFILEIMAGE',
-                profile_image: result.data.results
-              })
+    getProfileImage: function(store, item){
+        return axios.get('/profile/image').then(function(result){
+            if(result){
+                store.dispatch({
+                    type: 'UPDATE_PROFILEIMAGE',
+                    profile_image: result.data
+                })
             }
-        }
-    })
-},
+        })
+    },
 
 
 
@@ -156,14 +173,11 @@ getProfileImage: function(store, item){
                         };
                         
                         return axios.post('/profileimageupload',postObj).then(function(result){
-                            console.log('result From PROFILE image UPLOAD', result);
-                      
                                  dispatch({
                                     type:'UPDATE_PROFILEIMAGE',
                                     profile_image: result.data.imgsrc
                                 })
-                            
-                           
+                                console.log(result.data.imgsrc, "***what is this value of image post");
                         })
                     }//onload fn
                     reader.readAsBinaryString(file);

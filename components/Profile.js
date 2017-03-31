@@ -33,18 +33,14 @@ class Profile extends React.Component {
     this.handleOpenModal2 = this.handleOpenModal2.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleCloseModal2 = this.handleCloseModal2.bind(this);
+    helper.getProfileImage(store, "profile_image");
 }
 
    componentDidMount() {
     // get images for each section
-    
-    helper.getProfileImage(store, "profile_image");
+    console.log("is this being called....component did moutn")
+ 
    
-    // set to default initially
-    store.dispatch({
-      type: 'UPDATE_PROFILEIMAGE'
-     
-    })
    }
 
    
@@ -83,8 +79,6 @@ uploadFile(e) {
 
     
      render(){
-       console.log('this.state', this.state)
-        console.log('this.props', this.props)
       const self = this;
       let {
          profile_image,
@@ -102,7 +96,7 @@ uploadFile(e) {
         self.setState({editOn: true})
       }
       console.log(this)
-      let avatarSRC =  profile_image ? noImage : profile_image;
+      // let avatarSRC =  this.props.profile_image ? noImage : profile_image;
 
           return(
   <div>         
@@ -111,7 +105,7 @@ uploadFile(e) {
       <div className="jumbotron sharp">     
             <div className="row">
                       <div className="col-xs-2">
-                      <img className='thumbnail' src={avatarSRC} style={{width: 180, height: 200}}/>
+                      <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
                       <FaCamera className="icon"/>
                       <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload'
                               name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
@@ -173,11 +167,11 @@ uploadFile(e) {
                           
                                 {/*<button onClick={this.handleOpenModal}>Trigger Modal</button>*/}
                                 
-                                <img src= {"../assets/img/blkwhite.jpg"} onClick={this.handleOpenModal}
+                              {/* <img src= {"../assets/img/blkwhite.jpg"} onClick={this.handleOpenModal}
                                  style={{width: 150, height: 150}}/>
 
                                   <img src= {"../assets/img/pink.jpg"} onClick={this.handleOpenModal2}
-                                 style={{width: 150, height: 150}}/>
+                                 style={{width: 150, height: 150}}/>*/}
 
                                 <ReactModal 
                                 isOpen={this.state.showModal}

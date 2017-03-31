@@ -12,28 +12,54 @@ class InLineEdit extends React.Component {
     constructor(props){
       super(props);
       this.dataChanged = this.dataChanged.bind(this);
-      this.handlestylemotto = this.handlestylemotto.bind(this);
-      this.handleblurb = this.handleblurb.bind(this);
-      this.state = {
-          message1: 'enter stylemotto',
-        message2: 'enter blurb'
-      }
-    }
+      // this.handlestylemotto = this.handlestylemotto.bind(this);
+      // this.handleblurb = this.handleblurb.bind(this);
 
+      // if (!this.props.stylemotto){
+              store.dispatch({
+                type: 'UPDATE_STYLEMOTTO',
+                stylemotto: 'enter stylemotto'
+              })
+
+      // }
+      // if (!this.props.blurb){
+              store.dispatch({
+                type: 'UPDATE_BLURB',
+                blurb: 'enter blurb'
+              })
+        
+      // }
+      // this.state = {
+      //     blurb: 'enter style motto',
+      //   stylemotto: 'enter blurb'
+      // }
+    }
+    componentWillMount(){
+       helper.getStyleMotto(store); 
+       helper.getBlurb(store);
+    }
     dataChanged(data) {
         // data = { description: "New validated text comes here" }
         // Update your model from here
         console.log(data)
          this.setState({...data})
+         if (data.stylemotto){
+            helper.setStyleMotto(data.stylemotto,store); 
+         } else if (data.blurb){
+            helper.setBlurb(data.blurb, store);
+         }
     }
 
-handlestylemotto(e){
-   helper.getStyleMotto(e, store);   
-}
+// handlestylemotto(data){
+//   // console.log("e.target", e.target)
+//   this.setState({...data})
+//    helper.getStyleMotto(data,store);   
+// }
 
-handleblurb(e){
-  helper.getBlurb(e, store);
-}
+// handleblurb(data){
+//   this.setState({...data})
+//   helper.getBlurb(data, store);
+// }
 
 
 
@@ -48,9 +74,9 @@ handleblurb(e){
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
-              text={this.state.message1}
-              paramName="message"
-              change={this.handlestylemotto}
+              text={this.props.stylemotto}
+              paramName="stylemotto"
+              change={this.dataChanged}
               style={{
 
                 minWidth: 150,
@@ -66,13 +92,13 @@ handleblurb(e){
 
             
    
-<li> blurb :
+<li> blurb : 
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
-              text={this.state.message2}
-              paramName="message"
-              change={this.handleblurb}
+              text={this.props.blurb}
+              paramName="blurb"
+              change={this.dataChanged}
               style={{
 
                 minWidth: 150,

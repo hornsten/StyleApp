@@ -44,18 +44,15 @@ const userReducer = (state={}, action) => {
   
     switch(action.type){
         case 'ADD_USERNAME':
-            console.log("add usernamer", action.username);
             return Object.assign({},state, {username: action.username});
         case 'IS_LOGGED_IN':
-          console.log("logged in", action.loggedin);
             return Object.assign({},state, {loggedin: action.loggedin});
         case 'UPDATE_PROFILEIMAGE':
             console.log("updating profie image", action.profile_image);
             return Object.assign({}, state, {profile_image: action.profile_image});
         case 'UPDATE_STYLEMOTTO' :
-        console.log("updating style motto", action.stylemotto);
-        return Object.assign({}, state, {stylemotto: action.stylemotto});
-
+            console.log("updating style motto", action.stylemotto);
+            return Object.assign({}, state, {stylemotto: action.stylemotto});
         case 'UPDATE_BLURB':
             console.log("update blurb", action.blurb);
             return Object.assign({},state, {blurb: action.blurb});

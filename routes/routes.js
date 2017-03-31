@@ -118,21 +118,21 @@ app.get('/', function(req, res){
    app.get('/profile/image', function(req, res, next){
         if ( req.isAuthenticated()){
             var src = req.body.name;
-            // console.log("in here item" , type);
-             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){              
+            models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){ 
+                res.json(results.imgsrc)             
                 // return results.facebook.id;
                 // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
                 // need to query the database here for images for requesting user
-            //    console.log("in here???? tooo", results);
-            var userid =  results.facebook.id;
-            models.UserInfo.find({"userid": userid}).exec(function(err, items){
-                                    if (err) return console.log(err); 
+                // console.log("in here???? tooo", results);
+                // var userid =  results.facebook.id;
+                // models.User.find({"userid": userid}).exec(function(err, items){
+                //                     if (err) return console.log(err); 
                                        
-                                        results: items
-                                        console.log("return obj," ,results);
-                                    // console.log("or in here???? ", items);
-                                        res.json(results);
-                })          
+                //                         results: items
+                //                         console.log("return obj," ,results);
+                //                     // console.log("or in here???? ", items);
+                //                         res.json(results);
+                // })          
              })
         }
    });
@@ -175,51 +175,29 @@ app.get('/', function(req, res){
 app.post('/profileimageupload', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
-                console.log(results);
+                // console.log(results);
                 var filepath = '/../public/assets/img/' + req.body.name;
                 var fileName = __dirname + '/../public/assets/img/' + req.body.name;
-
-                console.log( "results", results);
                 var userid = results.facebook.id;
                 // remove .png extension
-                // var publicFileName = uniqueFileName.slice(0, -4);
-                 var publicFileName = req.body.name.slice(0,-4);
+                var publicFileName = req.body.name.slice(0,-4);
                 fs.open(fileName, 'a', 0755, function(err, fd) {
                 if (err) throw err;
 
                 fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
                     fs.close(fd, function() {
                         console.log('File saved successful!');
-                        // var filePath = '/../public/assets/img/profileimg' + uniqueFileName;
                         console.log(fileName, "filename");
                         cloudinary.uploader.upload( fileName, function(result) { 
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-                            models.UserInfo.findOneAndUpdate({"userid": userid}, {$set: {imgsrc: result.secure_url}}, {new: true}).exec(function(err, userInfo){
-//                             var newimage = new models.UserInfo({  userid:userid, imgsrc: result.secure_url
-// });                        
-                            // newimage.save().then(function(){
-                            //     if (err) return console.log(err); 
-                            //     console.log("saving item to db");
-                            //     return;
-                            // 		// need to updaet user closet too *****
-                            // }).then(function(data){
-                                //reqquer
-                                console.log('newImage Saved', userInfo)
-                                
+                            models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {imgsrc: result.secure_url}}).exec(function(err, userInfo){             
                                     if (err) return console.log(err); 
-                                    //     returnObj= {userid: userid,
-                                    //     results: items}
-                                    // console.log("or in here???? ", items);
                                         res.json(userInfo);
-                                  // })
                             })
-                            // // remove file from from tmp area
-
-
                         }, {
-                            public_id: "publicFileName", 
+                            public_id: publicFileName, 
                             crop: 'limit',
                             width: 2000,
                             height: 2000,
@@ -228,7 +206,6 @@ app.post('/profileimageupload', function(req, res,next){
                                 radius: 20 },
                             { width: 100, height: 150, crop: 'fit', format: 'png' }
                             ],                                     
-                            // tags: ['special', 'for_homepage']
                         } );
                     })
                 })
@@ -238,37 +215,46 @@ app.post('/profileimageupload', function(req, res,next){
         });
 
         } 
-    //    res.end();
     })
+
+
+
+app.get('/updatestylemotto', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+            console.log("updating stylemotto...")
+                res.json(userInfo.stylemotto);
+        })
+    }
+})
+
+app.get('/updateblurb', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+             console.log("updating blurb...")
+                res.json(userInfo.blurb);
+        })
+    }
+})
 
 app.post('/updatestylemotto', function(req, res){
     if(req.isAuthenticated()){
-        models.User.findOne({_id: req.session.passport.user}, function(err, results){
-              var userid = results.facebook.id;
-               var newstylemotto = new models.UserInfo({ userid: userid,
-                   stylemotto: req.body.stylemotto})
-                   newstylemotto.save().then(function(){
-                       if (err) return console.log(err); 
-                                console.log("saving item to db");
-                                return;
-                   });
-
+        models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {stylemotto: req.body.stylemotto}}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+            console.log("updating stylemotto...")
+                res.json(userInfo);
         })
     }
 })
 
 app.post('/updateblurb', function(req, res){
     if(req.isAuthenticated()){
-        models.User.findOne({_id: req.session.passport.user}, function(err, results){
-              var userid = results.facebook.id;
-               var newblurb = new models.UserInfo({ userid: userid,
-                   blurb: req.body.blurb})
-                   newblurb.save().then(function(){
-                       if (err) return console.log(err); 
-                                console.log("saving item to db");
-                                return;
-                   });
-
+        models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {blurb: req.body.blurb}}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+             console.log("updating blurb...")
+                res.json(userInfo);
         })
     }
 })
