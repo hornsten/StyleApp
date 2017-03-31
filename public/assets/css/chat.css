@@ -53,6 +53,9 @@
 .hover {
     background-color: yellow;
 }
+.profile-modal {
+ z-index:1000;
+}
 .success {
     background-color: green;
 }

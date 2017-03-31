@@ -58,6 +58,7 @@ const userReducer = (state={}, action) => {
         case 'UPDATE_BLURB':
             console.log("update blurb", action.blurb);
             return Object.assign({},state, {blurb: action.blurb});
+      
         }
     return state;
 }
@@ -70,6 +71,12 @@ switch(action.type) {
         return Object.assign({},state, {search: action.search});
     case 'ADD_SEARCH_USERID':
         return Object.assign({},state, {searchUserid: action.searchUserid});
+     case 'PROFILE_MODAL':     
+            return Object.assign({},state, {profileModal: action.profileModal});
+    case 'UPDATE_PROFILE_NAME':
+        return Object.assign({},state, {profileusername: action.profileusername});
+    case 'NEW_PROFILE_MAGAZINES':
+        return Object.assign({},state, {profilemagazines: action.profilemagazines});
     }
     return state;
 }

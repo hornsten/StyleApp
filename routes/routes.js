@@ -47,19 +47,6 @@ var path = require('path');
                     //  console.log("in router", results[0].magazine_profile);
                  res.json(results)      
              })
-            //      console.log("in router", results);
-            // //      res.json(results)      
-            // //  })
-            //           //  models.Magazine.aggregate([{
-            //            $lookup:
-            //                 {
-            //                 from: models.User,
-            //                 localField: "userid",
-            //                 foreignField: "facebook.id",
-            //                 as: "magazine_profile"
-            //                 }
-            // //  }])
-
    })
 
 
@@ -154,33 +141,84 @@ app.get('/', function(req, res){
         }
    });
 
-   app.get('/profile/image', function(req, res, next){
-        if ( req.isAuthenticated()){
+   // userprofileid is optional
+   app.get('/profile/image/:userprofileid?', function(req, res, next){
+       console.log("eq.params.userprofileid", req.params.userprofileid)
+        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
             var src = req.body.name;
             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){ 
                 res.json(results.imgsrc)             
-                // return results.facebook.id;
-                // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
-                // need to query the database here for images for requesting user
-                // console.log("in here???? tooo", results);
-                // var userid =  results.facebook.id;
-                // models.User.find({"userid": userid}).exec(function(err, items){
-                //                     if (err) return console.log(err); 
-                                       
-                //                         results: items
-                //                         console.log("return obj," ,results);
-                //                     // console.log("or in here???? ", items);
-                //                         res.json(results);
-                // })          
+                       
+             })
+        } else if (req.params.userprofileid){
+            console.log("user profileid" ,req.params.userprofileid);
+            models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                console.log("results", results);
+                res.json(results.imgsrc)             
+                       
              })
         }
    });
 
+app.get('/updatestylemotto/:userprofileid?', function(req, res){
+    if((req.isAuthenticated()) && (!req.params.userprofileid)){
+        models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+            // console.log("updating stylemotto...")
+                res.json(userInfo.stylemotto);
+        })
+    } else if (req.params.userprofileid){
+            console.log("getting stylemotto...")
+            models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                  console.log(results.stylemotto)
+                res.json(results.stylemotto)             
+                       
+             })
+        }
+})
 
+app.get('/profile/:userprofileid', function(req, res){
+    if (req.params.userprofileid !== ''){
+            console.log("getting usernme...")
+            models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                  console.log(results.facebook.firstName + " " + results.facebook.lastName)
+                  var name = results.facebook.firstName + " " + results.facebook.lastName
+                res.json(name);            
+                       
+             })
+        }
+})
+
+
+    app.get('/updateblurb/:userprofileid?', function(req, res){
+        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+                if (err) return console.log(err); 
+                    res.json(userInfo.blurb);
+            })
+        } else if (req.params.userprofileid){
+                // console.log("user stulemotto" ,req.params.userprofileid);
+                console.log("getting blurb...")
+                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                    console.log(results.blurb)
+                    res.json(results.blurb)             
+                        
+                })
+            }
+    })
+
+    app.get('/magazine/profile/:userid', function(req, res,next){
+
+                var userid = req.params.userid;
+                console.log("in here mag");
+                models.Magazine.find({"userid": userid}).sort({'date': -1}).limit(12).exec(function(err, results){
+                    res.json(results)      
+                })
+
+    })
    app.get('/magazine/:userid', function(req, res,next){
        if ( req.isAuthenticated()){
             var userid = req.params.userid;
-            console.log("in here mag");
              models.Magazine.find({"userid": userid}).exec(function(err, results){
                  console.log("in router", results);
                  res.json(results)      
@@ -229,28 +267,6 @@ app.get('/', function(req, res){
  })
 
 
-
-   
-								
-					
-//     app.get('/image/:filename', function(req, res){
-//        if ( req.isAuthenticated()){
-//             var filename = req.params.filename;
-            
-//              models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){
-//                 var userid = results.facebook.id;
-//                 console.log(userid," and ", filename);
-//                 models.Closet.findOne({"userid": userid, "filename": filename }).exec(function(err, image){
-//                     console.log("in router", image.src);
-//                     // res.type('png');  
-//                     // res.json(image.src) 
-
-//                     var imageDownload = cloudinary.image(filename);
-//                         console.log(imageDownload);
-//                     // res.sendFile(imageDownload);
-//                 })
-//              })
-//         }
 
 
 
@@ -302,25 +318,7 @@ app.post('/profileimageupload', function(req, res,next){
 
 
 
-app.get('/updatestylemotto', function(req, res){
-    if(req.isAuthenticated()){
-        models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
-            if (err) return console.log(err); 
-            console.log("updating stylemotto...")
-                res.json(userInfo.stylemotto);
-        })
-    }
-})
 
-app.get('/updateblurb', function(req, res){
-    if(req.isAuthenticated()){
-        models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
-            if (err) return console.log(err); 
-             console.log("updating blurb...")
-                res.json(userInfo.blurb);
-        })
-    }
-})
 
 app.post('/updatestylemotto', function(req, res){
     if(req.isAuthenticated()){

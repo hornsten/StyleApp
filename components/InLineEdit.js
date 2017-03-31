@@ -35,8 +35,8 @@ class InLineEdit extends React.Component {
       // }
     }
     componentWillMount(){
-       helper.getStyleMotto(store); 
-       helper.getBlurb(store);
+       helper.getStyleMotto(store,""); 
+       helper.getBlurb(store,"");
     }
     dataChanged(data) {
         // data = { description: "New validated text comes here" }
