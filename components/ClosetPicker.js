@@ -25,7 +25,9 @@ class ClosetPicker extends React.Component {
     // chathelper.updatecloset_listener(store);
     this.resetClothesbins = this.resetClothesbins.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
     chathelper.new_magazine_item_listener(store);
+
     this.state = {
       clothesbins: [
         { accepts: [ItemTypes.TOP], lastDroppedItem: null },
@@ -85,17 +87,23 @@ class ClosetPicker extends React.Component {
       type: 'ITEM_CHANGE',
       item: "SELECT"
     })
-
     store.dispatch({
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
+    store.dispatch({ 
+                  type: 'SAVING_MAGAZINE_IMG',
+                  saving_magazine_img: false
+    })
   }
   componentWillUpdate() {
-    console.log("componentWillUpdate", this.props)
+    console.log("componentWillUpdate", this.props.description)
+  }
+  componentDidUpdate() {
+    console.log("compoenet did update", this.props.description)
   }
   componentWillMount() {
-    console.log("compoenet will mount", this.props)
+    console.log("compoenet will mount", this.props.description)
   }
   uploadFile(e) {
     var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
@@ -132,6 +140,7 @@ class ClosetPicker extends React.Component {
   }
   handleClick(e) {
     var userid = this.props.userid;
+    var component = this;
     e.preventDefault();
     html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
@@ -154,33 +163,17 @@ class ClosetPicker extends React.Component {
         // console.log("store", store.getState());
 
         // var userid = component.props.userid;
-
-        chathelper.img_upload(data, userid);
-        // var userid = this.props.userid;
-
-        //  }
-
-
-        // .replace(/^data:image\/png;base64,/, "");
-        // var binaryData = new Buffer(img, 'base64').toString('binary');
-        // console.log(img);
-        // console.log("img", img);
-
-
-        // canvas.toBlob(function(blob) {
-        //   // var newImg = document.createElement('img'),
-        //       // url = URL.createObjectURL(blob);
-        //       console.log("blob", blob);
-        //       chathelper.img_upload(blob);
-        //   // newImg.onload = function() {
-        //   //   // no longer need to read the blob so it's revoked
-        //     // URL.revokeObjectURL(url);
-        //   // };
-        // })
-
-
-
-
+         console.log("descrptoin is empty?", component.props);
+        if (component.props.description){
+         
+          chathelper.img_upload(data, userid, component.props.description, store);
+          // reset description
+          store.dispatch({ 
+                type: 'ADD_DESCRIPTION',
+                description: ""
+          })
+          
+        }
         // window.open(img);
       }
 
@@ -207,7 +200,28 @@ class ClosetPicker extends React.Component {
     ReactDOM.findDOMNode(this.inputEntry).value = "";
 
   }
+  updateDescription(e){
+        store.dispatch({ 
+            type: 'ADD_DESCRIPTION',
+            description: e.target.value
+        })
+        store.dispatch({ 
+              type: 'SAVING_MAGAZINE_IMG',
+              saving_magazine_img: false
+        })
 
+    }
+  // addDescription(e, message) {
+  //       // tell server to execute 'sendchat' and send along one paramete
+  //       if (e.keyCode == 13) {
+  //          console.log("description being sent", e.target.value)
+  //           // chathelper.sendchat(message);
+  //           store.dispatch({ 
+  //               type: 'ADD_DESCRIPTION',
+  //               description: ""
+  //           })
+  //       }
+  //   }
 
   render() {
 
@@ -313,8 +327,12 @@ if (this.props.shoes){
       error = <div><strong>Please enter a valid clothing TYPE for your item!</strong><br /></div>
     }
     var message = "";
+    var img_message = "";
     if (this.props.imagesavedsuccess) {
       message = "File Successfully Saved";
+    }
+    if (this.props.saving_magazine_img){
+      img_message = "File Successfully Saved";
     }
     return (
       <section className="closet-container">
@@ -332,9 +350,11 @@ if (this.props.shoes){
                 />,
               )}
             </div>
-
+          {/* Needed to add a description for search and display */}
+            <input type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
             <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
             <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>
+            {img_message}    {/* Says File Saved Successfully */}
           </div>
 
           <div className="col-md-6 closet-block rel">
@@ -449,6 +469,8 @@ const mapStateToProps = (store, ownProps) => {
     accessory: store.closetState.accessory,
     dress: store.closetState.dress,
     flair: store.closetState.flair,
+    description: store.closetState.description,
+    saving_magazine_img: store.closetState.saving_magazine_img,
   }
 
 };

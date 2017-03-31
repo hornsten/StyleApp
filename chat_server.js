@@ -159,7 +159,8 @@ io.sockets.on('connection', function (socket) {
 	// })
 
 //  socket.emit('img-file', tmpfilename, userid, image);
-	socket.on('img-file', function(name, userid, image) {
+	socket.on('img-file', function(name, userid, image, description) {
+		// console.log("capturingdescription", description)
 			var fs = require('fs');
 			// var usernameNoSpaces = socket.username.replace(/\s/g, '_');
 			// create a unique name for the file
@@ -181,7 +182,7 @@ io.sockets.on('connection', function (socket) {
 					// var filelocation = result.url;
 					// console.log("result", result);
 					// save to the database
-					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url});
+					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url, "description": description});
 					newMagazineItem.save().then(function(){
 						if (err) return console.log(err); 
 							// console.log("saving item to db");

@@ -60,6 +60,10 @@ class NavBar extends Component {
                             Create</Link>
                     </li>
                     <li>
+                        <Link to='/profile'><FaLightbulbO className="icon"/>
+                            Profile</Link>
+                    </li>
+                    <li>
                         <Link
                             to='/private'
                             onClick={this

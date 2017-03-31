@@ -237,13 +237,18 @@ var chathelper = {
 
         },
     
-        img_upload: (image, userid) => {
+        img_upload: (image, userid, description, store) => {
 
                     
             //             //send the content via socket
             //             // socket.emit('send-file', "TEST", buffer);
+                console.log(description, "in chat helper");
                 var tmpfilename = userid + "_New_Look";
-                socket.emit('img-file', tmpfilename, userid, image);
+                socket.emit('img-file', tmpfilename, userid, image, description);
+                store.dispatch({ 
+                        type: 'SAVING_MAGAZINE_IMG',
+                        saving_magazine_img: true
+                })
             //         };
             //         // send the content via socket
              

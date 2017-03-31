@@ -27,6 +27,7 @@ class AllMagazines extends React.Component {
                     <div className="col-sm-6 col-md-4">
                         <div className="thumbnail">
                         <img src={result.src} />
+                        <div><strong>Desription</strong> {result.description}</div> 
                         <div className="caption">
         <h3>Thumbnail label</h3>
         <p>...</p>

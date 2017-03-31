@@ -109,6 +109,10 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {imagesavedsuccess: action.imagesavedsuccess});
         case 'NEW_MAGAZINES':
             return Object.assign({},state, {magazines: action.magazines});
+        case 'ADD_DESCRIPTION':
+            return Object.assign({},state, {description: action.description});
+        case 'SAVING_MAGAZINE_IMG':
+            return Object.assign({},state, {saving_magazine_img: action.saving_magazine_img});
         }
         
     return state;

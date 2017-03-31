@@ -11,6 +11,7 @@ var magazineSchema = new Schema({
     imageid: {type : String, required : true, unique : false}, // filename for now
     src: {type : String, required : true, unique : false},  // link to cloudinary location
     filename: {type : String, required : true, unique : false},
+    description: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}  
 });
 
