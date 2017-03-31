@@ -30,9 +30,6 @@ var path = require('path');
              models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
                  console.log("in router", results);
                  res.json(results)      
-             }).sort({'created_at': -1}).exec(function(err, results){
-                 console.log("in router", results);
-                 res.json(results)      
              })
                       //  models.Magazine.aggregate([{
             //            $lookup:
