@@ -7,8 +7,7 @@ import store from './Redux/redux.js';
 import InLineEdit from './InLineEdit';
 import helper from "../app/utils/helper.js";
 const noImage = 'http://www.vistagardentampa.org/assets/empty_avatar.jpg'
-
-
+import {Modal, Dialog, Button} from 'react-bootstrap';
 import ReactModal from 'react-modal';
 
 const initialEditorState = {

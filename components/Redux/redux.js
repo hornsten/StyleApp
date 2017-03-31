@@ -27,7 +27,9 @@ const chatReducer = (state={}, action) => {
         case 'PRIVATE_MESSAGE':
             return Object.assign({},state, {privatemessage: action.privatemessage});
         case 'PRIVATE_MODAL':
-            return Object.assign({},state, {showModal: action.showModal});
+            return Object.assign({},state, {showChatModal: action.showChatModal});
+        case 'PRIVATE_CHAT_WAITING':
+            return Object.assign({},state, {privateChatWaiting: action.privateChatWaiting})
         case 'CONNECTED':
             return Object.assign({},state, {connected: action.connected});
         case 'CHATTING_WITH':
@@ -60,6 +62,13 @@ const userReducer = (state={}, action) => {
     return state;
 }
 
+const mainReducer = (state={}, action) => {
+switch(action.type) {
+    case 'ALL_MAGAZINES':
+        return Object.assign({},state, {allmagazines: action.allmagazines});
+    }
+    return state;
+}
 
 const closetReducer = (state={}, action) => { 
     switch(action.type){
@@ -125,6 +134,7 @@ const reducers = combineReducers({
     userState : userReducer,
     closetState: closetReducer,
     interactiveClosetState: interactiveClosetReducer,
+    mainState: mainReducer,
 })
 
 var store = createStore(reducers);

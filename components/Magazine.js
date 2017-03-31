@@ -12,10 +12,11 @@ class Magazine extends React.Component {
     }
     componentDidMount(){
            helper.getMagazines(store, this.props.userid);
+        
     }
     render() {
         var component = this;
-        console.log(this.props.magazines);
+        console.log('my mags: ',this.props.magazines);   
         if (this.props.magazines){
           
                 var resultComponents = this.props.magazines.map(function(result) {
@@ -28,7 +29,7 @@ class Magazine extends React.Component {
                         <div className="caption">
         <h3>Thumbnail label</h3>
         <p>...</p>
-        <p><a href="#" className="btn btn-pink round" role="button">Button</a> <a href="#" className="btn btn-pink outline round" role="button">Button</a></p>
+        <p><a href="#" className="btn btn-link" role="button">Button</a> <a href="#" className="btn btn-link" role="button">Button</a></p>
       </div>
                         </div>
                         </div>
@@ -52,6 +53,7 @@ const mapStateToProps = (store,ownProps) => {
     return {
         magazines: store.closetState.magazines,
         userid: store.chatState.userid,
+       allmagazines:store.mainState.allmagazines
    
     }
 

@@ -3,20 +3,14 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys.js');
-// cloudinary.config(cloudinary_keys);
-// for heroku
+var cloudinary_keys = require('../auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
+// // for heroku
 // cloudinary.config({ 
 //   cloud_name: process.env.CLOUDINARY_NAME, 
 //   api_key: process.env.CLOUDINARY_API, 
 //   api_secret: process.env.CLOUDINARY_SECRET
 // });
-
-cloudinary.config({ 
-  cloud_name: 'hvzbthwxc',
-  api_key: '488184131115429',
-  api_secret: 'P9jDCHR53fNRB6dyvXMzCsazl9U' 
-});
 
 
 
@@ -24,6 +18,31 @@ cloudinary.config({
 module.exports = function(app, passport, models){
     //route for facebook logout
 var path = require('path');
+
+
+// moved get all magazines route here before authentication
+ app.get('/magazine/all', function(req, res,next){
+       console.log("is this router being ")
+            console.log("in here ALLL mags");
+            // get today's new magazines in date order
+            var cutoff = new Date();
+            cutoff.setDate(cutoff.getDate());
+             models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             })
+                      //  models.Magazine.aggregate([{
+            //            $lookup:
+            //                 {
+            //                 from: models.UserInfo,
+            //                 localField: "item",
+            //                 foreignField: "sku",
+            //                 as: "inventory_docs"
+            //                 }
+            //  }])
+
+   })
+
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + "../../public/index.html");
@@ -150,6 +169,11 @@ app.get('/', function(req, res){
 
    })
 
+
+
+   
+								
+					
 //     app.get('/image/:filename', function(req, res){
 //        if ( req.isAuthenticated()){
 //             var filename = req.params.filename;

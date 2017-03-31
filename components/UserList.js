@@ -16,14 +16,16 @@ class UserList extends React.Component {
             var connecteduser = "";
             var component=this;
             var currentroom = this.props.currentroom;
-            console.log( this.props.users, "in users");
+            console.log( this.props.privateChatWaiting, "privateChatWaiting in users");
             var chatWaiting = this.props.privateChatWaiting;
+
             var resultComponents = this.props.users.map(function(result) {
             // check to see if this is the current user or a user with which we are already having a prvate chat - if so don;t add hyperlink
 
            
-            console.log("chatWaiting", chatWaiting);
-             console.log("chatWithUser", chatWithUser);
+            console.log("******chatWaiting", chatWaiting);
+            // console.log("****chatWithUser", chatWithUser);
+            console.log("looking for chatWaiting in USErlist", store.getState())
             
             if ((result.username === currentusername) || (result.username === chatWithUser)){
             console.log("in hyperlink area ",  result.username);
