@@ -18,16 +18,16 @@ cloudinary.config({
 app.use(siofu.router);
 
 // rooms available in chat - populate from database 
-// var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
-// var images = ["./assets/img/Room1.png", "./assets/img/Room2.png", "./assets/img/Room3.png"];  /// only needed when populating data 
-// var description = ["This is the BLUE blah blah room.", "This is the RED blah blah room.", "This is the GREEN blah blah room."];  /// only needed when populating data 
-// models.Room.find({}, function(err, results){  
-// 	if (err) return console.log(err);
-// 	for (var i = 0; i< results.length; i++){
-// 		rooms.push(results[i].room);
-// // 		connectedusers[rooms[i]] = [];
-// 	}	
-// })
+var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
+var images = ["./assets/img/Room1.png", "./assets/img/Room2.png", "./assets/img/Room3.png"];  /// only needed when populating data 
+var description = ["This is the BLUE blah blah room.", "This is the RED blah blah room.", "This is the GREEN blah blah room."];  /// only needed when populating data 
+models.Room.find({}, function(err, results){  
+	if (err) return console.log(err);
+	for (var i = 0; i< results.length; i++){
+		rooms.push(results[i].room);
+// 		connectedusers[rooms[i]] = [];
+	}	
+})
 // // save rooms to database -- only for testing purposes
 for (var i = 0; i < rooms.length; i++){
 	// console.log("rooms",rooms[i] , "date",  Date.now())
