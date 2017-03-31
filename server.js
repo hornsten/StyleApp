@@ -54,8 +54,9 @@ var PrivateChat = require("./models/privatechat.js");
 var Profile = require("./models/profile.js");
 var Magazine = require("./models/magazine.js");
 var Closet = require("./models/closet.js");
+// var UserInfo = require("./models/userinfo.js");
 var InteractiveClothesBin = require("./models/interactiveclothesbin.js");
-var models = { "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Magazine": Magazine, "Closet": Closet, "InteractiveClothesBin": InteractiveClothesBin};
+var models = {  "Chat" : Chat, "ConnectedUser" : ConnectedUser, "Room": Room, "PrivateChat": PrivateChat,"User": User, "Profile": Profile, "Magazine": Magazine, "Closet": Closet, "InteractiveClothesBin": InteractiveClothesBin};
 
 app.use( express.static(path.join(__dirname, 'public')));
 

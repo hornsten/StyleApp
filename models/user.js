@@ -15,6 +15,10 @@ var UserSchema = new Schema({
     // photo: String,
     link:String
   },
+    stylemotto: {type : String},
+    blurb: {type : String},
+    imgsrc:{type:String}   
+});
   // userprofile: {
       // isComplete: Boolean
   //   // whatever fields we need for the bio page / profile page
@@ -41,7 +45,7 @@ var UserSchema = new Schema({
 
   // }
   // created_at: {type : Date, required : false, default: Date.now}
-});
+// });
 
 // Create the Model
 var User = mongoose.model("User", UserSchema);
