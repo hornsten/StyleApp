@@ -56,11 +56,11 @@ class NavBar extends Component {
             loginStatus = <div>
                 <ul className="nav navbar-nav">
                     <li>
-                        <Link to='/closet'><FaLightbulbO className="icon"/>
+                        <Link to='/closet'><FaLightbulbO className="nav-icon"/>
                             Create</Link>
                     </li>
                     <li>
-                        <Link to='/profile'><FaLightbulbO className="icon"/>
+                        <Link to='/profile'><FaLightbulbO className="nav-icon"/>
                             Profile</Link>
                     </li>
                     <li>
@@ -68,7 +68,7 @@ class NavBar extends Component {
                             to='/private'
                             onClick={this
                             .handlePrvtClick
-                            .bind(this)}><FaUser className="icon"/>
+                            .bind(this)}><FaUser className="nav-icon"/>
                             Style Consultation</Link>
                     </li>
                     <li>
@@ -76,7 +76,7 @@ class NavBar extends Component {
                             to='/group'
                             onClick={this
                             .handleGroupClick
-                            .bind(this)}><FaUserPlus className="icon"/>
+                            .bind(this)}><FaUserPlus className="nav-icon"/>
                             Collaborate
                         </Link>
                     </li>
@@ -97,14 +97,14 @@ class NavBar extends Component {
                         <ul className="dropdown-menu">
 
                             <li>
-                                <Link to='/profile'><FaUser className="icon"/>My Profile</Link>
+                                <Link to='/profile'><FaUser className="nav-icon"/>My Profile</Link>
                             </li>
                             <li>
                                 <a href="#">Something else here</a>
                             </li>
                             <li role="separator" className="divider"></li>
                             <li>
-                                <Link to='/' onClick={() => this.handleLogout()}><FaLock className="icon"/>Log Out</Link>
+                                <Link to='/' onClick={() => this.handleLogout()}><FaLock className="nav-icon"/>Log Out</Link>
                             </li>
                         </ul>
                     </li>
