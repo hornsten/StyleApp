@@ -2,86 +2,67 @@ var axios = require("axios");
 
 // Helper Functions
 var helpers = {
-    // e.g. functions below
-    // runQuery: function(queryURL) {
 
-    //     return axios.get(queryURL).then(function(response) {
 
-    //     return response.data;
-    //     })
-    // },
-
-    // querySaved: function(count) {
-
-    //     return axios.get('/api/saved').then(function(response) {
-    //         return response.data;
-    //     })
-
-    // }
-//    getUserList: function(room){
-//         // sends get request to apiController to query database for all connected users for a room
-//         return axios.get('/chat/user/'+room).then(function(response) {
-//             console.log(response);
-//             return response;
-//         })
-
-//    },,
-//  getClothesBin: function(store, item){
-getStyleMotto(store){
-return axios.get('/updatestylemotto').then(function(result){
-            if(result){
+getStyleMotto(store, userprofileid){
+return axios.get('/updatestylemotto/'+userprofileid).then(function(result){
+    console.log(result.data, "style in heloer")
+            if(result.data){
              store.dispatch({
                 type: 'UPDATE_STYLEMOTTO',
-                stylemotto: result.data.results
+                stylemotto: result.data
               })
             }
         })
 },
      
-getBlurb(store){
-return axios.get('/updateblurb').then(function(result){
-            if(result){
-                console.log(result.data.results)
+getBlurb(store, userprofileid){
+return axios.get('/updateblurb/'+userprofileid).then(function(result){
+     console.log(result.data, "blurb in heloer")
+            if(result.data){
+                console.log("blurb", result.data)
                 store.dispatch({
                     type: 'UPDATE_BLURB',
-                    blurb: result.data.results
+                    blurb: result.data
                 })
             }
         })
 },
 
+
+getProfileUsername(store, userprofileid){
+    return axios.get('/profile/'+userprofileid).then(function(result){
+     console.log(result.data, "blurb in heloer")
+            if(result.data){
+          
+                store.dispatch({
+                    type: 'UPDATE_PROFILE_NAME',
+                    profileusername: result.data
+                })
+            }
+        })
+
+},
+
+
 setStyleMotto: function(e,store){
     var mottoObj = {stylemotto: e}
     return axios.post('/updatestylemotto', mottoObj).then(function(result){
-         if (result){
-            console.log(result.data.results)
-             store.dispatch({
-                type: 'UPDATE_STYLEMOTTO',
-                stylemotto: result.data.results
-              })
-         }
+
     })
 },
 
 setBlurb: function(e, store){
     var blurbObj = {blurb: e}
     return axios.post('/updateblurb', blurbObj).then(function(result){
-        if(result){
-             if(result.data.type === 'blurb'){
-              store.dispatch({
-                type: 'UPDATE_BLURB',
-                blurb: result.data.results
-              })
-        }
-        }
+
     })
 },
 
 
-// },
 
-    getProfileImage: function(store, item){
-        return axios.get('/profile/image').then(function(result){
+    getProfileImage: function(store, userprofileid){
+        return axios.get('/profile/image/'+userprofileid).then(function(result){
             if(result){
                 store.dispatch({
                     type: 'UPDATE_PROFILEIMAGE',
@@ -328,6 +309,19 @@ setBlurb: function(e, store){
         })
 
    },
+
+    getProfileMagazines: function(store, userid){
+            console.log("being called");
+        return axios.get('/magazine/profile/'+userid, { credentials : 'same-origin' }).then(function(response) {
+
+
+                console.log("*******profile magazine", response.data);
+
+                store.dispatch({type: "NEW_PROFILE_MAGAZINES", profilemagazines: response.data})
+                return ;
+            })
+
+    },
 
    getAllMagazines: function(store){
         console.log("is this helper being callled next?");
