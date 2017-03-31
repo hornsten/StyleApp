@@ -5,7 +5,7 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import helper from "../app/utils/helper.js";
 import {Link} from 'react-router';
-
+import ImageModal from "./ImageModal"
 
 class AllMagazines extends React.Component {
     constructor(props) {
@@ -14,14 +14,24 @@ class AllMagazines extends React.Component {
     }
     componentDidMount(){
         //    helper.getMagazines(store, this.props.userid);
-        console.log("is this being called at all and when?");
-           helper.getAllMagazines(store);
+        helper.getAllMagazines(store);
+        // set modal to false initially
+        store.dispatch({ 
+            type: 'PROFILE_MODAL',
+            profileModal: false
+        })
     }
    
     handleClick(e, userid){
         console.log("profile", userid);
         // use the userid to display modal or something
 
+        // launch the modal
+        store.dispatch({ 
+            type: 'PROFILE_MODAL',
+            profileModal: true
+        })
+ console.log("handle click to launch modal", store.getState())
 
     }
     render() {
@@ -40,22 +50,18 @@ class AllMagazines extends React.Component {
                 return <div className="results" key={result._id}>
                     <div className="col-sm-6 col-md-4">
                         <div className="thumbnail">
-                        <img src={result.src} />
-                        <div><strong>Style Item Desription</strong> {result.description}</div> 
-                        <div><strong>Name</strong> {result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</div> 
-                        <div><strong>Stylist Style Motto</strong> {result.magazine_profile[0].stylemotto}</div> 
-                        <div><strong>About Stylist</strong> {result.magazine_profile[0].blurb}</div>
-                        
-                        {/*  put button that opens profile of user  ref by id  {result.magazine_profile[0].facebook.id}*/} 
-                       <button className="btn btn-link" onClick={(e) => component.handleClick(e, profileUserid)} >View Profile</button> 
-                       
-                        <div className="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><button href="#" className="btn btn-link" role="button" >View Profile</button> <a href="#" className="btn btn-link" role="button">Button</a></p>
-      </div>
+                            <img src={result.src} />
+                            <div><strong>Style Item Desription</strong> {result.description}</div> 
+                            <div><strong>Name</strong> {result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</div> 
+                            <div><strong>Stylist Style Motto</strong> {result.magazine_profile[0].stylemotto}</div> 
+                            <div><strong>About Stylist</strong> {result.magazine_profile[0].blurb}</div>
+                            
+                            {/*  put button that opens profile of user  ref by id  {result.magazine_profile[0].facebook.id}*/} 
+                        <button className="btn btn-link" onClick={(e) => component.handleClick(e, profileUserid)} >View Profile</button> 
+                            {/*  pass in userid of current into modal component, launch when button clicked}*/} 
+                            <ImageModal profileuserid={profileUserid} />
                         </div>
-                        </div>
+                    </div>
                 </div>
             })
         }
@@ -70,13 +76,12 @@ class AllMagazines extends React.Component {
 };
 
 
-
 const mapStateToProps = (store,ownProps) => {
 
     return {
         userid: store.chatState.userid,
-        allmagazines: store.mainState.allmagazines
-   
+        allmagazines: store.mainState.allmagazines,
+        profileModal: store.mainState.profileModal,
     }
 
 }

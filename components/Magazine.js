@@ -27,12 +27,10 @@ class Magazine extends React.Component {
                         <div className="thumbnail">
                         <img src={result.src} />
                         <div className="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" className="btn btn-link" role="button">Button</a> <a href="#" className="btn btn-link" role="button">Button</a></p>
-      </div>
+                            <p><strong>Style Item Desription</strong> {result.description}</p>
                         </div>
-                        </div>
+                    </div>
+                  </div>
                 </div>
             })
         }
