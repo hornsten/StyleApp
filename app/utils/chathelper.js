@@ -152,10 +152,7 @@ var chathelper = {
                     type: 'UPDATE_ITEM_ID',
                     itemid: data.item.id
                 })
-                store.dispatch({ 
-                    type: 'UPDATE_ITEM',
-                    items: data.item
-                })
+
                 store.dispatch({ 
                     type: 'UPDATE_ITEM_SRC',
                     itemsrc: data.item.src
@@ -163,6 +160,10 @@ var chathelper = {
                 store.dispatch({ 
                     type: 'UPDATE_INDEX',
                     index: data.index
+                })
+                store.dispatch({ 
+                    type: 'UPDATE_ITEM',
+                    items: data.item
                 })
                 console.log("store Obj after dispatch clothesbin", store.getState());
                 
