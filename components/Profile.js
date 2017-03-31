@@ -149,7 +149,8 @@ uploadFile(e) {
             </div> 
       </div>
       
-      {/*Search Bar*/}
+    {/*Search Bar*/}
+     <p>Search for Keywords:</p>
       <input type="text" value={this.props.searchUserid}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.searchUserid)} ref={input => this.textInput = input} />
       <Magazines />
               {/*<div className="panel panel-default">

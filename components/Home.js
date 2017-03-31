@@ -64,6 +64,7 @@ class Home extends React.Component {
     </div>
        <div className="magazine">  
                  {/* Search bar for magazines*/}
+                 <p>Search for Keywords:</p>
                 <input type="text" value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
   
                   

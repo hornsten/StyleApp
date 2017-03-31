@@ -28,19 +28,37 @@ var path = require('path');
             // get today's new magazines in date order
             var cutoff = new Date();
             cutoff.setDate(cutoff.getDate());
-             models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
-                 console.log("in router", results);
+            //  models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
+            //      console.log("in router", results);
+            //      res.json(results)      
+            //  })
+
+             models.Magazine.aggregate([
+                    {
+               $lookup:
+                            {
+                            from: "users",
+                            localField: "userid",
+                            foreignField: "facebook.id",
+                            as: "magazine_profile"
+                            }
+                }
+                ]).exec(function(err, results){
+                     console.log("in router", results[0].magazine_profile);
                  res.json(results)      
              })
-                      //  models.Magazine.aggregate([{
+            //      console.log("in router", results);
+            // //      res.json(results)      
+            // //  })
+            //           //  models.Magazine.aggregate([{
             //            $lookup:
             //                 {
-            //                 from: models.UserInfo,
-            //                 localField: "item",
-            //                 foreignField: "sku",
-            //                 as: "inventory_docs"
+            //                 from: models.User,
+            //                 localField: "userid",
+            //                 foreignField: "facebook.id",
+            //                 as: "magazine_profile"
             //                 }
-            //  }])
+            // //  }])
 
    })
 
