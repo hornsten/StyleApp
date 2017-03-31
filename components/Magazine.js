@@ -12,12 +12,11 @@ class Magazine extends React.Component {
     }
     componentDidMount(){
            helper.getMagazines(store, this.props.userid);
-           helper.getAllMagazines(store);
+        
     }
     render() {
         var component = this;
-        console.log('my mags: ',this.props.magazines);
-        console.log('ALL MAGAZINES!!: ',this.props.allmagazines);
+        console.log('my mags: ',this.props.magazines);   
         if (this.props.magazines){
           
                 var resultComponents = this.props.magazines.map(function(result) {

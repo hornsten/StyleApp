@@ -19,6 +19,34 @@ module.exports = function(app, passport, models){
     //route for facebook logout
 var path = require('path');
 
+
+// moved get all magazines route here before authentication
+ app.get('/magazine/all', function(req, res,next){
+       console.log("is this router being ")
+            console.log("in here ALLL mags");
+            // get today's new magazines in date order
+            var cutoff = new Date();
+            cutoff.setDate(cutoff.getDate());
+             models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             }).sort({'created_at': -1}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             })
+                      //  models.Magazine.aggregate([{
+            //            $lookup:
+            //                 {
+            //                 from: models.UserInfo,
+            //                 localField: "item",
+            //                 foreignField: "sku",
+            //                 as: "inventory_docs"
+            //                 }
+            //  }])
+
+   })
+
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + "../../public/index.html");
 })
@@ -129,16 +157,11 @@ app.get('/', function(req, res){
 
    })
 
- app.get('/magazine/all', function(req, res,next){
-       
-            console.log("in here ALLL mags");
-             models.Magazine.find({}).exec(function(err, results){
-                 console.log("in router", results);
-                 res.json(results)      
-             })
-       
 
-   })
+
+   
+								
+					
 //     app.get('/image/:filename', function(req, res){
 //        if ( req.isAuthenticated()){
 //             var filename = req.params.filename;
