@@ -57,6 +57,14 @@ const userReducer = (state={}, action) => {
     return state;
 }
 
+const mainReducer = (state={}, action) => {
+switch(action.type) {
+case 'ALL_MAGAZINES':
+    return Object.assign({},state, {allmagazines: action.allmagazines});
+}
+    return state;
+}
+
 const closetReducer = (state={}, action) => { 
     switch(action.type){
         case 'UPDATE_CLOSET_PICKER':
@@ -128,7 +136,7 @@ const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
     closetState: closetReducer,
-   
+    mainState:mainReducer
 
 })
 

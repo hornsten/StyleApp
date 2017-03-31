@@ -201,6 +201,17 @@ var helpers = {
             return ;
         })
 
+   },
+
+   getAllMagazines: function(store){
+        console.log("all being called");
+       return axios.get('/magazine/all', { credentials : 'same-origin' }).then(function(response) {
+            // console.log("magazine", response);
+            store.dispatch({type: "ALL_MAGAZINES", allmagazines: response.data})
+            console.log(store.getState());
+            return ;
+        })
+
    }
    
     // img_upload: (image, userid) => {

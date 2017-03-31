@@ -3,14 +3,14 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+var cloudinary_keys = require('../auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // // for heroku
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
 
 
 
@@ -129,6 +129,16 @@ app.get('/', function(req, res){
 
    })
 
+ app.get('/magazine/all', function(req, res,next){
+       
+            console.log("in here ALLL mags");
+             models.Magazine.find({}).exec(function(err, results){
+                 console.log("in router", results);
+                 res.json(results)      
+             })
+       
+
+   })
 //     app.get('/image/:filename', function(req, res){
 //        if ( req.isAuthenticated()){
 //             var filename = req.params.filename;
