@@ -111,7 +111,7 @@ console.log(prevProps.itemid, this.props.itemid)
 if ((prevProps.index !== this.props.index)){
   //  console.log("this prpos**********d");
    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
-} else if ((prevProps.items !== this.props.items)){
+} else if ((prevProps.itemid !== this.props.itemid)){
    console.log("this prpos**********d");
    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid)
 }
