@@ -7,6 +7,8 @@ var roomSchema = new Schema({
     // _id: Number,
     // id: {type : Number, required : true, unique : true},
     room: {type : String, required : true, unique : true},
+    description: {type : String, required : false, unique : false},
+    image: {type : String, required : false, unique : false},
     created_by: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}
     

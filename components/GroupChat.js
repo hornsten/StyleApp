@@ -18,41 +18,43 @@ class GroupChat extends React.Component {
 
         // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
         // this.handleUserData = this.handleUserData.bind(this);
-        this.handleRoomData = this.handleRoomData.bind(this);
-        this.switchRoom = this.switchRoom.bind(this);
+        // this.handleRoomData = this.handleRoomData.bind(this);
+        chathelper.switchRoom(this.props.params.room, "Group", store);
+        // this.switchRoom = this.switchRoom.bind();
+
         // this.ondragstart = this.ondragstart.bind(this);
 
     }
-   componentDidMount(){
-        helper.getRoomList().then((response) => {
-            this.handleRoomData(response)
-        })   
-            // var img = window.refs.dragimg.sgetDOMNode().src;
-            var img = this.refs.drag;
-            // console.log("img", img);
+//    componentDidMount(){
+//         helper.getRoomList().then((response) => {
+//             this.handleRoomData(response)
+//         })   
+//             // var img = window.refs.dragimg.sgetDOMNode().src;
+//             var img = this.refs.drag;
+//             // console.log("img", img);
            
            
            
             
-            // doc.allowDrop = function(event) {
-            //    console.log(event, "allowDrop");
-            //     event.preventDefault();
-            // }
+//             // doc.allowDrop = function(event) {
+//             //    console.log(event, "allowDrop");
+//             //     event.preventDefault();
+//             // }
            
 
         
-    }
+//     }
 
-    handleRoomData(response){
-        // dispatches updates to redux store to update the state 
-        store.dispatch({ 
-            type: 'ROOM_LIST',
-            rooms: response.data
-        })
-    }
-    switchRoom(newroom, chattype){
-       chathelper.switchRoom(newroom, chattype, store);
-    }
+//     handleRoomData(response){
+//         // dispatches updates to redux store to update the state 
+//         store.dispatch({ 
+//             type: 'ROOM_LIST',
+//             rooms: response.data
+//         })
+//     }
+    // switchRoom(newroom, chattype){
+    //    chathelper.switchRoom(newroom, chattype, store);
+    // }
     privateChat(chatuser){
        chathelper.privateChat(chatuser, store);
     }
@@ -100,9 +102,6 @@ class GroupChat extends React.Component {
     
         return (<div className="row">
                          <ChatModal />
-                        <div className="col-xs-4 col-s-2 col-md-2">
-                            <Rooms rooms={this.props.rooms} currentroom={this.props.currentroom} switchRoom={this.switchRoom}/>
-                        </div>
                         <div className="col-xs-8 col-s-6 col-md-6">
                             <GroupChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                         </div>
