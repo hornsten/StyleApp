@@ -44,7 +44,7 @@ var path = require('path');
                             }
                 }
                 ]).exec(function(err, results){
-                     console.log("in router", results[0].magazine_profile);
+                    //  console.log("in router", results[0].magazine_profile);
                  res.json(results)      
              })
             //      console.log("in router", results);
