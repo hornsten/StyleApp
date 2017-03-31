@@ -31,10 +31,20 @@ height: 100%;
 
 .closet-tabs-container {
     height: 45rem;
-    border: 1px solid silver;
+    border-bottom: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right:1px solid silver;
     overflow: scroll;
 }
 
+#drop-box {
+   
+    text-align: center;
+    border: 3px double black;
+    margin: 1rem;
+    padding-bottom:1rem;
+    box-sizing: border-box;
+}
 .drag-image {
      cursor: move; 
      overflow: hidden;
@@ -80,6 +90,11 @@ color: #000;
     color: white;
 }
 
+.closet-images {
+    height: 5rem;
+    width: auto;
+    margin: 2rem;
+}
 .dropped {
     background: transparent;
     color: transparent;
@@ -156,6 +171,12 @@ overflow:auto;
 
 .target {
     position:absolute;
+}
+
+#siofu_input {
+    margin:0 8rem;
+    padding: 0;
+    display: inline;
 }
 
 .poly-top {
