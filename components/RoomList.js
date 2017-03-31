@@ -1,6 +1,8 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
+import {connect } from 'react-redux';
+import store from './Redux/redux.js';
 
 
 class RoomList extends React.Component {
