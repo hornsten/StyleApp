@@ -10,7 +10,19 @@
     text-decoration: underline;
     color: blue;
 }
-
+.group-header{
+  margin: 40px;
+}
+.group-body{
+    padding: 30px;
+}
+.group-wrapper {
+    padding: 20px;
+}
+.group-img{
+    height: 150px;
+    width: 150px;
+}
 .user-list {
     float:left;
     width:100%;

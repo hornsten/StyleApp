@@ -19,17 +19,19 @@ app.use(siofu.router);
 
 // rooms available in chat - populate from database 
 var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
-// models.Room.find({}, function(err, results){  
-// 	if (err) return console.log(err);
-// 	for (var i = 0; i< results.length; i++){
-// 		rooms.push(results[i].room);
-// // 		connectedusers[rooms[i]] = [];
-// // 	}	
-// // })
+var images = ["./assets/img/Room1.png", "./assets/img/Room2.png", "./assets/img/Room3.png"];  /// only needed when populating data 
+var description = ["This is the BLUE blah blah room.", "This is the RED blah blah room.", "This is the GREEN blah blah room."];  /// only needed when populating data 
+models.Room.find({}, function(err, results){  
+	if (err) return console.log(err);
+	for (var i = 0; i< results.length; i++){
+		rooms.push(results[i].room);
+// 		connectedusers[rooms[i]] = [];
+	}	
+})
 // // save rooms to database -- only for testing purposes
 for (var i = 0; i < rooms.length; i++){
 	// console.log("rooms",rooms[i] , "date",  Date.now())
-	var roomList = new models.Room({room:rooms[i], created_by: "SERVER", created_at:  Date.now()});
+	var roomList = new models.Room({room:rooms[i], description: description[i], image: images[i], created_by: "SERVER", created_at:  Date.now()});
 	roomList.save(function (err) {
 		// console.log("saved:" + rooms[i]); 
 		if (err) return console.log(err);
@@ -281,39 +283,41 @@ io.sockets.on('connection', function (socket) {
 				// get users connected to a chat room
 				// var searchObj = {};
 				// whatever room you are in you want the list of conected users
-				if (defaultRoom !== "Private"){
-					var	searchObj = {room: defaultRoom}
-					// } 
-					console.log("is this the private room?", defaultRoom)
-					models.ConnectedUser.find(searchObj).exec(function (err, results) {
-					// console.log("connected users when first connect to ", results, defaultRoom);
-						io.sockets.in(defaultRoom).emit('connectedusers', results);
-					})
-				} else {
-					// send all connected users to user list in Private area
-					models.ConnectedUser.find({}).exec(function (err, results) {
-					// console.log("connected users when first connect to ", results, defaultRoom);
+				// if (defaultRoom !== "Private"){
+				// 	var	searchObj = {room: defaultRoom}
+				// 	// } 
+				// 	console.log("is this the private room?", defaultRoom)
+				// 	models.ConnectedUser.find(searchObj).exec(function (err, results) {
+				// 	// console.log("connected users when first connect to ", results, defaultRoom);
+				// 		io.sockets.in(defaultRoom).emit('connectedusers', results);
+				// 	})
+				// } else {
+					if (defaultRoom === "Private"){
+						// send all connected users to user list in Private area
+						models.ConnectedUser.find({}).exec(function (err, results) {
+						// console.log("connected users when first connect to ", results, defaultRoom);
 						io.sockets.in('Private').emit('connectedusers', results);
 					})
 
 				}
 
 			}).then(function(){
-					if (defaultRoom !== "Private"){
-						// send chat history for that room
-						// console.log("are we in here");
-						var cutoff = new Date();
-						cutoff.setDate(cutoff.getDate()-1);
-						models.Chat
-							.find({room: socket.room, "created_at": {"$gte": cutoff }})
-							.sort({'date': -1})
-							.exec(function(err, results) {
-								if (err) return console.log(err);
-								// emit to current user only after they log in or join chat
-								// console.log("results", results);
-								socket.emit('updatechat', results);
-							});
-					} else {
+					// if (defaultRoom !== "Private"){
+					// 	// send chat history for that room
+					// 	// console.log("are we in here");
+					// 	var cutoff = new Date();
+					// 	cutoff.setDate(cutoff.getDate()-1);
+					// 	models.Chat
+					// 		.find({room: socket.room, "created_at": {"$gte": cutoff }})
+					// 		.sort({'date': -1})
+					// 		.exec(function(err, results) {
+					// 			if (err) return console.log(err);
+					// 			// emit to current user only after they log in or join chat
+					// 			// console.log("results", results);
+					// 			socket.emit('updatechat', results);
+					// 		});
+				// } else 
+					if (defaultRoom === "Private"){
 					
 						// clear the chat window as no default private chats
 						socket.emit('updatechat', []);
