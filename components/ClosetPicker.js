@@ -66,6 +66,11 @@ class ClosetPicker extends React.Component {
 
     this.setState({ droppedImageIds: [] });
 
+    store.dispatch({ 
+        type: 'SAVING_MAGAZINE_IMG',
+        saving_magazine_img: false
+    })
+
   }
 
   isDropped(imageId) {

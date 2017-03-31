@@ -260,6 +260,11 @@ this.setState({
 
            this.setState({droppedImageIds: []});
 
+          store.dispatch({ 
+              type: 'SAVING_MAGAZINE_IMG',
+              saving_magazine_img: false
+          })
+
 }
 
   updateDescription(e){
