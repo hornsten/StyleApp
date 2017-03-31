@@ -111,9 +111,7 @@ console.log("itemid", prevProps.itemid, this.props.itemid)
 if ((prevProps.index !== this.props.index)){
   //  console.log("this prpos**********d");
    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
-} else if ((this.props.items !== null) && (prevProps.items !== this.props.items)){
-    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
-}
+} 
 // console.log("state of store", store.getState())
 // var Items = this.props.items;
 // var Index = this.props.index;
