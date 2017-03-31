@@ -108,7 +108,7 @@ componentDidUpdate(prevProps, prevState) {
 console.log(prevProps.index, this.props.index)
 console.log(prevProps.items , this.props.items) 
 console.log(prevProps.itemid, this.props.itemid)
-if ((prevProps.index !== this.props.index) || (prevProps.itemid !== this.props.itemid)  || (prevProps.items !== this.props.items)){
+if ((prevProps.items !== this.props.items)){
   //  console.log("this prpos**********d");
    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
 }
