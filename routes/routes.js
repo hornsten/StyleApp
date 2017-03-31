@@ -24,6 +24,7 @@ var path = require('path');
  app.get('/magazine/all', function(req, res,next){
        console.log("is this router being ")
             console.log("in here ALLL mags");
+   
             // get today's new magazines in date order
             var cutoff = new Date();
             cutoff.setDate(cutoff.getDate());
@@ -42,6 +43,7 @@ var path = require('path');
             //  }])
 
    })
+
 
 
 app.get('/', function(req, res){
@@ -168,6 +170,31 @@ app.get('/', function(req, res){
         }
 
    })
+
+ app.get('/magazine/keywords/:userid/:search', function(req, res,next){
+            
+
+       if ( req.isAuthenticated()){
+            var searchTerm = req.params.search;
+            var userid = req.params.userid;
+
+            models.Magazine.find({userid: userid, description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
+                    console.log("in router", results);
+                    res.json(results)      
+            })
+        }
+
+ })
+
+ app.get('/magazine/keywords/:search', function(req, res,next){
+            var searchTerm = req.params.search;
+            models.Magazine.find({description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
+                    console.log("in router", results);
+                    res.json(results)      
+            })
+
+
+ })
 
 
 

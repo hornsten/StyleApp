@@ -5,12 +5,37 @@ import ReactDOM from "react-dom";
 import AllMagazines from './AllMagazines';
 import {Modal, Dialog, Button} from 'react-bootstrap';
 import ChatModal from  './ChatModal';
+import {connect } from 'react-redux';
+
 
 class Home extends React.Component {
       constructor(props) {
       super(props);
    
 }
+
+    addSearch(e, message) {
+        // tell server to execute 'sendchat' and send along one paramete
+        if (e.keyCode == 13) {
+            var trimMessage = message.trim();
+            helper.searchMagazines(store, trimMessage);
+            store.dispatch({ 
+                type: 'ADD_SEARCH',
+                search: ""
+            })
+        }
+    }
+
+    updateSearch(e){
+
+        console.log(e.target.value, "search")
+        store.dispatch({ 
+            type: 'ADD_SEARCH',
+            search: e.target.value
+        })
+       
+
+    }
 
  handleClick(e) {
     e.preventDefault();
@@ -37,7 +62,11 @@ class Home extends React.Component {
         </div>
         </div>
     </div>
-       <div className="magazine">    
+       <div className="magazine">  
+                 {/* Search bar for magazines*/}
+                <input type="text" value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
+  
+                  
                   <ul>
                     <AllMagazines />
                   </ul>
@@ -47,4 +76,14 @@ class Home extends React.Component {
       }
 }
 
-export default Home;
+const mapStateToProps = (store,ownProps) => {
+
+    return {
+        userid: store.chatState.userid,
+        search: store.mainState.search,
+   
+    }
+
+}
+
+export default connect(mapStateToProps)(Home);

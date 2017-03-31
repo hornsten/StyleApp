@@ -9,6 +9,7 @@ import helper from "../app/utils/helper.js";
 const noImage = 'http://www.vistagardentampa.org/assets/empty_avatar.jpg'
 import {Modal, Dialog, Button} from 'react-bootstrap';
 import ReactModal from 'react-modal';
+import Magazines from './Magazine';
 
 const initialEditorState = {
             fnameOpen: false,
@@ -58,6 +59,30 @@ class Profile extends React.Component {
 uploadFile(e) {     
      helper.uploadToProfile(e, this.props.dispatch);   
 }
+
+  addSearch(e, message) {
+        // tell server to execute 'sendchat' and send along one paramete
+        console.log("serach", this.props.searchUseid);
+        if (e.keyCode == 13) {
+            var trimMessage = message.trim();
+            helper.searchMagazinesUserid(store, trimMessage, this.props.userid);
+            store.dispatch({ 
+                type: 'ADD_SEARCH_USERID',
+                searchUserid: ""
+            })
+        }
+    }
+
+    updateSearch(e){
+
+        console.log(e.target.value, "search")
+        store.dispatch({ 
+            type: 'ADD_SEARCH_USERID',
+            searchUserid: e.target.value
+        })
+       
+
+    }
 
   handleOpenModal () {
     this.setState({ showModal: true });
@@ -123,7 +148,10 @@ uploadFile(e) {
                       </div>  
             </div> 
       </div>
-
+      
+      {/*Search Bar*/}
+      <input type="text" value={this.props.searchUserid}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.searchUserid)} ref={input => this.textInput = input} />
+      <Magazines />
               {/*<div className="panel panel-default">
                <div className="row">
                  <div className="col-sm-4">
@@ -235,13 +263,14 @@ uploadFile(e) {
 const mapStateToProps = (store,ownProps) => {
     return {
 
-      userid: store.userState.userid,
+      userid: store.chatState.userid,
       loggedin: store.userState.loggedin,
         users: store.chatState.users,
         username: store.userState.username,
         profile_image: store.userState.profile_image,
         stylemotto: store.userState.stylemotto,
-        blurb: store.userState.blurb
+        blurb: store.userState.blurb,
+        searchUserid: store.mainState.searchUserid,
     }
 };
 

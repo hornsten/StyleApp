@@ -338,8 +338,46 @@ setBlurb: function(e, store){
             return ;
         })
 
-   }
+   },
 
+searchMagazinesUserid: function(store, searchTerm, userid){
+
+    if (searchTerm === ""){
+             // if user just hits enter return default view
+             this.getMagazines(store, userid);
+    } else{
+        return axios.get('/magazine/keywords/'+userid+"/"+searchTerm, { credentials : 'same-origin' }).then(function(response) {
+
+
+        console.log("*******magazine", response.data);
+
+        store.dispatch({type: "NEW_MAGAZINES", magazines: response.data})
+        return ;
+        })
+    }
+    console.log("being called");
+      
+
+},
+
+    searchMagazines: function(store, searchTerm){
+         
+         if (searchTerm === ""){
+             // if user just hits enter return default view
+             this.getAllMagazines(store);
+         } else{
+            return axios.get('/magazine/keywords/'+searchTerm, { credentials : 'same-origin' }).then(function(response) {
+            console.log("message serach", response)
+            store.dispatch({type: "ALL_MAGAZINES", allmagazines: response.data})
+            // console.log(store.getState());
+            return ;
+            })
+
+         }
+  
+
+        
+    }
     // img_upload: (image, userid) => {
     //         // sourceType ="upload" or "dnd"
 

@@ -66,6 +66,10 @@ const mainReducer = (state={}, action) => {
 switch(action.type) {
     case 'ALL_MAGAZINES':
         return Object.assign({},state, {allmagazines: action.allmagazines});
+    case 'ADD_SEARCH':
+        return Object.assign({},state, {search: action.search});
+    case 'ADD_SEARCH_USERID':
+        return Object.assign({},state, {searchUserid: action.searchUserid});
     }
     return state;
 }
@@ -113,7 +117,7 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {description: action.description});
         case 'SAVING_MAGAZINE_IMG':
             return Object.assign({},state, {saving_magazine_img: action.saving_magazine_img});
-            
+
         }
         
     return state;
