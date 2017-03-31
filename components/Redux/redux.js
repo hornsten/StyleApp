@@ -53,10 +53,8 @@ const userReducer = (state={}, action) => {
             console.log("updating profie image", action.profile_image);
             return Object.assign({}, state, {profile_image: action.profile_image});
         case 'UPDATE_STYLEMOTTO' :
-            console.log("updating style motto", action.stylemotto);
             return Object.assign({}, state, {stylemotto: action.stylemotto});
         case 'UPDATE_BLURB':
-            console.log("update blurb", action.blurb);
             return Object.assign({},state, {blurb: action.blurb});
       
         }

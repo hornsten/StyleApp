@@ -12,27 +12,19 @@ class InLineEdit extends React.Component {
     constructor(props){
       super(props);
       this.dataChanged = this.dataChanged.bind(this);
-      // this.handlestylemotto = this.handlestylemotto.bind(this);
-      // this.handleblurb = this.handleblurb.bind(this);
 
-      // if (!this.props.stylemotto){
-              store.dispatch({
-                type: 'UPDATE_STYLEMOTTO',
-                stylemotto: 'enter stylemotto'
-              })
+      store.dispatch({
+        type: 'UPDATE_STYLEMOTTO',
+        stylemotto: 'click to add style motto'
+      })
 
-      // }
-      // if (!this.props.blurb){
-              store.dispatch({
-                type: 'UPDATE_BLURB',
-                blurb: 'enter blurb'
-              })
-        
-      // }
-      // this.state = {
-      //     blurb: 'enter style motto',
-      //   stylemotto: 'enter blurb'
-      // }
+
+      store.dispatch({
+        type: 'UPDATE_BLURB',
+        blurb: 'click to add style story'
+      })
+
+
     }
     componentWillMount(){
        helper.getStyleMotto(store,""); 
@@ -42,25 +34,23 @@ class InLineEdit extends React.Component {
         // data = { description: "New validated text comes here" }
         // Update your model from here
         console.log(data)
-         this.setState({...data})
+        //  this.setState({...data})
          if (data.stylemotto){
             helper.setStyleMotto(data.stylemotto,store); 
-         } else if (data.blurb){
+              store.dispatch({
+                type: 'UPDATE_STYLEMOTTO',
+                stylemotto: data.stylemotto
+              })
+
+         } 
+         if (data.blurb){
             helper.setBlurb(data.blurb, store);
+                 store.dispatch({
+                  type: 'UPDATE_BLURB',
+                  blurb: data.blurb
+                })
          }
     }
-
-// handlestylemotto(data){
-//   // console.log("e.target", e.target)
-//   this.setState({...data})
-//    helper.getStyleMotto(data,store);   
-// }
-
-// handleblurb(data){
-//   this.setState({...data})
-//   helper.getBlurb(data, store);
-// }
-
 
 
     customValidateText(text) {
@@ -68,9 +58,9 @@ class InLineEdit extends React.Component {
     }
 
     render() {
-        return (<div>
 
-<ul><li>style motto : 
+        if (this.props.stylemotto){
+          var styleMotto = <li>style motto : {this.props.stylemotto}
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -88,11 +78,10 @@ class InLineEdit extends React.Component {
               }}
             /><FaEdit className="icon" />
 </li>
+        }
 
-
-            
-   
-<li> blurb : 
+         if (this.props.blurb){
+          var styleBlurb = <li> blurb : {this.props.blurb}
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -110,7 +99,13 @@ class InLineEdit extends React.Component {
               }}
             /><FaEdit className="icon" />
           </li>
-          </ul>
+        }
+        return (
+          <div>
+            <ul>
+              {styleMotto}
+              {styleBlurb}  
+            </ul>
         </div>)
     }
 }
@@ -120,11 +115,11 @@ const mapStateToProps = (store,ownProps) => {
 
       userid: store.userState.userid,
       loggedin: store.userState.loggedin,
-        users: store.chatState.users,
-        username: store.userState.username,
-        profile_image: store.userState.profile_image,
-        stylemotto: store.userState.stylemotto,
-        blurb: store.userState.blurb
+      users: store.chatState.users,
+      username: store.userState.username,
+      profile_image: store.userState.profile_image,
+      stylemotto: store.userState.stylemotto,
+      blurb: store.userState.blurb,
     }
 };
 

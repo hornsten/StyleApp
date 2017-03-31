@@ -34,7 +34,7 @@ getProfileUsername(store, userprofileid){
     return axios.get('/profile/'+userprofileid).then(function(result){
      console.log(result.data, "blurb in heloer")
             if(result.data){
-                console.log("blurb", result.data)
+          
                 store.dispatch({
                     type: 'UPDATE_PROFILE_NAME',
                     profileusername: result.data
@@ -48,27 +48,14 @@ getProfileUsername(store, userprofileid){
 setStyleMotto: function(e,store){
     var mottoObj = {stylemotto: e}
     return axios.post('/updatestylemotto', mottoObj).then(function(result){
-         if (result){
-            console.log(result.data.results)
-             store.dispatch({
-                type: 'UPDATE_STYLEMOTTO',
-                stylemotto: result.data.results
-              })
-         }
+
     })
 },
 
 setBlurb: function(e, store){
     var blurbObj = {blurb: e}
     return axios.post('/updateblurb', blurbObj).then(function(result){
-        if(result){
-             if(result.data.type === 'blurb'){
-              store.dispatch({
-                type: 'UPDATE_BLURB',
-                blurb: result.data.results
-              })
-        }
-        }
+
     })
 },
 
