@@ -169,13 +169,23 @@ class PrivateChatSection extends React.Component {
                      var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
                     // console.log("I am in privaet chat", chatmessage);
                 } else {
-                    var chatmessage =  <div className="col-md-8">{result.message}</div>
+                    var chatmessage =  <div>{result.message}</div>
                 }
               
-                return <div className="row results" key={result._id}>
-                    <div className="col-md-2"><strong>{result.username}</strong></div> 
-                            { chatmessage }
-                    <div className="col-md-2"></div>
+                // if (result.username){
+
+                // }
+                return <div><div className="row results" key={result._id}>
+                   
+                    <div className="col-md-12">
+                        <div className="row">
+                            <strong>{result.username}</strong>
+                        </div> 
+                        <div className="row">
+                             { chatmessage }
+                        </div>
+                    </div>
+                </div>
                 </div>
                 });
 
@@ -206,19 +216,10 @@ class PrivateChatSection extends React.Component {
                         <div>
                             {headerText}
                         </div>
-                    
                     </div>
-
                     <hr />
-            
-        
-
                     <div className="chatbox row"  ref={ref => this.chat = ref} >
-                        <div className="col-xs-12 col-md-12">    
                             <div className="row">{resultComponents}</div>                     
-                        <div>
-                    </div>
-                        </div>
                     </div>
                     <div className="row">
                         <div className="col-md-2"></div>

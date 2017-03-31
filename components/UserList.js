@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
+import {Modal, Dialog, Button} from 'react-bootstrap';
 
 class UserList extends React.Component {
     constructor(props) {
@@ -23,28 +24,27 @@ class UserList extends React.Component {
             // check to see if this is the current user or a user with which we are already having a prvate chat - if so don;t add hyperlink
 
            
-            console.log("******chatWaiting", chatWaiting);
-            // console.log("****chatWithUser", chatWithUser);
-            console.log("looking for chatWaiting in USErlist", store.getState())
+            if (result.username === currentusername){
             
-            if ((result.username === currentusername) || (result.username === chatWithUser)){
-            console.log("in hyperlink area ",  result.username);
-   
-                    connecteduser = result.username;
-            } else if (result.username === chatWaiting){ 
+                    connecteduser = <Button bsStyle='default' key={result._id}  className="user-list-other" active>{result.username}</Button>
+                    
+            }  else if (result.username === chatWithUser){
+
+                  connecteduser = <Button  bsStyle='default' key={result._id} className="user-list-other" active>{result.username}</Button>
+            } 
+            else if (result.username === chatWaiting){ 
                     // maybe colour or animate!!!
-                    connecteduser = <div className="room-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}><strong className="private-chat-waiting">{result.username}</strong></div>
+                    // <Button bsStyle="primary" bsSize="large" active>Primary button</Button>
+                    connecteduser = <Button  key={result._id} active bsStyle='primary' active className="user-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}><strong className="private-chat-waiting">{result.username}</strong></Button>
 
 
             } else {
 
                     // hyperlink not dsipalying properlyx
-                    connecteduser = <div className="room-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}> {result.username} </div>
+                    connecteduser = <Button bsStyle='default' key={result._id} className="user-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}> {result.username} </Button>
                 
             }
-            return <div className="row results" key={result._id}>
-                <div className="col-md-4 text-center">{connecteduser}</div>
-            </div>
+            return <div>{connecteduser}</div>
         });
     }
     

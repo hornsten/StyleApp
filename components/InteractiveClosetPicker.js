@@ -189,7 +189,7 @@ uploadFile(e) {
           // strip off the data: url prefix to get just the base64-encoded bytes
           var data = img.replace(/^data:image\/\w+;base64,/, "");
         
-          console.log("descrptoin is empty?", component.props);
+          console.log("descrptoin is empty?", component.props.description);
           if (component.props.description){
           
             chathelper.img_upload(data, userid, component.props.description, store);
@@ -397,7 +397,7 @@ if (this.props.flair){
            )}
         </div>
             {/* Needed to add a description for search and display */}
-            <input type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
+            <input placeholder="Please add a description" type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
             <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
             <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>
             {img_message}    {/* Says File Saved Successfully */}

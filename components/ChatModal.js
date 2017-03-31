@@ -27,35 +27,18 @@ class ChatModal extends React.Component {
          var isloggedin = this.props.loggedin;
          if (isloggedin){
             // if there is a chat message
-   
-                   var displayModal  = 
-                     <div className="static-modal">
-                    <Modal  show={this.props.showChatModal}>
-                        <Modal.Header>
-                        <Modal.Title>Modal title</Modal.Title>
-                        </Modal.Header>
-
-                        <Modal.Body>
-                          {this.props.privatemessage}
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                        <Button onClick={this.closeModal}>Close</Button>
-                    
-                        </Modal.Footer>
-
-                    </Modal>
-                    </div>
+            if (this.props.showChatModal){
+                 var displayModal  = <div id="snackbar"  onClick={this.closeModal} className="show"><strong> {this.props.privatemessage} </strong>would like a style consultation.</div>
+            }
+                
 
                 
         }
 
-        console.log("modal", displayModal);
-        
     
     
 
-        return (<div className="custom-modal">
+        return (<div>
                     {displayModal}
                 </div>) 
             }

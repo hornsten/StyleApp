@@ -351,7 +351,7 @@ if (this.props.shoes){
               )}
             </div>
           {/* Needed to add a description for search and display */}
-            <input type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
+            <input placeholder="Please add a description" type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
             <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
             <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>
             {img_message}    {/* Says File Saved Successfully */}

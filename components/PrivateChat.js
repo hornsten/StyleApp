@@ -83,13 +83,13 @@ class PrivateChat extends React.Component {
     //                     </div> 
     render() {
         // console.log(this.props.rooms, "this.props.rooms");
-        return (<div className="row">
+        return (<div className= "row">
                  
                         <div className="col-xs-12 col-s-4 col-md-4">
-                            <div className="row">
+                            <div className="border row">
                                 <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
                             </div>
-                            <div className="row">
+                            <div className="border row">
                                 <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom} chatWithUser={this.props.chatWithUser}/>
                             </div> 
                         </div>
