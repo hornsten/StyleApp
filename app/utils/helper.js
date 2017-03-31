@@ -167,7 +167,7 @@ var helpers = {
   getUserDetails: function(store){
 
        return axios.get('/user', { credentials : true }).then(function(result){
-           if (result){
+           if (result !== ""){
                 var username = result.data[0].facebook.firstName +" " + result.data[0].facebook.lastName;
                 var userid = result.data[0].facebook.id;
                 //  console.log("userid", userid);
@@ -196,7 +196,7 @@ var helpers = {
    getMagazines: function(store, userid){
         console.log("being called");
        return axios.get('/magazine/'+userid, { credentials : 'same-origin' }).then(function(response) {
-            // console.log("magazine", response);
+             console.log("*******magazine", response.data);
             store.dispatch({type: "NEW_MAGAZINES", magazines: response.data})
             return ;
         })
@@ -204,9 +204,9 @@ var helpers = {
    },
 
    getAllMagazines: function(store){
-        console.log("all being called");
+        console.log("is this helper being callled next?");
        return axios.get('/magazine/all', { credentials : 'same-origin' }).then(function(response) {
-            // console.log("magazine", response);
+            console.log("in helper magazine", response);
             store.dispatch({type: "ALL_MAGAZINES", allmagazines: response.data})
             console.log(store.getState());
             return ;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import helper from "../app/utils/helper.js";
 import store from './Redux/redux.js';
 import ReactDOM from "react-dom";
-import Magazine from './Magazine';
+import AllMagazines from './AllMagazines';
 import {Modal, Dialog, Button} from 'react-bootstrap';
 import ChatModal from  './ChatModal';
 
@@ -15,22 +15,6 @@ class Home extends React.Component {
  handleClick(e) {
     e.preventDefault();
  }
-
-// componentDidMount(){
-//     // get images for each section
-//     helper.getMagazines(store, this.props.userid);
-    
-//     // set to default initially
-//     store.dispatch({ 
-//       type: 'ITEM_CHANGE',
-//       item: "SELECT"
-//     })
-
-//     store.dispatch({ 
-//       type: 'SUCCESSFUL_SAVE',
-//       imagesavedsuccess: false
-//     })
-//   }
 
      render(){
           return(
@@ -55,7 +39,7 @@ class Home extends React.Component {
     </div>
        <div className="magazine">    
                   <ul>
-                    <Magazine />
+                    <AllMagazines />
                   </ul>
               </div> 
 </div>
