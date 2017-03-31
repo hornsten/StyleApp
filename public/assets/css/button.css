@@ -26,7 +26,8 @@
 
 .btn.outline {
 	background: none;
-	padding: 12px 22px;
+    margin:2px;
+	padding: 8px 15px;
 }
 
 .btn-pink.outline {
