@@ -35,13 +35,33 @@ class Profile extends React.Component {
     this.handleCloseModal2 = this.handleCloseModal2.bind(this);
 }
 
+   componentDidMount() {
+    // get images for each section
+    
+    helper.getProfileImage(store, "profile_image");
+   
+    // set to default initially
+    store.dispatch({
+      type: 'UPDATE_PROFILEIMAGE'
+     
+    })
+   }
+
+   
+
+   componentWillUpdate() {
+    console.log("componentWillUpdate", this.props)
+  }
+  componentWillMount() {
+    console.log("compoenet will mount", this.props)
+  }
+
  handleClick(e) {
     e.preventDefault();
  }
 
-uploadFile(e) {
-     helper.uploadToProfile(e, store);   
-
+uploadFile(e) {     
+     helper.uploadToProfile(e, this.props.dispatch);   
 }
 
   handleOpenModal () {
@@ -64,9 +84,10 @@ uploadFile(e) {
     
      render(){
        console.log('this.state', this.state)
+        console.log('this.props', this.props)
       const self = this;
       let {
-         avatarSrc,
+         profile_image,
          firstName,
          lastName,
          moto,
@@ -81,11 +102,8 @@ uploadFile(e) {
         self.setState({editOn: true})
       }
       console.log(this)
-      let saveClicked = () => {
-        let f = self.refs.fname.value.trim();
-        let l = self.refs.lname.value.trim();
-        self.setState({editOn: false, firstName: f, lastName: l })
-      }
+      let avatarSRC =  profile_image ? noImage : profile_image;
+
           return(
   <div>         
 
@@ -93,9 +111,9 @@ uploadFile(e) {
       <div className="jumbotron sharp">     
             <div className="row">
                       <div className="col-xs-2">
-                      <img className='thumbnail' src= {noImage} style={{width: 180, height: 200}}/>
+                      <img className='thumbnail' src={avatarSRC} style={{width: 180, height: 200}}/>
                       <FaCamera className="icon"/>
-                      <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload' accept='.png' 
+                      <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload'
                               name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
                                
                       </div>

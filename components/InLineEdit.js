@@ -2,7 +2,7 @@ import React,  {Component} from 'react';
 
 import Edit from 'react-edit-inline';
 import FaEdit from 'react-icons/lib/fa/edit';
-
+import helper from "../app/utils/helper.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 

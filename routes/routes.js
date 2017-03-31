@@ -127,11 +127,11 @@ app.get('/', function(req, res){
             var userid =  results.facebook.id;
             models.UserInfo.find({"userid": userid}).exec(function(err, items){
                                     if (err) return console.log(err); 
-                                        var returnObj= {src: fileName,
-                                        results: items}
-                                        console.log(returnObj);
+                                       
+                                        results: items
+                                        console.log("return obj," ,results);
                                     // console.log("or in here???? ", items);
-                                        res.json(returnObj);
+                                        res.json(results);
                 })          
              })
         }
@@ -179,11 +179,11 @@ app.post('/profileimageupload', function(req, res,next){
                 var filepath = '/../public/assets/img/' + req.body.name;
                 var fileName = __dirname + '/../public/assets/img/' + req.body.name;
 
-                console.log(results, "results");
+                console.log( "results", results);
                 var userid = results.facebook.id;
                 // remove .png extension
                 // var publicFileName = uniqueFileName.slice(0, -4);
-                 
+                 var publicFileName = req.body.name.slice(0,-4);
                 fs.open(fileName, 'a', 0755, function(err, fd) {
                 if (err) throw err;
 
@@ -191,33 +191,35 @@ app.post('/profileimageupload', function(req, res,next){
                     fs.close(fd, function() {
                         console.log('File saved successful!');
                         // var filePath = '/../public/assets/img/profileimg' + uniqueFileName;
-                        cloudinary.uploader.upload( filepath, function(result) { 
+                        console.log(fileName, "filename");
+                        cloudinary.uploader.upload( fileName, function(result) { 
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
-
-                            var newimage = new models.UserInfo({  userid:userid, imgsrc: result.secure_url
-});
-                            newimage.save().then(function(){
-                                if (err) return console.log(err); 
-                                console.log("saving item to db");
-                                return;
-                            		// need to updaet user closet too *****
-                            }).then(function(){
+                            models.UserInfo.findOneAndUpdate({"userid": userid}, {$set: {imgsrc: result.secure_url}}, {new: true}).exec(function(err, userInfo){
+//                             var newimage = new models.UserInfo({  userid:userid, imgsrc: result.secure_url
+// });                        
+                            // newimage.save().then(function(){
+                            //     if (err) return console.log(err); 
+                            //     console.log("saving item to db");
+                            //     return;
+                            // 		// need to updaet user closet too *****
+                            // }).then(function(data){
                                 //reqquer
-                                models.UserInfo.find({"userid": userid}).exec(function(err, items){
+                                console.log('newImage Saved', userInfo)
+                                
                                     if (err) return console.log(err); 
-                                        returnObj= {userid: userid,
-                                        results: items}
+                                    //     returnObj= {userid: userid,
+                                    //     results: items}
                                     // console.log("or in here???? ", items);
-                                        res.json(returnObj);
-                                    })
+                                        res.json(userInfo);
+                                  // })
                             })
                             // // remove file from from tmp area
 
 
                         }, {
-                            public_id: fileName, 
+                            public_id: "publicFileName", 
                             crop: 'limit',
                             width: 2000,
                             height: 2000,

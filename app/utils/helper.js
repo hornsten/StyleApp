@@ -29,26 +29,6 @@ var helpers = {
 //  getClothesBin: function(store, item){
 
 
-
-
-// },
-
-getProfileImage: function(store, item){
-    return axios.get('/profile/image').then(function(result){
-        if(result){
-            console.log("result form profile: ", result.data.results);
-
-            console.log("results.type ----", result.data.type);
-            if(result.data.type === 'profile_image'){
-              store.dispatch({
-                type: 'UPDATE_PROFILEIMAGE',
-                profile_image: result.data.results
-              })
-            }
-        }
-    })
-},
-
 getStyleMotto: function(e,store){
     return axios.get('/updatestylemotto').then(function(result){
         if(result){
@@ -74,6 +54,26 @@ getBlurb: function(e, store){
         }
     })
 },
+
+
+// },
+
+getProfileImage: function(store, item){
+    return axios.get('/profile/image').then(function(result){
+        if(result){
+            console.log("result form profile: ", result.data.results);
+
+            
+            if(result.data.type === 'profile_image'){
+              store.dispatch({
+                type: 'UPDATE_PROFILEIMAGE',
+                profile_image: result.data.results
+              })
+            }
+        }
+    })
+},
+
 
 
     getImages: function(store, item){
@@ -138,7 +138,7 @@ getBlurb: function(e, store){
     },
 
     /////////////////////////////   
-    uploadToProfile: function(e, store){
+    uploadToProfile: function(e, dispatch){
                 var files = e.target.files || e.dataTransfer.files 
                 if (files) {
                     //send only the first one
@@ -156,13 +156,13 @@ getBlurb: function(e, store){
                         };
                         
                         return axios.post('/profileimageupload',postObj).then(function(result){
-                            console.log('result posting in route uplaod', result);
-                            if(result.data.type === 'profile_image'){
-                                 store.dispatch({
+                            console.log('result From PROFILE image UPLOAD', result);
+                      
+                                 dispatch({
                                     type:'UPDATE_PROFILEIMAGE',
-                                    profile_image: result.data.results
+                                    profile_image: result.data.imgsrc
                                 })
-                            }
+                            
                            
                         })
                     }//onload fn
