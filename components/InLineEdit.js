@@ -60,7 +60,7 @@ class InLineEdit extends React.Component {
     render() {
 
         if (this.props.stylemotto){
-          var styleMotto = <li>style motto : {this.props.stylemotto}
+          var styleMotto = <li>style motto : 
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -81,7 +81,7 @@ class InLineEdit extends React.Component {
         }
 
          if (this.props.blurb){
-          var styleBlurb = <li> blurb : {this.props.blurb}
+          var styleBlurb = <li> blurb : 
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
