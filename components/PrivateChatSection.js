@@ -161,6 +161,7 @@ class PrivateChatSection extends React.Component {
         // console.log("this.props.privatemessage store", store.getState());
         // console.log("this.props.showModal", this.props.showModal);
        var chatmessage = this.props.chat;
+       var component = this;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
                 var resultComponents = this.props.chat.map(function(result) {
@@ -172,6 +173,7 @@ class PrivateChatSection extends React.Component {
                     var chatmessage =  <div>{result.message}</div>
                 }
                 
+
                 var d = new Date(result.created_at);
                 var chiDate = new Date(d.setHours(d.getHours())).toString();
                 var dateObj = new Date(chiDate);
@@ -182,25 +184,40 @@ class PrivateChatSection extends React.Component {
                 var minutes = dateObj.getMinutes();
 
                 var newdate = month + "/" + day + "/" + year + " " + hour + ":" + minutes;
-                
-                // if (result.username){
+  
+                var userChat = "";
+                // for chat bubbles
+                if (result.username === component.props.username){
 
-                // }
-                return <div><div className="row results talk-bubble tri-right round btm-left" key={result._id}>
+
+                        userChat =  <div className="talk-bubble tri-left round btm-left-in">
+                            <div className="row">
+                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                            </div>
+                            <div className="row">
+                                { chatmessage }
+                            </div>
+                        </div>
+
+
+                } else {
+                           userChat =  <div className="talk-bubble tri-right round btm-right-in">
+                            <div className="row">
+                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                            </div>
+                            <div className="row">
+                                { chatmessage }
+                            </div>
+                        </div>
+                }
+
+
+
+                return <div><div className="row results" key={result._id}>
                    
                     <div className="col-md-12">
-                        <div className="row">
+                        {userChat}
 
-                            <p className="chat-stuff">{result.username}</p>
-
-                            <strong>{result.username}</strong> @ {newdate}
-
-                        </div> 
-                        <div className="row">
-                            <div className="">
-                             { chatmessage }
-                             </div>
-                        </div>
                     </div>
                 </div>
                 </div>
