@@ -1,3 +1,8 @@
+#chat-title {
+      font-family: 'Clicker Script', cursive;
+      
+}
+
 .room-list {
     float:left;
     width:100%;
@@ -24,8 +29,12 @@
     padding: 20px;
 }
 .group-img{
-    height: 150px;
-    width: 150px;
+    height: 10rem;
+    width: 10rem;
+}
+.media {
+ background:#ddd;
+
 }
 .user-list {
     float:left;

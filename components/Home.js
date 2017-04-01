@@ -44,7 +44,7 @@ class Home extends React.Component {
      render(){
           return(
 <div>        
-    <div className="jumbotron sharp"> 
+    <div id="sharp" className="jumbotron"> 
     <div className="row">
        <div className="col-xs-4">
        <h1>Style App</h1>

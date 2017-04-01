@@ -25,7 +25,7 @@ class Collaborate extends React.Component {
     }
     render() {
 return(<div>TEST</div>)
-        }
+      
        
 // <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
