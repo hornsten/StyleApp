@@ -189,6 +189,7 @@ class PrivateChatSection extends React.Component {
                 // for chat bubbles
                 if (result.username === component.props.username){
 
+
                         userChat =  <div className="talk-bubble tri-left round btm-left-in">
                             <div className="row">
                                 <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
@@ -197,6 +198,7 @@ class PrivateChatSection extends React.Component {
                                 { chatmessage }
                             </div>
                         </div>
+
 
                 } else {
                            userChat =  <div className="talk-bubble tri-right round btm-right-in">
@@ -210,10 +212,12 @@ class PrivateChatSection extends React.Component {
                 }
 
 
+
                 return <div><div className="row results" key={result._id}>
                    
                     <div className="col-md-12">
                         {userChat}
+
                     </div>
                 </div>
                 </div>
