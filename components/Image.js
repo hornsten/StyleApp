@@ -39,42 +39,19 @@ export default class Image extends Component {
      type: PropTypes.string.isRequired,
     isDropped: PropTypes.bool.isRequired,
   };
-ondragstart(e){
+  ondragstart(e){
 
-  // sadded by fiona
-        // var imageSrc = ReactDOM.findDOMNode(this.drag)
-        // console.log("img", imageSrc);
-        // e.dataTransfer.setData('text/uri-list', imageSrc);
-   
-        // e.dataTransfer.setData('text/uri-list',   e.target.src);
-        // /console.log(e.target.result, "result");
-        // console.log(result);
-        // e.target.src gives the url of the file but I only want the file username
-        // so this should be put in the id field and grabbed from there
-        e.dataTransfer.setData('text/plain-text',e.target.id );
-        // console.log(e.target.id, "id");
-        // img.dataTransfer.setData('text/plain', 'Drag Me Button');
-        this.className = 'hover'; 
-        return false;
-    }
+      // e.target.src gives the url of the file but I only want the file username
+      // so this should be put in the id field and grabbed from there
+      e.dataTransfer.setData('text/plain-text',e.target.id );
+      this.className = 'hover'; 
+      return false;
+  }
 
   render() {
     const { id, src, isDropped, isDragging, connectDragSource } = this.props;
     const opacity = isDragging ? 0.4 : 1;
 
-    // var Img1 = new Iamge("100%", auto);
-    // Img1.crossOrigin = "Anonymous";
-    //  Img1.className = "noselect";
-    // Img1.src = {src};
-
-    // var myImage = new Image('80%', auto);
-    // myImage.crossOrigin = "Anonymous";
-    // myImage.className = "drag";
-    // myImage.src = {src};
-    // myImage.id ={id};
-    // myImage.ref = ref => this.drag = ref;
-    // myImage.onD
-    // console.log(myImage);
 
     return connectDragSource(
         <div style={{ ...style, opacity }} >

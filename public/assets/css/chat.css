@@ -37,6 +37,11 @@
  background:#ddd;
 
 }
+.media-body {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
 .user-list {
     float:left;
     width:100%;

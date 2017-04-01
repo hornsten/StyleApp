@@ -17,7 +17,6 @@ class UserList extends React.Component {
             var connecteduser = "";
             var component=this;
             var currentroom = this.props.currentroom;
-            console.log( this.props.privateChatWaiting, "privateChatWaiting in users");
             var chatWaiting = this.props.privateChatWaiting;
 
             var resultComponents = this.props.users.map(function(result) {
@@ -33,8 +32,7 @@ class UserList extends React.Component {
                   connecteduser = <Button  bsStyle='default' key={result._id} className="user-list-other" active>{result.username}</Button>
             } 
             else if (result.username === chatWaiting){ 
-                    // maybe colour or animate!!!
-                    // <Button bsStyle="primary" bsSize="large" active>Primary button</Button>
+
                     connecteduser = <Button  key={result._id} active bsStyle='primary' active className="user-list-other" onClick={() => component.props.switchRoom(result.username, "Private")}><strong className="private-chat-waiting">{result.username}</strong></Button>
 
 

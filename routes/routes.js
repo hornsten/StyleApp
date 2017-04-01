@@ -28,10 +28,6 @@ var path = require('path');
             // get today's new magazines in date order
             var cutoff = new Date();
             cutoff.setDate(cutoff.getDate());
-            //  models.Magazine.find({}).sort({'created_at': -1}).exec(function(err, results){
-            //      console.log("in router", results);
-            //      res.json(results)      
-            //  })
 
              models.Magazine.aggregate([
                     {
@@ -44,7 +40,7 @@ var path = require('path');
                             }
                 }
                 ]).exec(function(err, results){
-                    //  console.log("in router", results[0].magazine_profile);
+
                  res.json(results)      
              })
    })
@@ -66,42 +62,21 @@ app.get('/', function(req, res){
 
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
             failureRedirect: '/'}), function(req,res, next){
-                console.log(req.user.username);
                 
             //successful auth  , redirect home 
             res.redirect('/');
-            // res.sendFile(__dirname + "../../public/Home.html");
-            // res.sendFile(path.resolve('public/profile.html'));
+
         }
         );
 
 
-//    app.post('/img', function(req, res){
-//         console.log(req.body, "req.body");
-//         var fs = require('fs');
-//             // fs.writeFile('ARRRRRRRRRRR.jpg', req.body, {encoding: 'base64'});
-//             fs.open("ARRRRRRRTEST.png", 'a', 0755, function(err, fd) {
-//             if (err) throw err;
-
-//             fs.write(fd, req.body, {encoding: 'base64'}, 'Binary', function(err, written, buff) {
-//                 fs.close(fd, function() {})
-//    })
-
-//             //  var data = img.replace(/^data:image\/\w+;base64,/, "");
-//             // var buf = new Buffer(data, 'base64');
-//             // fs.writeFile('image.png', buf);
-
-//    })
-//     })
-
    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
             failureRedirect: '/'}), function(req,res, next){
-                console.log(req.user.username);
+
                 
             //successful auth  , redirect home 
             res.redirect('/');
-            // res.sendFile(__dirname + "../../public/Home.html");
-            // res.sendFile(path.resolve('public/profile.html'));
+
         }
         );
 
@@ -111,7 +86,7 @@ app.get('/', function(req, res){
         //to allow CORS
         
 		models.Room.find({}, function(err, results){
-		console.log("rooms", results); 
+ 
 		if (err) return console.log(err);
 			res.json(results)
 		});
@@ -121,19 +96,15 @@ app.get('/', function(req, res){
    app.get('/closet/image/:item', function(req, res, next){
         if ( req.isAuthenticated()){
             var type = req.params.item;
-            // console.log("in here item" , type);
+
              models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){              
-                // return results.facebook.id;
-                // console.log(userid, "userid", results.facebook.id, "results.facebook.id");
-                // need to query the database here for images for requesting user
-            //    console.log("in here???? tooo", results);
+
             var userid =  results.facebook.id;
             models.Closet.find({"userid": userid, "type" : type}).exec(function(err, items){
                                     if (err) return console.log(err); 
                                         var returnObj= {type: type,
                                         results: items}
-                                        console.log(returnObj);
-                                    // console.log("or in here???? ", items);
+
                                         res.json(returnObj);
                 })
                 
@@ -143,7 +114,7 @@ app.get('/', function(req, res){
 
    // userprofileid is optional
    app.get('/profile/image/:userprofileid?', function(req, res, next){
-       console.log("eq.params.userprofileid", req.params.userprofileid)
+
         if ((req.isAuthenticated()) && (!req.params.userprofileid)){
             var src = req.body.name;
             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){ 
@@ -151,9 +122,9 @@ app.get('/', function(req, res){
                        
              })
         } else if (req.params.userprofileid){
-            console.log("user profileid" ,req.params.userprofileid);
+
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                console.log("results", results);
+
                 res.json(results.imgsrc)             
                        
              })
@@ -164,13 +135,13 @@ app.get('/updatestylemotto/:userprofileid?', function(req, res){
     if((req.isAuthenticated()) && (!req.params.userprofileid)){
         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-            // console.log("updating stylemotto...")
+
                 res.json(userInfo.stylemotto);
         })
     } else if (req.params.userprofileid){
-            console.log("getting stylemotto...")
+
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                  console.log(results.stylemotto)
+
                 res.json(results.stylemotto)             
                        
              })
@@ -179,9 +150,7 @@ app.get('/updatestylemotto/:userprofileid?', function(req, res){
 
 app.get('/profile/:userprofileid', function(req, res){
     if (req.params.userprofileid !== ''){
-            console.log("getting usernme...")
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                  console.log(results.facebook.firstName + " " + results.facebook.lastName)
                   var name = results.facebook.firstName + " " + results.facebook.lastName
                 res.json(name);            
                        
@@ -197,10 +166,8 @@ app.get('/profile/:userprofileid', function(req, res){
                     res.json(userInfo.blurb);
             })
         } else if (req.params.userprofileid){
-                // console.log("user stulemotto" ,req.params.userprofileid);
-                console.log("getting blurb...")
+
                 models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                    console.log(results.blurb)
                     res.json(results.blurb)             
                         
                 })
@@ -210,7 +177,6 @@ app.get('/profile/:userprofileid', function(req, res){
     app.get('/magazine/profile/:userid', function(req, res,next){
 
                 var userid = req.params.userid;
-                console.log("in here mag");
                 models.Magazine.find({"userid": userid}).sort({'date': -1}).limit(12).exec(function(err, results){
                     res.json(results)      
                 })
@@ -220,7 +186,6 @@ app.get('/profile/:userprofileid', function(req, res){
        if ( req.isAuthenticated()){
             var userid = req.params.userid;
              models.Magazine.find({"userid": userid}).exec(function(err, results){
-                 console.log("in router", results);
                  res.json(results)      
              })
         }
@@ -235,7 +200,6 @@ app.get('/profile/:userprofileid', function(req, res){
             var userid = req.params.userid;
 
             models.Magazine.find({userid: userid, description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
-                    console.log("in router", results);
                     res.json(results)      
             })
         }
@@ -244,10 +208,6 @@ app.get('/profile/:userprofileid', function(req, res){
 
  app.get('/magazine/keywords/:search', function(req, res,next){
             var searchTerm = req.params.search;
-            // models.Magazine.find({description: {$regex: searchTerm, $options: 'i'}}).exec(function(err, results){
-            //         console.log("in router", results);
-            //         res.json(results)      
-            // })
              models.Magazine.aggregate([
                     {
                $lookup:
@@ -259,7 +219,6 @@ app.get('/profile/:userprofileid', function(req, res){
                             }
                 },  { $match: { 'description' : {$regex: searchTerm, $options: 'i'} } }
                 ]).exec(function(err, results){
-                     console.log("in router", results);
                  res.json(results)      
              })
 
@@ -274,7 +233,6 @@ app.get('/profile/:userprofileid', function(req, res){
 app.post('/profileimageupload', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
-                // console.log(results);
                 var filepath = '/../public/assets/img/' + req.body.name;
                 var fileName = __dirname + '/../public/assets/img/' + req.body.name;
                 var userid = results.facebook.id;
@@ -285,13 +243,10 @@ app.post('/profileimageupload', function(req, res,next){
 
                 fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
                     fs.close(fd, function() {
-                        console.log('File saved successful!');
-                        console.log(fileName, "filename");
+
                         cloudinary.uploader.upload( fileName, function(result) { 
                             // remove old tmp file
                             fs.unlinkSync(fileName);
-                            console.log("result",result);
-                            // var filelocation = result.url;
                             // save to the database
                             models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {imgsrc: result.secure_url}}).exec(function(err, userInfo){             
                                     if (err) return console.log(err); 
@@ -326,7 +281,6 @@ app.post('/updatestylemotto', function(req, res){
     if(req.isAuthenticated()){
         models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {stylemotto: req.body.stylemotto}}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-            console.log("updating stylemotto...")
                 res.json(userInfo);
         })
     }
@@ -336,7 +290,6 @@ app.post('/updateblurb', function(req, res){
     if(req.isAuthenticated()){
         models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {blurb: req.body.blurb}}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-             console.log("updating blurb...")
                 res.json(userInfo);
         })
     }
@@ -346,7 +299,7 @@ app.post('/updateblurb', function(req, res){
     app.post('/closet/image/new/', function(req, res,next){
        if ( req.isAuthenticated()){
             models.User.findOne({_id: req.session.passport.user}, function(err, results){
-                console.log(results, "results");
+
                 var userid = results.facebook.id;
                 var usernameNoSpaces = results.facebook.firstName+'_'+results.facebook.lastName;
                 // create a unique name for the file
@@ -356,28 +309,20 @@ app.post('/updateblurb', function(req, res){
                 var fileName = __dirname + '/../public/assets/img/' + uniqueFileName;
                 // remove .png extension
                 var publicFileName = uniqueFileName.slice(0, -4);
-                console.log("new filename", fileName);
                 
                 fs.open(fileName, 'a', 0755, function(err, fd) {
                 if (err) throw err;
 
                 fs.write(fd, req.body.buffer, null, 'Binary', function(err, written, buff) {
                     fs.close(fd, function() {
-                        console.log('File saved successful!');
-                        // var filePath = '/../public/assets/img/' + uniqueFileName;
                         cloudinary.uploader.upload( fileName, function(result) { 
-
-
-                            console.log("result",result);
                             fs.unlinkSync(fileName);
-                            // var filelocation = result.url;
                             // save to the database
                             var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, 
                                 filename: uniqueFileName, type: req.body.type, 
                                 src: result.secure_url, created_at:  Date.now()});
                             newClosetItem.save().then(function(){
                                 if (err) return console.log(err); 
-                                console.log("saving item to db");
                                 return;
                             		// need to updaet user closet too *****
                             }).then(function(){
@@ -386,7 +331,6 @@ app.post('/updateblurb', function(req, res){
                                     if (err) return console.log(err); 
                                         returnObj= {type: req.body.type,
                                         results: items}
-                                    // console.log("or in here???? ", items);
                                         res.json(returnObj);
                                     })
                             })
@@ -413,18 +357,12 @@ app.post('/updateblurb', function(req, res){
         });
 
         } 
-    //    res.end();
+
 })
 
     app.get('/user', function(req, res, next){
-                //to allow CORS
-        // res.header("Access-Control-Allow-Origin", "*");
-        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        // var userdetails = req.session.passport.user;
-		// models.Room.find({}, function(err, results){
 	   if ( req.isAuthenticated()){
             models.User.find({_id: req.session.passport.user}, function(err, results){
-                    console.log("user detaiks", results); 
                     
                     res.json(results);
                     // if (err) return console.log(err);
@@ -435,7 +373,7 @@ app.post('/updateblurb', function(req, res){
             res.json({})
        }
 		
-        // res.json(req.session.passport.user);
+
 	});
  // to allow CORS
 app.use(function(req, res, next) {

@@ -23,7 +23,6 @@ class AllMagazines extends React.Component {
     }
    
     handleClick(e, userid){
-        console.log("profile", userid);
         // use the userid to display modal or something
 
         // launch the modal
@@ -31,17 +30,16 @@ class AllMagazines extends React.Component {
             type: 'PROFILE_MODAL',
             profileModal: true
         })
- console.log("handle click to launch modal", store.getState())
 
     }
     render() {
         var component = this;
-        // console.log('ALL MAGAZINES!!: ',this.props.allmagazines);
+
         if (this.props.allmagazines){
           
                 var resultComponents = this.props.allmagazines.map(function(result) {
                 // dont hyperlink current room
-                // console.log("result", result)
+
                 if (result.magazine_profile){
                       var profileUserid = result.magazine_profile[0].facebook.id;
                 }

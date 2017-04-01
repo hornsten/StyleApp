@@ -5,6 +5,8 @@ import {Link} from 'react-router';
 import chathelper from "../app/utils/chathelper.js";
 import FaCommentO from 'react-icons/lib/fa/comment-o';
 import FaUser from 'react-icons/lib/fa/user';
+import FaHome from 'react-icons/lib/fa/home';
+import FaWeChat from 'react-icons/lib/fa/wechat';
 import FaUserPlus from 'react-icons/lib/fa/user-plus';
 import FaLeanpub from 'react-icons/lib/fa/leanpub';
 import FaLightbulbO from 'react-icons/lib/fa/lightbulb-o';
@@ -56,19 +58,24 @@ class NavBar extends Component {
             loginStatus = <div>
                 <ul className="nav navbar-nav">
                     <li>
-                        <Link to='/closet'><FaLightbulbO className="nav-icon"/>
-                            Create</Link>
-                    </li>
+                        <Link to='/'><FaHome className="nav-icon"/>
+                            Home</Link>
+                        </li>
+
                     <li>
-                        <Link to='/profile'><FaLightbulbO className="nav-icon"/>
+                        <Link to='/profile'><FaUser className="nav-icon"/>
                             Profile</Link>
                     </li>
+                    <li>
+                        <Link to='/closet'><FaLightbulbO className="nav-icon"/>
+                            Create</Link>
+                        </li>
                     <li>
                         <Link
                             to='/private'
                             onClick={this
                             .handlePrvtClick
-                            .bind(this)}><FaUser className="nav-icon"/>
+                            .bind(this)}><FaUserPlus className="nav-icon"/>
                             Style Consultation</Link>
                     </li>
                     <li>
@@ -76,7 +83,7 @@ class NavBar extends Component {
                             to='/group'
                             onClick={this
                             .handleGroupClick
-                            .bind(this)}><FaUserPlus className="nav-icon"/>
+                            .bind(this)}><FaWeChat className="nav-icon"/>
                             Collaborate
                         </Link>
                     </li>

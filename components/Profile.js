@@ -44,7 +44,7 @@ class Profile extends React.Component {
 
   addSearch(e, message) {
         // tell server to execute 'sendchat' and send along one paramete
-        console.log("serach", this.props.searchUseid);
+
         if (e.keyCode == 13) {
             var trimMessage = message.trim();
             helper.searchMagazinesUserid(store, trimMessage, this.props.userid);
@@ -57,7 +57,6 @@ class Profile extends React.Component {
 
     updateSearch(e){
 
-        console.log(e.target.value, "search")
         store.dispatch({ 
             type: 'ADD_SEARCH_USERID',
             searchUserid: e.target.value
@@ -86,8 +85,7 @@ class Profile extends React.Component {
       let editClicked = () => {
         self.setState({editOn: true})
       }
-      console.log(this)
-      // let avatarSRC =  this.props.profile_image ? noImage : profile_image;
+
 
           return(
               <div>         

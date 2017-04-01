@@ -31,10 +31,7 @@ class InLineEdit extends React.Component {
        helper.getBlurb(store,"");
     }
     dataChanged(data) {
-        // data = { description: "New validated text comes here" }
-        // Update your model from here
-        console.log(data)
-        //  this.setState({...data})
+
          if (data.stylemotto){
             helper.setStyleMotto(data.stylemotto,store); 
               store.dispatch({

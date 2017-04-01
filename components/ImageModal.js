@@ -31,13 +31,11 @@ class ImageModal extends React.Component{
             type: 'PROFILE_MODAL',
             profileModal: false
         })
-        console.log("closeModal", store.getState())
+
     }
 
     render(){
 
-        console.log("render modal", store.getState())
-    // if (this.props.profileModal){
 
         var showProfileModal =
 

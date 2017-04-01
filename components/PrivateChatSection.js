@@ -1,17 +1,13 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-// // import Chat from "./Chat.js";
-// import CurrentUserAndRoom from "./CurrentUserAndRoom.js";
-// import ChatInput from "./ChatInput.js";
-// import ChatHistory from "./ChatHistory.js";
 import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import io from 'socket.io-client'
 import {Modal, Dialog, Button} from 'react-bootstrap';
 import ChatModal from  './ChatModal';
-// let socket = io(`http://localhost:8000`)
+
 var socket = io.connect();
 
 
@@ -19,75 +15,27 @@ class PrivateChatSection extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.updatechat = this.updatechat.bind(this);
         chathelper.updatechat_listener(store);
         chathelper.connected_users(store, "private");
-        // chathelper.server_messages(store);
-        // chathelper.private_message(store);
-
-        // console.log("constructor", store.getState());
-        // socket.on('updatechat', (username, data) => {   
-        //      console.log("socket", username, data);
-        //     this.updatechat(username, data);
-        // })
+        
     }
      uploadFile(e) {
-        // tell server to execute 'sendchat' and send along one paramete
-        // if (e.keyCode == 13) {
-        //     chathelper.sendchat(message);
-        //     store.dispatch({ 
-        //         type: 'ADD_MESSAGE',
-        //         message: ""
-        //     })
-        // }
-        // console.log("calling this$$$", e.target.value);
-       
-  
 
-        // var uploadelem = this.fileInput.files;
-        // console.log("uploadelem", uploadelem);
         chathelper.file_upload(e, "upload");
         
     }
     ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
     ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
     ondrop(e) {
-            // console.log(" is this being called ondrop");
+
             this.className = 'success';
             e.preventDefault && e.preventDefault();
-            // console.log("item draffed", e.dataTransfer.getData('text/plain-text'))
+
             chathelper.file_upload(e, "dnd");
-            // this.className = '';
-            // e.dataTransfer.getData('text/plain-text');
-        //    console.log(url, "url");
-        //     // now do something with:
-        //     var files = e.dataTransfer.files;
-
-        //     // process all File objects
-        //     // for (var i = 0, file; file = files[i]; i++) {
-        //         console.log( files, "files");
-        //     // }
-        //*****FOR TESTING */
-
 
             return false;
 };
-    // updatechat(username, data){
-    //         console.log("callint this udate caht function", username, data);
-    //         store.dispatch({ 
-    //             type: 'CHAT_USER',
-    //             chatuser: username
-    //         },
-    //         { 
-    //             type: 'CHAT_MSG',
-    //             chatmsg: data
-    //         })
-    // }
-    // addMessage(message) {
-    //     // tell server to execute 'sendchat' and send along one parameter
-    //     console.log("am i getting here");
-    //     chathelper.sendchat(message);
-    // }
+
     addMessage(e, message) {
         // tell server to execute 'sendchat' and send along one paramete
         if (e.keyCode == 13) {
@@ -98,8 +46,6 @@ class PrivateChatSection extends React.Component {
                 type: 'ADD_MESSAGE',
                 message: ""
             })
-
-        //    console.log("add Message", store.getState());
 
         }
 
@@ -116,59 +62,28 @@ class PrivateChatSection extends React.Component {
 
     componentDidUpdate() {
         var node = ReactDOM.findDOMNode(this.chat);
-        // console.log(node);
         node.scrollTop = node.scrollHeight;
     }
     componentDidMount() {
         this.textInput.focus();
-        // console.log("did mount", store.getState());
-        // commented out 29 Mar
-        // store.dispatch({ 
-        //     type: 'PRIVATE_MODAL',
-        //     showModal: false
-        // })
-        // store.dispatch({ 
-        //     type: 'PRIVATE_MESSAGE',
-        //     privatemessage: ""
-        // })
-
         var node = ReactDOM.findDOMNode(this.chat);
-        // console.log(node);
         node.scrollTop = node.scrollHeight;
-        // var chatDiv = ReactDOM.findDOMNode(this.chat);
-        // console.log("chatDV",chatDiv );
-        // chatDiv.scrollTop = chatDiv.scrollHeight;
-        /// *****for testing only!!!
-        // store.dispatch({ 
-        //     type: 'PRIVATE_MODAL',
-        //     showModal: false
-        // })
-//            var objDiv = document.getElementById("your_div");
-// objDiv.scrollTop = objDiv.scrollHeight;
-//     }
+
     }
 
-    // closeModal(){
-    //     store.dispatch({ 
-    //         type: 'PRIVATE_MODAL',
-    //         showModal: false
-    //     })
-    // }
 
  
     render() {
-        // console.log("this.props.privatemessage", this.props.privatemessage);
-        // console.log("this.props.privatemessage store", store.getState());
-        // console.log("this.props.showModal", this.props.showModal);
+
        var chatmessage = this.props.chat;
        var component = this;
        if (this.props.chat){
            if (this.props.chat.length !== 0){
                 var resultComponents = this.props.chat.map(function(result) {
-                    // console.log(result.type)
+
                 if (result.type === "file"){
                      var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
-                    // console.log("I am in privaet chat", chatmessage);
+
                 } else {
                     var chatmessage =  <div>{result.message}</div>
                 }
@@ -227,10 +142,6 @@ class PrivateChatSection extends React.Component {
 
        }
         var alertMessage = "";
-    //     if (this.props.privatemessage){
-    //         var alertMessage = this.props.privatemessage;
-    //    }
-
         var chattingwith = "";
         
 
