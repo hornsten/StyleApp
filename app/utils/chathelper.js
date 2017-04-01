@@ -105,7 +105,9 @@ var chathelper = {
 
         updateclothesbin: (store) => {
              socket.on('updateclothesbin', function (data){
-
+                // console.log("is the closthes bin in here", data.item, data.index);
+                // console.log("store Obj in clothesbin", store.getState());
+                console.log("update clothese bine Data", data);
                 store.dispatch({ 
                     type: 'UPDATE_ITEM_ID',
                     itemid: data.item.id
@@ -123,6 +125,7 @@ var chathelper = {
                     type: 'UPDATE_ITEM',
                     items: data.item
                 })
+                console.log("store Obj after dispatch clothesbin", store.getState());
                 
             })
 

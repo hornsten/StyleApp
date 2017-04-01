@@ -384,6 +384,7 @@ io.sockets.on('connection', function (socket) {
 		if (socket.room !== "Private"){
 
 		    var returnObj= { index: index, item: item};
+			console.log(returnObj);
 			io.sockets.in(socket.room).emit('updateclothesbin', returnObj);
 		}
 	})

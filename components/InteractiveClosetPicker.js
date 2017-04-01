@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import update from 'react/lib/update';
 import ReactDOM from "react-dom";
@@ -10,9 +11,6 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import helper from "../app/utils/helper.js";
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import FaLeanpub from 'react-icons/lib/fa/leanpub';
-import Magazine from './Magazine';
 var html2canvas = require('html2canvas');
 
 
@@ -25,7 +23,7 @@ class InteractiveClosetPicker extends React.Component {
       chathelper.new_magazine_item_listener(store);
       this.resetClothesbins = this.resetClothesbins.bind(this);
       this.updateClothesBin = this.updateClothesBin.bind(this);
-      this.updateDescription = this.updateDescription.bind(this);
+      // chathelper.updatecloset_listener(store);  // commented out for now as i dont think this does anything
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
         clothesbins: [
@@ -43,14 +41,47 @@ class InteractiveClosetPicker extends React.Component {
 
       
   }
-
-
+// componentWillReceiveProps(){
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// // shouldComponentUpdate(){
+// //   console.log("shouldComponentUpdate")
+// // }
+// componentWillUpdate(){
+//   console.log("componentWillUpdate")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// componentDidUpdate(){
+//   console.log("componentDidUpdate")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
+// componentWillMount(){
+//   console.log("componentWillMount")
+//   console.log("componentWillReceiveProps")
+//      if (this.props.items) {
+//        console.log(this.props.items, "this.props.items");
+//       this.handleDrop(this.props.index, this.props.items).bind(this);
+//     } 
+// }
 isDropped(imageId) {
     return this.state.droppedImageIds.indexOf(imageId) > -1;
   }
   componentDidMount(){
     // get images for each section
 
+    console.log("store Obj in interactive did mount", store.getState());
     helper.getImages(store, "top");
     helper.getImages(store, "bottom");
     helper.getImages(store, "accessory");
@@ -69,22 +100,42 @@ isDropped(imageId) {
       type: 'SUCCESSFUL_SAVE',
       imagesavedsuccess: false
     })
-    store.dispatch({ 
-        type: 'SAVING_MAGAZINE_IMG',
-        saving_magazine_img: false
-    })
+
 }
 componentDidUpdate(prevProps, prevState) {
   // only update chart if the data has changed
 
-  if ((prevProps.items !== this.props.items)){
+// console.log(prevProps, "prevprops");
+console.log("index", prevProps.index, this.props.index)
+console.log("items", prevProps.items , this.props.items) 
+console.log("itemid", prevProps.itemid, this.props.itemid)
+if ((prevProps.items !== this.props.items)){
+  //  console.log("this prpos**********d");
+   this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
+} 
+// console.log("state of store", store.getState())
+// var Items = this.props.items;
+// var Index = this.props.index;
+// var ItemID = this.props.itemid
+// if  ((Items) && (Index) && (ItemID)){
+//   console.log("this prpos.", this.props.index, this.props.items, this.props.itemid);
+//   this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
+// }
 
-    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
-  } 
+  // if (prevProps.data !== this.props.data) {
+  //   this.chart = c3.load({
+  //     data: this.props.data
+  //   });
+  // }
 }
 uploadFile(e) {
   var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
-
+  // console.log(itemType, "itemType");
+  // console.log("calling this$$$", e.target.value);
+  // Make sure a valid type entered before saving file
+  // console.log("this.props.itemtype", this.props.itemtype);
+   // Make sure a valid type entered before saving file
+  // console.log("itemtype", itemType);
   //reset old error message
   store.dispatch({ 
   type: 'CLOSET_ERROR',
@@ -100,41 +151,62 @@ uploadFile(e) {
       closeterror: true
     })
      
+   
+    // send error message
+    // store.dispatch({ 
+    //   type: 'INPUT_FILE',
+    //   file: e.target.files
+    // })
 
   }
 
 }
  handleClick(e) {
   var userid = this.props.userid;
-  var component = this;
   e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
       logging: true,
       allowTaint: true, 
+      // proxy: 'http://localhost:8080',  // removed 29 Mar
       onrendered: function (canvas) {
-
           var img = canvas.toDataURL();
+
+          //  console.log(img,"img");
+          // fs = require('fs');
+          // sys = require('sys');
+          // string generated by canvas.toDataURL()
+          // // var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0"
+          //     + "NAAAAKElEQVQ4jWNgYGD4Twzu6FhFFGYYNXDUwGFpIAk2E4dHDRw1cDgaCAASFOffhEIO"
+          //     + "3gAAAABJRU5ErkJggg==";
           // strip off the data: url prefix to get just the base64-encoded bytes
           var data = img.replace(/^data:image\/\w+;base64,/, "");
         
-          if (component.props.description){
-          
-            chathelper.img_upload(data, userid, component.props.description, store);
-            // reset description
-            store.dispatch({ 
-                  type: 'ADD_DESCRIPTION',
-                  description: ""
-            })
-            
-          }
-        
+          chathelper.img_upload(data, userid);
+      
+          // .replace(/^data:image\/png;base64,/, "");
+          // var binaryData = new Buffer(img, 'base64').toString('binary');
+          // console.log(img);
+          // console.log("img", img);
+      
+
+          // canvas.toBlob(function(blob) {
+          //   // var newImg = document.createElement('img'),
+          //       // url = URL.createObjectURL(blob);
+          //       console.log("blob", blob);
+          //       chathelper.img_upload(blob);
+          //   // newImg.onload = function() {
+          //   //   // no longer need to read the blob so it's revoked
+          //     // URL.revokeObjectURL(url);
+          //   // };
+          // }) 
+          // window.open(img);
         }
   
   })
 }
 handleItemType(e){
-
+  // console.log("item type chagne this$$$", e.target.id);
   store.dispatch({ 
       type: 'TYPE_CHANGE',
       itemtype: e.target.value
@@ -147,6 +219,9 @@ handleItemType(e){
     type: 'SUCCESSFUL_SAVE',
     imagesavedsuccess: false
   })
+
+
+    console.log("store Obj in interactive on regular state change", store.getState());
 
   // reset any old file in input box
   ReactDOM.findDOMNode(this.inputEntry).value = "";
@@ -168,24 +243,9 @@ this.setState({
 
            this.setState({droppedImageIds: []});
 
-          store.dispatch({ 
-              type: 'SAVING_MAGAZINE_IMG',
-              saving_magazine_img: false
-          })
-
 }
 
-  updateDescription(e){
-        store.dispatch({ 
-            type: 'ADD_DESCRIPTION',
-            description: e.target.value
-        })
-        store.dispatch({ 
-              type: 'SAVING_MAGAZINE_IMG',
-              saving_magazine_img: false
-        })
-
-    }
+// // 
    
    render() {
        
@@ -289,14 +349,10 @@ if (this.props.flair){
       if (this.props.imagesavedsuccess){
          message = "File Successfully Saved";
       }
-      var img_message = "";
-      if (this.props.saving_magazine_img){
-        img_message = "File Successfully Saved";
-      }
       return (
-         <section className="closet-container">
+         <section className="container-fluid closet-container">
         
-            <div id='clothesSet' className="col-xs-12 col-sm-6 closet-block rel"> 
+            <div id='clothesSet' className="col-xs-12 col-md-7 closet-block rel"> 
 
         <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
@@ -309,76 +365,9 @@ if (this.props.flair){
              />,
            )}
         </div>
-            {/* Needed to add a description for search and display */}
-            <input placeholder="Please add a description" type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
-            <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
-            <button onClick={this.resetClothesbins} className="btn btn-pink outline round btn-lg">Reset</button>
-            {img_message}    {/* Says File Saved Successfully */}
-          </div>
-
-             <div className="col-sm-6 closet-block rel">
-             <div className="clothes-items">
-                    <div className="closet-tabs-container">
-                       <div className="closet-tabs-container">
-              <Tabs onSelect={this.handleSelect} selectedIndex={2}>
-                <TabList>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-shirt.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-pants.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-dress.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-shoes.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-purse.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-accessory.png'></img>
-                  </Tab>
-                  <Tab>
-                    <img className='icons' src='../assets/img/i-flair.png'></img>
-                  </Tab>
-                  <Tab><FaLeanpub className="icons"/></Tab>
-
-                </TabList>
-
-                <TabPanel>
-                  {topResults}
-                </TabPanel>
-                <TabPanel>
-                  {bottomResults}
-                </TabPanel>
-                <TabPanel>
-                  {dressResults}
-                </TabPanel>
-                <TabPanel>
-                  {shoeResults}
-                </TabPanel>
-                <TabPanel>
-                  {bagResults}
-                </TabPanel>
-                <TabPanel>
-                  {accessoryResults}
-                </TabPanel>
-                <TabPanel>
-                  {flairResults}
-                </TabPanel>
-                <TabPanel>
-                  <Magazine/>
-                </TabPanel>
-              </Tabs>
-            </div>
-                       
-                       
-                       
-                         
-                 </div>
-                  <div className="drop-box">
+         <button onClick={(e) => this.handleClick(e)} className="btn btn-primary btn-lg">Save</button>
+        <button onClick={this.resetClothesbins} className="btn btn-primary btn-lg">Reset</button>       
+      </div>
         <div className="form-group">
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
@@ -393,14 +382,52 @@ if (this.props.flair){
           <option id="shoes" value="shoes">SHOES</option>
         </select>
       </div> 
-     
         <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
          {message}
-          </div>
+             <div className="col-md-5 closet-block">
+             <div className="clothes-items">
+                    <div className="closet-tabs-container">
+                        <div className="row">
+                            <li>Shoes</li>
+                            { shoeResults}
+                        </div>
+                        <div className="row">
+                            <li>Tops</li>
+                            {topResults}
+                         </div>
+                         <div className="row">
+                            <li>Dresses</li>
+                            { dressResults}
+                        </div>
+                         <div className="row">
+                            <li>Bags</li>
+                            { bagResults}
+                        </div>
+                         <div className="row">
+                            <li>Accessories</li>
+                            { accessoryResults}
+                        </div>
+                        <div className="row">
+                            <li>Flair</li>
+                            {flairResults}
+                        </div>
+                        <div className="row">
+                            <li>Bottoms</li>
+                            {bottomResults}
+                        </div>
+                      
+                        <div id="gallery">
+                        
+                        {/*{clothesImages}*/}
+                         <div style={{ overflow: 'hidden', clear: 'both' }}>
+                            
+                       
+                    </div>
+                 </div>
             </div>
             </div>
    
-    
+    </div>
 </section>
       )
    }
@@ -439,7 +466,7 @@ if (this.props.flair){
 const mapStateToProps = (store,ownProps) => {
 
     return {
-        userid: store.chatState.userid,
+        userid: store.userState.userid,
         updateClosetPicker: store.closetState.updateClosetPicker,
         updateClosetItems: store.closetState.updateClosetItems,
         images: store.closetState.images,
@@ -459,8 +486,6 @@ const mapStateToProps = (store,ownProps) => {
         itemid: store.closetState.itemid,
         itemsrc: store.closetState.itemsrc,
         items: store.closetState.items,
-        description: store.closetState.description,
-        saving_magazine_img: store.closetState.saving_magazine_img,
 
     }
 
@@ -469,4 +494,3 @@ const mapStateToProps = (store,ownProps) => {
 export default connect(mapStateToProps)(InteractiveClosetPicker);
 
            
-       
