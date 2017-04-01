@@ -38,7 +38,7 @@ class Main extends Component{
                     </div>
                         <div className="footer">    
                              <div className="container">
-                                 <p className="text-muted">&copy; Company 2017</p>
+                                 <p className="text-muted">&copy; 2017 Fiona Hegarty, Jessica Hornsten, and Mitali Naik</p>
                             </div>
                         </div>
                     </div> 

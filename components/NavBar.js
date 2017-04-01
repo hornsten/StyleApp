@@ -106,9 +106,7 @@ class NavBar extends Component {
                             <li>
                                 <Link to='/profile'><FaUser className="nav-icon"/>My Profile</Link>
                             </li>
-                            <li>
-                                <a href="#">Something else here</a>
-                            </li>
+                        
                             <li role="separator" className="divider"></li>
                             <li>
                                 <Link to='/' onClick={() => this.handleLogout()}><FaLock className="nav-icon"/>Log Out</Link>
