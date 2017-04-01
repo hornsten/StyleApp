@@ -51,7 +51,7 @@ class AllMagazines extends React.Component {
                     <div className="col-sm-6 col-md-4">
                         <div className="thumbnail">
                             <img src={result.src} />
-                            <div><strong>Style Item Desription</strong> {result.description}</div> 
+                            <div><strong>Style Item Description</strong> {result.description}</div> 
                             <div><strong>Name</strong> {result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</div> 
                             <div><strong>Stylist Style Motto</strong> {result.magazine_profile[0].stylemotto}</div> 
                             <div><strong>About Stylist</strong> {result.magazine_profile[0].blurb}</div>

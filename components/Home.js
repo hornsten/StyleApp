@@ -6,6 +6,7 @@ import AllMagazines from './AllMagazines';
 import {Modal, Dialog, Button} from 'react-bootstrap';
 import ChatModal from  './ChatModal';
 import {connect } from 'react-redux';
+import FaSearch from 'react-icons/lib/fa/search';
 
 
 class Home extends React.Component {
@@ -46,7 +47,7 @@ class Home extends React.Component {
 <div>        
     <div id="sharp" className="jumbotron"> 
     <div className="row">
-       <div className="col-xs-4">
+       <div className="col-xs-12 col-sm-4">
        <h1>Style App</h1>
        <ul>
        <li><h4>Upload your wardrobe</h4></li>
@@ -54,7 +55,7 @@ class Home extends React.Component {
        <li><h4>Share your style with your friends!</h4></li>  
        </ul>
        </div>
-       <div className="col-xs-8">
+       <div className="col-xs-12 col-sm-8">
       
         <video id="video-background" autoPlay loop width="auto" height="400">
              <source src="../assets/img/style_video.m4v" type="video/mp4"></source>
@@ -64,8 +65,8 @@ class Home extends React.Component {
     </div>
        <div className="magazine">  
                  {/* Search bar for magazines*/}
-                 <p>Search for Keywords:</p>
-                <input type="text" value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
+                
+                <input type="text" placeholder='Search for Keywords' value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
   
                   
                   <ul>

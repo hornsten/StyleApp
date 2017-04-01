@@ -103,7 +103,7 @@ class Profile extends React.Component {
                             <div className="col-xs-10">                                        
                                   <ul>      
                                     <h3>{this.props.username}</h3>
-                                      <li><h3 className='username'>passionista123</h3></li>    
+                                      
                                       {/*<li>style motto: {}</li>
                                       <li>blurb:{}</li>*/}
                                       <InLineEdit />
@@ -114,8 +114,8 @@ class Profile extends React.Component {
                   </div>
                   
                   {/*Search Bar*/}
-                  <p>Search for Keywords:</p>
-                  <input type="text" value={this.props.searchUserid}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.searchUserid)} ref={input => this.textInput = input} />
+                
+                  <input type="text" placeholder="Search for Keywords" value={this.props.searchUserid}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.searchUserid)} ref={input => this.textInput = input} />
                   <Magazine />
               </div>)
       }
