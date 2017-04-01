@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import update from 'react/lib/update';
 import ReactDOM from "react-dom";
@@ -106,13 +105,13 @@ componentDidUpdate(prevProps, prevState) {
   // only update chart if the data has changed
 
 // console.log(prevProps, "prevprops");
-console.log("index", prevProps.index, this.props.index)
-console.log("items", prevProps.items , this.props.items) 
-console.log("itemid", prevProps.itemid, this.props.itemid)
+console.log(prevProps.index, this.props.index)
+console.log(prevProps.items , this.props.items) 
+console.log(prevProps.itemid, this.props.itemid)
 if ((prevProps.items !== this.props.items)){
-  //  console.log("this prpos**********d");
+   console.log("this prpos**********d");
    this.updateClothesBin(this.props.index, this.props.items, this.props.itemid);
-} 
+}
 // console.log("state of store", store.getState())
 // var Items = this.props.items;
 // var Index = this.props.index;
@@ -494,3 +493,4 @@ const mapStateToProps = (store,ownProps) => {
 export default connect(mapStateToProps)(InteractiveClosetPicker);
 
            
+       

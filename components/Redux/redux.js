@@ -122,32 +122,44 @@ const closetReducer = (state={}, action) => {
             return Object.assign({},state, {description: action.description});
         case 'SAVING_MAGAZINE_IMG':
             return Object.assign({},state, {saving_magazine_img: action.saving_magazine_img});
-
-        }
-        
-    return state;
-}
-
-
-const interactiveClosetReducer = (state={}, action) => { 
-    switch(action.type){
+            return Object.assign({},state, {items: action.items});
         case 'UPDATE_INDEX':
             console.log("UPDATE_INDEX");
-            return Object.assign({},state, {interactiveindex: action.interactiveindex});
+            return Object.assign({},state, {index: action.index});
+        case 'UPDATE_ITEM_ID':
+            console.log("UPDATE_ITEM_ID");
+            return Object.assign({},state, {itemid: action.itemid});
+        case 'UPDATE_ITEM_SRC':
+            console.log("UPDATE_ITEM_SRC");
+            return Object.assign({},state, {itemsrc: action.itemsrc});
         case 'UPDATE_ITEM':
             console.log("UPDATE_ITEM");
-            return Object.assign({},state, {interactiveitem: action.interactiveitem});
+            return Object.assign({},state, {items: action.items});
+            
         }
         
     return state;
 }
+
+
+// const interactiveClosetReducer = (state={}, action) => { 
+//     switch(action.type){
+//         case 'UPDATE_INDEX':
+//             console.log("UPDATE_INDEX");
+//             return Object.assign({},state, {interactiveindex: action.interactiveindex});
+//         case 'UPDATE_ITEM':
+//             console.log("UPDATE_ITEM");
+//             return Object.assign({},state, {interactiveitem: action.interactiveitem});
+//         }
+        
+//     return state;
+// }
 
 
 const reducers = combineReducers({
     chatState : chatReducer,
     userState : userReducer,
     closetState: closetReducer,
-    interactiveClosetState: interactiveClosetReducer,
     mainState: mainReducer,
 })
 
