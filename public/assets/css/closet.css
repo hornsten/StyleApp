@@ -37,7 +37,7 @@ height: 100%;
     overflow: scroll;
 }
 
-#drop-box {
+.drop-box {
    
     text-align: center;
     border: 3px double black;
