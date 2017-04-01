@@ -189,7 +189,7 @@ class PrivateChatSection extends React.Component {
                 return <div><div className="row results" key={result._id}>
                    
                     <div className="col-md-12">
-                        <div className="row">
+                        <div className="row talk-bubble tri-right round btm-left">
 
                             <p className="chat-stuff">{result.username}</p>
 
