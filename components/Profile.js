@@ -39,7 +39,7 @@ class Profile extends React.Component {
   }
 
   uploadFile(e) {     
-      helper.uploadToProfile(e, this.props.dispatch);   
+      helper.uploadToProfile(e, store);   
   }
 
   addSearch(e, message) {

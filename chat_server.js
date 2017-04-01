@@ -74,9 +74,8 @@ io.sockets.on('connection', function (socket) {
                     // console.log('File saved successful!');
 					var filePath = '/public/assets/img/' + uniqueFileName;
 					cloudinary.uploader.upload(fileName, function(result) { 
-
-
-					    // console.log("url",result.url);
+					    /// remove tmp file
+						fs.unlinkSync(fileName);
 						var filelocation = result.secure_url;
 						// save to the database
 						var newChatMessage = new models.Chat({ room: socket.room, username: socket.username, message: filelocation, type: "file", created_at:  Date.now()});
@@ -183,6 +182,8 @@ io.sockets.on('connection', function (socket) {
 				// console.log('File saved successful!');
 				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
+					// remove tmp file
+					fs.unlinkSync(filePath);
 					console.log("result", result);
 					// save to the database
 					var newMagazineItem = new models.Magazine({ "userid": userid, "imageid": uniqueFileName, "filename": fileNameWithExtension, "src": result.secure_url, "description": description});

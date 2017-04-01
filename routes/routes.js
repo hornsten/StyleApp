@@ -288,6 +288,8 @@ app.post('/profileimageupload', function(req, res,next){
                         console.log('File saved successful!');
                         console.log(fileName, "filename");
                         cloudinary.uploader.upload( fileName, function(result) { 
+                            // remove old tmp file
+                            fs.unlinkSync(fileName);
                             console.log("result",result);
                             // var filelocation = result.url;
                             // save to the database
@@ -367,6 +369,7 @@ app.post('/updateblurb', function(req, res){
 
 
                             console.log("result",result);
+                            fs.unlinkSync(fileName);
                             // var filelocation = result.url;
                             // save to the database
                             var newClosetItem = new models.Closet({ userid: userid, imageid: uniqueFileName, 

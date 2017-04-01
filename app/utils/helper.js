@@ -62,7 +62,9 @@ setBlurb: function(e, store){
 
 
     getProfileImage: function(store, userprofileid){
+        console.log("in get profile image*******", userprofileid);
         return axios.get('/profile/image/'+userprofileid).then(function(result){
+           console.log("in get profile image", result.data);
             if(result){
                 store.dispatch({
                     type: 'UPDATE_PROFILEIMAGE',
@@ -136,7 +138,7 @@ setBlurb: function(e, store){
     },
 
     /////////////////////////////   
-    uploadToProfile: function(e, dispatch){
+    uploadToProfile: function(e, store){
                 var files = e.target.files || e.dataTransfer.files 
                 if (files) {
                     //send only the first one
@@ -154,11 +156,11 @@ setBlurb: function(e, store){
                         };
                         
                         return axios.post('/profileimageupload',postObj).then(function(result){
-                                 dispatch({
-                                    type:'UPDATE_PROFILEIMAGE',
+                                 store.dispatch({
+                                    type: 'UPDATE_PROFILEIMAGE',
                                     profile_image: result.data.imgsrc
                                 })
-                                console.log(result.data.imgsrc, "***what is this value of image post");
+                                console.log(store.getState(), "***what is this value of image post");
                         })
                     }//onload fn
                     reader.readAsBinaryString(file);
