@@ -136,22 +136,20 @@ class GroupChatSection extends React.Component {
                         // for chat bubbles
                         if (result.username === component.props.username){
 
-                                userChat =  <div className="talk-bubble tri-left round btm-left-in">
+                                userChat =  <div className="talk-bubble-pink tri-right round left-top">
                             <div className="row">
-                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
-                            </div>
-                            <div className="row">
-                                { chatmessage }
+                                <p className="talktext chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                           
+                                <p className="talktext chat-stuff">{ chatmessage }</p>
                             </div>
                         </div>
 
                         } else {
-                                userChat =  <div className="talk-bubble tri-right round btm-right-in">
+                                userChat =  <div className="talk-bubble-grey tri-right round btm-right-in">
                             <div className="row">
-                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
-                            </div>
-                            <div className="row">
-                                { chatmessage }
+                                <p className="talktext chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                            
+                                <p className="talktext chat-stuff">{ chatmessage }</p>
                             </div>
                         </div>
                         }
@@ -194,7 +192,8 @@ class GroupChatSection extends React.Component {
                 </div>
             </div>
 
-            var chatDislay = <div>
+            var chatDislay = 
+            <div>
                 <div className="row">
                     <div>
                         {headerText}
@@ -267,6 +266,7 @@ class GroupChatSection extends React.Component {
                     </div>
                     <div className="col-md-2"></div>
                 </div>
+            </div>
             </div>
         } else {
 

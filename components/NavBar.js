@@ -121,7 +121,7 @@ class NavBar extends Component {
                         backgroundImage: `url(${user.facebook.photo})`
                     }}>
 
-                        <a href="/auth/facebook"><FaFacebook className="icon"/>
+                        <a href="/auth/facebook"><FaFacebook className="nav-icon"/>
                             Login with Facebook</a>
                     </li>
 
