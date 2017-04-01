@@ -26,6 +26,14 @@ class ClosetItems extends React.Component {
       droppedImageIds: []
     };
   }
+      ondragstart(e){
+        // e.target.src gives the url of the file but I only want the file username
+        // so this should be put in the id field and grabbed from there
+        e.dataTransfer.setData('text/plain-text', e.target.src );
+       
+        this.className = 'hover'; 
+        return false;
+    }
 
   componentDidMount() {
     // get images for each section
@@ -58,10 +66,11 @@ class ClosetItems extends React.Component {
         .top
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index}
+          onDragStart={(e) => this.ondragstart(e)}/>,)
 
     }
 
@@ -71,10 +80,11 @@ class ClosetItems extends React.Component {
         .dress
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index}
+          onDragStart={(e) => this.ondragstart(e)}/>,)
 
     }
     if (this.props.bottom) {
@@ -83,10 +93,11 @@ class ClosetItems extends React.Component {
         .bottom
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index} 
+          onDragStart={(e) => this.ondragstart(e)}/>,)
     }
 
     if (this.props.shoes) {
@@ -95,10 +106,11 @@ class ClosetItems extends React.Component {
         .shoes
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index} 
+          onDragStart={(e) => this.ondragstart(e)}/>,)
     }
 
     if (this.props.bag) {
@@ -107,10 +119,11 @@ class ClosetItems extends React.Component {
         .bag
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index}
+          onDragStart={(e) => this.ondragstart(e)}/>,)
 
     }
 
@@ -120,10 +133,11 @@ class ClosetItems extends React.Component {
         .accessory
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index} 
+          onDragStart={(e) => this.ondragstart(e)}/>,)
          
     }
     if (this.props.flair) {
@@ -132,10 +146,11 @@ class ClosetItems extends React.Component {
         .flair
         .map((result, index) => <img
           className="closet-images"
-          id={result.imageid}
+          id={result.src}
           src={'/proxy/' + result.src}
           type={result.type}
-          key={result.type + '_' + index}/>,)
+          key={result.type + '_' + index}
+          onDragStart={(e) => this.ondragstart(e)}/>,)
 
     }
 
