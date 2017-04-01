@@ -46,13 +46,13 @@ class Home extends React.Component {
 <div>        
     <div id="sharp" className="jumbotron"> 
     <div className="row">
-       <div className="col-xs-12 col-sm-4">
-       <h1>Style App</h1>
-       <ul>
-       <li><h4>Upload your wardrobe</h4></li>
-       <li><h4>Create outfits</h4></li>
-       <li><h4>Share your style with your friends!</h4></li>  
-       </ul>
+       <div className="col-xs-12 col-sm-4 text-center">
+       <h1 className="app-title">Style App</h1>
+     
+       <h4>Upload your wardrobe</h4>
+       <h4>Create outfits</h4>
+       <h4>Share your style with your friends!</h4> 
+     
        </div>
        <div className="col-xs-12 col-sm-8">
       
