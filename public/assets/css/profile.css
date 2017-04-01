@@ -1,5 +1,7 @@
 
-.container .jumbotron { 
+.container .jumbotron,
+.container-fluid .jumbotron,
+ #sharp{ 
     background: transparent;
     border-radius: 0;
     border-bottom: 5px double #000;
