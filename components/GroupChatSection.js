@@ -105,9 +105,9 @@ class GroupChatSection extends React.Component {
             width: '100px',
             height: '100px'
         };
-        console.log("show modal group chat", this.props.showModal);
-        console.log("privatemessage group chat", this.props.privatemessage);
+
         var chatmessage = this.props.chat;
+        var component = this;
         if (this.props.chat) {
             if (this.props.chat.length !== 0) {
                 var resultComponents = this
@@ -132,18 +132,39 @@ class GroupChatSection extends React.Component {
 
                         var newdate = month + "/" + day + "/" + year + " " + hour + ":" + minutes;
 
+                        var userChat = "";
+                        // for chat bubbles
+                        if (result.username === component.props.username){
+
+                                userChat =  <div className="talk-bubble tri-left round btm-left-in">
+                            <div className="row">
+                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                            </div>
+                            <div className="row">
+                                { chatmessage }
+                            </div>
+                        </div>
+
+                        } else {
+                                userChat =  <div className="talk-bubble tri-right round btm-right-in">
+                            <div className="row">
+                                <p className="chat-stuff"><strong>{result.username}</strong> @ {newdate} </p>
+                            </div>
+                            <div className="row">
+                                { chatmessage }
+                            </div>
+                        </div>
+                        }
+
+
+
+
+
                         return <div>
                             <div className="row results talk-bubble tri-right round btm-left" key={result._id}>
 
                                 <div className="col-md-12">
-                                    <div className="row">
-
-                                        <p className="chat-stuff">{result.username}
-                                        @ {newdate}</p>
-                                    </div>
-                                    <div className="row">
-                                        <p className="chat-stuff">{chatmessage}</p>
-                                    </div>
+                                        {userChat}
                                 </div>
                             </div>
 
