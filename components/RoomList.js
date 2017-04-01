@@ -22,7 +22,7 @@ class RoomList extends React.Component {
                 } else {
                     // hyperlink not dsipalying properlyx
                     room = <div className="room-list-other" onClick={() => component.props.switchRoom(result.room, "Group")}> {result.room} </div>
-                    // console.log(room);
+
             }
                 return <div className="row results" key={result._id}>
                     <div className="col-md-4 text-center">{room}</div>
@@ -30,7 +30,6 @@ class RoomList extends React.Component {
             })
         }
        
-// <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
                     <div className="col-sm-12">
                         <div className="row results">{resultComponents}</div>

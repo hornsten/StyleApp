@@ -29,7 +29,6 @@ class Home extends React.Component {
 
     updateSearch(e){
 
-        console.log(e.target.value, "search")
         store.dispatch({ 
             type: 'ADD_SEARCH',
             search: e.target.value

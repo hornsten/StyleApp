@@ -17,8 +17,6 @@ class PrivateChat extends React.Component {
     constructor(props) {
         super(props);
 
-        // Functions must be bound manually with ES6 classes or Another way is to bind them inline, where you use them 
-        // this.handleUserData = this.handleUserData.bind(this);
         this.handleRoomData = this.handleRoomData.bind(this);
         this.switchRoom = this.switchRoom.bind(this);
 
@@ -37,7 +35,7 @@ class PrivateChat extends React.Component {
         })
     }
     switchRoom(newroom, chattype){
-        console.log("switch room before", store.getState());
+      
        // reset noticification if user clicks on this private chat
         if (newroom === this.props.privateChatWaiting){
                 // reset this prop
@@ -47,42 +45,23 @@ class PrivateChat extends React.Component {
                 })
         }   
        chathelper.switchRoom(newroom, chattype, store);
-       console.log("switch room after", store.getState());
+     
   
     }
-    // removed 28 Mar 
-    // privateChat(chatuser){
-    //     console.log("prvt chat user", store.getState());
-    //    chathelper.privateChat(chatuser, store);
-    //    console.log("prvt chat user", store.getState());
-    // }
+
     ondragstart(e){
-        // var imageSrc = ReactDOM.findDOMNode(this.drag)
-        // console.log("img", imageSrc);
-        // e.dataTransfer.setData('text/uri-list', imageSrc);
-   
-        // e.dataTransfer.setData('text/uri-list',   e.target.src);
-        // /console.log(e.target.result, "result");
-        // console.log(result);
+
         // e.target.src gives the url of the file but I only want the file username
         // so this should be put in the id field and grabbed from there
         e.dataTransfer.setData('text/plain-text', e.target.src );
-        console.log(e.target.src, "src");
-        // img.dataTransfer.setData('text/plain', 'Drag Me Button');
+
         this.className = 'hover'; 
         return false;
     }
 
-    //  <div className="col-s-2 col-s-2 col-md-2">
-    //                         <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom}/>
-    // //                     </div> 
-    // <div className="col-s-2 col-s-2 col-md-2">
-    //                        <img id="github.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/github.png" /> Drop here
-    //                          <img id="linkedin.png" ref={ref => this.drag = ref} className="drag" onDragStart={(e) => this.ondragstart(e)}  src="assets/img/linkedin.png" /> Drop here
 
-    //                     </div> 
     render() {
-        // console.log(this.props.rooms, "this.props.rooms");
+      
         return (<div className= "row">
                  
                         <div className="col-xs-12 col-s-4 col-md-4">

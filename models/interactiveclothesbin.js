@@ -8,8 +8,6 @@ var Schema = mongoose.Schema;
 // Create a Schema for capturing clicks. We'll use clickID to update the same clickCounter
 var interactiveClothesBinSchema = new Schema({
     conversationid: {type : String, required : true, unique : false},
-    // accepts: {type : String, required : true, unique : false},
-    // lastDroppedItem: {type : String, required : true, unique : false},
     item: {type : Object, required : true, unique : false},
     index: {type : String, required : true, unique : false},
     created_at: {type : Date, required : true, default: Date.now}

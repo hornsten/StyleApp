@@ -17,7 +17,6 @@ import FaLeanpub from 'react-icons/lib/fa/leanpub';
 class ClosetItems extends React.Component {
   constructor(props) {
     super(props);
-    // chathelper.updatecloset_listener(store);
 
     chathelper.new_magazine_item_listener(store);
 

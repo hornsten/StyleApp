@@ -10,25 +10,6 @@ import Profile from "../components/Profile.js";
 import RoomSummary from "../components/RoomSummary.js";
 import Home from "../components/Home.js";
 
-// e.g. sample
-// var routes = (s
-//     <Router history={hashHistory}>
-//         // <Route IndexRoute component={Main}>
-//         //     <Route path='/' component={Search}/>
-//         //     <Route path='/' component={Results} />
-//         //     <Route path='/' component={Saved}/>
-//         // </Route>  
-//     </Router>
-// )
-
-//   <Router history={hashHistory}>
-//     <Route path="/" component={App}>
-//       <Route path="/repos" component={Repos}/>
-//       {/* add the new route */}
-//       <Route path="/repos/:userName/:repoName" component={Repo}/>
-//       <Route path="/about" component={About}/>
-//     </Route>
-//   </Router>
 
 var routes = (
     <Router history={browserHistory}>

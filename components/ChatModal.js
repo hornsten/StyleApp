@@ -18,11 +18,7 @@ class ChatModal extends React.Component {
         })
     }
     render() {
-        console.log("in chat modale **** loggedin", this.props.loggedin);
-        console.log("show modal  chat", this.props.showChatModal);
-         console.log("privatemessage private chat", this.props.privatemessage);
-         console.log("looking for showChatModal in ChatModal", store.getState())
-        // var displayModal  = ""
+
          // verify user is logged in
          var isloggedin = this.props.loggedin;
          if (isloggedin){
@@ -34,9 +30,6 @@ class ChatModal extends React.Component {
 
                 
         }
-
-    
-    
 
         return (<div>
                     {displayModal}
