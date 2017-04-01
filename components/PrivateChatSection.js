@@ -179,10 +179,12 @@ class PrivateChatSection extends React.Component {
                    
                     <div className="col-md-12">
                         <div className="row">
-                            <strong>{result.username}</strong>
+                            <p className="chat-name">{result.username}</p>
                         </div> 
                         <div className="row">
+                            <div className="talk-bubble tri-right round btm-left">
                              { chatmessage }
+                             </div>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ class MagazineProfile extends React.Component {
                         <div className="thumbnail">
                         <img src={result.src} />
                         <div className="caption">
-                            <p><strong>Style Item Desription</strong> {result.description}</p>
+                            <p><strong>{result.description}</strong></p>
                         </div>
                     </div>
                   </div>

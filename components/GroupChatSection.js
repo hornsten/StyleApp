@@ -162,12 +162,15 @@ class GroupChatSection extends React.Component {
                     var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
                 } else if  (result.type === "text"){
                     // console.log("in here", result.type);
-                    var chatmessage =  <div className="col-md-8">{result.message}</div>
+                    var chatmessage =  <div>{result.message}</div>
                 }
-                return <div className="row results" key={result._id}>
-                    <div className="col-md-2"><strong>{result.username}</strong></div> 
-                            { chatmessage }
-                    <div className="col-md-2"></div>
+                return <div className="row results talk-bubble tri-right round btm-left" key={result._id}>
+                    <div className="talk-bubble tri-right round btm-left">
+                        <p className="chat-stuff">{ chatmessage }</p>
+                    <p className="chat-stuff">{result.username}</p>
+                            
+                            </div>
+                   
                 </div>
                 });
            }
@@ -232,8 +235,9 @@ class GroupChatSection extends React.Component {
        }
     
         return (<div>
-                 
+                
                   {chatDislay}
+                  
                 </div>);
     }
 };
