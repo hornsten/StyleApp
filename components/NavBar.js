@@ -151,7 +151,7 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <Link to='/' id="brand" className="navbar-brand"> Style App</Link>
+                        <Link to='/' id="brand" className="navbar-brand"> Style Genie</Link>
                        
                     </div>
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

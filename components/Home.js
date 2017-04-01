@@ -47,7 +47,7 @@ class Home extends React.Component {
     <div id="sharp" className="jumbotron"> 
     <div className="row">
        <div className="col-xs-12 col-sm-4 text-center">
-       <h1 className="app-title">Style App</h1>
+       <h1 className="app-title">Style Genie</h1>
      
        <h4>Upload your wardrobe</h4>
        <h4>Create outfits</h4>

@@ -50,7 +50,6 @@ const userReducer = (state={}, action) => {
         case 'IS_LOGGED_IN':
             return Object.assign({},state, {loggedin: action.loggedin});
         case 'UPDATE_PROFILEIMAGE':
-            console.log("updating profie image", action.profile_image);
             return Object.assign({}, state, {profile_image: action.profile_image});
         case 'UPDATE_STYLEMOTTO' :
             return Object.assign({}, state, {stylemotto: action.stylemotto});

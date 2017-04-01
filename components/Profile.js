@@ -122,8 +122,8 @@ class Profile extends React.Component {
 const mapStateToProps = (store,ownProps) => {
     return {
 
-      userid: store.chatState.userid,
-      loggedin: store.userState.loggedin,
+       userid: store.chatState.userid,
+       loggedin: store.userState.loggedin,
         users: store.chatState.users,
         username: store.userState.username,
         profile_image: store.userState.profile_image,
