@@ -125,15 +125,7 @@ class ClosetPicker extends React.Component {
     store.dispatch({type: 'SUCCESSFUL_SAVE', imagesavedsuccess: false})
     store.dispatch({type: 'SAVING_MAGAZINE_IMG', saving_magazine_img: false})
   }
-  componentWillUpdate() {
-   
-  }
-  componentDidUpdate() {
-   
-  }
-  componentWillMount() {
-   
-  }
+
   uploadFile(e) {
 
     var itemType = ReactDOM.findDOMNode(this.closetItemType).value;
@@ -180,7 +172,7 @@ class ClosetPicker extends React.Component {
 
     });
   }
-
+  handleItemType(e) {
     // console.log("item type chagne this$$$", e.target.id);
     store.dispatch({type: 'TYPE_CHANGE', itemtype: e.target.value})
     store.dispatch({type: 'ITEM_CHANGE', item: e.target.value})
