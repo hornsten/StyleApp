@@ -5,6 +5,11 @@
     background: transparent;
     border-radius: 0;
     border-bottom: 5px double #000;
+    padding-top:0;
+}
+
+#sharp {
+    padding-bottom:0;
 }
 
 ul {

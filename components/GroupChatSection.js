@@ -163,9 +163,11 @@ class GroupChatSection extends React.Component {
                     var chatmessage = <img src={result.message} alt="File Not Found" height="150" width="150" />
                 } else if  (result.type === "text"){
                     // console.log("in here", result.type);
-                    var chatmessage =  <div className="col-md-8">{result.message}</div>
+                    var chatmessage =  <div>{result.message}</div>
                 }
-                var d = new Date(result.created_at);
+
+                
+         var d = new Date(result.created_at);
                 var chiDate = new Date(d.setHours(d.getHours())).toString();
                 var dateObj = new Date(chiDate);
                 var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -180,13 +182,15 @@ class GroupChatSection extends React.Component {
                    
                     <div className="col-md-12">
                         <div className="row">
-                            <strong>{result.username}</strong> @ {newdate}
+                          
+                      <p className="chat-stuff">{result.username}</p> @ {newdate}
                         </div> 
                         <div className="row">
-                             { chatmessage }
+                       <p className="chat-stuff">{ chatmessage }</p>
                         </div>
                     </div>
                 </div>
+
                 </div>
                 });
            }
@@ -254,8 +258,9 @@ class GroupChatSection extends React.Component {
        }
     
         return (<div>
-                 
+                
                   {chatDislay}
+                  
                 </div>);
     }
 };
