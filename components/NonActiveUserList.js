@@ -1,7 +1,7 @@
 
 import ReactDOM from "react-dom";
 import React from "react";
-
+import {Modal, Dialog, Button} from 'react-bootstrap';
 
 class NonActiveUserList extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class NonActiveUserList extends React.Component {
 
             
             return <div className="row results" key={result._id}>
-                <div className="col-md-4 text-center">{result.username}</div>
+               <Button bsStyle='default' active className="user-list-other text-center">{result.username}</Button> 
             </div>
         });
     }

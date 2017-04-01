@@ -171,7 +171,18 @@ class PrivateChatSection extends React.Component {
                 } else {
                     var chatmessage =  <div>{result.message}</div>
                 }
-              
+                
+                var d = new Date(result.created_at);
+                var chiDate = new Date(d.setHours(d.getHours())).toString();
+                var dateObj = new Date(chiDate);
+                var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                var day = dateObj.getUTCDate();
+                var year = dateObj.getUTCFullYear();
+                var hour = dateObj.getHours();
+                var minutes = dateObj.getMinutes();
+
+                var newdate = month + "/" + day + "/" + year + " " + hour + ":" + minutes;
+                
                 // if (result.username){
 
                 // }
@@ -179,7 +190,11 @@ class PrivateChatSection extends React.Component {
                    
                     <div className="col-md-12">
                         <div className="row">
-                            <p className="chat-name">{result.username}</p>
+
+                            <p className="chat-stuff">{result.username}</p>
+
+                            <strong>{result.username}</strong> @ {newdate}
+
                         </div> 
                         <div className="row">
                             <div className="talk-bubble tri-right round btm-left">

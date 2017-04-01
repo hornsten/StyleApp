@@ -18,9 +18,11 @@ cloudinary.config(cloudinary_keys);
 app.use(siofu.router);
 
 // rooms available in chat - populate from database 
-var rooms = ["room1", "room2", "room3"];  /// only needed when populating data 
+var rooms = ["Special Occasions", "Fashion Forward", "Chic and Cheap",  "Accessory Lovers - Bags, Boots and More"];  /// only needed when populating data 
 var images = ["./assets/img/Room1.png", "./assets/img/Room2.png", "./assets/img/Room3.png"];  /// only needed when populating data 
-var description = ["This is the BLUE blah blah room.", "This is the RED blah blah room.", "This is the GREEN blah blah room."];  /// only needed when populating data 
+var description = ["Join your fellow sylistas to plan and discuss what to wear for your special day - be it a date, a wedding, vacation or just a lunch with friends.", 
+"Discuss the latest trends from Tokyo to Milan to London and New York - whatever your locale this is the place to be.", "Love luxury but not the prices - find out how to look a million dollars without spending a million dollars.",
+"If you believe that accessories make or break an outfit we want you here to share your views and ideas."];  /// only needed when populating data 
 models.Room.find({}, function(err, results){  
 	if (err) return console.log(err);
 	for (var i = 0; i< results.length; i++){
@@ -85,7 +87,8 @@ io.sockets.on('connection', function (socket) {
 								models.Chat
 									.find({room: socket.room, "created_at": {"$gte": cutoff }})
 									// .sort({'date': -1})
-									.sort({'created_at': -1})
+									// .sort({'created_at': -1})
+									.sort({created_at: 1})
 									.exec(function(err, results) {
 										if (err) return console.log(err);
 										// to everyone in that room including current client
@@ -136,7 +139,8 @@ io.sockets.on('connection', function (socket) {
 				models.Chat
 					.find({room: socket.room, "created_at": {"$gte": cutoff }})
 					// .sort({'date': -1})
-					.sort({'created_at': -1})
+					// .sort({'created_at': -1})
+					.sort({created_at: 1})
 					.exec(function(err, results) {
 						if (err) return console.log(err);
 						// to everyone in that room including current client
@@ -197,9 +201,6 @@ io.sockets.on('connection', function (socket) {
 						//reqquer
 						models.Magazine.find({"userid": userid}).exec(function(err, magazines){
 							if (err) return console.log(err); 
-							
-							console.log("or in here???? ");
-								// res.json(magazines);
 								// emit to listener to update state
 								socket.emit('newmagazine', magazines);
 							})
@@ -230,32 +231,7 @@ io.sockets.on('connection', function (socket) {
     });
 
 
-	// TO DO on connection automatically join room1 so put first two function connected user and adduser in the "on connection"" part directoy
-	// Add user to database on connection then update room later when they select a room / prvt chat
-	// socket.on('adduser', function(username){
-	// 	console.log("******* adduser to chat initial socket id", socket.id);
-
-		// find if there, then update
-		// models.ConnectedUser.findOne({username: username}).exec(function(err, user){
-		// 	// there should not be a connected user of this name as it is unique but if there is for some reason like user did not disconnect properly update it
-		// 	if (user === null){
-		// 		//add it
-		// 		var newConnectedUser = new models.ConnectedUser({room: "NewConnection", username: username, socketid: socket.id, created_at:  Date.now()});
-		// 		newConnectedUser.save().then(function(err, newconnection){
-		// 			console.log(err);
-		// 		});
-		// 	} else {
-		// 		//update it
-		// 		models.ConnectedUser.findOneAndUpdate({username: username}, { $set: { room: "NewConnection", socketid: socket.id, created_at:  Date.now()}}).exec(function(){
-		// 			console.log(err);
-		// 		})
-		// 		// trying to find all connected users for Private Chat and onlly those in a Room for Group Ch}
-		// 	}
-		// })
-
-	// })
-
-	// var lastHeartBeat = Date.now();
+	
 	// when the client emits 'connectuser', this listens and executes
 	// it updates the users room and sends back the latest connected user data and chat history for that room
 	// this is activated when you select link to "Group" or "Private" chats
@@ -285,18 +261,8 @@ io.sockets.on('connection', function (socket) {
 					// trying to find all connected users for Private Chat and onlly those in a Room for Group Ch}
 				}
 			}).then(function(){
-				// get users connected to a chat room
-				// var searchObj = {};
-				// whatever room you are in you want the list of conected users
-				// if (defaultRoom !== "Private"){
-				// 	var	searchObj = {room: defaultRoom}
-				// 	// } 
-				// 	console.log("is this the private room?", defaultRoom)
-				// 	models.ConnectedUser.find(searchObj).exec(function (err, results) {
-				// 	// console.log("connected users when first connect to ", results, defaultRoom);
-				// 		io.sockets.in(defaultRoom).emit('connectedusers', results);
-				// 	})
-				// } else {
+				      // get users connected to a chat room
+			
 					if (defaultRoom === "Private"){
 						// send all connected users to user list in Private area
 						models.ConnectedUser.find({}).exec(function (err, results) {
@@ -307,21 +273,7 @@ io.sockets.on('connection', function (socket) {
 				}
 
 			}).then(function(){
-					// if (defaultRoom !== "Private"){
-					// 	// send chat history for that room
-					// 	// console.log("are we in here");
-					// 	var cutoff = new Date();
-					// 	cutoff.setDate(cutoff.getDate()-1);
-					// 	models.Chat
-					// 		.find({room: socket.room, "created_at": {"$gte": cutoff }})
-					// 		.sort({'date': -1})
-					// 		.exec(function(err, results) {
-					// 			if (err) return console.log(err);
-					// 			// emit to current user only after they log in or join chat
-					// 			// console.log("results", results);
-					// 			socket.emit('updatechat', results);
-					// 		});
-				// } else 
+					
 					if (defaultRoom === "Private"){
 					
 						// clear the chat window as no default private chats
@@ -344,7 +296,9 @@ io.sockets.on('connection', function (socket) {
 				cutoff.setDate(cutoff.getDate()-1);
 				models.Chat
 					.find({room: socket.room, "created_at": {"$gte": cutoff }})
-					.sort({'date': -1})
+					// .sort({'date': -1})
+					// .sort({'created_at': -1})
+					.sort({created_at: 1})
 					.exec(function(err, results) {
 						if (err) return console.log(err);
 						// to everyone in that room including current client
@@ -423,7 +377,9 @@ io.sockets.on('connection', function (socket) {
 						cutoff.setDate(cutoff.getDate()-1);
 						models.Chat
 							.find({room: currentSocket.room, "created_at": {"$gte": cutoff }})
-							.sort({'date': -1})
+							// .sort({'date': -1})
+						    // .sort({'created_at': -1})
+							.sort({created_at: 1})
 							.exec(function(err, results) {
 								if (err) return console.log(err);
 								// just send to current client  / socket.id that switched rooms not everyone
@@ -473,7 +429,8 @@ io.sockets.on('connection', function (socket) {
 						models.Chat
 							.find({room: socket.room, "created_at": {"$gte": cutoff }})
 							// .sort({'date': -1})
-							.sort({'created_at': -1})
+							// .sort({'created_at': -1})
+							.sort({created_at: 1})
 							.exec(function(err, results) {
 								if (err) return console.log(err);
 								// just send to current client that switched rooms not everyone
@@ -502,33 +459,10 @@ io.sockets.on('connection', function (socket) {
 		// now save these to the database for the current room  / private conversation
 		// make sure there is a valid converation going on
 		if (socket.room !== "Private"){
-			console.log(" in interactive server code");
+
 		    var returnObj= { index: index, item: item};
-			console.log("data to be sent for interactive", returnObj);
-			/// for testing
-			console.log("room", socket.room);
 			io.sockets.in(socket.room).emit('updateclothesbin', returnObj);
-			/// for prod - only emit to other party
-			// socket.broadcast.to(socket.room).emit('updateclothesbin', result);
-
-			// we dont need to save - just emit to other party in conversation
-			// var newInteractiveClothesBin = new models.InteractiveClothesBin({conversationid: socket.room, index: index, item: item});
-			// newInteractiveClothesBin.save(function(){
-				
-				// console.log("error", err);
-				// console.log("result", result);
-				// emit to other user
-				// io.sockets.in(socket.room).emit('updateclothesbin', results);
-				// sending to all clients in 'game' room(channel) except sender
-			
-				// console.log(socket.room);
-				
-
-			// });
-
 		}
-		
-
 	})
 
 	// when the user disconnects - delete from ConnectedUser collection
@@ -539,11 +473,9 @@ io.sockets.on('connection', function (socket) {
 		// remove from database of list current users/rooms on disconect
 		models.ConnectedUser.findOneAndRemove({username: socket.username}, function (err) {
 			if (err) return console.log(err);
-			console.log("disconnect user removed:",  socket.username); 
 			models.ConnectedUser.find({room: socket.room}, function(err, results){ 
 			if (err) return console.log(err)
 				// send updated user list to everyone in that room
-				console.log("disconect  1", results);
 				io.sockets.in(socket.room).emit('connectedusers', results);
 			});
 		});
@@ -553,10 +485,6 @@ io.sockets.on('connection', function (socket) {
 
 
 }
-// to do: test if connection, validate disconnect, message when prvt chat....to socket id then message, images uploading and storing
-// remove old chat history - housekeeping, redis?
-// make it pretty, test, test, test
-// toggle chat hypelinks - open/close chat
-// onkeyup for chat part - remove button
+
 
 module.exports = chat_server;

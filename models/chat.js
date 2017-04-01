@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var chatSchema = new Schema({
     // _id: Number,
     // id: {type : Number, required : true, unique : true},
+    seq: { type: Number, default: 0 },
     room: {type : String, required : true, unique : false},
     username: {type : String, required : true, unique : false},
     message: {type : String, required : true, unique : false},
