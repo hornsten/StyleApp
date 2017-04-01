@@ -6,7 +6,7 @@ var mongoose = require('../config/connection.js');
 var Schema = mongoose.Schema;
 
 var magazineSchema = new Schema({
-    // title: {type : String, required : false, unique : false},
+
     userid: {type : String, required : true, unique : false},  // facebook id
     imageid: {type : String, required : true, unique : false}, // filename for now
     src: {type : String, required : true, unique : false},  // link to cloudinary location

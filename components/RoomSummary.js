@@ -17,17 +17,16 @@ class RoomSummary extends React.Component {
                 console.log(response, "response")
                 this.handleRoomData(response)
             })
-        // var img = window.refs.dragimg.sgetDOMNode().src;
+
         var img = this.refs.drag;
-        // console.log("img", img); doc.allowDrop = function(event) {
-        // console.log(event, "allowDrop");     event.preventDefault(); }
+
 
     }
 
     handleRoomData(response) {
         // dispatches updates to redux store to update the state
         store.dispatch({type: 'ROOM_LIST', rooms: response.data})
-        console.log(this.props.rooms);
+
     }
     render() {
         var component = this;

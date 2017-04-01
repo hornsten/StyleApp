@@ -207,7 +207,8 @@ class GroupChatSection extends React.Component {
                 </div>
          
             </div>
-            </div>
+     
+     
         } else {
 
             var chatDislay = <div className="text-center">Apologies but there is currently no chat connection

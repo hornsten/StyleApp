@@ -8,8 +8,7 @@ mongoose.modelSchemas = {};
 
 // create a Schema
 var connectedUserSchema = new Schema({
-    // _id: Number,
-    // id: {type : Number, required : true, unique : true},
+
     username: {type : String, required : false, unique : false},
     room: {type : String, required : true, unique : false},
     socketid: {type : String, required : true, unique : false},
