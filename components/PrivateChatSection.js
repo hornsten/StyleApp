@@ -186,7 +186,7 @@ class PrivateChatSection extends React.Component {
                 // if (result.username){
 
                 // }
-                return <div><div className="row results" key={result._id}>
+                return <div><div className="row results talk-bubble tri-right round btm-left" key={result._id}>
                    
                     <div className="col-md-12">
                         <div className="row">
@@ -197,7 +197,7 @@ class PrivateChatSection extends React.Component {
 
                         </div> 
                         <div className="row">
-                            <div className="talk-bubble tri-right round btm-left">
+                            <div className="">
                              { chatmessage }
                              </div>
                         </div>
