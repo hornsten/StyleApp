@@ -10,6 +10,9 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import chathelper from "../app/utils/chathelper.js";
 import helper from "../app/utils/helper.js";
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import FaLeanpub from 'react-icons/lib/fa/leanpub';
+import Magazine from './Magazine';
 var html2canvas = require('html2canvas');
 
 
@@ -291,9 +294,9 @@ if (this.props.flair){
         img_message = "File Successfully Saved";
       }
       return (
-         <section className="container-fluid closet-container">
+         <section className="closet-container">
         
-            <div id='clothesSet' className="col-xs-12 col-md-7 closet-block rel"> 
+            <div id='clothesSet' className="col-xs-12 col-sm-6 closet-block rel"> 
 
         <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
@@ -313,6 +316,69 @@ if (this.props.flair){
             {img_message}    {/* Says File Saved Successfully */}
           </div>
 
+             <div className="col-sm-6 closet-block rel">
+             <div className="clothes-items">
+                    <div className="closet-tabs-container">
+                       <div className="closet-tabs-container">
+              <Tabs onSelect={this.handleSelect} selectedIndex={2}>
+                <TabList>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-shirt.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-pants.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-dress.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-shoes.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-purse.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-accessory.png'></img>
+                  </Tab>
+                  <Tab>
+                    <img className='icons' src='../assets/img/i-flair.png'></img>
+                  </Tab>
+                  <Tab><FaLeanpub className="icons"/></Tab>
+
+                </TabList>
+
+                <TabPanel>
+                  {topResults}
+                </TabPanel>
+                <TabPanel>
+                  {bottomResults}
+                </TabPanel>
+                <TabPanel>
+                  {dressResults}
+                </TabPanel>
+                <TabPanel>
+                  {shoeResults}
+                </TabPanel>
+                <TabPanel>
+                  {bagResults}
+                </TabPanel>
+                <TabPanel>
+                  {accessoryResults}
+                </TabPanel>
+                <TabPanel>
+                  {flairResults}
+                </TabPanel>
+                <TabPanel>
+                  <Magazine/>
+                </TabPanel>
+              </Tabs>
+            </div>
+                       
+                       
+                       
+                         
+                 </div>
+                  <div className="drop-box">
         <div className="form-group">
         {error}
         <label for="sel1">Select list Item Type, then upload file:</label>
@@ -327,52 +393,14 @@ if (this.props.flair){
           <option id="shoes" value="shoes">SHOES</option>
         </select>
       </div> 
+     
         <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
          {message}
-             <div className="col-md-5 closet-block">
-             <div className="clothes-items">
-                    <div className="closet-tabs-container">
-                        <div className="row">
-                            <li>Shoes</li>
-                            { shoeResults}
-                        </div>
-                        <div className="row">
-                            <li>Tops</li>
-                            {topResults}
-                         </div>
-                         <div className="row">
-                            <li>Dresses</li>
-                            { dressResults}
-                        </div>
-                         <div className="row">
-                            <li>Bags</li>
-                            { bagResults}
-                        </div>
-                         <div className="row">
-                            <li>Accessories</li>
-                            { accessoryResults}
-                        </div>
-                        <div className="row">
-                            <li>Flair</li>
-                            {flairResults}
-                        </div>
-                        <div className="row">
-                            <li>Bottoms</li>
-                            {bottomResults}
-                        </div>
-                      
-                        <div id="gallery">
-                        
-                        {/*{clothesImages}*/}
-                         <div style={{ overflow: 'hidden', clear: 'both' }}>
-                            
-                       
-                    </div>
-                 </div>
+          </div>
             </div>
             </div>
    
-    </div>
+    
 </section>
       )
    }
