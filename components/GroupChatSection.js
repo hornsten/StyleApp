@@ -105,11 +105,12 @@ class GroupChatSection extends React.Component {
 //                 return false; 
 //     }
 
-    ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
-    ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
+    ondragover(e) { this.className = 'hover'; console.log("ondragend"); e.preventDefault && e.preventDefault();return false; };
+    ondragend(e) { this.className = '';  console.log("dragedn", e);  console.log("ondragend");return false; };
     ondrop(e) {
             // console.log(" is this being called ondrop");
             this.className = 'success';
+            console.log("dropping", e);
             e.preventDefault && e.preventDefault();
             chathelper.file_upload(e, "dnd");
             // this.className = '';
@@ -164,10 +165,28 @@ class GroupChatSection extends React.Component {
                     // console.log("in here", result.type);
                     var chatmessage =  <div className="col-md-8">{result.message}</div>
                 }
-                return <div className="row results" key={result._id}>
-                    <div className="col-md-2"><strong>{result.username}</strong></div> 
-                            { chatmessage }
-                    <div className="col-md-2"></div>
+                var d = new Date(result.created_at);
+                var chiDate = new Date(d.setHours(d.getHours())).toString();
+                var dateObj = new Date(chiDate);
+                var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                var day = dateObj.getUTCDate();
+                var year = dateObj.getUTCFullYear();
+                var hour = dateObj.getHours();
+                var minutes = dateObj.getMinutes();
+
+                var newdate = month + "/" + day + "/" + year + " " + hour + ":" + minutes;
+                
+                return <div><div className="row results" key={result._id}>
+                   
+                    <div className="col-md-12">
+                        <div className="row">
+                            <strong>{result.username}</strong> @ {newdate}
+                        </div> 
+                        <div className="row">
+                             { chatmessage }
+                        </div>
+                    </div>
+                </div>
                 </div>
                 });
            }
@@ -212,8 +231,11 @@ class GroupChatSection extends React.Component {
                     <div className="row">
                         <div className="col-md-2"></div>
                             <div className="col-md-8">
+
+                              <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}> Drop here</div>
+                                
                             <div id='drop-box'>
-                            <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}><h3>Drop Image Here</h3></div>
+                            <div ref={ref => this.drop = ref} className="drop" onDrop={(e) => this.ondrop(e)} onDragEnd={(e) => this.ondragend(e).bind(this)}  onDragOver={(e) => this.ondragover(e)}>Drop Image Here</div>
                                 <p>or</p>
                                 <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" defaultValue={this.props.file} onChange={this.uploadFile} /><br /> 
                             </div>
