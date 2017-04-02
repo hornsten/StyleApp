@@ -8,10 +8,10 @@ var helpers = {
     return axios.get('/updatestylemotto/'+userprofileid).then(function(result){
 
                 if(result.data){
-                store.dispatch({
-                    type: 'UPDATE_STYLEMOTTO',
-                    stylemotto: result.data
-                })
+                    store.dispatch({
+                        type: 'UPDATE_STYLEMOTTO',
+                        stylemotto: result.data
+                    })
                 }
             })
     },

@@ -10,7 +10,7 @@ import helper from "../app/utils/helper.js";
 
 class ImageModal extends React.Component{
 
-    constructor(props){
+constructor(props){
         super(props);
         helper.getProfileImage(store, this.props.profileuserid);
         helper.getBlurb(store, this.props.profileuserid);
@@ -20,17 +20,33 @@ class ImageModal extends React.Component{
  }
 
 
-
-  handleClick(e) {
-      e.preventDefault();
-  }
-
-
     closeModal(){
         store.dispatch({ 
             type: 'PROFILE_MODAL',
             profileModal: false
         })
+        // reset values
+        store.dispatch({ 
+            type: 'UPDATE_PROFILE_NAME',
+            profileusername: ""
+        })
+        store.dispatch({ 
+            type: 'UPDATE_PROFILE_ID',
+            profileuserid: ""
+        })
+        store.dispatch({ 
+            type: 'UPDATE_STYLEMOTTO',
+            stylemotto: ""
+        })
+        store.dispatch({ 
+            type: 'UPDATE_BLURB',
+            blurb: ""
+        })
+        store.dispatch({ 
+            type: 'UPDATE_PROFILEIMAGE',
+            profile_image: ""
+        })
+
 
     }
 
@@ -101,7 +117,7 @@ const mapStateToProps = (store,ownProps) => {
         searchUserid: store.mainState.searchUserid,
         profileusername: store.mainState.profileusername,
         profilemagazines: store.mainState.profilemagazines,
-         profileuserid: store.mainState.profileuserid,
+        profileuserid: store.mainState.profileuserid,
     }
 
 }

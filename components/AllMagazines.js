@@ -49,13 +49,6 @@ class AllMagazines extends React.Component {
             
           
                 var resultComponents = this.props.allmagazines.map(function(result) {
-                // dont hyperlink current room
-
-                // if (result.magazine_profile){
-                //       var profileUserid = result.magazine_profile[0].facebook.id;
-                // }
-                // render modal if true 
-
                 
                 return <div className="results" key={result._id}>
                     <div className="col-sm-6 col-md-4">
