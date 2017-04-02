@@ -138,6 +138,11 @@ class ClosetPicker extends React.Component {
 
     if (this.props.item !== "SELECT") {
       helper.uploadToCloset(e, itemType, store);
+      //  reset back to default
+      ReactDOM
+        .findDOMNode(this.closetItemType)
+        .value = "SELECT";
+
     } else {
       // send error message
       store.dispatch({type: 'CLOSET_ERROR', closeterror: true})
@@ -183,6 +188,9 @@ class ClosetPicker extends React.Component {
     ReactDOM
       .findDOMNode(this.inputEntry)
       .value = "";
+
+
+
 
   }
   updateDescription(e) {
