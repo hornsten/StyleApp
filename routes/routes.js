@@ -3,14 +3,14 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+var cloudinary_keys = require('../auth/cloudinary_keys');
+cloudinary.config(cloudinary_keys);
 // // for heroku
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET
-});
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUDINARY_NAME, 
+//   api_key: process.env.CLOUDINARY_API, 
+//   api_secret: process.env.CLOUDINARY_SECRET
+// });
 
 
 
@@ -114,7 +114,7 @@ app.get('/', function(req, res){
 
    // userprofileid is optional
    app.get('/profile/image/:userprofileid?', function(req, res, next){
-
+  
         if ((req.isAuthenticated()) && (!req.params.userprofileid)){
             var src = req.body.name;
             models.User.findOne({_id: req.session.passport.user}).exec(function(err, results){ 
@@ -124,7 +124,8 @@ app.get('/', function(req, res){
         } else if (req.params.userprofileid){
 
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-
+                console.log("userid: ",req.params.userprofileid);
+                console.log("results: ",req.params.results)
                 res.json(results.imgsrc)             
                        
              })

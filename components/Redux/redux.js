@@ -72,6 +72,8 @@ switch(action.type) {
             return Object.assign({},state, {profileModal: action.profileModal});
     case 'UPDATE_PROFILE_NAME':
         return Object.assign({},state, {profileusername: action.profileusername});
+    case 'UPDATE_PROFILE_ID':
+        return Object.assign({},state, {profileuserid: action.profileuserid});
     case 'NEW_PROFILE_MAGAZINES':
         return Object.assign({},state, {profilemagazines: action.profilemagazines});
     }

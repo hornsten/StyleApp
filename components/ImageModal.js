@@ -35,7 +35,11 @@ class ImageModal extends React.Component{
     }
 
     render(){
-
+        console.log("what is in this profileusername?", this.props.profileusername);
+        console.log("what is in this profile_image?", this.props.profile_image);
+        console.log("what is in this stylemotto?", this.props.stylemotto);
+        console.log("what is in this blurb?", this.props.blurb);
+        console.log("what is in this blurb profileuserid?", this.props.profileuserid);
 
         var showProfileModal =
 
@@ -58,9 +62,9 @@ class ImageModal extends React.Component{
                             </div>
                             <div className="col-xs-8">                                        
                                   
-                                    <h3>Style Motto:</h3>
+                                    <h4>Style Motto:</h4>
                                     <p>{this.props.stylemotto}</p> 
-                                    <h3>About:</h3>
+                                    <h4>About:</h4>
                                     <p>{this.props.blurb}</p> 
                                   
                                   
@@ -97,6 +101,7 @@ const mapStateToProps = (store,ownProps) => {
         searchUserid: store.mainState.searchUserid,
         profileusername: store.mainState.profileusername,
         profilemagazines: store.mainState.profilemagazines,
+         profileuserid: store.mainState.profileuserid,
     }
 
 }

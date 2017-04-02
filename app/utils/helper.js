@@ -294,6 +294,7 @@ var helpers = {
    getAllMagazines: function(store){
 
        return axios.get('/magazine/all', { credentials : 'same-origin' }).then(function(response) {
+           console.log("magazines response", response);
             store.dispatch({type: "ALL_MAGAZINES", allmagazines: response.data})
             return ;
         })
