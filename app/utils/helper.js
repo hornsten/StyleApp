@@ -138,10 +138,13 @@ var helpers = {
                         };
                         
                         return axios.post('/profileimageupload',postObj).then(function(result){
-                                 store.dispatch({
+                            console.log("sercure", result);
+                                store.dispatch({
                                     type: 'UPDATE_PROFILEIMAGE',
-                                    profile_image: result.data.imgsrc
+                                    profile_image: result.data
                                 })
+                                console.log("waht is this value", result.data.imgsrc);
+                                console.log("profile iage",store.getState())
                         })
                     }//onload fn
                     reader.readAsBinaryString(file);

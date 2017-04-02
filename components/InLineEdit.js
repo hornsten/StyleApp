@@ -29,6 +29,8 @@ class InLineEdit extends React.Component {
     componentWillMount(){
        helper.getStyleMotto(store,""); 
        helper.getBlurb(store,"");
+       
+      //  helper.getBlurb(store,"");
     }
     dataChanged(data) {
 
