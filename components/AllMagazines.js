@@ -48,7 +48,7 @@ class AllMagazines extends React.Component {
         if (this.props.allmagazines){
 
             var resultComponents = this.props.allmagazines.map(function(result, index) {     
-                        return <div className="results" key={result._id} className="pull-left style-story">
+                        return <div className="results" key={result._id} className="pull-left  style-story">
                             <div>
                                 
                                     <div className="thumbnail">

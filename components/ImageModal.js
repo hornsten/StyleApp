@@ -64,20 +64,31 @@ constructor(props){
             <div className="col-md-8"><Modal.Title id="contained-modal-title-lg"><h4>{this.props.profileusername}</h4> </Modal.Title></div>
             <div className="col-md-4"><Button className="pull-right" onClick={this.closeModal}>Close</Button></div>
           </Modal.Header>
-          <Modal.Body>    
+          <Modal.Body className="profile-modal-body">    
               <div>         
-                  <div className="jumbotron sharp">     
-                        <div className="row">
+                  <div className="sharp">     
+                        <div className="row profile-image">
                             <div className="col-xs-4">
-                            <img className='profile-image thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
-                                      
+                              <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>         
                             </div>
-                            <div className="col-xs-8">                                        
-                                  
-                                    <h4>Style Motto:</h4>
-                                    <p>{this.props.stylemotto}</p> 
-                                    <h4>About:</h4>
-                                    <p>{this.props.blurb}</p> 
+                            <div className="col-xs-8">  
+                                <br />                                      
+                                <div className="row">
+                                    <div className="col-md-4"><p className="front-profile"><strong>Style Motto:</strong></p></div>
+                                    <div className="col-md-8"><p className="front-profile">{this.props.stylemotto}</p></div> 
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4"><p className="front-profile"><strong>About Me:</strong></p></div>
+                                     <div className="col-md-8"><p className="front-profile">{this.props.blurb}</p></div>
+                                 </div>
+                                <div className="row">
+                                    <div className="col-md-4"><p className="front-profile"><strong>Style Inspiration:</strong></p></div>
+                                     <div className="col-md-8"><p className="front-profile">{this.props.stylemotto}</p></div> 
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4"><p className="front-profile"><strong>Favorite Designers:</strong></p></div>
+                                    <div className="col-md-8"><p className="front-profile">{this.props.blurb}</p></div> 
+                                 </div>
                                   
                                   
                             </div>  

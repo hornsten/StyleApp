@@ -17,6 +17,16 @@ img {
     border-width: 1px;
 }
 .profile-image {
-    margin-left: 10px;
+    background-color: hotpink;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+}
+.profile-modal{
+     background-color:lightpink;
+
 }
 
+.magazine-thumbnails {
+    background-color: hotpink;
+}

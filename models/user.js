@@ -16,7 +16,9 @@ var UserSchema = new Schema({
   },
     stylemotto: {type : String},
     blurb: {type : String},
-    imgsrc:{type:String}   
+    imgsrc:{type:String},
+    styleInspiration:{type:String},
+    favoriteDesigners: {type:String},
 });
 
 

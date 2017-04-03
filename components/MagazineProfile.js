@@ -79,6 +79,7 @@ class MagazineProfile extends React.Component {
                     <div className="col-xs-12 magazines">
                         <br />
                         <h4 className="text-center">Stylist's Magazines</h4>
+                        <p className="text-center"><em>Click Image to Toggle View</em></p>
                         <hr />
                         <div className="row results">{resultComponents}</div>
                     </div>  
