@@ -76,6 +76,9 @@ switch(action.type) {
         return Object.assign({},state, {profileuserid: action.profileuserid});
     case 'NEW_PROFILE_MAGAZINES':
         return Object.assign({},state, {profilemagazines: action.profilemagazines});
+    case 'SINGLE_IMAGE_MODAL':
+        return Object.assign({},state, {singleImageModal: action.singleImageModal});
+
     }
     return state;
 }

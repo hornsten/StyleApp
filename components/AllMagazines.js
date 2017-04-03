@@ -44,6 +44,9 @@ class AllMagazines extends React.Component {
         if (this.props.profileModal){
                 modal = <ImageModal />
         }
+        if (this.props.singleImageModal){
+            console.log(this.props.singleImageModal, "in all magazines")
+        }
         if (this.props.allmagazines){
 
             
@@ -86,8 +89,11 @@ const mapStateToProps = (store,ownProps) => {
         allmagazines: store.mainState.allmagazines,
         profileModal: store.mainState.profileModal,
         profileuserid: store.mainState.profileuserid,
+        singleImageModal: store.mainState.singleImageModal,
+        
     }
 
 }
 
 export default connect(mapStateToProps)(AllMagazines);
+

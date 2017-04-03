@@ -18,6 +18,13 @@ constructor(props){
         helper.getProfileUsername(store, this.props.profileuserid);
         helper.getProfileMagazines(store, this.props.profileuserid);
  }
+ componentDidMount(){
+        // set to false initally
+        store.dispatch({ 
+            type: 'SINGLE_IMAGE_MODAL',
+            singleImageModal: false
+        })
+ }
 
 
     closeModal(){
@@ -47,6 +54,14 @@ constructor(props){
             profile_image: ""
         })
 
+
+    }
+    handleImageClick(e){
+        console.log("in here");
+        store.dispatch({ 
+            type: 'SINGLE_IMAGE_MODAL',
+            singleImageModal: true
+        })
 
     }
 
@@ -90,7 +105,7 @@ constructor(props){
                   
                   {/*Search Bar*/}
 
-                  <MagazineProfile />
+                  <MagazineProfile  />
               </div>
           </Modal.Body>
           <Modal.Footer>
@@ -118,6 +133,7 @@ const mapStateToProps = (store,ownProps) => {
         profileusername: store.mainState.profileusername,
         profilemagazines: store.mainState.profilemagazines,
         profileuserid: store.mainState.profileuserid,
+        singleImageModal: store.mainState.singleImageModal,
     }
 
 }
