@@ -89,19 +89,18 @@ class Profile extends React.Component {
               <div>         
                   <div className="jumbotron sharp">     
                         <div className="row">
-                            <div className="col-xs-2">
+                            <div className="col-xs-3">
                           
                             <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
                  
                              
                             
-                            <input className="pull-left" ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload'
-                                    name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><FaCamera className="icon pull-left"/>
+                         
                             
                             <br /> 
                                         
                             </div>
-                            <div className="col-xs-10">                                        
+                            <div className="col-xs-9">                                        
                                   <div className="row">
                                     <h3>{this.props.username}</h3>
                                         <br />
@@ -112,7 +111,11 @@ class Profile extends React.Component {
                                     </div>
                             </div>  
                         </div> 
-                  </div>
+                         <div className="row">
+                           <FaCamera className="icon pull-left"/><input className="camera-icon pull-left" ref={ref => this.inputEntry = ref} type="file"  label='Upload'
+                                    name="file" ref="file" onChange={(e) => this.uploadFile(e)}/>
+                        </div>
+            </div>
                   
                   {/*Search Bar*/}
                 
