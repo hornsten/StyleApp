@@ -12,6 +12,11 @@ var helpers = {
                         type: 'UPDATE_STYLEMOTTO',
                         stylemotto: result.data
                     })
+                } else {
+                     store.dispatch({
+                        type: 'UPDATE_STYLEMOTTO',
+                        stylemotto: ""
+                    })
                 }
             })
     },
@@ -22,6 +27,11 @@ var helpers = {
                     store.dispatch({
                         type: 'UPDATE_BLURB',
                         blurb: result.data
+                    })
+                } else {
+                    store.dispatch({
+                        type: 'UPDATE_BLURB',
+                        blurb: ""
                     })
                 }
             })
@@ -35,6 +45,11 @@ var helpers = {
                         type: 'UPDATE_INSPIRATION',
                         inspiration: result.data
                     })
+                }  else {
+                    store.dispatch({
+                        type: 'UPDATE_INSPIRATION',
+                        inspiration: ""
+                    })
                 }
             })
     },
@@ -46,6 +61,12 @@ var helpers = {
                         type: 'UPDATE_DESIGNER',
                         designer: result.data
                     })
+                } else {
+                    store.dispatch({
+                        type: 'UPDATE_DESIGNER',
+                        designer: ""
+                    })
+
                 }
             })
     },

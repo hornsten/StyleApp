@@ -128,7 +128,7 @@ class InLineEdit extends React.Component {
                 border: 0
               }}
             /><FaEdit className="icon" />
-              /><FaEdit className="icon" />
+            
          
             </div>
             </div>
