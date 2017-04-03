@@ -27,6 +27,30 @@ var helpers = {
             })
     },
 
+    getInspiration(store, userprofileid){
+    return axios.get('/updateinspiration/'+userprofileid).then(function(result){
+
+                if(result.data){
+                    store.dispatch({
+                        type: 'UPDATE_INSPIRATION',
+                        inspiration: result.data
+                    })
+                }
+            })
+    },
+        
+    getDesigner(store, userprofileid){
+    return axios.get('/updatedesigner/'+userprofileid).then(function(result){
+                if(result.data){
+                    store.dispatch({
+                        type: 'UPDATE_DESIGNER',
+                        designer: result.data
+                    })
+                }
+            })
+    },
+
+
 
     getProfileUsername(store, userprofileid){
         return axios.get('/profile/'+userprofileid).then(function(result){
@@ -53,6 +77,21 @@ var helpers = {
 
         })
     },
+
+    setInspiration: function(e,store){
+        var inspirationObj = {inspiration: e}
+        return axios.post('/updateinspiration', inspirationObj).then(function(result){
+
+        })
+    },
+
+    setDesigner: function(e, store){
+        var designerObj = {designer: e}
+        return axios.post('/updatedesigner', designerObj).then(function(result){
+
+        })
+    },
+
 
 
 

@@ -55,6 +55,10 @@ const userReducer = (state={}, action) => {
             return Object.assign({}, state, {stylemotto: action.stylemotto});
         case 'UPDATE_BLURB':
             return Object.assign({},state, {blurb: action.blurb});
+        case 'UPDATE_INSPIRATION' :
+            return Object.assign({}, state, {inspiration: action.inspiration});
+        case 'UPDATE_DESIGNER':
+            return Object.assign({},state, {designer: action.designer});
       
         }
     return state;

@@ -175,6 +175,36 @@ app.get('/profile/:userprofileid', function(req, res){
             }
     })
 
+        app.get('/updatedesigner/:userprofileid?', function(req, res){
+        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+                if (err) return console.log(err); 
+                    res.json(userInfo.designer);
+            })
+        } else if (req.params.userprofileid){
+
+                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                    res.json(results.designer)             
+                        
+                })
+            }
+    })
+
+        app.get('/updateinspiration/:userprofileid?', function(req, res){
+        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+                if (err) return console.log(err); 
+                    res.json(userInfo.inspiration);
+            })
+        } else if (req.params.userprofileid){
+
+                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+                    res.json(results.inspiration)             
+                        
+                })
+            }
+    })
+
     app.get('/magazine/profile/:userid', function(req, res,next){
 
                 var userid = req.params.userid;
@@ -282,7 +312,7 @@ app.post('/updatestylemotto', function(req, res){
     if(req.isAuthenticated()){
         models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {stylemotto: req.body.stylemotto}}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-                res.json(userInfo);
+                res.end();
         })
     }
 })
@@ -291,10 +321,30 @@ app.post('/updateblurb', function(req, res){
     if(req.isAuthenticated()){
         models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {blurb: req.body.blurb}}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-                res.json(userInfo);
+                res.end();
         })
     }
 })
+
+
+app.post('/updateinspiration', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {inspiration: req.body.inspiration}}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+                res.end();
+        })
+    }
+})
+
+app.post('/updatedesigner', function(req, res){
+    if(req.isAuthenticated()){
+        models.User.findOneAndUpdate({_id: req.session.passport.user}, {$set: {designer: req.body.designer}}).exec(function(err, userInfo){             
+            if (err) return console.log(err); 
+                res.end();
+        })
+    }
+})
+
 
 
     app.post('/closet/image/new/', function(req, res,next){

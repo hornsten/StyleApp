@@ -15,10 +15,11 @@ constructor(props){
         helper.getProfileImage(store, this.props.profileuserid);
         helper.getBlurb(store, this.props.profileuserid);
         helper.getStyleMotto(store, this.props.profileuserid);
+        helper.getInspiration(store, this.props.profileuserid);
+        helper.getDesigner(store, this.props.profileuserid);
         helper.getProfileUsername(store, this.props.profileuserid);
         helper.getProfileMagazines(store, this.props.profileuserid);
  }
- 
 
 
     closeModal(){
@@ -42,6 +43,15 @@ constructor(props){
         store.dispatch({ 
             type: 'UPDATE_BLURB',
             blurb: ""
+        })
+
+        store.dispatch({ 
+            type: 'UPDATE_INSPIRATION',
+            inspiration: ""
+        })
+        store.dispatch({ 
+            type: 'UPDATE_DESIGNER',
+            designer: ""
         })
         store.dispatch({ 
             type: 'UPDATE_PROFILEIMAGE',
@@ -83,11 +93,11 @@ constructor(props){
                                  </div>
                                 <div className="row">
                                     <div className="col-md-4"><p className="front-profile"><strong>Style Inspiration:</strong></p></div>
-                                     <div className="col-md-8"><p className="front-profile">{this.props.stylemotto}</p></div> 
+                                     <div className="col-md-8"><p className="front-profile">{this.props.inspiration}</p></div> 
                                 </div>
                                 <div className="row">
                                     <div className="col-md-4"><p className="front-profile"><strong>Favorite Designers:</strong></p></div>
-                                    <div className="col-md-8"><p className="front-profile">{this.props.blurb}</p></div> 
+                                    <div className="col-md-8"><p className="front-profile">{this.props.designer}</p></div> 
                                  </div>
                                   
                                   
@@ -121,6 +131,8 @@ const mapStateToProps = (store,ownProps) => {
         profile_image: store.userState.profile_image,
         stylemotto: store.userState.stylemotto,
         blurb: store.userState.blurb,
+        inspiration: store.userState.inspiration,
+        designer: store.userState.designer,
         searchUserid: store.mainState.searchUserid,
         profileusername: store.mainState.profileusername,
         profilemagazines: store.mainState.profilemagazines,

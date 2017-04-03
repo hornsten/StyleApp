@@ -22,12 +22,10 @@ const initialEditorState = {
 class Profile extends React.Component {
       constructor(props) {
       super(props);
-        this.state = Object.assign({}, props, {editor: initialEditorState});
+    this.state = Object.assign({}, props, {editor: initialEditorState});
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
       data: [],
-      showModal: false,
-      showModal2: false
     };
     helper.getProfileImage(store, "");
 }
@@ -92,21 +90,26 @@ class Profile extends React.Component {
                   <div className="jumbotron sharp">     
                         <div className="row">
                             <div className="col-xs-2">
+                          
                             <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
-                            <FaCamera className="icon"/>
-                            <input ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload'
-                                    name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><br /> 
-                                      
+                 
+                             
+                            
+                            <input className="pull-left" ref={ref => this.inputEntry = ref} type="file" id="siofu_input" label='Upload'
+                                    name="file" ref="file" onChange={(e) => this.uploadFile(e)}/><FaCamera className="icon pull-left"/>
+                            
+                            <br /> 
+                                        
                             </div>
                             <div className="col-xs-10">                                        
-                                  <ul>      
+                                  <div className="row">
                                     <h3>{this.props.username}</h3>
-                                      
+                                        <br />
                                       {/*<li>style motto: {}</li>
                                       <li>blurb:{}</li>*/}
                                       <InLineEdit />
                                       {/*<li><button onClick={this.handleClick} className="btn btn-default btn-pink outline round btn-lg">edit</button></li>*/}
-                                  </ul>
+                                    </div>
                             </div>  
                         </div> 
                   </div>
@@ -129,6 +132,8 @@ const mapStateToProps = (store,ownProps) => {
         profile_image: store.userState.profile_image,
         stylemotto: store.userState.stylemotto,
         blurb: store.userState.blurb,
+        inspiration: store.userState.inspiration,
+        designer: store.userState.designer,
         searchUserid: store.mainState.searchUserid,
     }
 };

@@ -24,12 +24,24 @@ class InLineEdit extends React.Component {
         blurb: 'click to add style story'
       })
 
+      store.dispatch({
+        type: 'UPDATE_INSPIRATION',
+        inspiration: 'click to add style inspiration'
+      })
+
+
+      store.dispatch({
+        type: 'UPDATE_DESIGNER',
+        designer: 'click to fav designers'
+      })
+
 
     }
     componentWillMount(){
        helper.getStyleMotto(store,""); 
        helper.getBlurb(store,"");
-       
+       helper.getInspiration(store,""); 
+       helper.getDesigner(store,"");
       //  helper.getBlurb(store,"");
     }
     dataChanged(data) {
@@ -49,6 +61,21 @@ class InLineEdit extends React.Component {
                   blurb: data.blurb
                 })
          }
+        if (data.inspiration){
+            helper.setInspiration(data.inspiration,store); 
+              store.dispatch({
+                type: 'UPDATE_INSPIRATION',
+                inspiration: data.inspiration
+              })
+
+         } 
+         if (data.designer){
+            helper.setDesigner(data.designer, store);
+                 store.dispatch({
+                  type: 'UPDATE_DESIGNERS',
+                  designer: data.designer
+                })
+         }
     }
 
 
@@ -59,7 +86,8 @@ class InLineEdit extends React.Component {
     render() {
 
         if (this.props.stylemotto){
-          var styleMotto = <li><strong> Style Motto : </strong>
+          var styleMotto = <div className="row"><div className="col-md-2"><strong>Style Motto: </strong> </div>
+            <div className="col-md-8">
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -76,11 +104,14 @@ class InLineEdit extends React.Component {
                 border: 0
               }}
             /><FaEdit className="icon" />
-</li>
+         
+            </div>
+            </div>
         }
 
          if (this.props.blurb){
-          var styleBlurb = <li><strong> Style Vision : </strong>
+          var styleBlurb = <div className="row"><div className="col-md-2"><strong>Style Vision: </strong> </div>
+            <div className="col-md-8">
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -97,15 +128,68 @@ class InLineEdit extends React.Component {
                 border: 0
               }}
             /><FaEdit className="icon" />
-          </li>
+              /><FaEdit className="icon" />
+         
+            </div>
+            </div>
         }
-        return (
-          <div>
-            <ul>
-              {styleMotto}
-              {styleBlurb}  
-            </ul>
-        </div>)
+        if (this.props.inspiration){
+          var inspireMotto = <div className="row"><div className="col-md-2"><strong>Style Inspiration: </strong></div>
+            <div className="col-md-8">
+            <Edit
+              validate={this.customValidateText}
+              activeClassName="editing"
+              text={this.props.inspiration}
+              paramName="inspiration"
+              change={this.dataChanged}
+              style={{
+
+                minWidth: 150,
+                margin: 5,
+                padding: 5,
+                fontSize: 15,
+                outline: 0,
+                border: 0
+              }}
+            /><FaEdit className="icon" />
+          </div>
+
+            </div>
+        }
+
+if (this.props.designer){
+          var designerMotto = <div className="row"><div className="col-md-2"><strong>Favorite Designers: </strong></div>
+          <div className="col-md-8">
+            <Edit
+              validate={this.customValidateText}
+              activeClassName="editing"
+              text={this.props.designer}
+              paramName="designer"
+              change={this.dataChanged}
+              style={{
+
+                minWidth: 150,
+                margin: 5,
+                padding: 5,
+                fontSize: 15,
+                outline: 0,
+                border: 0
+              }}
+            /><FaEdit className="icon" />
+            </div>
+            </div>
+            
+        }
+
+        return (<div>
+          {styleMotto}
+          <br />
+           {styleBlurb} 
+             <br />
+           {designerMotto}
+             <br />
+            {inspireMotto}
+               </div>)
     }
 }
 
@@ -119,6 +203,8 @@ const mapStateToProps = (store,ownProps) => {
       profile_image: store.userState.profile_image,
       stylemotto: store.userState.stylemotto,
       blurb: store.userState.blurb,
+      inspiration: store.userState.inspiration,
+      designer: store.userState.designer,
     }
 };
 
