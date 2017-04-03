@@ -311,7 +311,7 @@ class ClosetPicker extends React.Component {
       message = "File Successfully Saved";
     }
     if (this.props.saving_magazine_img) {
-      img_message = "File Successfully Saved";
+      img_message = "Successfully Saved to 'My Magazines'";
     }
     return (
       <section className="closet-container">

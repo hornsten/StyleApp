@@ -65,7 +65,7 @@ class Home extends React.Component {
        <div className="magazine">  
                  {/* Search bar for magazines*/}
                 
-                <input type="text" placeholder='Search for Keywords' value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
+                <input type="text" placeholder='Search for Styles using Keywords e.g. Chic' value={this.props.search}  onChange={this.updateSearch}  className="form-control"   onKeyUp={(e) => this.addSearch(e, this.props.search)} ref={input => this.textInput = input} />
   
                   
                   <ul>

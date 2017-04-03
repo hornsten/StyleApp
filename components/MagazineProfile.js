@@ -17,7 +17,7 @@ class MagazineProfile extends React.Component {
             type: 'SINGLE_IMAGE_MODAL',
             singleImageModal: true
         })
-        console.log("event",e);
+
         this.setState({largeImage: image, largeDescription: description  } )
 
     }
@@ -40,14 +40,15 @@ class MagazineProfile extends React.Component {
     }
     render() {
         var component = this;
-        console.log('profile mags: ',this.props.profilemagazines);   
+        
         // toggle between large image and summary
         if (this.props.singleImageModal){
            var resultComponents =  
-            <div className="results">
-                     <div className="thumbnail">
-                    <img src={this.state.largeImage}   onClick={(e) => component.closeImage()}/>                 
-                    <p><strong>{this.state.largeDescription}</strong></p>
+            <div className="results col-md-12">
+                    <div className="thumbnail">
+                    <img src={this.state.largeImage}   onClick={(e) => component.closeImage()}/>     
+                    <br />            
+                    <p className="text-center"><strong>{this.state.largeDescription}</strong></p>
                 </div>
             </div>
 
@@ -58,11 +59,11 @@ class MagazineProfile extends React.Component {
                 // dont hyperlink current room
            
                 return <div className="results" key={result._id}>
-                        <div className="col-sm-6 col-md-4">
+                        <div className="col-sm-6 col-md-4 ">
                             <div className="thumbnail">
                             <img src={result.src}   onClick={(e) => component.handleImageClick(e, result.src, result.description)}/>
                             <div className="caption">
-                                <p><strong>{result.description}</strong></p>
+                                <p className="text-center"><strong>{result.description}</strong></p>
                             </div>
                           </div>
                         </div>
@@ -75,7 +76,10 @@ class MagazineProfile extends React.Component {
        
 // <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
-                    <div className="col-xs-12 magazines"><h1>Magazines</h1>
+                    <div className="col-xs-12 magazines">
+                        <br />
+                        <h4 className="text-center">Stylist's Magazines</h4>
+                        <hr />
                         <div className="row results">{resultComponents}</div>
                     </div>  
                 </div>) 

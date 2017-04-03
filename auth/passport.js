@@ -1,7 +1,7 @@
 //facebook strategy
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var keys = require('./keys');
+var keys = require('./keys.js');
 // load up the user model
 var User = require('../models/user');
 
@@ -16,8 +16,8 @@ module.exports = function (passport) {
         })
     })
 
-var clientID = process.env.FACEBOOK_CLIENTID || '1454706357935887';
-var clientSecret = process.env.FACEBOOK_SECRET || 'f956114b95df65fd35f1e5552b0fb756';
+var clientID = process.env.FACEBOOK_CLIENTID || keys.facebookAuth.clientId;
+var clientSecret = process.env.FACEBOOK_SECRET || keys.facebookAuth.clientSecret;
 var callbackURL = process.env.FACEBOOK_URL || 'http://localhost:8080/auth/facebook/callback';
 
     passport.use(new FacebookStrategy({

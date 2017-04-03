@@ -18,13 +18,7 @@ constructor(props){
         helper.getProfileUsername(store, this.props.profileuserid);
         helper.getProfileMagazines(store, this.props.profileuserid);
  }
- componentDidMount(){
-        // set to false initally
-        store.dispatch({ 
-            type: 'SINGLE_IMAGE_MODAL',
-            singleImageModal: false
-        })
- }
+ 
 
 
     closeModal(){
@@ -56,39 +50,26 @@ constructor(props){
 
 
     }
-    handleImageClick(e){
-        console.log("in here");
-        store.dispatch({ 
-            type: 'SINGLE_IMAGE_MODAL',
-            singleImageModal: true
-        })
 
-    }
 
     render(){
-        console.log("what is in this profileusername?", this.props.profileusername);
-        console.log("what is in this profile_image?", this.props.profile_image);
-        console.log("what is in this stylemotto?", this.props.stylemotto);
-        console.log("what is in this blurb?", this.props.blurb);
-        console.log("what is in this blurb profileuserid?", this.props.profileuserid);
 
         var showProfileModal =
-
 
         <Modal className="profile-modal"
           show={this.props.profileModal}
         >
           <Modal.Header>
            
-            <div className="col-md-8"><Modal.Title id="contained-modal-title-lg"><h3>{this.props.profileusername}</h3> </Modal.Title></div>
-            <div className="col-md-4"><Button onClick={this.closeModal}>Close</Button></div>
+            <div className="col-md-8"><Modal.Title id="contained-modal-title-lg"><h4>{this.props.profileusername}</h4> </Modal.Title></div>
+            <div className="col-md-4"><Button className="pull-right" onClick={this.closeModal}>Close</Button></div>
           </Modal.Header>
           <Modal.Body>    
               <div>         
                   <div className="jumbotron sharp">     
                         <div className="row">
                             <div className="col-xs-4">
-                            <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
+                            <img className='profile-image thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
                                       
                             </div>
                             <div className="col-xs-8">                                        

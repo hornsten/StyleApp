@@ -6,3 +6,17 @@
 #app {
       font-family: 'Roboto', sans-serif;
 }
+.style-story {
+  
+  width: 30%;
+  padding: 10px;
+ 
+}
+img {
+    border: solid;
+    border-width: 1px;
+}
+.profile-image {
+    margin-left: 10px;
+}
+

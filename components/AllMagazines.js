@@ -20,6 +20,7 @@ class AllMagazines extends React.Component {
             type: 'PROFILE_MODAL',
             profileModal: false
         })
+    
     }
    
     handleClick(e, userid){
@@ -39,42 +40,35 @@ class AllMagazines extends React.Component {
     }
     render() {
         var component = this;
-        console.log("all magazines", this.props.allmagazines);
         var modal = "";
         if (this.props.profileModal){
                 modal = <ImageModal />
         }
-        if (this.props.singleImageModal){
-            console.log(this.props.singleImageModal, "in all magazines")
-        }
+
         if (this.props.allmagazines){
 
-            
-          
-                var resultComponents = this.props.allmagazines.map(function(result) {
-                
-                return <div className="results" key={result._id}>
-                    <div className="col-sm-6 col-md-4">
-                        <div className="thumbnail">
-                            <img src={result.src} />
-                            <div><strong>Style Item Description</strong> {result.description}</div> 
-                            <div><strong>Name</strong> {result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</div> 
-                            <div><strong>Stylist Style Motto</strong> {result.magazine_profile[0].stylemotto}</div> 
-                            <div><strong>About Stylist</strong> {result.magazine_profile[0].blurb}</div>
-                            
-                            {/*  put button that opens profile of user  ref by id  {result.magazine_profile[0].facebook.id}*/} 
-                            <button  className="btn btn-link" onClick={(e) => component.handleClick(e, result.magazine_profile[0].facebook.id)} >View Profile</button> 
-                            {/*  pass in userid of current into modal component, launch when button clicked}*/} 
-                            {modal}
+            var resultComponents = this.props.allmagazines.map(function(result, index) {     
+                        return <div className="results" key={result._id} className="pull-left style-story">
+                            <div>
+                                
+                                    <div className="thumbnail">
+                                        <div><strong><h4 className="text-center">{result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</h4></strong></div> 
+                                        <div><em><p className="text-center">{result.magazine_profile[0].stylemotto}</p></em></div>
+                                    <br />
+                                        <img src={result.src} onClick={(e) => component.handleClick(e, result.magazine_profile[0].facebook.id)}/>
+                                        <div className="text-center"> {result.description}</div> 
+                                        {modal}
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </div>
-            })
+             })
         }
        
 // <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
-                    <div className="col-xs-12 magazines"><h1>Latest Magazines</h1>
+                    <div className="col-xs-12 magazines"><h2 className="text-center"><strong>Recent Style Stories</strong></h2>
+                   <p className="text-center"><em>Click Image to View Stylist Profile</em></p>
+                       <br />
                         <div className="row results">{resultComponents}</div>
                     </div>  
                 </div>) 
