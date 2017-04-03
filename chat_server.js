@@ -18,7 +18,7 @@ cloudinary.config({
 app.use(siofu.router);
 
 // rooms available in chat - populate from database 
-// var rooms = [" Special Occasions ", " Fashion Forward ", " Cheap & Chic ",  " Accessory Lovers - Bags, Boots and More..."];  /// only needed when populating data 
+var rooms = [" Special Occasions ", " Fashion Forward ", " Cheap & Chic ",  " Accessory Lovers - Bags, Boots and More..."];  /// only needed when populating data 
 // var images = ["./assets/img/Room1.png", "./assets/img/Room2.png", "./assets/img/Room3.png",  "./assets/img/Room4.png"];  /// only needed when populating data 
 // var description = ["Join your fellow sylistas to plan and discuss what to wear for your special day - be it a date, a wedding, vacation or just a lunch with friends.", 
 // "Discuss the latest trends from Tokyo to Milan to London and New York - whatever your locale this is the place to be.", "Love luxury but not the prices - find out how to look a million dollars without spending a million dollars.",
