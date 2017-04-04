@@ -1,7 +1,8 @@
 
 
 .talk-bubble-pink {
-	margin: 40px;
+	margin-top: 10px;
+	margin-left: 10px;
   display: inline-block;
   position: relative;
 	width: 85%;
@@ -10,7 +11,8 @@
 }
 
 .talk-bubble-grey {
-	margin: 40px;
+	margin-top: 10px;
+	margin-right: 10px;
   display: inline-block;
   position: relative;
 	width: 85%;
@@ -249,12 +251,17 @@
 
 /* talk bubble contents */
 .talktext{
-  padding: 1em;
-	text-align: left;
-  line-height: 1.5em;
+padding-left: 1.5em;
+    padding-top: 0.4em;
+    text-align: left;
+    line-height: 1;
 }
 .talktext p{
   /* remove webkit p margins */
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+}
+.results {
+	margin-left: -10px;
+  width: 99%;
 }

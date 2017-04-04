@@ -62,22 +62,26 @@ class PrivateChat extends React.Component {
 
     render() {
       
-        return (<div className= "row">
-                 
-                        <div className="col-xs-12 col-sm-3">
-                            <div className="border row">
-                                <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
-                            </div>
-                            <div className="border row">
-                                <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom} chatWithUser={this.props.chatWithUser}/>
-                            </div> 
-                        </div>
-                        <div className="col-sm-12 col-sm-9">
-                            <InteractiveClosetPicker />
-                        </div> 
-                        
-                        
+        return (<div className="consultation">
+                        <div className= "row">
+                    
+                            <div className="col-xs-12 col-sm-4">
+                                <div className="border row">
+                                    <PrivateChatSection currentroom={this.props.currentroom} username={this.props.username}/>
+                                </div>
 
+                            </div>   
+                            <div className="col-sm-12 col-sm-8">
+                                <InteractiveClosetPicker />
+                            </div>                   
+
+                        </div>
+                        <div className="border row">
+                            <div className="col-xs-12">
+                                <Users users={this.props.users} switchRoom={this.switchRoom} currentuser={this.props.username} currentroom={this.props.currentroom} chatWithUser={this.props.chatWithUser}/>
+                            </div>
+                        </div>
+                    
                     </div>);
         }
     };

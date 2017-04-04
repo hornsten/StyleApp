@@ -165,44 +165,37 @@ class GroupChatSection extends React.Component {
                  <div className="row">
                     <div className="col-md-2"></div>
                     <div className="col-md-8">
-
-                        <div
-                            ref={ref => this.drop = ref}
-                            className="drop"
-                            onDrop={(e) => this.ondrop(e)}
-                            onDragEnd={(e) => this.ondragend(e).bind(this)}
-                            onDragOver={(e) => this.ondragover(e)}>
-                            Drop here</div>
-
-                        <div id='drop-box'>
-                            <div
-                                ref={ref => this.drop = ref}
-                                className="drop"
-                                onDrop={(e) => this.ondrop(e)}
-                                onDragEnd={(e) => this.ondragend(e).bind(this)}
-                                onDragOver={(e) => this.ondragover(e)}>Drop Image Here</div>
-                            <p>or</p>
-                            <input
-                                type="file"
-                                id="siofu_input"
-                                label='Upload'
-                                accept='.png'
-                                name="file"
-                                ref="file"
-                                defaultValue={this.props.file}
-                                onChange={this.uploadFile}/><br/>
-                        </div>
-
                         <input
                             type="text"
                             value={this.props.message}
                             onChange={this.updateMessage}
                             className="form-control"
                             onKeyUp={(e) => this.addMessage(e, this.props.message)}
-                            onDrop={this.uploadFile}
                             ref={input => this.textInput = input}/>
+                        <div id='drop-box'>
 
+                            <div 
+                            ref={ref => this.drop = ref}
+                            className="text-center drop drop-file-box"
+                            onDrop={(e) => this.ondrop(e)}
+                            onDragEnd={(e) => this.ondragend(e).bind(this)}
+                            onDragOver={(e) => this.ondragover(e)}>
+                            Drop here</div>
+                            
+                            <div className="drop-file-box">
+                            <input
+                                className="text-center"
+                                type="file"
+                                label='Upload'
+                                accept='.png'
+                                name="file"
+                                ref="file"
+                                defaultValue={this.props.file}
+                                onChange={this.uploadFile}/><br/>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div className="col-md-2"></div>
                 </div>
          

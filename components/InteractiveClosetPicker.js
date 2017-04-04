@@ -58,7 +58,6 @@ isDropped(imageId) {
     helper.getImages(store, "bag");
     helper.getImages(store, "dress");
     helper.getImages(store, "flair");
-    ReactDOM.findDOMNode(this.inputEntry).value = "";
     // set to default initially
     store.dispatch({ 
       type: 'ITEM_CHANGE',
@@ -110,8 +109,9 @@ uploadFile(e) {
   e.preventDefault();
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-      logging: true,
+    
       allowTaint: true, 
+      timeout: 500,
       onrendered: function (canvas) {
 
           var img = canvas.toDataURL();
@@ -296,8 +296,8 @@ if (this.props.flair){
       return (
          <section className="closet-container">
         
-            <div id='clothesSet' className="col-xs-12 col-sm-6 closet-block rel"> 
-
+            <div id='clothesSet' className="col-xs-12 col-sm-7 closet-block rel"> 
+ <div className="canvas-delimiter">
         <div className="clothes-items backdrop" style={{ overflow: 'hidden', clear: 'both' }}>
  {clothesbins.map(({ accepts, lastDroppedItem, className }, index) =>
           
@@ -309,6 +309,7 @@ if (this.props.flair){
              />,
            )}
         </div>
+        </div>
             {/* Needed to add a description for search and display */}
             <input placeholder="Please add a description" type="text" value={this.props.description}  onChange={this.updateDescription}  className="form-control"   ref={input => this.textInput = input} />
             <button onClick={(e) => this.handleClick(e)} className="btn btn-pink outline round btn-lg">Save</button>
@@ -316,10 +317,10 @@ if (this.props.flair){
             {img_message}    {/* Says File Saved Successfully */}
           </div>
 
-             <div className="col-sm-6 closet-block rel">
+             <div className="col-sm-5 closet-block-interactive rel">
              <div className="clothes-items">
-                    <div className="closet-tabs-container">
-                       <div className="closet-tabs-container">
+                    <div className="closet-tabs-container-interactive">
+                       <div className="closet-tabs-container-interactive">
               <Tabs onSelect={this.handleSelect} selectedIndex={2}>
                 <TabList>
                   <Tab>
@@ -378,25 +379,6 @@ if (this.props.flair){
                        
                          
                  </div>
-                  <div className="drop-box">
-        <div className="form-group">
-        {error}
-        <label for="sel1">Select list Item Type, then upload file:</label>
-        <select class="form-control" ref={ref => this.closetItemType = ref} onChange={(e) => this.handleItemType(e)} id="closetItemType">
-          <option selected="selected" value="SELECT">SELECT</option>
-          <option id="bottom" value="bottom">BOTTOM</option>
-          <option id="top" value="top">TOP</option>
-          <option id="dress" value="dress">DRESS</option>
-          <option id="bag" value="bag">BAG</option>
-          <option id="accessory" value="accessory">ACCESSORY</option>
-          <option id="flair" value="flair">FLAIR</option>
-          <option id="shoes" value="shoes">SHOES</option>
-        </select>
-      </div> 
-     
-        <input type="file" id="siofu_input" label='Upload' accept='.png' name="file" ref="file" onChange={(e) => this.uploadFile(e)} ref = {ref => this.inputEntry = ref}/><br /> 
-         {message}
-          </div>
             </div>
             </div>
    
