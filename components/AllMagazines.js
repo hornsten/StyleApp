@@ -24,8 +24,6 @@ class AllMagazines extends React.Component {
     }
    
     handleClick(e, userid){
-        //  the userid to display modal or something
-        console.log(userid);
         // launch the modal
         store.dispatch({ 
             type: 'PROFILE_MODAL',

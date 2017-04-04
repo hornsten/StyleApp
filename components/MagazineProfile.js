@@ -12,21 +12,16 @@ class MagazineProfile extends React.Component {
         
     }
     handleImageClick(e, image, description){
-        console.log("in here", image, description);
         store.dispatch({ 
             type: 'SINGLE_IMAGE_MODAL',
             singleImageModal: true
         })
 
         this.setState({largeImage: image, largeDescription: description  } )
-        console.log("largeImage in handle click ", this.state.largeImage);
-        console.log("singleImageModal in handle click ", this.props.singleImageModal);
-
     }
     componentDidMount(){
         // reset local props
         this.setState({largeImage: "", largeDescription: ""  } )
-        // console.log("largeImage in component did mount", this.state.largeImage);
         // set to false initally
         store.dispatch({ 
             type: 'SINGLE_IMAGE_MODAL',
@@ -39,18 +34,13 @@ class MagazineProfile extends React.Component {
             type: 'SINGLE_IMAGE_MODAL',
             singleImageModal: false
         })
-        console.log("largeImage in close click ", this.state.largeImage);
-        console.log("singleImageModal in close click ", this.props.singleImageModal);
 
     }
     render() {
         var component = this;
-        //   console.log("largeImage in  remder  ", this.state.largeImage);
         // toggle between large image and summary
-           console.log("singleImageModal in render!! ", this.props.singleImageModal);
         if (this.props.singleImageModal){
             
-             console.log("largeImage in close click ", this.state.largeImage);
            var resultComponents =  
             <div className="results col-md-12">
                     <div className="thumbnail">

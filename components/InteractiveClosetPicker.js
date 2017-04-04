@@ -412,15 +412,13 @@ if (this.props.flair){
     // then populate these with a local state chage passing in the index and item
     
     // step 1 - capture data and emit to server
-    console.log(index, "index",  item, "item" , id , "id");
     chathelper.getIndexAndItem(index, item);
     this.updateClothesBin(index,   item,  id );
           
   }
 
     updateClothesBin(index, item, id){
-        console.log("this prpos**********d tooooo");
-          this.setState(update(this.state, {
+      this.setState(update(this.state, {
       clothesbins: {
         [index]: {
           lastDroppedItem: {
@@ -432,7 +430,6 @@ if (this.props.flair){
         $push: [id],
       } : {},
     }));
-    console.log("the clothesbin", this.state)
     }
 }
 

@@ -3,7 +3,7 @@ var path = require('path');
 var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('../auth/cloudinary_keys');
+var cloudinary_keys = require('../auth/cloudinary_keys');
 // cloudinary.config(cloudinary_keys);
 // // for heroku
 
@@ -133,7 +133,7 @@ app.get('/', function(req, res){
 
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
                 console.log("userid: ",req.params.userprofileid);
-                console.log("results: ",req.params.results)
+                console.log("results: ", results)
                 res.json(results.imgsrc)             
                        
              })

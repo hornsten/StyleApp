@@ -57,6 +57,11 @@ constructor(props){
             type: 'UPDATE_PROFILEIMAGE',
             profile_image: ""
         })
+        // reset to large image modal
+        store.dispatch({ 
+            type: 'SINGLE_IMAGE_MODAL',
+            singleImageModal: false
+        })
 
 
     }
