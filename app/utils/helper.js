@@ -15,7 +15,7 @@ var helpers = {
                 } else {
                      store.dispatch({
                         type: 'UPDATE_STYLEMOTTO',
-                        stylemotto: ""
+                        stylemotto: "click to add style motto"
                     })
                 }
             })
@@ -31,7 +31,7 @@ var helpers = {
                 } else {
                     store.dispatch({
                         type: 'UPDATE_BLURB',
-                        blurb: ""
+                        blurb: "click to add style story"
                     })
                 }
             })
@@ -48,7 +48,7 @@ var helpers = {
                 }  else {
                     store.dispatch({
                         type: 'UPDATE_INSPIRATION',
-                        inspiration: ""
+                        inspiration: "click to add style inspiration"
                     })
                 }
             })
@@ -64,7 +64,7 @@ var helpers = {
                 } else {
                     store.dispatch({
                         type: 'UPDATE_DESIGNER',
-                        designer: ""
+                        designer: "click to add fav designers"
                     })
 
                 }

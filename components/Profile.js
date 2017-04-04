@@ -89,7 +89,7 @@ class Profile extends React.Component {
               <div>         
                   <div className="jumbotron sharp">     
                         <div className="row">
-                            <div className="col-xs-3">
+                            <div className="col-xs-6 col-s-6 col-md-3">
                           
                             <img className='thumbnail' src={this.props.profile_image} style={{width: 180, height: 200}}/>
                  
@@ -100,7 +100,7 @@ class Profile extends React.Component {
                             <br /> 
                                         
                             </div>
-                            <div className="col-xs-9">                                        
+                            <div className="col-xs-6  col-s-6 col-md-9">                                        
                                   <div className="row">
                                     <h3>{this.props.username}</h3>
                                         <br />

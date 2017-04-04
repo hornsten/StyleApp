@@ -35,14 +35,22 @@ class InLineEdit extends React.Component {
         designer: 'click to fav designers'
       })
 
+       console.log("In line Edit constructor store.getSTATe", store.getState())
+         console.log("this.props.designer constructor", this.props.designer);
+       console.log("this.props.inspiration constructor", this.props.inspiration);
 
     }
     componentWillMount(){
+
        helper.getStyleMotto(store,""); 
        helper.getBlurb(store,"");
        helper.getInspiration(store,""); 
        helper.getDesigner(store,"");
-      //  helper.getBlurb(store,"");
+       console.log("In line Edit Compponent Will Mount store.getSTATe", store.getState())
+
+       console.log("this.props.designer", this.props.designer);
+       console.log("this.props.inspiration", this.props.inspiration);
+     
     }
     dataChanged(data) {
 
@@ -85,9 +93,13 @@ class InLineEdit extends React.Component {
 
     render() {
 
+       console.log("this.props.designer in render", this.props.designer);
+       console.log("this.props.inspiration in render", this.props.inspiration);
+
         if (this.props.stylemotto){
           var styleMotto = <div className="row"><div className="col-md-2"><strong>Style Motto: </strong> </div>
             <div className="col-md-8">
+            <FaEdit className="icon" />
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -103,7 +115,7 @@ class InLineEdit extends React.Component {
                 outline: 0,
                 border: 0
               }}
-            /><FaEdit className="icon" />
+            />
          
             </div>
             </div>
@@ -112,6 +124,7 @@ class InLineEdit extends React.Component {
          if (this.props.blurb){
           var styleBlurb = <div className="row"><div className="col-md-2"><strong>Style Vision: </strong> </div>
             <div className="col-md-8">
+            <FaEdit className="icon" />
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -127,7 +140,7 @@ class InLineEdit extends React.Component {
                 outline: 0,
                 border: 0
               }}
-            /><FaEdit className="icon" />
+            />
             
          
             </div>
@@ -136,6 +149,7 @@ class InLineEdit extends React.Component {
         if (this.props.inspiration){
           var inspireMotto = <div className="row"><div className="col-md-2"><strong>Style Inspiration: </strong></div>
             <div className="col-md-8">
+            <FaEdit className="icon" />
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -151,7 +165,7 @@ class InLineEdit extends React.Component {
                 outline: 0,
                 border: 0
               }}
-            /><FaEdit className="icon" />
+            />
           </div>
 
             </div>
@@ -160,6 +174,7 @@ class InLineEdit extends React.Component {
 if (this.props.designer){
           var designerMotto = <div className="row"><div className="col-md-2"><strong>Favorite Designers: </strong></div>
           <div className="col-md-8">
+          <FaEdit className="icon" />
             <Edit
               validate={this.customValidateText}
               activeClassName="editing"
@@ -175,7 +190,7 @@ if (this.props.designer){
                 outline: 0,
                 border: 0
               }}
-            /><FaEdit className="icon" />
+            />
             </div>
             </div>
             
