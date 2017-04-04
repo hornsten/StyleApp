@@ -5,8 +5,12 @@ import {connect } from 'react-redux';
 import store from './Redux/redux.js';
 import helper from "../app/utils/helper.js";
 import {Link} from 'react-router';
-import ImageModal from "./ImageModal"
+import ImageModal from "./ImageModal";
+var Masonry = require('react-masonry-component');
 
+var masonryOptions = {
+    transitionDuration: 0
+};
 class AllMagazines extends React.Component {
     constructor(props) {
         super(props);
@@ -47,8 +51,22 @@ class AllMagazines extends React.Component {
 
         if (this.props.allmagazines){
 
-            var resultComponents = this.props.allmagazines.map(function(result, index) {     
-                        return <div className="results" key={result._id} className="pull-left  style-story">
+             var childElements = this.props.allmagazines.map(function(result, index) { 
+           return (
+              
+                    <div className="thumbnail col-xs-12 col-sm-4" key={result._id}>
+            <div><strong><h4 className="text-center">{result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</h4></strong></div> 
+                                    <div><em><p className="text-center">{result.magazine_profile[0].stylemotto}</p></em></div>                               
+                                        <img src={result.src} onClick={(e) => component.handleClick(e, result.magazine_profile[0].facebook.id)}/>
+     {modal}
+                       <div className="text-center"> {result.description}</div>     
+                    </div>
+               
+            );
+        });
+
+            /*var resultComponents = this.props.allmagazines.map(function(result, index) {     
+                        return <div className="results" key={result._id} className="pull-left style-story">
                             <div>
                                 
                                     <div className="thumbnail">
@@ -61,17 +79,27 @@ class AllMagazines extends React.Component {
                                     </div>
                                 </div>
                         </div>
-             })
+             })*/
         }
        
 // <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
-        return (<div>
-                    <div className="col-xs-12 magazines"><h2 className="text-center"><strong>Recent Style Stories</strong></h2>
-                   <p className="text-center"><em>Click Image to View Stylist Profile</em></p>
-                       <br />
-                        <div className="row results">{resultComponents}</div>
-                    </div>  
-                </div>) 
+        return (
+            <div>
+        <Masonry
+                className={'row results'} // default ''
+                elementType={'div'} // default 'div'
+                options={masonryOptions} // default {}
+                disableImagesLoaded={false} // default false
+                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+            >
+
+                {childElements}
+            </Masonry>
+        
+        
+       </div>
+        
+                ) 
             }
 };
 
