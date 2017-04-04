@@ -12,11 +12,12 @@ class ImageModal extends React.Component{
 
 constructor(props){
         super(props);
-        helper.getProfileImage(store, this.props.profileuserid);
-        helper.getBlurb(store, this.props.profileuserid);
-        helper.getStyleMotto(store, this.props.profileuserid);
-        helper.getInspiration(store, this.props.profileuserid);
-        helper.getDesigner(store, this.props.profileuserid);
+        // helper.getProfileImage(store, this.props.profileuserid);
+        // helper.getBlurb(store, this.props.profileuserid);
+        // helper.getStyleMotto(store, this.props.profileuserid);
+        // helper.getInspiration(store, this.props.profileuserid);
+        // helper.getDesigner(store, this.props.profileuserid);
+        helper.getProfileData(store, this.props.profileuserid);
         helper.getProfileUsername(store, this.props.profileuserid);
         helper.getProfileMagazines(store, this.props.profileuserid);
  }
@@ -27,7 +28,7 @@ constructor(props){
             type: 'PROFILE_MODAL',
             profileModal: false
         })
-        // reset values
+        // // reset values
         store.dispatch({ 
             type: 'UPDATE_PROFILE_NAME',
             profileusername: ""
@@ -36,27 +37,29 @@ constructor(props){
             type: 'UPDATE_PROFILE_ID',
             profileuserid: ""
         })
-        store.dispatch({ 
-            type: 'UPDATE_STYLEMOTTO',
-            stylemotto: ""
-        })
-        store.dispatch({ 
-            type: 'UPDATE_BLURB',
-            blurb: ""
-        })
 
-        store.dispatch({ 
-            type: 'UPDATE_INSPIRATION',
-            inspiration: ""
-        })
-        store.dispatch({ 
-            type: 'UPDATE_DESIGNER',
-            designer: ""
-        })
-        store.dispatch({ 
-            type: 'UPDATE_PROFILEIMAGE',
-            profile_image: ""
-        })
+        // removed the below - shouldnt need to reset 4 Apr
+        // store.dispatch({ 
+        //     type: 'UPDATE_STYLEMOTTO',
+        //     stylemotto: ""
+        // })
+        // store.dispatch({ 
+        //     type: 'UPDATE_BLURB',
+        //     blurb: ""
+        // })
+
+        // store.dispatch({ 
+        //     type: 'UPDATE_INSPIRATION',
+        //     inspiration: ""
+        // })
+        // store.dispatch({ 
+        //     type: 'UPDATE_DESIGNER',
+        //     designer: ""
+        // })
+        // store.dispatch({ 
+        //     type: 'UPDATE_PROFILEIMAGE',
+        //     profile_image: ""
+        // })
         // reset to large image modal
         store.dispatch({ 
             type: 'SINGLE_IMAGE_MODAL',
@@ -76,7 +79,7 @@ constructor(props){
         >
           <Modal.Header>
            
-            <div className="col-md-8"><Modal.Title id="contained-modal-title-lg"><h4>{this.props.profileusername}</h4> </Modal.Title></div>
+            <div className="col-md-8"><Modal.Title id="contained-modal-title-lg"><p className="profile-name-heading"><strong>{this.props.profileusername}</strong></p> </Modal.Title></div>
             <div className="col-md-4"><Button className="pull-right" onClick={this.closeModal}>Close</Button></div>
           </Modal.Header>
           <Modal.Body className="profile-modal-body">    

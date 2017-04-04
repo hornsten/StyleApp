@@ -25,6 +25,7 @@ class AllMagazines extends React.Component {
    
     handleClick(e, userid){
         // launch the modal
+        console.log("in image click image", userid);
         store.dispatch({ 
             type: 'PROFILE_MODAL',
             profileModal: true
@@ -62,7 +63,6 @@ class AllMagazines extends React.Component {
              })
         }
        
-// <a href="/chat/{{resultComponents}}" onclick="switchRoom(\'{resultComponents}\')"> {resultComponents} </a><
         return (<div>
                     <div className="col-xs-12 magazines"><h2 className="text-center"><strong>Recent Style Stories</strong></h2>
                    <p className="text-center"><em>Click Image to View Stylist Profile</em></p>

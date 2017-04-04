@@ -4,29 +4,92 @@ var axios = require("axios");
 var helpers = {
 
 
-    getStyleMotto(store, userprofileid){
-    return axios.get('/updatestylemotto/'+userprofileid).then(function(result){
+    // getStyleMotto(store, userprofileid){
+    // return axios.get('/updatestylemotto/'+userprofileid).then(function(result){
 
-                if(result.data){
+    //             if(result.data){
+    //                 store.dispatch({
+    //                     type: 'UPDATE_STYLEMOTTO',
+    //                     stylemotto: result.data
+    //                 })
+    //             } else {
+    //                  store.dispatch({
+    //                     type: 'UPDATE_STYLEMOTTO',
+    //                     stylemotto: "click to add style motto"
+    //                 })
+    //             }
+    //         })
+    // },
+        
+    // getBlurb(store, userprofileid){
+    // return axios.get('/updateblurb/'+userprofileid).then(function(result){
+    //             if(result.data){
+    //                 store.dispatch({
+    //                     type: 'UPDATE_BLURB',
+    //                     blurb: result.data
+    //                 })
+    //             } else {
+    //                 store.dispatch({
+    //                     type: 'UPDATE_BLURB',
+    //                     blurb: "click to add style story"
+    //                 })
+    //             }
+    //         })
+    // },
+
+    // getInspiration(store, userprofileid){
+    // return axios.get('/updateinspiration/'+userprofileid).then(function(result){
+
+    //             if(result.data){
+    //                 store.dispatch({
+    //                     type: 'UPDATE_INSPIRATION',
+    //                     inspiration: result.data
+    //                 })
+    //             }  else {
+    //                 store.dispatch({
+    //                     type: 'UPDATE_INSPIRATION',
+    //                     inspiration: "click to add style inspiration"
+    //                 })
+    //             }
+    //         })
+    // },
+        
+    // getDesigner(store, userprofileid){
+    // return axios.get('/updatedesigner/'+userprofileid).then(function(result){
+    //             if(result.data){
+    //                 store.dispatch({
+    //                     type: 'UPDATE_DESIGNER',
+    //                     designer: result.data
+    //                 })
+    //             } else {
+    //                 store.dispatch({
+    //                     type: 'UPDATE_DESIGNER',
+    //                     designer: "click to add fav designers"
+    //                 })
+
+    //             }
+    //         })
+    // },
+    
+        
+    getProfileData(store, userprofileid){
+    return axios.get('/profile/attributes/'+userprofileid).then(function(result){
+                if(result.data.designer){
                     store.dispatch({
-                        type: 'UPDATE_STYLEMOTTO',
-                        stylemotto: result.data
+                        type: 'UPDATE_DESIGNER',
+                        designer: result.data.designer
                     })
                 } else {
-                     store.dispatch({
-                        type: 'UPDATE_STYLEMOTTO',
-                        stylemotto: "click to add style motto"
+                    store.dispatch({
+                        type: 'UPDATE_DESIGNER',
+                        designer: "click to add fav designers"
                     })
                 }
-            })
-    },
-        
-    getBlurb(store, userprofileid){
-    return axios.get('/updateblurb/'+userprofileid).then(function(result){
-                if(result.data){
+
+                 if(result.data.blurb){
                     store.dispatch({
                         type: 'UPDATE_BLURB',
-                        blurb: result.data
+                        blurb: result.data.blurb
                     })
                 } else {
                     store.dispatch({
@@ -34,44 +97,59 @@ var helpers = {
                         blurb: "click to add style story"
                     })
                 }
-            })
-    },
 
-    getInspiration(store, userprofileid){
-    return axios.get('/updateinspiration/'+userprofileid).then(function(result){
-
-                if(result.data){
+                 if(result.data.inspiration){
+                    
                     store.dispatch({
                         type: 'UPDATE_INSPIRATION',
-                        inspiration: result.data
+                        inspiration: result.data.inspiration
                     })
-                }  else {
+                } else {
+
                     store.dispatch({
                         type: 'UPDATE_INSPIRATION',
                         inspiration: "click to add style inspiration"
                     })
                 }
-            })
-    },
-        
-    getDesigner(store, userprofileid){
-    return axios.get('/updatedesigner/'+userprofileid).then(function(result){
-                if(result.data){
-                    store.dispatch({
-                        type: 'UPDATE_DESIGNER',
-                        designer: result.data
+
+                 if(result.data.stylemotto){
+                  store.dispatch({
+                        type: 'UPDATE_STYLEMOTTO',
+                        stylemotto: result.data.stylemotto
                     })
                 } else {
-                    store.dispatch({
-                        type: 'UPDATE_DESIGNER',
-                        designer: "click to add fav designers"
+                  store.dispatch({
+                        type: 'UPDATE_STYLEMOTTO',
+                        stylemotto: "click to add style motto"
                     })
-
+                }
+                if (result.data.imgsrc){
+                    store.dispatch({
+                        type: 'UPDATE_PROFILEIMAGE',
+                        profile_image: result.data.imgsrc
+                    })
+                } else {
+                  store.dispatch({
+                        type: 'UPDATE_PROFILEIMAGE',
+                        profile_image: '../../assets/img/Blank_Profile.png'
+                    })
                 }
             })
     },
 
+// use this to get all profile data not just image
+    getProfileImage: function(store, userprofileid){
+        return axios.get('/profile/image/'+userprofileid).then(function(result){
+            if(result){
+                store.dispatch({
+                    type: 'UPDATE_PROFILEIMAGE',
+                    profile_image: result.data
+                })
 
+   
+            }
+        })
+    },
 
     getProfileUsername(store, userprofileid){
         return axios.get('/profile/'+userprofileid).then(function(result){
@@ -116,16 +194,6 @@ var helpers = {
 
 
 
-    getProfileImage: function(store, userprofileid){
-        return axios.get('/profile/image/'+userprofileid).then(function(result){
-            if(result){
-                store.dispatch({
-                    type: 'UPDATE_PROFILEIMAGE',
-                    profile_image: result.data
-                })
-            }
-        })
-    },
 
 
 
@@ -355,7 +423,7 @@ var helpers = {
     },
 
    getAllMagazines: function(store){
-
+        console.log("before magazines");
        return axios.get('/magazine/all', { credentials : 'same-origin' }).then(function(response) {
            console.log("magazines response", response);
             store.dispatch({type: "ALL_MAGAZINES", allmagazines: response.data})

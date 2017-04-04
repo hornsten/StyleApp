@@ -161,7 +161,7 @@ handleLoad(e){
   
     html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-      timeout: 100,
+      timeout: 200,
       onrendered: function (canvas) {
         var img = canvas.toDataURL();
 

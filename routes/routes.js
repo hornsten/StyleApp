@@ -140,22 +140,42 @@ app.get('/', function(req, res){
         }
    });
 
-app.get('/updatestylemotto/:userprofileid?', function(req, res){
+// app.get('/updatestylemotto/:userprofileid?', function(req, res){
+//     if((req.isAuthenticated()) && (!req.params.userprofileid)){
+//         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+//             if (err) return console.log(err); 
+
+//                 res.json(userInfo.stylemotto);
+//         })
+//     } else if (req.params.userprofileid){
+
+//             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+
+//                 res.json(results.stylemotto)             
+                       
+//              })
+//         }
+// })
+
+
+
+app.get('/profile/attributes/:userprofileid?', function(req, res){
     if((req.isAuthenticated()) && (!req.params.userprofileid)){
         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
             if (err) return console.log(err); 
-
-                res.json(userInfo.stylemotto);
+                console.log("userInfo", userInfo);
+                res.json(userInfo);
         })
     } else if (req.params.userprofileid){
 
             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-
-                res.json(results.stylemotto)             
+                console.log("results", results);
+                res.json(results)             
                        
              })
         }
 })
+
 
 app.get('/profile/:userprofileid', function(req, res){
     if (req.params.userprofileid !== ''){
@@ -168,50 +188,50 @@ app.get('/profile/:userprofileid', function(req, res){
 })
 
 
-    app.get('/updateblurb/:userprofileid?', function(req, res){
-        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
-            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
-                if (err) return console.log(err); 
-                    res.json(userInfo.blurb);
-            })
-        } else if (req.params.userprofileid){
+    // app.get('/updateblurb/:userprofileid?', function(req, res){
+    //     if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+    //         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+    //             if (err) return console.log(err); 
+    //                 res.json(userInfo.blurb);
+    //         })
+    //     } else if (req.params.userprofileid){
 
-                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                    res.json(results.blurb)             
+    //             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+    //                 res.json(results.blurb)             
                         
-                })
-            }
-    })
+    //             })
+    //         }
+    // })
 
-        app.get('/updatedesigner/:userprofileid?', function(req, res){
-        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
-            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
-                if (err) return console.log(err); 
-                    res.json(userInfo.designer);
-            })
-        } else if (req.params.userprofileid){
+    //     app.get('/updatedesigner/:userprofileid?', function(req, res){
+    //     if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+    //         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+    //             if (err) return console.log(err); 
+    //                 res.json(userInfo.designer);
+    //         })
+    //     } else if (req.params.userprofileid){
 
-                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                    res.json(results.designer)             
+    //             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+    //                 res.json(results.designer)             
                         
-                })
-            }
-    })
+    //             })
+    //         }
+    // })
 
-        app.get('/updateinspiration/:userprofileid?', function(req, res){
-        if ((req.isAuthenticated()) && (!req.params.userprofileid)){
-            models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
-                if (err) return console.log(err); 
-                    res.json(userInfo.inspiration);
-            })
-        } else if (req.params.userprofileid){
+    //     app.get('/updateinspiration/:userprofileid?', function(req, res){
+    //     if ((req.isAuthenticated()) && (!req.params.userprofileid)){
+    //         models.User.findOne({_id: req.session.passport.user}).exec(function(err, userInfo){             
+    //             if (err) return console.log(err); 
+    //                 res.json(userInfo.inspiration);
+    //         })
+    //     } else if (req.params.userprofileid){
 
-                models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
-                    res.json(results.inspiration)             
+    //             models.User.findOne({"facebook.id": req.params.userprofileid}).exec(function(err, results){ 
+    //                 res.json(results.inspiration)             
                         
-                })
-            }
-    })
+    //             })
+    //         }
+    // })
 
     app.get('/magazine/profile/:userid', function(req, res,next){
 

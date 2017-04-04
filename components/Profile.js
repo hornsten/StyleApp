@@ -27,7 +27,7 @@ class Profile extends React.Component {
       this.state = {
       data: [],
     };
-    helper.getProfileImage(store, "");
+    // helper.getProfileImage(store, "");
 }
 
 

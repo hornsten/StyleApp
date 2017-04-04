@@ -42,10 +42,11 @@ class InLineEdit extends React.Component {
     }
     componentWillMount(){
 
-       helper.getStyleMotto(store,""); 
-       helper.getBlurb(store,"");
-       helper.getInspiration(store,""); 
-       helper.getDesigner(store,"");
+      //  helper.getStyleMotto(store,""); 
+      //  helper.getBlurb(store,"");
+      //  helper.getInspiration(store,""); 
+      //  helper.getDesigner(store,"");
+       helper.getProfileData(store,"");
        console.log("In line Edit Compponent Will Mount store.getSTATe", store.getState())
 
        console.log("this.props.designer", this.props.designer);
