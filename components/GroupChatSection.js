@@ -47,16 +47,16 @@ class GroupChatSection extends React.Component {
     }
 
     ondragover(e) {
-        this.className = 'hover';
+        this.drop.className = 'text-center drop drop-file-box hover';
         e.preventDefault && e.preventDefault();
         return false;
     };
     ondragend(e) {
-        this.className = '';
+        this.drop.className = 'text-center drop drop-file-box';
         return false;
     };
     ondrop(e) {
-        this.className = 'success';
+         this.drop.className = 'text-center drop drop-file-box';
         e.preventDefault && e.preventDefault();
         chathelper.file_upload(e, "dnd");
         return false;
@@ -141,8 +141,8 @@ class GroupChatSection extends React.Component {
                 </div>
                 <div className="row text-center">
                     <div className="col-xs-12 col-md-12">You are in the
-                        <strong>{this.props.currentroom}
-                        </strong>Room!</div>
+                        <strong> {this.props.currentroom} 
+                        </strong> Room!</div>
                 </div>
             </div>
 
@@ -156,7 +156,7 @@ class GroupChatSection extends React.Component {
 
                 <hr/>
 
-                <div className="chatbox row" ref={ref => this.chat = ref}>
+                <div className="chatbox-private row" ref={ref => this.chat = ref}>
                     <div className="col-xs-12 col-md-12">
                         <div className="row">{resultComponents}</div>
                         <div></div>
@@ -172,6 +172,7 @@ class GroupChatSection extends React.Component {
                             className="form-control"
                             onKeyUp={(e) => this.addMessage(e, this.props.message)}
                             ref={input => this.textInput = input}/>
+                             <br />
                         <div id='drop-box'>
 
                             <div 
@@ -180,18 +181,22 @@ class GroupChatSection extends React.Component {
                             onDrop={(e) => this.ondrop(e)}
                             onDragEnd={(e) => this.ondragend(e).bind(this)}
                             onDragOver={(e) => this.ondragover(e)}>
-                            Drop here</div>
+                            <strong>DROP FILE HERE</strong>
+                            </div>
                             
-                            <div className="drop-file-box">
-                            <input
-                                className="text-center"
-                                type="file"
-                                label='Upload'
-                                accept='.png'
-                                name="file"
-                                ref="file"
-                                defaultValue={this.props.file}
-                                onChange={this.uploadFile}/><br/>
+                            <div className="input-file-box text-center">
+                                <strong>UPLOAD FILE HERE</strong>
+                                <br/>
+                                <input
+                                    className="text-center"
+                                    type="file"
+                                    label='Upload'
+                                    accept='.png'
+                                    name="file"
+                                    ref="file"
+                                    defaultValue={this.props.file}
+                                    onChange={this.uploadFile}/>
+                                <br/>
                             </div>
                         </div>
                     </div>

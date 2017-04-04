@@ -24,11 +24,11 @@ class PrivateChatSection extends React.Component {
         chathelper.file_upload(e, "upload");
         
     }
-    ondragover(e) { this.className = 'hover'; e.preventDefault && e.preventDefault();return false; };
-    ondragend(e) { this.className = '';  console.log("dragedn", e); return false; };
+    ondragover(e) { console.log(this); this.drop.className = 'text-center drop drop-file-box hover'; e.preventDefault && e.preventDefault();return false; };
+    ondragend(e) { this.drop.className = 'text-center drop drop-file-box';  console.log("dragedn", e); return false; };
     ondrop(e) {
 
-            this.className = 'success';
+            this.drop.className = 'text-center drop drop-file-box';
             e.preventDefault && e.preventDefault();
 
             chathelper.file_upload(e, "dnd");
@@ -167,11 +167,6 @@ class PrivateChatSection extends React.Component {
                     <div className="row">
                         <div className="col-md-2"></div>
                              <div className="col-md-8">
-
-
-
-                        
-
                         <input
                             type="text"
                             value={this.props.message}
@@ -179,6 +174,7 @@ class PrivateChatSection extends React.Component {
                             className="form-control"
                             onKeyUp={(e) => this.addMessage(e, this.props.message)}
                             ref={input => this.textInput = input}/>
+                            <br />
                         <div id='drop-box'>
 
                             <div 
@@ -187,18 +183,23 @@ class PrivateChatSection extends React.Component {
                             onDrop={(e) => this.ondrop(e)}
                             onDragEnd={(e) => this.ondragend(e).bind(this)}
                             onDragOver={(e) => this.ondragover(e)}>
-                            Drop here</div>
+                            <strong>DROP FILE HERE</strong></div>
                             
-                            <div className="drop-file-box">
-                            <input
-                                className="pull-left"
-                                type="file"
-                                label='Upload'
-                                accept='.png'
-                                name="file"
-                                ref="file"
-                                defaultValue={this.props.file}
-                                onChange={this.uploadFile}/><br/>
+                            <div className="text-center input-file-box">
+                            <strong>UPLOAD FILE HERE</strong>
+                                <br/>
+                                <br/>
+                                <input
+                                    className="text-center"
+                                    type="file"
+                                    label='Upload'
+                                    accept='.png'
+                                    name="file"
+                                    ref="file"
+                                    defaultValue={this.props.file}
+                                    onChange={this.uploadFile}/>
+                                <br/>
+                                <br/>
                             </div>
          
                     </div>

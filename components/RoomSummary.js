@@ -52,7 +52,6 @@ class RoomSummary extends React.Component {
                                 
                             
                             {result.description}
-                                This is a description of each room!
                             
                         </div>
                        

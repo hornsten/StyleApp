@@ -42,7 +42,7 @@ class MagazineProfile extends React.Component {
         if (this.props.singleImageModal){
             
            var resultComponents =  
-            <div className="results col-md-12">
+            <div className="results-profile col-md-12">
                     <div className="thumbnail">
                     <img src={this.state.largeImage}   onClick={(e) => component.closeImage()}/>     
                     <br />            
@@ -56,7 +56,7 @@ class MagazineProfile extends React.Component {
                 var resultComponents = this.props.profilemagazines.map(function(result) {
                 // dont hyperlink current room
            
-                return <div className="results" key={result._id}>
+                return <div className="results-profile" key={result._id}>
                         <div className="col-sm-6 col-md-4 ">
                             <div className="thumbnail">
                             <img src={result.src}   onClick={(e) => component.handleImageClick(e, result.src, result.description)}/>
@@ -79,7 +79,7 @@ class MagazineProfile extends React.Component {
                         <h4 className="text-center">Stylist's Magazines</h4>
                         <p className="text-center"><em>Click Image to Toggle View</em></p>
                         <hr />
-                        <div className="row results">{resultComponents}</div>
+                        <div className="row results-profile">{resultComponents}</div>
                     </div>  
                 </div>) 
             }

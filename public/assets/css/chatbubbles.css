@@ -265,3 +265,8 @@ padding-left: 1.5em;
 	margin-left: -10px;
   width: 99%;
 }
+.results-modal {
+    margin-left: 20px;
+    margin-right: 20px;
+		width: 99%;
+}

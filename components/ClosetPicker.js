@@ -349,6 +349,7 @@ handleLoad(e){
               onChange={this.updateDescription}
               className="form-control"
               ref={input => this.textInput = input}/>
+              <br />
             <button
               onClick={(e) => this.handleClick(e)}
               className="btn btn-pink outline round btn-lg">Save</button>
