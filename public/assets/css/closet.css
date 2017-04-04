@@ -6,8 +6,11 @@
 height: 100%;
 }
 .clothes-items {
-border: 1px solid silver;
+/*border: 1px solid silver; removed/ FH */
 height: 100%;
+}
+.canvas-delimiter {
+    border: 1px solid silver; 
 }
 
 .backdrop {

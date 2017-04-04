@@ -5,12 +5,12 @@ var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('./auth/cloudinary_keys');
+var cloudinary_keys = require('./auth/cloudinary_keys');
 
 cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME || cloudnary_keys.cloud_name, 
-  api_key: process.env.CLOUDINARY_API || cloudnary_keys.api_key, 
-  api_secret: process.env.CLOUDINARY_SECRET || cloudnary_keys.api_secret,
+  cloud_name: process.env.CLOUDINARY_NAME || cloudinary_keys.cloud_name, 
+  api_key: process.env.CLOUDINARY_API || cloudinary_keys.api_key, 
+  api_secret: process.env.CLOUDINARY_SECRET || cloudinary_keys.api_secret,
 });
 
 
@@ -145,7 +145,7 @@ io.sockets.on('connection', function (socket) {
 			var fs = require('fs');
 			// create a unique name for the file
 			var uniqueFileName = name + '_' + Date.now() ;
-			 console.log("****uniqueFileName",uniqueFileName);
+			//  console.log("****uniqueFileName",uniqueFileName);
 			//path to store uploaded files (NOTE: presumed you have created the folders)
 			// stored in temp area before being pushed to cloud
 			var filePath = __dirname + '/public/assets/img/' + uniqueFileName + '.png';

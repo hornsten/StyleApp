@@ -35,6 +35,7 @@ class ClosetPicker extends React.Component {
 
     chathelper.new_magazine_item_listener(store);
 
+
     this.state = {
       clothesbins: [
         {
@@ -66,7 +67,9 @@ class ClosetPicker extends React.Component {
 
     };
   }
-
+handleLoad(e){
+  console.log("loaded")
+}
   resetClothesbins() {
     // just sets them back to inital state
     this.setState({
@@ -155,8 +158,10 @@ class ClosetPicker extends React.Component {
     var userid = this.props.userid;
     var component = this;
     e.preventDefault();
+  
     html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
+      timeout: 30,
       onrendered: function (canvas) {
         var img = canvas.toDataURL();
 
@@ -177,6 +182,7 @@ class ClosetPicker extends React.Component {
 
     });
   }
+
   handleItemType(e) {
     // console.log("item type chagne this$$$", e.target.id);
     store.dispatch({type: 'TYPE_CHANGE', itemtype: e.target.value})
@@ -317,7 +323,7 @@ class ClosetPicker extends React.Component {
       <section className="closet-container">
         <div className="row">
           <div id='clothesSet' className="col-md-6 closet-block rel">
-
+            <div className="canvas-delimiter">
             <div
               className="clothes-items backdrop"
               style={{
@@ -328,11 +334,12 @@ class ClosetPicker extends React.Component {
                 accepts,
                 lastDroppedItem,
                 className
-              }, index) => <Clothesbin
+              }, index) => <Clothesbin 
                 accepts={accepts}
                 lastDroppedItem={lastDroppedItem}
                 onDrop={item => this.handleDrop(index, item)}
                 key={index}/>,)}
+            </div>
             </div>
             {/* Needed to add a description for search and display */}
             <input
