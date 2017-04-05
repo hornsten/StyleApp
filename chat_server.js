@@ -154,6 +154,7 @@ io.sockets.on('connection', function (socket) {
 			fs.writeFile(filePath, image, 'base64', function(err) {
 				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
+					console.log(results);
 					// remove tmp file
 					fs.unlinkSync(filePath);
 					// save to the database
