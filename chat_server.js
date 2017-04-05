@@ -5,7 +5,7 @@ var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('./auth/cloudinary_keys');
+var cloudinary_keys = require('./auth/cloudinary_keys');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME || cloudinary_keys.cloud_name, 
@@ -154,7 +154,6 @@ io.sockets.on('connection', function (socket) {
 			fs.writeFile(filePath, image, 'base64', function(err) {
 				cloudinary.uploader.upload(filePath, function(result) { 
 					// var filelocation = result.url;
-					console.log(results);
 					// remove tmp file
 					fs.unlinkSync(filePath);
 					// save to the database
@@ -181,7 +180,7 @@ io.sockets.on('connection', function (socket) {
 					eager: [
 					{ width: 200, height: 200, crop: 'thumb',
 						radius: 20 },
-					{ width: 200, height: 250, crop: 'fit', format: 'png' }
+					{ width: 100, height: 150, crop: 'fit', format: 'png' }
 					],                                     
 
 				} );

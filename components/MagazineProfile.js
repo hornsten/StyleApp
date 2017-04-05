@@ -59,7 +59,7 @@ class MagazineProfile extends React.Component {
                 return <div className="results-profile" key={result._id}>
                         <div className="col-sm-6 col-md-4 ">
                             <div className="thumbnail">
-                            <img src={result.src} style={{width: 180, height: 200}}  onClick={(e) => component.handleImageClick(e, result.src, result.description)}/>
+                            <img src={result.src}  onClick={(e) => component.handleImageClick(e, result.src, result.description)}/>
                             <div className="caption">
                                 <p className="text-center"><strong>{result.description}</strong></p>
                             </div>
