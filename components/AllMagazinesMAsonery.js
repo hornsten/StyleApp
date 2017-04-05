@@ -1,3 +1,4 @@
+
 import ReactDOM from "react-dom";
 import React from "react";
 import {connect } from 'react-redux';
@@ -23,6 +24,10 @@ class AllMagazines extends React.Component {
             type: 'PROFILE_MODAL',
             profileModal: false
         })
+        store.dispatch({ 
+            type: 'SINGLE_IMAGE_MODAL',
+            singleImageModal: false
+        })
     
     }
    
@@ -38,7 +43,10 @@ class AllMagazines extends React.Component {
             type: 'UPDATE_PROFILE_ID',
             profileuserid: userid
         })
-
+        store.dispatch({ 
+            type: 'SINGLE_IMAGE_MODAL',
+            singleImageModal: false
+        })
 
     }
     render() {
@@ -117,3 +125,4 @@ const mapStateToProps = (store,ownProps) => {
 }
 
 export default connect(mapStateToProps)(AllMagazines);
+
