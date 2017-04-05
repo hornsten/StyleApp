@@ -23,7 +23,7 @@ class Magazine extends React.Component {
                 // dont hyperlink current room
            
                 return <div className="results" key={result._id}>
-                    <div className="col-sm-6 col-md-4">
+                    <div className="col-xs-12 col-sm-6">
                         <div className="thumbnail">
                         <img src={result.src} />
                         <div className="caption">

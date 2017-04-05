@@ -46,18 +46,18 @@ class Home extends React.Component {
 <div>        
     <div id="sharp" className="jumbotron"> 
     <div className="row">
-       <div className="col-xs-12 col-sm-4 text-center">
-       <h1 className="app-title">Style Genie</h1>
+       <div className="col-xs-12 col-sm-6 text-center">
+       <h1 id="app-title">Style Genie</h1>
      
        <h4>Upload your wardrobe</h4>
        <h4>Create outfits</h4>
        <h4>Share your style with your friends!</h4> 
      
        </div>
-       <div className="col-xs-12 col-sm-8">
+       <div className="col-xs-12 col-sm-6 text-center">
       
-        <video id="video-background" autoPlay loop width="auto" height="400">
-             <source src="../assets/img/style_video.m4v" type="video/mp4"></source>
+        <video id="video-background embed-responsive-item" autoPlay loop width="auto" height="400">
+             <source src="../assets/img/Style-Video.m4v" type="video/mp4"></source>
         </video>
         </div>
         </div>
