@@ -180,7 +180,7 @@ io.sockets.on('connection', function (socket) {
 					eager: [
 					{ width: 200, height: 200, crop: 'thumb',
 						radius: 20 },
-					{ width: 100, height: 150, crop: 'fit', format: 'png' }
+					{ width: 200, height: 250, crop: 'fit', format: 'png' }
 					],                                     
 
 				} );
