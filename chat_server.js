@@ -5,7 +5,7 @@ var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
 var cloudinary = require('cloudinary');
-// var cloudinary_keys = require('./auth/cloudinary_keys');
+var cloudinary_keys = require('./auth/cloudinary_keys');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME || cloudinary_keys.cloud_name, 

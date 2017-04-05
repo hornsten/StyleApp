@@ -25,7 +25,7 @@ class Magazine extends React.Component {
                 return <div className="results" key={result._id}>
                     <div className="col-xs-12 col-sm-6">
                         <div className="thumbnail">
-                        <img src={result.src} />
+                        <img style={{width: 100, height: 110}} src={result.src} />
                         <div className="caption">
                             <p><strong>{result.description}</strong></p>
                         </div>
