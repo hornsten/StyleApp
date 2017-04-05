@@ -158,14 +158,15 @@ handleLoad(e){
     var userid = this.props.userid;
     var component = this;
     e.preventDefault();
-  
+    console.log("create",document.getElementsByClassName('clothes-items') );
+
     html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-      timeout: 500,
+      timeout: 400,
       onrendered: function (canvas) {
         var img = canvas.toDataURL();
 
-
+//  window.open(img);
         // strip off the data: url prefix to get just the base64-encoded bytes
         var data = img.replace(/^data:image\/\w+;base64,/, "");
 
@@ -177,7 +178,7 @@ handleLoad(e){
           store.dispatch({type: 'ADD_DESCRIPTION', description: ""})
 
         }
-        // window.open(img);
+      //  
       }
 
     });

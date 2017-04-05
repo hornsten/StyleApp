@@ -107,11 +107,10 @@ uploadFile(e) {
   var userid = this.props.userid;
   var component = this;
   e.preventDefault();
+  console.log("interacive",document.getElementsByClassName('clothes-items') );
  html2canvas(document.getElementsByClassName('clothes-items'), {
       background: '#fff',
-    
-      allowTaint: true, 
-      timeout: 500,
+      timeout: 400,
       onrendered: function (canvas) {
 
           var img = canvas.toDataURL();

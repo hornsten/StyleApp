@@ -4,7 +4,7 @@ var React = require('react');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('../auth/cloudinary_keys');
-// cloudinary.config(cloudinary_keys);
+cloudinary.config(cloudinary_keys);
 // // for heroku
 
 cloudinary.config({ 
