@@ -422,7 +422,6 @@ handleLoad(e){
 
                 <label for="sel1">
                   <h4>
-                    <img className='icons' src='../assets/img/i-upload.png'></img>
                     To upload, select item type:
                   </h4>
                 </label>

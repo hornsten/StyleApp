@@ -4,7 +4,7 @@ function chat_server(app, io, models){
 var heartbeatObj = {};
 var siofu = require("socketio-file-upload");
 // import siofu from 'socketio-file-upload';
-var cloudinary = require('cloudinary');
+// var cloudinary = require('cloudinary');
 // var cloudinary_keys = require('./auth/cloudinary_keys');
 
 cloudinary.config({ 
