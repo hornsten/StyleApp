@@ -44,7 +44,7 @@ class MagazineProfile extends React.Component {
            var resultComponents =  
             <div className="results-profile col-md-12">
                     <div className="thumbnail">
-                    <img src={this.state.largeImage}   onClick={(e) => component.closeImage()}/>     
+                    <img src={this.state.largeImage}  style={{width: 100, height: 110}} onClick={(e) => component.closeImage()}/>     
                     <br />            
                     <p className="text-center"><strong>{this.state.largeDescription}</strong></p>
                 </div>

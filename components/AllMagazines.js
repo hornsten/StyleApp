@@ -54,7 +54,7 @@ class AllMagazines extends React.Component {
                                         <div><strong><h4 className="text-center">{result.magazine_profile[0].facebook.firstName}  {result.magazine_profile[0].facebook.lastName}</h4></strong></div> 
                                         <div><em><p className="text-center">{result.magazine_profile[0].stylemotto}</p></em></div>
                                     <br />
-                                        <img  src={result.src} style={{width: 200, height: 250}} onClick={(e) => component.handleClick(e, result.magazine_profile[0].facebook.id)}/>
+                                        <img  src={result.src} style={{width: 200, height: 210}} onClick={(e) => component.handleClick(e, result.magazine_profile[0].facebook.id)}/>
                                         <div className="text-center"> {result.description}</div> 
                                         {modal}
                                     </div>
