@@ -6,11 +6,28 @@
 #app {
       font-family: 'Roboto', sans-serif;
 }
+
+#app-title {
+      font-family: 'Clicker Script', cursive;
+      font-weight: bolder;
+    color:#e4556a;
+    font-size:10rem;
+    text-shadow: 1px 1px 3px rgba(148, 150, 150, 1);
+
+}
 .style-story {
   
   width: 33%;
-  padding: 10px;
+  padding-right: 2rem;
  
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .style-story {
+        width: 100%;
+        padding-right: 2rem;
+    }
 }
 
 img {
